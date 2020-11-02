@@ -12,6 +12,7 @@ from nltk import PCFG
 from model import Model
 from model_box import ModelBox
 from generate import generate_models
+from generators.grammar import GeneratorGrammar
 
 """Methods for estimating model parameters. Currently implemented: differential evolution.
 
@@ -140,11 +141,14 @@ if __name__ == "__main__":
     grammar = PCFG.fromstring("""S -> S '+' T [0.4] | T [0.6]
                               T -> 'C' [0.6] | T "*" V [0.4]
                               V -> 'x' [0.5] | 'y' [0.5]""")
+    gram = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
+                              T -> 'C' [0.6] | T "*" V [0.4]
+                              V -> 'x' [0.5] | 'y' [0.5]""")
     symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
     N = 10
     
-    models = generate_models(N, grammar, symbols)
-    
+    # models = generate_models(N, grammar, symbols)
+    models = generate_models(gram, symbols, strategy_parameters = {"N":10})
     models = fit_models(models, X, y)    
     print(models)
     
