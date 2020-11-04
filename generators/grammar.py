@@ -10,7 +10,6 @@ from nltk import PCFG
 from nltk.grammar import Nonterminal
 
 from generators.base_generator import BaseExpressionGenerator
-#from base_generator import BaseExpressionGenerator
 
 class GeneratorGrammar (BaseExpressionGenerator):
     def __init__ (self, grammar):
@@ -70,6 +69,8 @@ class GeneratorGrammar (BaseExpressionGenerator):
     
     def __repr__ (self):
         return str(self.grammar)
+    
+    
     
 def generate_sample_alternative(grammar, start):
     """Alternative implementation of generate_sample. Just for example."""
@@ -236,12 +237,7 @@ if __name__ == "__main__":
         print(f"\nFor grammar:\n {gramm}")
         for i in range(0,5):
             print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
-            # print(gramm.count_coverage(gramm.start_symbol,i), f" = total probability of height <= {i}")
-    # for gramm in [pgramSSparam(p)]:
-    #     print(f"For grammar:\n {gramm}")
-    #     for i in range(0,5):
-    #         print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
-    #         print(gramm.count_coverage(gramm.start_symbol,i), f" = total probability of height <= {i}")
+            print(gramm.count_coverage(gramm.start_symbol,i), f" = total probability of height <= {i}")
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
         
         
