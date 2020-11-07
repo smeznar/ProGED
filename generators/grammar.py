@@ -9,7 +9,8 @@ import numpy as np
 from nltk import PCFG
 from nltk.grammar import Nonterminal
 
-from generators.base_generator import BaseExpressionGenerator
+# from generators.base_generator import BaseExpressionGenerator
+from base_generator import BaseExpressionGenerator
 
 class GeneratorGrammar (BaseExpressionGenerator):
     def __init__ (self, grammar):
@@ -25,6 +26,7 @@ class GeneratorGrammar (BaseExpressionGenerator):
                              "Input: " + str(grammar))
                 
         self.start_symbol = self.grammar.start()
+        self.coverage_dict = {}
     
     def generate_one (self):
         return generate_sample(self.grammar, items=[self.start_symbol])
@@ -63,6 +65,51 @@ class GeneratorGrammar (BaseExpressionGenerator):
                     subprobabs *= self.count_coverage(symbol, height-1)
                 coverage += subprobabs
             return coverage
+
+    def count_coverage_fast(self, start, height):
+        """Counts coverage of set maximal height using cache (dictionary)."""
+        coverage = 0
+        probs_dict = {}
+        prods = self.grammar.productions(lhs=start)
+        for prod in prods:
+            subprobabs = prod.prob()
+            for symbol in prod.rhs():
+                if not isinstance(symbol, Nonterminal):
+                    continue
+                elif (height-1) == 0:
+                    subprobabs = 0
+                    break
+                else:
+                    if (symbol, height-1) in probs_dict:
+                        subprobabs *= probs_dict[(symbol, height-1)]
+                    else:
+                        newprob = self.count_coverage_fast(symbol, height-1)
+                        probs_dict[(symbol, height)] = newprob
+                        subprobabs *= newprob
+            coverage += subprobabs
+        return coverage
+
+    def count_coverage_external(self, start, height):
+        """Counts coverage fast using external (objective) cache."""
+        coverage = 0
+        prods = self.grammar.productions(lhs=start)
+        for prod in prods:
+            subprobabs = prod.prob()
+            for symbol in prod.rhs():
+                if not isinstance(symbol, Nonterminal):
+                    continue
+                elif (height-1) == 0:
+                    subprobabs = 0
+                    break
+                else:
+                    if (symbol, height-1) in self.probs_dict:
+                        subprobabs *= self.probs_dict[(symbol, height-1)]
+                    else:
+                        newprob = self.count_coverage_fast(symbol, height-1)
+                        self.probs_dict[(symbol, height)] = newprob
+                        subprobabs *= newprob
+            coverage += subprobabs
+        return coverage
 
     def __str__ (self):
         return str(self.grammar)
@@ -236,8 +283,10 @@ if __name__ == "__main__":
     for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
         for i in range(0,5):
-            print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
-            print(gramm.count_coverage(gramm.start_symbol,i), f" = total probability of height <= {i}")
+            # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
+            print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
+            print(gramm.count_coverage_fast(gramm.start_symbol,i), f" = coverage_fast(start,{i}) of height <= {i}")
+            print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage_external(start,{i}) of height <= {i}")
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
         
         
