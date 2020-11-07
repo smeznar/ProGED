@@ -68,8 +68,10 @@ class GeneratorGrammar (BaseExpressionGenerator):
 
     def count_coverage_fast(self, start, height):
         """Counts coverage of set maximal height using cache (dictionary)."""
+        if height == 0:
+            return 0
         coverage = 0
-        probs_dict = {}
+        coverage_dict = {}
         prods = self.grammar.productions(lhs=start)
         for prod in prods:
             subprobabs = prod.prob()
@@ -80,17 +82,19 @@ class GeneratorGrammar (BaseExpressionGenerator):
                     subprobabs = 0
                     break
                 else:
-                    if (symbol, height-1) in probs_dict:
-                        subprobabs *= probs_dict[(symbol, height-1)]
+                    if (symbol, height-1) in coverage_dict:
+                        subprobabs *= coverage_dict[(symbol, height-1)]
                     else:
                         newprob = self.count_coverage_fast(symbol, height-1)
-                        probs_dict[(symbol, height)] = newprob
+                        coverage_dict[(symbol, height)] = newprob
                         subprobabs *= newprob
             coverage += subprobabs
         return coverage
 
     def count_coverage_external(self, start, height):
         """Counts coverage fast using external (objective) cache."""
+        if height == 0:
+            return 0
         coverage = 0
         prods = self.grammar.productions(lhs=start)
         for prod in prods:
@@ -102,11 +106,11 @@ class GeneratorGrammar (BaseExpressionGenerator):
                     subprobabs = 0
                     break
                 else:
-                    if (symbol, height-1) in self.probs_dict:
-                        subprobabs *= self.probs_dict[(symbol, height-1)]
+                    if (symbol, height-1) in self.coverage_dict:
+                        subprobabs *= self.coverage_dict[(symbol, height-1)]
                     else:
                         newprob = self.count_coverage_fast(symbol, height-1)
-                        self.probs_dict[(symbol, height)] = newprob
+                        self.coverage_dict[(symbol, height)] = newprob
                         subprobabs *= newprob
             coverage += subprobabs
         return coverage
@@ -220,6 +224,8 @@ if __name__ == "__main__":
         print(code_to_sample(c, grammar.grammar, [grammar.start_symbol]))
         print(grammar.count_trees(grammar.start_symbol,i))
         print(grammar.count_coverage(grammar.start_symbol,i))
+        print(grammar.count_coverage_fast(grammar.start_symbol,i))
+        print(grammar.count_coverage_external(grammar.start_symbol,i))
     print("\n-- testing different grammars: --\n")
     pgram0 = GeneratorGrammar("""
         S -> 'a' [0.3]
@@ -282,11 +288,11 @@ if __name__ == "__main__":
     p=0.6
     for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
-        for i in range(0,5):
+        for i in range(0,3):
             # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
             print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
             print(gramm.count_coverage_fast(gramm.start_symbol,i), f" = coverage_fast(start,{i}) of height <= {i}")
             print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage_external(start,{i}) of height <= {i}")
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
         
-        
+    # pgram0.count_coverage_fast(pgram0.start_symbol, 0)
