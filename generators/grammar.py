@@ -215,7 +215,7 @@ if __name__ == "__main__":
     print("--- generators.grammar.py test ---")
     np.random.seed(0)
     grammar = GeneratorGrammar("E -> 'x' [0.7] | E '*' 'x' [0.3]")
-    for i in range(5):
+    for i in range(1,5):
         np.random.seed(i)
         f, p, c = grammar.generate_one()
         print((f, p, c))
@@ -285,14 +285,23 @@ if __name__ == "__main__":
     B2 -> 'af' [1]
     B1 -> 'bf' [1]
 """)
+    from time import time
+    # round = 10**(-3)*int(r*10**3)
+    t1=0
+    def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); return t2
     p=0.6
     for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
-        for i in range(0,3):
+        for i in range(0,5):
+            # t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); t1=t2;
+            t2=display_time(t1); t1=t2;
             # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
             print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
+            t2=display_time(t1); t1=t2;
             print(gramm.count_coverage_fast(gramm.start_symbol,i), f" = coverage_fast(start,{i}) of height <= {i}")
+            t2=display_time(t1); t1=t2;
             print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage_external(start,{i}) of height <= {i}")
+            t2=display_time(t1); t1=t2;
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
         
     # pgram0.count_coverage_fast(pgram0.start_symbol, 0)
