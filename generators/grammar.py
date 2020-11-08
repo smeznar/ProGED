@@ -66,6 +66,47 @@ class GeneratorGrammar (BaseExpressionGenerator):
                 coverage += subprobabs
             return coverage
 
+
+    def count_coverage_for(self, start, height):
+        """Counts coverage of set maximal height using cache (dictionary)."""
+        # def list_symbols(grammar):
+        #     # print()
+        #     bag_of_symbols = [prod.lhs() for prod in grammar.productions()]
+        #     nonterminals = set(bag_of_symbols)
+        #     # print(symbols, print(list(symbols)))
+        #     # print([isinstance(symbol, Nonterminal) for symbol in list(symbols)])
+        #     # # nonterminals = grammar.nontrminals(list(symbols))
+        #     # # terminals = symbols.difference(set(nonterminals))
+        #     # print(symbols)
+        #     print(prods)
+
+        #     return None
+        # list_symbols(self.grammar)
+        # return None 
+        if height == 0: 
+            return 0
+
+        nonterminals = list(set([prod.lhs() for prod in self.grammar.productions()]))
+        probs_dict = {}
+         # height = 0:
+        for A in nonterminals:
+            probs_dict[(A, 0)] = 0
+         # height > 0:
+        for level in range(1, height+1):
+            for A in nonterminals:
+                coverage = 0
+                prods = self.grammar.productions(lhs=A)
+                for prod in prods:
+                    subprobabs = prod.prob()
+                    for symbol in prod.rhs():
+                        if not isinstance(symbol, Nonterminal):
+                            continue
+                        else:
+                            subprobabs *= probs_dict[(symbol, level-1)]
+                    coverage += subprobabs
+                probs_dict[(A, level)] = coverage
+        return probs_dict[(start, height)]
+
     def count_coverage_fast(self, start, height):
         """Counts coverage of set maximal height using cache (dictionary)."""
         if height == 0:
@@ -290,18 +331,34 @@ if __name__ == "__main__":
     t1=0
     def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); return t2
     p=0.6
-    for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, pgramSSparam(p) ]:
+    height = 10**5
+    for gramm in [pgramSS, pgramSSparam(p) ]:
+        # for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
-        for i in range(0,5):
+        for i in range(height, height+1):
             # t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); t1=t2;
             t2=display_time(t1); t1=t2;
             # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
-            print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
-            t2=display_time(t1); t1=t2;
-            print(gramm.count_coverage_fast(gramm.start_symbol,i), f" = coverage_fast(start,{i}) of height <= {i}")
-            t2=display_time(t1); t1=t2;
-            print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage_external(start,{i}) of height <= {i}")
+            # print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
+            # t2=display_time(t1); t1=t2;
+            # print(gramm.count_coverage_fast(gramm.start_symbol,i), f" = coverage_fast(start,{i}) of height <= {i}")
+            # t2=display_time(t1); t1=t2;
+            # print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage_external(start,{i}) of height <= {i}")
+            # t2=display_time(t1); t1=t2;
+            print(gramm.count_coverage_for(gramm.start_symbol,i), f" = coverage_for(start,{i}) of height <= {i}")
             t2=display_time(t1); t1=t2;
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
+    print("Test results for count_coverage_for() : for height 10**5, "+
+        "the grammar S->SS needs half of a second.")
         
-    # pgram0.count_coverage_fast(pgram0.start_symbol, 0)
+pgramw.count_coverage_for(pgramw.start_symbol, 0)
+pgram1 = GeneratorGrammar("""
+        S -> A B [0.8]
+        S -> 's' [0.2]
+        A -> 'a' [1]
+        B -> 'b' [0.3]
+        B -> C D [0.7]
+        C -> 'c' [1]
+        D -> 'd' [1]""")
+
+# pgram1 = GeneratorGrammar(""" S -> A B [0.8] S -> 's' [0.2] A -> 'a' [1] B -> 'b' [0.3] B -> C D [0.7] C -> 'c' [1]  D -> 'd' [1] """)
