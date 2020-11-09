@@ -7,7 +7,7 @@ Created on Thu Oct 22 12:00:39 2020
 
 import numpy as np
 from nltk import PCFG
-from nltk.grammar import Nonterminal
+from nltk.grammar import Nonterminal, ProbabilisticProduction
 
 # from generators.base_generator import BaseExpressionGenerator
 from base_generator import BaseExpressionGenerator
@@ -119,35 +119,29 @@ class GeneratorGrammar (BaseExpressionGenerator):
         """Returns renormalized grammar."""
         # create all productions S->alpha
         coverages_dict = self.list_coverages(height)
-        if 0 in [prob for prob in coverages_dict]
-        def chi(prod):
+        if coverages_dict[self.grammar.start()] == 0:
+            raise ValueError("Coverage is not pozitive so renormalization "
+                            + "cannot be performed since zerro division")
+        def chi(prod, coverages_dict):
+            """Renormalizes production probability p^~ as in Chi paper (22)."""
             subprobabs = prod.prob()
             for symbol in prod.rhs():
                 if not isinstance(symbol, Nonterminal):
+                # if is_terminal(symbol):
                     continue  # or subprobabs = 1
                 else:
                     subprobabs *= coverages_dict[symbol]
             return subprobabs/coverages_dict[prod.lhs()]
+        # to_change_prods = self.grammar.productions(lhs=self.grammar.start())
+        # prods = [ProbabilisticProduction(prod.lhs(), prod.rhs(), 
+        #                                 prob=chi(prod, coverages_dict))
+        #         for prod in to_change_prods]
 
-        old_prods = self.grammar.productions(lhs=self.grammar.start())
-        prods = [
-            ProbabilisticProduction(prod.lhs(), prod.rhs(), prob=[p] / lcount[p.lhs()])
-            for prod in old_prods
-        ]
-
-        prod = ProbabilisticProduction(p.lhs(), p.rhs(), prob=pcount[p] / lcount[p.lhs()])
-
-
-#    prods = [
-    #     ProbabilisticProduction(p.lhs(), p.rhs(), prob=pcount[p] / lcount[p.lhs()])
-    #     for p in pcount
-    # ]
-        # return PCFG(start, prods)
-
-        # print(self.grammar)
-        # print(self.grammar.chomsky_normal_form('_'))
-        # self.grammar.productions()
-        return None
+        prods = [ProbabilisticProduction(prod.lhs(), prod.rhs(), 
+                                        prob=chi(prod, coverages_dict))
+                if prod.lhs() == self.grammar.start() else prod 
+                for prod in self.grammar.productions()]
+        return PCFG(self.grammar.start(), prods)
 
 
     def __str__ (self):
@@ -336,7 +330,12 @@ if __name__ == "__main__":
             print(gramm.list_coverages(i, tol=10**(-17), min_height=100,
                 verbosity=1)[gramm.grammar.start()], 
                 f" = list_coverages({i})[start] of height <= {i}")
-            # t2=display_time(t1); t1=t2
+            t2=display_time(t1); t1=t2
+        print("\nRenormalized grammar:\n %s \n %f" % gramm.renormalize())
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
-    print(pgramw)
-    print(pgramw.renormalize())
+    # print(pgramw)
+    # # print([type(i) for i in pgramw.grammar.productions()])
+    # print(pgramw.renormalize())
+
+    print(pgramSSparam(0.5),"\n", pgramSSparam(0.6))
+    print(pgramSSparam(0.5).renormalize(),"\n", pgramSSparam(0.6).renormalize())
