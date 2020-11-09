@@ -26,7 +26,6 @@ class GeneratorGrammar (BaseExpressionGenerator):
                              "Input: " + str(grammar))
                 
         self.start_symbol = self.grammar.start()
-        self.coverage_dict = {}
     
     def generate_one (self):
         return generate_sample(self.grammar, items=[self.start_symbol])
@@ -66,12 +65,10 @@ class GeneratorGrammar (BaseExpressionGenerator):
                 coverage += subprobabs
             return coverage
 
-    def count_coverage_fast(self, start, height, tol=10**(-17),
+    def list_coverages(self, height, tol=10**(-17),
                             min_height=100, verbosity=0):
         """Counts coverage of maximal height using cache(dictionary).
         Input:
-            start - start symbol of a grammar for which the coverage
-                is calculated.
             height - maximal height of parse trees of which the
                 coverage is calculated of.
             tol - tolerance as a stopping condition. If change
@@ -86,23 +83,24 @@ class GeneratorGrammar (BaseExpressionGenerator):
             Coverage of all parse trees starting from symbol `start`
             with their height less or equal to given height.
         """
-        if height == 0:
-            return 0
         nonterminals = list(set([prod.lhs() for prod
                                 in self.grammar.productions()]))
+        if height == 0:
+            return {A: 0 for A in nonterminals}
         probs_dict = {}
         for A in nonterminals:      # height = 0:
             probs_dict[(A, 0)] = 0
+        min_height = max(min_height, 2)  # to avoid int(min_height/2)=0
         for level in range(1, height+1):    # height > 0:
             if level > min_height:  # Do `min_height` levels without stopping.
                 # Measure change from last min_height/2 levels:
-                if abs(probs_dict[(start, level-1)] 
-                    - probs_dict[(start, level-int(min_height/2))]) < tol:
+                change = max(abs(probs_dict[(A, level-1)]
+                                 - probs_dict[(A, level-int(min_height/2))])
+                                 for A in nonterminals)
+                if change < tol:
                     if verbosity > 0:
-                        print(abs(probs_dict[(start, level-1)] 
-                                - probs_dict[(start, level-2)]),
-                            level, tol, "change of probability")
-                    return probs_dict[(start, level-1)]
+                        print(change, level, tol, "change of probability")
+                    return {A: probs_dict[(A, level-1)] for A in nonterminals}
             for A in nonterminals:
                 coverage = 0
                 prods = self.grammar.productions(lhs=A)
@@ -110,19 +108,53 @@ class GeneratorGrammar (BaseExpressionGenerator):
                     subprobabs = prod.prob()
                     for symbol in prod.rhs():
                         if not isinstance(symbol, Nonterminal):
-                            continue
+                            continue  # or subprobabs = 1
                         else:
                             subprobabs *= probs_dict[(symbol, level-1)]
                     coverage += subprobabs
                 probs_dict[(A, level)] = coverage
-        return probs_dict[(start, height)]
+        return {A: probs_dict[(A, height)] for A in nonterminals}
+
+    def renormalize(self, height=10**5, tol=10**(-17), min_height=100):
+        """Returns renormalized grammar."""
+        # create all productions S->alpha
+        coverages_dict = self.list_coverages(height)
+        if 0 in [prob for prob in coverages_dict]
+        def chi(prod):
+            subprobabs = prod.prob()
+            for symbol in prod.rhs():
+                if not isinstance(symbol, Nonterminal):
+                    continue  # or subprobabs = 1
+                else:
+                    subprobabs *= coverages_dict[symbol]
+            return subprobabs/coverages_dict[prod.lhs()]
+
+        old_prods = self.grammar.productions(lhs=self.grammar.start())
+        prods = [
+            ProbabilisticProduction(prod.lhs(), prod.rhs(), prob=[p] / lcount[p.lhs()])
+            for prod in old_prods
+        ]
+
+        prod = ProbabilisticProduction(p.lhs(), p.rhs(), prob=pcount[p] / lcount[p.lhs()])
+
+
+#    prods = [
+    #     ProbabilisticProduction(p.lhs(), p.rhs(), prob=pcount[p] / lcount[p.lhs()])
+    #     for p in pcount
+    # ]
+        # return PCFG(start, prods)
+
+        # print(self.grammar)
+        # print(self.grammar.chomsky_normal_form('_'))
+        # self.grammar.productions()
+        return None
+
 
     def __str__ (self):
         return str(self.grammar)
     
     def __repr__ (self):
         return str(self.grammar)
-    
     
     
 def generate_sample_alternative(grammar, start):
@@ -226,7 +258,7 @@ if __name__ == "__main__":
         print(code_to_sample(c, grammar.grammar, [grammar.start_symbol]))
         print(grammar.count_trees(grammar.start_symbol,i))
         print(grammar.count_coverage(grammar.start_symbol,i))
-        print(grammar.count_coverage_fast(grammar.start_symbol,i))
+        print(grammar.list_coverages(i)[grammar.start_symbol])
     print("\n-- testing different grammars: --\n")
     pgram0 = GeneratorGrammar("""
         S -> 'a' [0.3]
@@ -289,20 +321,22 @@ if __name__ == "__main__":
     from time import time
     t1=0
     def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); return t2
-    p=0.9
+
     height = 10**5
+    p=0.9
     for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, 
                     pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
         for i in range(height, height+1):
-            t2=display_time(t1); t1=t2;
+        # for i in range(0, 5):
+            t2=display_time(t1); t1=t2
             # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
             # print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
             # t2=display_time(t1); t1=t2;
-            print(gramm.count_coverage_fast(
-                gramm.start_symbol, i, tol=10**(-17), min_height=100,
-                verbosity=1), 
-                f" = coverage_for(start,{i}) of height <= {i}")
-            t2=display_time(t1); t1=t2;
+            print(gramm.list_coverages(i, tol=10**(-17), min_height=100,
+                verbosity=1)[gramm.grammar.start()], 
+                f" = list_coverages({i})[start] of height <= {i}")
+            # t2=display_time(t1); t1=t2
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
-
+    print(pgramw)
+    print(pgramw.renormalize())
