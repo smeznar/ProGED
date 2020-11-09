@@ -66,21 +66,42 @@ class GeneratorGrammar (BaseExpressionGenerator):
                 coverage += subprobabs
             return coverage
 
-    def count_coverage_fast(self, start, height, tol=10**(-17)):
-        """Counts coverage of given maximal height using cache(dictionary)."""
+    def count_coverage_fast(self, start, height, tol=10**(-17),
+                            min_height=100, verbosity=0):
+        """Counts coverage of maximal height using cache(dictionary).
+        Input:
+            start - start symbol of a grammar for which the coverage
+                is calculated.
+            height - maximal height of parse trees of which the
+                coverage is calculated of.
+            tol - tolerance as a stopping condition. If change
+                is smaller than a given tolerance, then it stops.
+            min_height - overrides tolerance stopping condition and
+                calculates coverage of all heights <= min_height. It
+                also determines for how many previous steps the change
+                is measured, i.e. for levels (height-1 - min_height/2).
+            verbosity - if set to > 0, it prints stopping probability
+                change, height and given tolerance.
+        Output:
+            Coverage of all parse trees starting from symbol `start`
+            with their height less or equal to given height.
+        """
         if height == 0:
             return 0
-        nonterminals = list(set([prod.lhs() for prod in self.grammar.productions()]))
+        nonterminals = list(set([prod.lhs() for prod
+                                in self.grammar.productions()]))
         probs_dict = {}
         for A in nonterminals:      # height = 0:
             probs_dict[(A, 0)] = 0
         for level in range(1, height+1):    # height > 0:
-            # if level > 1:
-                # print( abs(probs_dict[(start, level-1)] - probs_dict[(start, level-2)]) ,level, tol , "sprememba verjetnosti")
-            if level > 10:      # It doesnt hurt to make 10 steps without checking.
+            if level > min_height:  # Do `min_height` levels without stopping.
+                # Measure change from last min_height/2 levels:
                 if abs(probs_dict[(start, level-1)] 
-                    - probs_dict[(start, level-2)]) < tol:
-                    print( abs(probs_dict[(start, level-1)] - probs_dict[(start, level-2)]) ,level, tol , "sprememba verjetnosti")
+                    - probs_dict[(start, level-int(min_height/2))]) < tol:
+                    if verbosity > 0:
+                        print(abs(probs_dict[(start, level-1)] 
+                                - probs_dict[(start, level-2)]),
+                            level, tol, "change of probability")
                     return probs_dict[(start, level-1)]
             for A in nonterminals:
                 coverage = 0
@@ -266,24 +287,22 @@ if __name__ == "__main__":
     B1 -> 'bf' [1]
 """)
     from time import time
-    # round = 10**(-3)*int(r*10**3)
     t1=0
     def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); return t2
     p=0.9
     height = 10**5
-    # for gramm in [pgramSS, pgramSSparam(p) ]:
-    for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, pgramSSparam(p) ]:
+    for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, 
+                    pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
         for i in range(height, height+1):
-            # t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); t1=t2;
             t2=display_time(t1); t1=t2;
             # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
             # print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
             # t2=display_time(t1); t1=t2;
-            # print(gramm.count_coverage_fast_naive(gramm.start_symbol,i), f" = coverage_fast(start,{i}) of height <= {i}")
-            # t2=display_time(t1); t1=t2;
-            # print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage_external(start,{i}) of height <= {i}")
-            # t2=display_time(t1); t1=t2;
-            print(gramm.count_coverage_fast(gramm.start_symbol,i), f" = coverage_for(start,{i}) of height <= {i}")
+            print(gramm.count_coverage_fast(
+                gramm.start_symbol, i, tol=10**(-17), min_height=100,
+                verbosity=1), 
+                f" = coverage_for(start,{i}) of height <= {i}")
             t2=display_time(t1); t1=t2;
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
+
