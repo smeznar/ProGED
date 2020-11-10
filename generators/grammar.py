@@ -122,27 +122,21 @@ class GeneratorGrammar (BaseExpressionGenerator):
     def renormalize(self, height=10**4, tol=10**(-17), min_height=100):
         """Returns renormalized grammar. Inputs like list_coverages."""
         coverages_dict = self.list_coverages(height, tol, min_height)
-        if coverages_dict[self.grammar.start()] == 0:
-            raise ValueError("Coverage is not positive so renormalization "
-                            + "cannot be performed since zero division.")
+        if min(coverages_dict[A] for A in coverages_dict) < tol:  # input tol
+            raise ValueError("Not all coverages are positive, so"
+                            + " renormalization cannot be performed since zero"
+                            + " division.")
         def chi(prod, coverages_dict):
             """Renormalizes production probability p^~ as in Chi paper (22)."""
             subprobabs = prod.prob()
             for symbol in prod.rhs():
                 if not isinstance(symbol, Nonterminal):
-                # if is_terminal(symbol):
                     continue  # or subprobabs = 1
                 else:
                     subprobabs *= coverages_dict[symbol]
             return subprobabs/coverages_dict[prod.lhs()]
-        # to_change_prods = self.grammar.productions(lhs=self.grammar.start())
-        # prods = [ProbabilisticProduction(prod.lhs(), prod.rhs(), 
-        #                                 prob=chi(prod, coverages_dict))
-        #         for prod in to_change_prods]
-
         prods = [ProbabilisticProduction(prod.lhs(), prod.rhs(), 
                                         prob=chi(prod, coverages_dict))
-                if prod.lhs() == self.grammar.start() else prod 
                 for prod in self.grammar.productions()]
         return PCFG(self.grammar.start(), prods)
 
@@ -318,7 +312,6 @@ if __name__ == "__main__":
     from time import time
     t1=0
     def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); return t2
-
     height = 10**5
     p=0.9
     for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, 
@@ -381,7 +374,7 @@ if __name__ == "__main__":
         S -> 'a' [0.9]
         A -> A 'a' [1]  
     """)
-    pgramCounter = GeneratorGrammar("""
+    pgramCounterExample = GeneratorGrammar("""
         A -> S 'c' [0.7] 
         A -> 'b' [0.3] 
         S -> S S [0.8]
@@ -392,13 +385,13 @@ if __name__ == "__main__":
     # pgramZoo.grammar = pgramZoo.renormalize()
     # print(pgramZoo, pgramZoo.list_coverages(10**5)[pgramZoo.grammar.start()], " renormalized coverage")
 
-    print(pgramRe,"\n to je bil pgramRe")
-    print(pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " original coverage")
-    pgramRe.grammar = pgramRe.renormalize()
-    print(pgramRe, pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " renormalized coverage")
+    # print(pgramRe,"\n to je bil pgramRe")
+    # print(pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " original coverage")
+    # pgramRe.grammar = pgramRe.renormalize()
+    # print(pgramRe, pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " renormalized coverage")
 
-    print(pgramCounter,"\n to je bil pgramCounter")
-    print(pgramCounter.list_coverages(10**5), " original coverage")
+    print(pgramCounterExample,"\n to je bil pgramCounter")
+    print(pgramCounterExample.list_coverages(10**5), " original coverage")
     print("Chi says: 1/p-1 = %f" % (1/0.8-1))
-    pgramCounter.grammar = pgramCounter.renormalize()
-    print(pgramCounter, pgramCounter.list_coverages(10**5), " renormalized coverage")
+    pgramCounterExample.grammar = pgramCounterExample.renormalize()
+    print(pgramCounterExample, pgramCounterExample.list_coverages(10**5), " renormalized coverage")
