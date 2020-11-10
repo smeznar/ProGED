@@ -80,8 +80,9 @@ class GeneratorGrammar (BaseExpressionGenerator):
             verbosity - if set to > 0, it prints stopping probability
                 change, height and given tolerance.
         Output:
-            Coverage of all parse trees starting from symbol `start`
-            with their height less or equal to given height.
+            Dictionary with nonterminals as keys and coverages of all
+            parse trees with root in given key nonterminal and their
+            heights at most a given height as their values.
         """
         nonterminals = list(set([prod.lhs() for prod
                                 in self.grammar.productions()]))
@@ -113,6 +114,8 @@ class GeneratorGrammar (BaseExpressionGenerator):
                             subprobabs *= probs_dict[(symbol, level-1)]
                     coverage += subprobabs
                 probs_dict[(A, level)] = coverage
+            # if verbosity > 0:
+            #     print("Aeached")
         return {A: probs_dict[(A, height)] for A in nonterminals}
 
     def renormalize(self, height=10**5, tol=10**(-17), min_height=100):
@@ -331,7 +334,7 @@ if __name__ == "__main__":
                 verbosity=1)[gramm.grammar.start()], 
                 f" = list_coverages({i})[start] of height <= {i}")
             t2=display_time(t1); t1=t2
-        print("\nRenormalized grammar:\n %s \n %f" % gramm.renormalize())
+        print("\nRenormalized grammar:\n %s" % gramm.renormalize())
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
     # print(pgramw)
     # # print([type(i) for i in pgramw.grammar.productions()])
@@ -339,3 +342,21 @@ if __name__ == "__main__":
 
     print(pgramSSparam(0.5),"\n", pgramSSparam(0.6))
     print(pgramSSparam(0.5).renormalize(),"\n", pgramSSparam(0.6).renormalize())
+    pgram2 = pgramSSparam(0.6)
+    print("\n\n")
+    print(pgram2,"\n to je bil pgram2")
+    t2=display_time(t1); t1=t2
+    print(pgram2.list_coverages(10**5,10**(-17),100,1)[pgram2.grammar.start()], " original coverage")
+    t2=display_time(t1); t1=t2
+    pgram2.grammar = pgram2.renormalize()
+    print(pgram2,"\n to je bil pgram2")
+    print(pgram2.list_coverages(1000)[pgram2.grammar.start()], "new coverage")
+
+    pgram2 = pgramSSparam(0.5)
+    print(pgram2,"\n to je bil pgram2")
+    t2=display_time(t1); t1=t2
+    print(pgram2.list_coverages(10**4,10**(-17),100,1)[pgram2.grammar.start()], " original coverage")
+    t2=display_time(t1); t1=t2
+    pgram2.grammar = pgram2.renormalize()
+    print(pgram2,"\n to je bil pgram2")
+    print(pgram2.list_coverages(1000)[pgram2.grammar.start()], "new coverage")
