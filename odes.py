@@ -1,7 +1,8 @@
 #%% dataset
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import odeint
+from scipy.integrate import odeint, solve_ivp
+from scipy.interpolate import interp1d
 
 #%% 
 n= 1000
@@ -50,7 +51,7 @@ n= 1000
 ts = np.linspace(0.45,0.87,n)
 a = 0.4
 B = -2.56
-B = 0
+# B = 0
 Xs = (ts+B)*np.exp(a*ts)
 x0 = Xs[0]
 Ys = np.exp(a*ts)
@@ -67,4 +68,55 @@ Xode_y = odeint(dx, x0, ts)
 plt.plot(ts,Xs,"r-")
 plt.plot(ts, Xode_y,'k--')
 
+# %%
+# solve_ivp cell:
+n= 1000
+ts = np.linspace(0.45,0.87,n)
+a = 0.4
+B = -2.56
+# B = 0
+Xs = (ts+B)*np.exp(a*ts)
+x0 = Xs[-1:]
+# print(np.array(Xs[0]), np.array(Xs[0]).ndim)
+# print(type(Xs), Xs.shape, Xs.ndim)
+# print(x0, type(x0), x0.shape, x0.ndim)
+Ys = np.exp(a*ts)
+
+y = interp1d(ts, Ys, kind='cubic')
+# plt.plot(ts,Ys,"r-")
+# plt.plot(ts, y(ts),'k:')
+
+def dx(t,x):
+    # return a*x + y(t)
+    return a*x + cy 
+
+# Xode_y = odeint(dx, x0, ts)
+Xode_y = solve_ivp(dx, (ts[0],ts[-1]), x0)
+# plt.plot(ts,Xs,"r-")
+len(Xode_y.t), len(Xode_y.y)
+# len(Xode_y.sol(ts))
+print(Xode_y.t_events, Xode_y.y_events)
+print(Xode_y.t, Xode_y.y)
+print(ts[0],ts[-1])
+print(Xs[0],Xs[-1])
+# plt.plot(ts, Xode_y,'k--')
+print(Xode_y)
+
+
+
+
+
+#%%
+from scipy.interpolate import interp1d
+
+x = np.linspace(0, 10, num=11, endpoint=True)
+y = np.cos(-x**2/9.0)
+f = interp1d(x, y)
+f2 = interp1d(x, y, kind='cubic')
+
+xnew = np.linspace(0, 10, num=41, endpoint=True)
+import matplotlib.pyplot as plt
+plt.plot(x, y, 'o', xnew, f(xnew), '-', xnew, f2(xnew), '--')
+plt.legend(['data', 'linear', 'cubic'], loc='best')
+plt.show()
 # %%
