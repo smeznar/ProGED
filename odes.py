@@ -72,11 +72,17 @@ plt.plot(ts, Xode_y,'k--')
 # solve_ivp cell:
 n= 1000
 ts = np.linspace(0.45,0.87,n)
+C = 3.75
+cy = 10.34
 a = 0.4
 B = -2.56
 # B = 0
+Xs_c = C*np.exp(a*ts) - cy/a
+Ys_c = np.ones(ts.shape[0])*cy
 Xs = (ts+B)*np.exp(a*ts)
-x0 = Xs[-1:]
+Xs = Xs_c
+x0 = Xs[:1]
+print(x0, Xs[:4])
 # print(np.array(Xs[0]), np.array(Xs[0]).ndim)
 # print(type(Xs), Xs.shape, Xs.ndim)
 # print(x0, type(x0), x0.shape, x0.ndim)
@@ -88,20 +94,24 @@ y = interp1d(ts, Ys, kind='cubic')
 
 def dx(t,x):
     # return a*x + y(t)
-    return a*x + cy 
-
+    return a*x + cy
+n=10
+tsa = ts[:n]
+# print(tsa)
 # Xode_y = odeint(dx, x0, ts)
-Xode_y = solve_ivp(dx, (ts[0],ts[-1]), x0)
+# Xode_y = solve_ivp(dx, (ts[0],ts[-1]), x0, t_eval = ts)
+Xode_y = solve_ivp(dx, (ts[0],ts[-1]), x0, t_eval = tsa)
 # plt.plot(ts,Xs,"r-")
 len(Xode_y.t), len(Xode_y.y)
 # len(Xode_y.sol(ts))
-print(Xode_y.t_events, Xode_y.y_events)
-print(Xode_y.t, Xode_y.y)
-print(ts[0],ts[-1])
-print(Xs[0],Xs[-1])
+# print(Xode_y.t_events, Xode_y.y_events)
+print(ts[0],ts[n-1])
+print(Xs[0],Xs[n-1])
 # plt.plot(ts, Xode_y,'k--')
-print(Xode_y)
-
+# print(Xode_y)
+print("ode.t:", Xode_y.t, "ode.y:",  Xode_y.y)
+print(Xs[:n])
+print(x0)
 
 
 
