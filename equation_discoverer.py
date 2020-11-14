@@ -67,7 +67,8 @@ class EqDisco:
     def generate_models (self, strategy_parameters = None):
         if not strategy_parameters:
             strategy_parameters = self.strategy_parameters
-        self.models = generate_models(self.generator, self.task.symbols, self.strategy, strategy_parameters, verbosity=self.verbosity)
+        self.models = generate_models(self.generator, self.task.symbols, self.strategy, 
+                                    strategy_parameters, verbosity=self.verbosity)
         return self.models
     
     def fit_models (self, pool_map = map):

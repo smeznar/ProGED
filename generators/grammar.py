@@ -9,8 +9,8 @@ import numpy as np
 from nltk import PCFG
 from nltk.grammar import Nonterminal, ProbabilisticProduction
 
-# from generators.base_generator import BaseExpressionGenerator
-from base_generator import BaseExpressionGenerator
+from generators.base_generator import BaseExpressionGenerator
+# from base_generator import BaseExpressionGenerato
 
 class GeneratorGrammar (BaseExpressionGenerator):
     def __init__ (self, grammar):
@@ -255,6 +255,7 @@ if __name__ == "__main__":
         S -> 'a' [0.3]
         S -> 'b' [0.7]
     """)
+    pgram0ln = GeneratorGrammar("""S -> 'a' [0.3] \n S -> 'b' [0.7]""")
     pgram1 = GeneratorGrammar("""
         S -> A B [0.8]
         S -> 's' [0.2]
