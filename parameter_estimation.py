@@ -94,7 +94,7 @@ class ParameterEstimator:
         print("Estimating model " + str(model.expr))
         try:
             if len(model.params) > 5:
-                model.set_estimated({}, valid=False)
+                pass
             elif len(model.params) < 1:
                 model.set_estimated({"x":[], "fun":model_error(model, [], self.X, self.Y)})
             else:
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     X = lhs(2, 10)*5
     y = testf(X)
     
-    grammar = PCFG.fromstring("""S -> S '+' T [0.4] | T [0.6]
+    grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                               T -> 'C' [0.6] | T "*" V [0.4]
                               V -> 'x' [0.5] | 'y' [0.5]""")
     gram = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
@@ -147,8 +147,8 @@ if __name__ == "__main__":
     symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
     N = 10
     
-    # models = generate_models(N, grammar, symbols)
-    models = generate_models(gram, symbols, strategy_parameters = {"N":10})
+    models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
+    
     models = fit_models(models, X, y)    
     print(models)
-    
+

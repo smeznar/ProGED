@@ -127,7 +127,7 @@ class GeneratorGrammar (BaseExpressionGenerator):
                             + " renormalization cannot be performed since zero"
                             + " division.")
         def chi(prod, coverages_dict):
-            """Renormalizes production probability p^~ as in Chi paper (22)."""
+            """Renormalizes production probability p^~ as in Chi paper(22)."""
             subprobabs = prod.prob()
             for symbol in prod.rhs():
                 if not isinstance(symbol, Nonterminal):
@@ -135,11 +135,10 @@ class GeneratorGrammar (BaseExpressionGenerator):
                 else:
                     subprobabs *= coverages_dict[symbol]
             return subprobabs/coverages_dict[prod.lhs()]
-        prods = [ProbabilisticProduction(prod.lhs(), prod.rhs(), 
+        prods = [ProbabilisticProduction(prod.lhs(), prod.rhs(),
                                         prob=chi(prod, coverages_dict))
                 for prod in self.grammar.productions()]
         return PCFG(self.grammar.start(), prods)
-
 
     def __str__ (self):
         return str(self.grammar)
@@ -148,6 +147,7 @@ class GeneratorGrammar (BaseExpressionGenerator):
         return str(self.grammar)
     
     
+
 def generate_sample_alternative(grammar, start):
     """Alternative implementation of generate_sample. Just for example."""
     if not isinstance(start, Nonterminal):
@@ -315,8 +315,19 @@ if __name__ == "__main__":
     def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3)); return t2
     height = 10**5
     p=0.9
-    for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS, 
-                    pgramSSparam(p) ]:
+    pgramCounterExample = GeneratorGrammar("""
+        A -> S 'c' [0.7]
+        A -> 'b' [0.3]
+        S -> S S [0.8]
+        S -> 'a' [0.2]
+    """)
+    from time import time
+    t1=0
+    def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3), "= seconds consumed"); return t2
+    height = 10**5
+    p=0.9
+    for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS,
+                    pgramCounterExample, pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
         for i in range(height, height+1):
         # for i in range(0, 5):
@@ -396,3 +407,8 @@ if __name__ == "__main__":
     print("Chi says: 1/p-1 = %f" % (1/0.8-1))
     pgramCounterExample.grammar = pgramCounterExample.renormalize()
     print(pgramCounterExample, pgramCounterExample.list_coverages(10**5), " renormalized coverage")
+            t2=display_time(t1); t1=t2
+            gramm.grammar = gramm.renormalize()
+            print("Renormalized grammar:\n %s" % gramm)
+            print(gramm.list_coverages(i), " = renormalized coverages")
+    print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
