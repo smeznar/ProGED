@@ -5,10 +5,11 @@ Created on Wed Oct 21 14:05:57 2020
 @author: Jure
 """
 
-from nltk.grammar import Nonterminal
+# from nltk.grammar import Nonterminal
 from nltk import PCFG
 import numpy as np
-import sympy as sp
+# import sympy as sp
+import sympy.core as sp
 
 from model import Model
 
