@@ -7,11 +7,11 @@ Created on Thu Oct 22 09:12:29 2020
 
 import numpy as np
 from scipy.optimize import differential_evolution, minimize
-from nltk import PCFG
+# from nltk import PCFG
 
-from model import Model
+# from model import Model
 from model_box import ModelBox
-from generate import generate_models
+# from generate import generate_models
 from generators.grammar import GeneratorGrammar
 
 """Methods for estimating model parameters. Currently implemented: differential evolution.
@@ -129,7 +129,7 @@ def fit_models (models, X, Y, pool_map = map, verbosity=0):
 if __name__ == "__main__":
     print("--- parameter_estimation.py test --- ")
     np.random.seed(2)
-    
+    from generate import generate_models    
     from pyDOE import lhs
     
     def testf (x):

@@ -10,7 +10,7 @@ from nltk import PCFG
 from nltk.grammar import Nonterminal, ProbabilisticProduction
 
 from generators.base_generator import BaseExpressionGenerator
-# from base_generator import BaseExpressionGenerato
+# from base_generator import BaseExpressionGenerator
 
 class GeneratorGrammar (BaseExpressionGenerator):
     def __init__ (self, grammar):
@@ -407,8 +407,4 @@ if __name__ == "__main__":
     print("Chi says: 1/p-1 = %f" % (1/0.8-1))
     pgramCounterExample.grammar = pgramCounterExample.renormalize()
     print(pgramCounterExample, pgramCounterExample.list_coverages(10**5), " renormalized coverage")
-            t2=display_time(t1); t1=t2
-            gramm.grammar = gramm.renormalize()
-            print("Renormalized grammar:\n %s" % gramm)
-            print(gramm.list_coverages(i), " = renormalized coverages")
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")

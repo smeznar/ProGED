@@ -6,7 +6,7 @@ Created on Wed Oct 21 14:05:57 2020
 """
 
 # from nltk.grammar import Nonterminal
-from nltk import PCFG
+# import PCFG sem dal na dno
 import numpy as np
 # import sympy as sp
 import sympy.core as sp
@@ -175,6 +175,7 @@ class ModelBox:
                             "Expected canonical expression string or integer index.")
         
 if __name__ == "__main__":
+    from nltk import PCFG
     print("--- models_box.py test ---")
     grammar_str = "S -> 'c' '*' 'x' [0.5] | 'x' [0.5]"
     grammar = PCFG.fromstring(grammar_str)
