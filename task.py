@@ -22,7 +22,8 @@ TODO:
 """
 
 class EDTask:
-    def __init__(self, dataX, dataY, variable_names, output_variables, success_threshold = 1e-8, task_type = "algebraic"):
+    def __init__(self, dataX, dataY, variable_names, output_variables, success_threshold = 1e-8, 
+                task_type = "algebraic"):
         """Initialize an equation discovery task specification.
         
         Arguments:

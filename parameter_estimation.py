@@ -141,14 +141,17 @@ if __name__ == "__main__":
     grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                               T -> 'C' [0.6] | T "*" V [0.4]
                               V -> 'x' [0.5] | 'y' [0.5]""")
-    gram = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
-                              T -> 'C' [0.6] | T "*" V [0.4]
-                              V -> 'x' [0.5] | 'y' [0.5]""")
     symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
     N = 10
     
-    models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
+    models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
     
     models = fit_models(models, X, y)    
     print(models)
-
+    m = models[-1]
+    print(model_error(m,m.params, X, y), m.params)
+    m.params = []
+    print(m.params)
+    ParameterEstimator(X, y).fit_one(m)
+    # print(model_error(m, [], X, y))
+    # # models = fit_models(models, [], X, y)    

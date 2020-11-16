@@ -7,6 +7,7 @@ Created on Thu Oct 22 10:07:25 2020
 
 import numpy as np
 from generators.grammar import GeneratorGrammar
+# from grammar import GeneratorGrammar
 
 def grammar_from_template (template_name, grammar_parameters):
     if template_name in GRAMMAR_LIBRARY:
@@ -99,7 +100,11 @@ if __name__ == "__main__":
     print("--- grammar_construction.py test ---")
     np.random.seed(0)
     from nltk import PCFG
-    grammar = grammar_from_template("universal", {"variables":["'phi'", "'theta'", "'r'"], "p_vars":[0.2,0.4,0.4]})
+    # grammar = grammar_from_template("universal", {"variables":["'phi'", "'theta'", "'r'"], "p_vars":[0.2,0.4,0.4]})
+    # grammar = grammar_from_template("trigonometric", {}) 
+    # grammar = grammar_from_template("trigonometric", {"variables":["'phi'", "'theta'", "'r'"]})
+    grammar = grammar_from_template("trigonometric", {"probs1":[0.8,0.2], "probs2":[0.4,0.4,0.2],
+                                            "symbols": {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}})
     print(grammar)
     for i in range(5):
         print(grammar.generate_one())

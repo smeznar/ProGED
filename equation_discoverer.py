@@ -41,7 +41,9 @@ class EqDisco:
         else:
             raise TypeError ("Missing task information!")
             
-        generator_parameters.update({"variables":self.task.symbols["x"]})
+        # generator_parameters.update({"variables":self.task.symbols["x"]})
+        if not generator_parameters:
+            generator_parameters.update({"variables":self.task.symbols["x"]})
         if isinstance(generator, BaseExpressionGenerator):
             self.generator = generator
         elif isinstance(generator, str):
@@ -90,6 +92,11 @@ if __name__ == "__main__":
     N = 2
     disco = EqDisco(dataX = X, dataY = y, strategy_parameters = {"N":10}, verbosity = 0,
                     generator="grammar", generator_template_name="universal")
-    
+    # disco = EqDisco(dataX = X, dataY = y, strategy_parameters = {"N":10}, verbosity = 0,
+    #                 generator="grammar", generator_template_name="trigonometric", 
+    #                 generator_parameters = {"probs1":[0.8,0.2], "probs2":[0.4,0.4,0.2],
+    #                                         "symbols": {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}}
+    #                 )
+                    
     print(disco.generate_models())
     print(disco.fit_models())

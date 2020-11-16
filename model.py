@@ -255,12 +255,21 @@ if __name__ == '__main__':
     
     print(model.full_expr(*model.params))
     assert str(model.full_expr(*model.params)) == "1.2*x"
+    print(model.full_expr(*[4,3]), "full_expr")
+    print(model.full_expr(*[]), "full_expr")
     
     print("Evaluate the model at points X.")
-    X = np.reshape(np.linspace(0, 5, 2), (2, 1))
+    X = np.reshape(np.linspace(2, 15, 2), (2, 1))
     y = model.evaluate(X, *model.params)
     print(y)
-    assert isinstance(y, type(np.array([0])))
-    assert sum((y - np.array([0, 6.0]))**2) < 1e-15
+    print("X", X)
+    print("model.params", model.params)
+    y2 = model.evaluate(X, *[])
+    # print(np.mean((y2-y)**2), "y2")
+    print(np.isinf(np.mean((y2-y)**2)))#
+    print(np.isnan(345), "y2")
+
+    # assert isinstance(y, type(np.array([0])))
+    # assert sum((y - np.array([0, 6.0]))**2) < 1e-15
     
     
