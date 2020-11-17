@@ -7,12 +7,14 @@ Created on Thu Oct 22 09:12:29 2020
 
 import numpy as np
 from scipy.optimize import differential_evolution, minimize
+from scipy.interpolate import interp1d
+from scipy.integrate import solve_ivp
 # from nltk import PCFG
 
 # from model import Model
 from model_box import ModelBox
 # from generate import generate_models
-from generators.grammar import GeneratorGrammar
+# from generators.grammar import GeneratorGrammar
 
 """Methods for estimating model parameters. Currently implemented: differential evolution.
 
@@ -35,6 +37,30 @@ def model_constant_error (model, params, X, Y):
     
     testY = model.evaluate(X, *params)
     return np.std(testY)#/np.linalg.norm(params)
+    
+def ode1d(model, params, T, X_data, y0):
+    if T.shape[0] != X_data.shape[0]: 
+        raise IndexError("Number of samples in T and X does not match.")
+    X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
+    def dy_dt(t, y):  # \frac{dy}{dt}
+        return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+    Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T) # spremeni v y0
+    return Yode.y[0]
+
+def model_ode_error (model, params, T, X, Y):
+    """Defines mean squared error of solution to differential equation
+    as the error metric.
+        Input:
+        - T is column of times at which samples in X and Y happen.
+        - X are columns that do not contain variables that are derived.
+        - Y is column containing variable that is derived.
+    """
+    odeY = ode1d(model, params, T, X, y0=Y[0]) # spremeni v Y[:1]
+    res = np.mean((Y-odeY)**2)
+    if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+#        print(model.expr, model.params, model.sym_params, model.sym_vars)
+        return 10**9
+    return res
 
 def optimization_wrapper (x, *args):
     """Calls the appropriate error function. The choice of error function is made here.
@@ -44,21 +70,34 @@ def optimization_wrapper (x, *args):
             and implement a library framework, similarly to grammars and generation strategies."""
     
     return model_error (args[0], x, args[1], args[2])
+
+def optimization_wrapper_ODE (x, *args):
+    """Calls the appropriate error function. The choice of error function is made here.
     
-def DE_fit (model, X, Y, p0, **kwargs):
+    TODO:
+        We need to pass information on the choice of error function from fit_models all the way to here,
+            and implement a library framework, similarly to grammars and generation strategies."""
+    
+    return model_ode_error(args[0], x, args[3], args[1], args[2])
+    
+def DE_fit (model, X, Y, p0, T=[], **kwargs):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
     bounds = [[-10**1, 10**1] for i in range(len(p0))]
-    return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
-                                  maxiter=10**2, popsize=10)
+    if not T:
+        return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
+                                    maxiter=10**2, popsize=10)
+    else:
+        return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
+                                    maxiter=10**2, popsize=10)
     
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
     
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
-def find_parameters (model, X, Y):
+def find_parameters (model, X, Y, T=[]):
     """Calls the appropriate fitting function. 
     
     TODO: 
@@ -70,7 +109,7 @@ def find_parameters (model, X, Y):
 #        popt, pcov = model.params, 0
 #    opt_params = popt; othr = pcov
     
-    res = DE_fit (model, X, Y, p0=model.params)
+    res = DE_fit (model, X, Y, p0=model.params, T=T)
     
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
@@ -86,9 +125,10 @@ class ParameterEstimator:
             add inputs to make requirements flexible
             add verbosity input
     """
-    def __init__(self, X, Y):
+    def __init__(self, X, Y, T=[]):
         self.X = X
         self.Y = Y
+        self.T = T
         
     def fit_one (self, model):
         print("Estimating model " + str(model.expr))
@@ -98,13 +138,13 @@ class ParameterEstimator:
             elif len(model.params) < 1:
                 model.set_estimated({"x":[], "fun":model_error(model, [], self.X, self.Y)})
             else:
-                res = find_parameters(model, self.X, self.Y)
+                res = find_parameters(model, self.X, self.Y, self.T)
                 model.set_estimated(res)
         except:
             model.set_estimated({}, valid=False)
         return model
     
-def fit_models (models, X, Y, pool_map = map, verbosity=0):
+def fit_models (models, X, Y, T=[], pool_map = map, verbosity=0):
     """Performs parameter estimation on given models. Main interface to the module.
     
     Supports parallelization by passing it a pooled map callable.
@@ -121,7 +161,7 @@ def fit_models (models, X, Y, pool_map = map, verbosity=0):
                 fit_models (models, X, Y, pool_map = pool.map)
         verbosity (int): Level of printout desired. 0: none, 1: info, 2+: debug.
     """
-    estimator = ParameterEstimator(X, Y)
+    estimator = ParameterEstimator(X, Y, T)
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
 
 
@@ -131,7 +171,7 @@ if __name__ == "__main__":
     np.random.seed(2)
     from generate import generate_models    
     from pyDOE import lhs
-
+    from generators.grammar import GeneratorGrammar
     
     
     def testf (x):
@@ -148,8 +188,11 @@ if __name__ == "__main__":
     
     models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
     
-    # models = fit_models(models, X, y)    
-    # print(models)
+    print(models, models[-1].params)
+    models1 = fit_models(models, X, y)    
+    print(models1, models1[-1].params)
+    models2 = fit_models(models, X[:,0], y, np.linspace(1,50,X.shape[0]))    
+    print(models2, models2[-1].params)
     # m = models[-1]
     # print(model_error(m,m.params, X, y), m.params)
     # m.params = []
@@ -160,53 +203,51 @@ if __name__ == "__main__":
 
 #########################
 # ode radosti
-    print("Oda radosti.")
-    from scipy.interpolate import interp1d
-    from scipy.integrate import solve_ivp
+    # print("Oda radosti.")
     
-    def ode1d(model, params, T, X_data, y0):
-        if T.shape[0] != X_data.shape[0]: 
-            raise IndexError("Number of samples in T and X does not match.")
-        X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
-        def dy_dt(t, y):  # \frac{dy}{dt}
-            # model.evaluate(np.array([[y]+X(t)]), *params)  # if X is vector(array)
-            return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-        Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T)
-        # plt.plot(T, Y, "r-")
-        # plt.plot(T, Yode.y[0],'k--')
-        return Yode.y[0]
-        # return dy_dt(11,3)
+    # def ode1d(model, params, T, X_data, y0):
+    #     if T.shape[0] != X_data.shape[0]: 
+    #         raise IndexError("Number of samples in T and X does not match.")
+    #     X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
+    #     def dy_dt(t, y):  # \frac{dy}{dt}
+    #         # model.evaluate(np.array([[y]+X(t)]), *params)  # if X is vector(array)
+    #         return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+    #     Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T)
+    #     # plt.plot(T, Y, "r-")
+    #     # plt.plot(T, Yode.y[0],'k--')
+    #     return Yode.y[0]
+    #     # return dy_dt(11,3)
 
-    def model_ode_error (model, params, T, X, Y):
-        """Defines mean squared error of solution to differential equation
-        as the error metric.
-            Input:
-            - T is column of times at which samples in X and Y happen.
-            - X are columns that do not contain variables that are derived.
-            - Y is column containing variable that is derived.
-        """
-        odeY = ode1d(model, params, T, X, y0=Y[0])
-        res = np.mean((Y-odeY)**2)
-        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-    #        print(model.expr, model.params, model.sym_params, model.sym_vars)
-            return 10**9
-        return res
+    # def model_ode_error (model, params, T, X, Y):
+    #     """Defines mean squared error of solution to differential equation
+    #     as the error metric.
+    #         Input:
+    #         - T is column of times at which samples in X and Y happen.
+    #         - X are columns that do not contain variables that are derived.
+    #         - Y is column containing variable that is derived.
+    #     """
+    #     odeY = ode1d(model, params, T, X, y0=Y[0])
+    #     res = np.mean((Y-odeY)**2)
+    #     if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+    # #        print(model.expr, model.params, model.sym_params, model.sym_vars)
+    #         return 10**9
+    #     return res
 
-    print(X,y)
-    x1 = X[:,0]
+    # print(X,y)
+    # x1 = X[:,0]
     
-    T = np.linspace(10, 50, X.shape[0])
-    # X = interp1d(T, x1, kind='cubic')
-    # print("x1,y,T, X(11))", x1,y,T, X(11))
-    # print("x1,y,T, X(11))", x1.shape,y.shape,T.shape, X(11).shape)
-    # print("X(t)", X(11), type(X(11)), X(11).shape)
-    models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
-    model = models[-1]
-    err = model_ode_error(model, model.params, T, x1, y)
-    er = model_error(model, model.params, X, y)
-    print(models)
-    print(err)
-    print(er)
+    # T = np.linspace(10, 50, X.shape[0])
+    # # X = interp1d(T, x1, kind='cubic')
+    # # print("x1,y,T, X(11))", x1,y,T, X(11))
+    # # print("x1,y,T, X(11))", x1.shape,y.shape,T.shape, X(11).shape)
+    # # print("X(t)", X(11), type(X(11)), X(11).shape)
+    # models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
+    # model = models[-1]
+    # err = model_ode_error(model, model.params, T, x1, y)
+    # er = model_error(model, model.params, X, y)
+    # print(models)
+    # print(err)
+    # print(er)
     # model.evaluate(np.array([y[0]]+[X(11)]), *model.params) 
     # print(model.evaluate(np.array([[y[0]]+[X(11)]]), *model.params) )
 
