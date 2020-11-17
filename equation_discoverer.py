@@ -55,7 +55,7 @@ class EqDisco:
         else:
             raise TypeError ("Invalid generator specification. Expected: class that inherits from "\
                              "generators.base_generator.BaseExpressionGenerator or string, corresponding to template name.\n"\
-                             "Input: " + str(type(task)))
+                             "Input: " + str(type(task))) # spremeni
             
         self.strategy = strategy
         self.strategy_parameters = strategy_parameters
