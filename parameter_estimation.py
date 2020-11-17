@@ -131,6 +131,8 @@ if __name__ == "__main__":
     np.random.seed(2)
     from generate import generate_models    
     from pyDOE import lhs
+
+    
     
     def testf (x):
         return 3*x[:,0]*x[:,1]**2 + 0.5
@@ -146,12 +148,65 @@ if __name__ == "__main__":
     
     models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
     
-    models = fit_models(models, X, y)    
-    print(models)
-    m = models[-1]
-    print(model_error(m,m.params, X, y), m.params)
-    m.params = []
-    print(m.params)
-    ParameterEstimator(X, y).fit_one(m)
+    # models = fit_models(models, X, y)    
+    # print(models)
+    # m = models[-1]
+    # print(model_error(m,m.params, X, y), m.params)
+    # m.params = []
+    # print(m.params)
+    # ParameterEstimator(X, y).fit_one(m)
     # print(model_error(m, [], X, y))
     # # models = fit_models(models, [], X, y)    
+
+#########################
+# ode radosti
+    print("Oda radosti.")
+    from scipy.interpolate import interp1d
+    from scipy.integrate import solve_ivp
+    
+    def ode1d(model, params, T, X_data, y0):
+        if T.shape[0] != X_data.shape[0]: 
+            raise IndexError("Number of samples in T and X does not match.")
+        X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
+        def dy_dt(t, y):  # \frac{dy}{dt}
+            # model.evaluate(np.array([[y]+X(t)]), *params)  # if X is vector(array)
+            return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T)
+        # plt.plot(T, Y, "r-")
+        # plt.plot(T, Yode.y[0],'k--')
+        return Yode.y[0]
+        # return dy_dt(11,3)
+
+    def model_ode_error (model, params, T, X, Y):
+        """Defines mean squared error of solution to differential equation
+        as the error metric.
+            Input:
+            - T is column of times at which samples in X and Y happen.
+            - X are columns that do not contain variables that are derived.
+            - Y is column containing variable that is derived.
+        """
+        odeY = ode1d(model, params, T, X, y0=Y[0])
+        res = np.mean((Y-odeY)**2)
+        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+    #        print(model.expr, model.params, model.sym_params, model.sym_vars)
+            return 10**9
+        return res
+
+    print(X,y)
+    x1 = X[:,0]
+    
+    T = np.linspace(10, 50, X.shape[0])
+    # X = interp1d(T, x1, kind='cubic')
+    # print("x1,y,T, X(11))", x1,y,T, X(11))
+    # print("x1,y,T, X(11))", x1.shape,y.shape,T.shape, X(11).shape)
+    # print("X(t)", X(11), type(X(11)), X(11).shape)
+    models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
+    model = models[-1]
+    err = model_ode_error(model, model.params, T, x1, y)
+    er = model_error(model, model.params, X, y)
+    print(models)
+    print(err)
+    print(er)
+    # model.evaluate(np.array([y[0]]+[X(11)]), *model.params) 
+    # print(model.evaluate(np.array([[y[0]]+[X(11)]]), *model.params) )
+

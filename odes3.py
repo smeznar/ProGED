@@ -26,12 +26,12 @@ def dx(t, x):
     return a*x + y(t)
 
 Xode = solve_ivp(dx, (ts[0],ts[-1]), Xs[:1], t_eval=ts) # brez tolerance -> neuspesno
-# plt.plot(ts,Xs,"r-")  # analiticna (na roke) resitev
-# plt.plot(ts, Xode.y[0],'b--')  # ne izgleda kot resitev
+plt.plot(ts,Xs,"r-")  # analiticna (na roke) resitev
+plt.plot(ts, Xode.y[0],'b--')  # ne izgleda kot resitev
 
 ## resitev z atol absolutno toleranco:
 Xode = solve_ivp(dx, (ts[0],ts[-1]), Xs[:1], t_eval=ts, atol=10**(-9))
-# plt.plot(ts, Xode.y[0],'k--')  # izgleda kot resitev
+plt.plot(ts, Xode.y[0],'k--')  # izgleda kot resitev
 print(f"Napaka ode: {sum((Xs-Xode.y[0])**2)} in {sum(Xs-Xode.y[0])}")
 #%%
 
@@ -67,5 +67,5 @@ def example6ab(n=1000, t1=0.45, t2=0.87, C=4.21, b=-30, a=-40):
     print(f"Napaka ode: {sum((Xs-Xode2.y[0])**2)} in {sum(Xs-Xode2.y[0])}")
     return None
 
-# example6ab(b=4, a=0.4) # Se vidi odstopanje (index ne deluje).
+example6ab(b=4, a=0.4) # Se vidi odstopanje (index ne deluje).
 # example6ab() # ( =nepomembno: ) isti primer kot pri interpolaciji za primerjavo
