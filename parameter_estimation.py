@@ -44,18 +44,12 @@ def model_constant_error (model, params, X, Y):
     return np.std(testY)#/np.linalg.norm(params)
     
 
-    # uporabi lamdify!!!!!
 def ode1d(model, params, T, X_data, y0):
     if T.shape[0] != X_data.shape[0]: 
         raise IndexError("Number of samples in T and X does not match.")
     X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
     lamb_expr = sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
     def dy_dt(t, y):  # \frac{dy}{dt}
-    # uporabi lamdify!!!!!
-    # uporabi lamdify!!!!!
-    # uporabi lamdify!!!!!
-    # uporabi lamdify!!!!!
-    # uporabi lamdify!!!!!
         # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
         return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
     Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T) # spremeni v y0
@@ -73,11 +67,15 @@ def model_ode_error (model, params, T, X, Y):
     # print("inside ode error. Model:", model)
     odeY = ode1d(model, params, T, X, y0=Y[0]) # spremeni v Y[:1]
     res = np.mean((Y-odeY)**2)
-    # print("Before isnan. Model:", model, "res: ", res)
-    if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-#        print(model.expr, model.params, model.sym_params, model.sym_vars)
-        return 10**9
-    return res
+    print(f"Before isnan. Result:{res}, isnan:{np.isnan(res)}, isinf:{np.isinf(res)}, isreal:{np.isreal(res)}")
+    try:
+        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+    #        print(model.expr, model.params, model.sym_params, model.sym_vars)
+            return 10**9
+        return res
+    except:
+        print("Error happened inside model_ode_error when isnan et al.")
+        raise ValueError("Error happened inside model_ode_error when isnan et al.")
 
 def optimization_wrapper (x, *args):
     """Calls the appropriate error function. The choice of error function is made here.
@@ -94,7 +92,7 @@ def optimization_wrapper_ODE (x, *args):
     TODO:
         We need to pass information on the choice of error function from fit_models all the way to here,
             and implement a library framework, similarly to grammars and generation strategies."""
-    
+    # print("inside wrapper ode")
     return model_ode_error(args[0], x, args[3], args[1], args[2])
     
 def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
@@ -108,10 +106,13 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
         return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
                                     maxiter=10**2, popsize=10)
     else:
-        print("If in ode DEfit. Model:", model)
-        return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
-                                    maxiter=10**2, popsize=10)
-    
+        # print("If in ode DEfit. Model:", model)
+        try:
+            return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
+                                        maxiter=10**2, popsize=10)
+        except:
+            RuntimeError("diff_evol() got error.")
+
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
     
@@ -130,7 +131,7 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    opt_params = popt; othr = pcov
     print("in find_parametres")
     res = DE_fit(model, X, Y, p0=model.params, T=T)
-    
+    print("in find_parametres, after succesful DE_fit")
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
     
@@ -160,6 +161,7 @@ class ParameterEstimator:
             else:
                 print("Obicno, find parameters! Model:", model)
                 res = find_parameters(model, self.X, self.Y, self.T)
+                print("find_parameter output:", res)
                 model.set_estimated(res)
         except:
             print("Excepted an error!! Model:", model)
@@ -227,71 +229,8 @@ if __name__ == "__main__":
     # # models = fit_models(models, [], X, y)    
 
 #########################
-# ode radosti
-    # print("Oda radosti.")
-    
-    # def ode1d(model, params, T, X_data, y0):
-    #     if T.shape[0] != X_data.shape[0]: 
-    #         raise IndexError("Number of samples in T and X does not match.")
-    #     X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
-    #     def dy_dt(t, y):  # \frac{dy}{dt}
-    #         # model.evaluate(np.array([[y]+X(t)]), *params)  # if X is vector(array)
-    #         return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-    #     Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T)
-    #     # plt.plot(T, Y, "r-")
-    #     # plt.plot(T, Yode.y[0],'k--')
-    #     return Yode.y[0]
-    #     # return dy_dt(11,3)
-
-    # def model_ode_error (model, params, T, X, Y):
-    #     """Defines mean squared error of solution to differential equation
-    #     as the error metric.
-    #         Input:
-    #         - T is column of times at which samples in X and Y happen.
-    #         - X are columns that do not contain variables that are derived.
-    #         - Y is column containing variable that is derived.
-    #     """
-    #     odeY = ode1d(model, params, T, X, y0=Y[0])
-    #     res = np.mean((Y-odeY)**2)
-    #     if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-    # #        print(model.expr, model.params, model.sym_params, model.sym_vars)
-    #         return 10**9
-    #     return res
-
-    # print(X,y)
-    # x1 = X[:,0]
-
-    # def ode1d(model, params, T, X_data, y0):
-    #     if T.shape[0] != X_data.shape[0]: 
-    #         raise IndexError("Number of samples in T and X does not match.")
-    #     X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
-    #     lamb_expr = sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
-    #     def dy_dt(t, y):  # \frac{dy}{dt}
-    #     # uporabi lamdify!!!!!
-    #     # uporabi lamdify!!!!!
-    #     # uporabi lamdify!!!!!
-    #     # uporabi lamdify!!!!!
-    #     # uporabi lamdify!!!!!
-    #         # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-    #         return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-    #     Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T) # spremeni v y0
-    #     return Yode.y[0]  
-    
-    # def model_ode_error (model, params, T, X, Y):
-    #     """Defines mean squared error of solution to differential equation
-    #     as the error metric.
-    #         Input:
-    #         - T is column of times at which samples in X and Y happen.
-    #         - X are columns that do not contain variables that are derived.
-    #         - Y is column containing variable that is derived.
-    #     """
-    #     odeY = ode1d(model, params, T, X, y0=Y[0]) # spremeni v Y[:1]
-    #     res = np.mean((Y-odeY)**2)
-    #     if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-    # #        print(model.expr, model.params, model.sym_params, model.sym_vars)
-    #         return 10**9
-    #     return res
-
+  
+  
     # T = np.linspace(5, 10, X.shape[0])
     # X = interp1d(T, x1, kind='cubic')
     # print("x1,y,T, X(11))", x1,y,T, X(11))
