@@ -52,7 +52,11 @@ def ode1d(model, params, T, X_data, y0):
     def dy_dt(t, y):  # \frac{dy}{dt}
         # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
         return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-    Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T) # spremeni v y0
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T) # spremeni v y0
+    Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T, atol=0) # spremeni v y0
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T, atol=0) 
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T) 
+    print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
     return Yode.y[0]
 
 def model_ode_error (model, params, T, X, Y):
@@ -102,7 +106,7 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     bounds = [[-10**1, 10**1] for i in range(len(p0))]
     # print("in DEfit. before if", bo)
     if isinstance(T, str):
-        print("in DEfit. if is in algebraic", model)
+        print("in DE_fit. if is in algebraic", model)
         return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
                                     maxiter=10**2, popsize=10)
     else:
@@ -111,7 +115,11 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
             return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
                                         maxiter=10**2, popsize=10)
         except:
-            RuntimeError("diff_evol() got error.")
+            print("excerpet in DE_fit. ")
+            
+            # raise RuntimeError("diff_evol() got error.")
+            print("excerpt in DE_fit, after error ")
+            return "Something"
 
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
@@ -131,7 +139,7 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    opt_params = popt; othr = pcov
     print("in find_parametres")
     res = DE_fit(model, X, Y, p0=model.params, T=T)
-    print("in find_parametres, after succesful DE_fit")
+    print("in find_parametres, after succesful DE_fit. res:", res)
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
     
@@ -162,7 +170,7 @@ class ParameterEstimator:
                 print("Obicno, find parameters! Model:", model)
                 res = find_parameters(model, self.X, self.Y, self.T)
                 print("find_parameter output:", res)
-                model.set_estimated(res)
+                model.set_estimated(res) # res je lahko None, zato ta vrstica lahko vrne Error!
         except:
             print("Excepted an error!! Model:", model)
             model.set_estimated({}, valid=False)
