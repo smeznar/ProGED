@@ -82,7 +82,7 @@ odey2 = ode1d(m, m.params, ts, x1, y[0])
 print(ts.shape)
 
     
-def ode(model, params, T, X_data, y0):
+def ode1dmulti(model, params, T, X_data, y0):
     """Solves ode defined by model.
         Input specs:
         - y0 is array (1-dim) of initial value of vector function y(t)
@@ -109,6 +109,51 @@ def ode(model, params, T, X_data, y0):
         # print("b:", b)
         # return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
         return lamb_expr(*b.T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
+
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T, atol=0) # spremeni v y0
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T, atol=0) 
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T) 
+    print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
+    return Yode.y[0]
+
+
+def ode(models, params_matrix, T, X_data, y0):
+    """Solves ode defined by model.
+        Input specs:
+        - models is list (not dictionary) of models that e.g.
+        generate_models() generates.
+        - params_matrix is list of lists of parameters for 
+        corresponding models.
+        - y0 is array (1-dim) of initial value of vector function y(t)
+        i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...].
+        - X_data is 2-dim array (matrix) i.e. X = [X[0,:], X[1,:],...].
+        - T is (1-dim) array, i.e. of shape (N,)
+    """
+    if T.shape[0] != X_data.shape[0]: 
+        raise IndexError("Number of samples in T and X does not match.")
+    ### 1-dim version currently: ###
+    # X = interp1d(T, X_data, kind='cubic') # orig
+    # Xt = interp1d(T, X_data.T[0], kind='cubic')  
+    X = interp1d(T, X_data.T[0], kind='cubic')  # 1 -dim
+    # if X(T[0]).ndim == 0:  # in case X_data is one dimensional array
+    ### 1-dim version currently: ###
+    # X = lambda t: np.array([Xt(t)])  # convert 0-dim. number to 1-dim. array
+        # print("Opazil, da je X 0-dim")
+    lamb_exprs = [
+        sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
+        for model, params in zip(models, params_matrix)
+    ]
+    def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
+        # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        # b = np.array([np.concatenate((y,X(t)))]) # popravi
+        # 1-dim interpol:
+        # b = np.array([np.concatenate((y,np.array([X(t)])))])
+        b = np.concatenate((y,np.array([X(t)]))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        # print("b:", b)
+        # return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        return np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
+
     Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
 
     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T, atol=0) # spremeni v y0
