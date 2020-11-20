@@ -1,7 +1,7 @@
 #%% dataset
 import sympy as sp
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp #,  odeint
 from scipy.interpolate import interp1d
 
@@ -63,19 +63,31 @@ grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                             T -> 'C' [0.6] | T "*" V [0.4]
                             V -> 'x' [0.5] | 'y' [0.5]""")
 symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
+grammar2 = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
+                            T -> 'C' [0.6] | T "*" V [0.4]
+                            V -> 'x' [0.3] | 'z' [0.4] | 'y' [0.3]""")
+symbols2 = {"x":['x', 'y', 'z'], "start":"S", "const":"C"}
 N = 10
-models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
-m = models[-1]
-print(m)
-
+models123 = generate_models(grammar, symbols, strategy_parameters = {"N":1})
+models2 = generate_models(grammar2, symbols2, strategy_parameters = {"N":2})
+# models42 = generate_models(grammar2, symbols2, strategy_parameters = {"N":1})
+# m = models[-1]
+# models_selected = [models2[0], models2[1]]
+# print(models[-1], models[-2])
+# print(models[0], models[1])
+# print(m)
+print(models123)
+# print(models2)
 
 x1 = X[:,0]
 ts = np.linspace(10, 50, X.shape[0])
 Xt = interp1d(ts, x1, kind='cubic')
 
 
-odey = ode1d(m, m.params, ts, x1, y[0])
-odey2 = ode1d(m, m.params, ts, x1, y[0])
+# print(m)
+# odey = ode1d(m, m.params, ts, x1, y[0])
+# odey2 = ode1d(m, m.params, ts, x1, y[0])
+
 # plt.plot(ts,X[:,1],"r-")
 # plt.plot(ts, odey,'k--')
 
@@ -118,7 +130,7 @@ def ode1dmulti(model, params, T, X_data, y0):
     return Yode.y[0]
 
 
-def ode(models, params_matrix, T, X_data, y0):
+def ode(models_list, params_matrix, T, X_data, y0):
     """Solves ode defined by model.
         Input specs:
         - models is list (not dictionary) of models that e.g.
@@ -142,7 +154,7 @@ def ode(models, params_matrix, T, X_data, y0):
         # print("Opazil, da je X 0-dim")
     lamb_exprs = [
         sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
-        for model, params in zip(models, params_matrix)
+        for model, params in zip(models_list, params_matrix)
     ]
     def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
         # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
@@ -165,52 +177,81 @@ def ode(models, params_matrix, T, X_data, y0):
 X1 = np.array([x1]).T
 print(x1.shape, x1.ndim)
 print(X1.shape, X1.ndim)
-ode2 = ode(m, m.params, ts, X1, np.array([y[0]]))
-ode3 = ode(m, m.params, ts, X1, np.array([y[0]]))
-
-plt.plot(ts,X[:,1],"r-")
-plt.plot(ts, odey,'g-')
-plt.plot(ts, ode2,"k--")
-def simerr(y1,y2): return np.mean((y1-y2)**2)
-print(np.mean((ode2-odey)**2))
-print(simerr(ode2,odey))
-print(simerr(ode2,ode3))
-print(simerr(odey2,odey))
+# ode2 = ode1dmulti(m, m.params, ts, X1, np.array([y[0]]))
+# ode3 = ode1dmulti(m, m.params, ts, X1, np.array([y[0]]))
 
 
-# print(X)
-# print(x1, "x1")
-# print(x1.T,)
-# print(X[:,0])
-# print("po X")
-# X = interp1d(ts, x1, kind='cubic')  # testiral, zgleda da dela.
-# # if X(T[0]).ndim == 0:  # in case X_data is one dimensional array
-# # plt.plot(ts,x1,"r-")
-# # plt.plot(ts,X(ts),"k--")
+# ode4 = ode([m], [m.params], ts, X1, np.array([y[0]]))
+# ode5 = ode(models_selected, [m.params for m in models_selected], ts, X1, np.array([y[0]]))
 
-# Xt = lambda t: np.array([X(t)])
-# # plt.plot(ts,Xt(ts)[0],"b--")
-# print(x1)
-# print(X(30))
-# print(Xt(30))
-# print(Xt(ts))
+# models_list = models_selected
+# params_matrix = [m.params for m in models_selected]
+# lamb_exprs = [
+#     (sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy"), (model,params))
+#     for model, params in zip(models_list, params_matrix)
+# ]
+# print(lamb_exprs)
+# y = [1,2]
+# Xtt = 3
+# b = np.concatenate((y,np.array([Xtt]))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
+# print(Xtt)
+# lam = lamb_exprs[1]
+# print(b)
+# print(lam(*[1,2]))
 
-# # # izgled X in y dataset
-# a = np.array([np.array([j*10+i for i in range(j,j+4)]) for j in range(1,6)])
-# print(a)
-# # X2 = a[:,2:3] # vsi data set imputi tako X kot y bodo te oblike.
-# # # tj. oblike shape=(N,D) = [[x1,..,xD],..,[x1_N,..,xD_N]]
+# np.array([lam(*b)])
+# np.array([lam(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
+# np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
+
+# %%
+
+# plt.plot(ts,X[:,1],"r-")
+# # plt.plot(ts, odey,'g-')
+# # plt.plot(ts, ode2,"k--")
+# plt.plot(ts, ode4,"b*")
+# def simerr(y1,y2): return np.mean((y1-y2)**2)
+# # print(np.mean((ode2-odey)**2))
+# # print(simerr(ode2,odey))
+# # print(simerr(ode2,ode3))
+# # print(simerr(odey2,odey))
+# print(simerr(ode2,ode4))
+# print(simerr(ode4,ode5))
+
+# # print(X)
+# # print(x1, "x1")
+# # print(x1.T,)
+# # print(X[:,0])
+# # print("po X")
+# # X = interp1d(ts, x1, kind='cubic')  # testiral, zgleda da dela.
+# # # if X(T[0]).ndim == 0:  # in case X_data is one dimensional array
+# # # plt.plot(ts,x1,"r-")
+# # # plt.plot(ts,X(ts),"k--")
+
+# # Xt = lambda t: np.array([X(t)])
+# # # plt.plot(ts,Xt(ts)[0],"b--")
+# # print(x1)
+# # print(X(30))
+# # print(Xt(30))
+# # print(Xt(ts))
+
+# # # # izgled X in y dataset
+# # a = np.array([np.array([j*10+i for i in range(j,j+4)]) for j in range(1,6)])
+# # print(a)
+# # # X2 = a[:,2:3] # vsi data set imputi tako X kot y bodo te oblike.
+# # # # tj. oblike shape=(N,D) = [[x1,..,xD],..,[x1_N,..,xD_N]]
+# # # print(X2)
+# # X2 = a[:,2]
+# # X3 = a[:,[2]]
 # # print(X2)
-# X2 = a[:,2]
-# X3 = a[:,[2]]
-# print(X2)
-# print(X3)
-# # X2 = a[:,(2-1):2]
-# # print(X2)
-# # print(a[:,0:1])
-# # print(a[:,[0]])
-# print(np.array([X2]))
-# print(np.array([X2]).T)
-# # print(a[0,:])
-# # print(np.linspace(1,50,4), np.linspace(1,50,4).shape, np.linspace(1,50,4).ndim)
+# # print(X3)
+# # # X2 = a[:,(2-1):2]
+# # # print(X2)
+# # # print(a[:,0:1])
+# # # print(a[:,[0]])
+# # print(np.array([X2]))
+# # print(np.array([X2]).T)
+# # # print(a[0,:])
+# # # print(np.linspace(1,50,4), np.linspace(1,50,4).shape, np.linspace(1,50,4).ndim)
 
+
+# # %%
