@@ -40,7 +40,7 @@ class ModelBox:
         items: Return the key and value pairs in models_dict.
     """
     def __init__ (self, models_dict = {}):
-        self.models_dict = models_dict
+        self.models_dict = dict(models_dict)
         
     def add_model (self, expr_str, symbols, grammar, code="0", p=1.0, **kwargs):
         x = [s.strip("'") for s in symbols["x"]]

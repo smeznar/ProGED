@@ -54,10 +54,15 @@ def ode1d(model, params, T, X_data, y0):
 
 def testf (x):
     return 3*x[:,0]*x[:,1]**2 + 0.5
+def testf2 (x):
+    return 4*x[:,0] - x[:,1] + 2.5
 
 X = lhs(2, 10)*5
 y = testf(X)
 
+X_2 = lhs(1, 10)*5
+y_2 = np.concatenate((testf(X), testf2(X)), axis = 0)
+print(y_2)
 
 grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                             T -> 'C' [0.6] | T "*" V [0.4]
@@ -68,16 +73,16 @@ grammar2 = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                             V -> 'x' [0.3] | 'z' [0.4] | 'y' [0.3]""")
 symbols2 = {"x":['x', 'y', 'z'], "start":"S", "const":"C"}
 N = 10
-models123 = generate_models(grammar, symbols, strategy_parameters = {"N":1})
+# models123 = generate_models(grammar, symbols, strategy_parameters = {"N":1})
+models = generate_models(grammar2, symbols2, strategy_parameters = {"N":1})
 models2 = generate_models(grammar2, symbols2, strategy_parameters = {"N":2})
-# models42 = generate_models(grammar2, symbols2, strategy_parameters = {"N":1})
 # m = models[-1]
-# models_selected = [models2[0], models2[1]]
+models_selected = [models2[0], models2[1]]
 # print(models[-1], models[-2])
 # print(models[0], models[1])
 # print(m)
-print(models123)
-# print(models2)
+print(models)
+print(models2)
 
 x1 = X[:,0]
 ts = np.linspace(10, 50, X.shape[0])
@@ -182,7 +187,7 @@ print(X1.shape, X1.ndim)
 
 
 # ode4 = ode([m], [m.params], ts, X1, np.array([y[0]]))
-# ode5 = ode(models_selected, [m.params for m in models_selected], ts, X1, np.array([y[0]]))
+ode5 = ode(models_selected, [m.params for m in models_selected], ts, X1, np.array([y[0],1]))
 
 # models_list = models_selected
 # params_matrix = [m.params for m in models_selected]
