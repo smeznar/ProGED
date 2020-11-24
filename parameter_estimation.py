@@ -100,7 +100,7 @@ def ode(models_list, params_matrix, T, X_data, y0):
                         + "number of equations and dimensions of input data"
                         + " does not match.")
     ### 1-dim version of X_data currently: ###
-    X = interp1d(T, X_data.T[0], kind='cubic')  # 1 -dim
+    X = interp1d(T, X_data.T[0], kind='cubic', fill_value="extrapolate")  # 1 -dim
     lamb_exprs = [
         sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
         for model, params in zip(models_list, params_matrix)
@@ -110,7 +110,7 @@ def ode(models_list, params_matrix, T, X_data, y0):
         b = np.concatenate((y,np.array([X(t)]))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
         return np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
     Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
-    print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
+    # print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
     return Yode.y
 
 def model_ode_error (model, params, T, X, Y):
@@ -124,12 +124,17 @@ def model_ode_error (model, params, T, X, Y):
     # print("inside ode error. Model:", model)
 
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
-
-    # odeY = ode1d(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
-    odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+    try:
+        odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+    except Exception as error:
+        print("error inside ode() of model_ode_error.")
+        print("params at error:", params, "Error message:", error)
+        odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+    print("Successful ode(). params:", params)
     odeY = odeY.T  # solve_ivp() returns in oposite (DxN) form
-    res = np.mean((Y-odeY)**2)
-    print(f"Before isnan. Result:{res}, isnan:{np.isnan(res)}, isinf:{np.isinf(res)}, isreal:{np.isreal(res)}")
+    res = np.mean((Y-odeY)**2)  
+
+    # print(f"Before isnan. Result:{res}, isnan:{np.isnan(res)}, isinf:{np.isinf(res)}, isreal:{np.isreal(res)}")
     try:
         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
     #        print(model.expr, model.params, model.sym_params, model.sym_vars)
@@ -155,7 +160,12 @@ def optimization_wrapper_ODE (x, *args):
         We need to pass information on the choice of error function from fit_models all the way to here,
             and implement a library framework, similarly to grammars and generation strategies."""
     # print("inside wrapper ode")
-    return model_ode_error(args[0], x, args[3], args[1], args[2])
+    try:
+        return model_ode_error(args[0], x, args[3], args[1], args[2])
+    except:
+        print("Error occured inside model_ode_error")
+        print("model.params:", args[0].params, "model:", args[0])
+        return model_ode_error(args[0], x, args[3], args[1], args[2])
     
 def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     """Calls scipy.optimize.differential_evolution. 
@@ -169,15 +179,16 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
                                     maxiter=10**2, popsize=10)
     else:
         print("If in ODE! DEfit. Model:", model)
-        try:
-            return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
-                                        maxiter=10**2, popsize=10)
-        except:
-            print("excerpted in DE_fit. ")
+        # try:
+        diff_evol =  differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
+                                    maxiter=10**2, popsize=10)
+        return diff_evol
+        # except:
+        #     print("excerpted in DE_fit. ")
             
-            # raise RuntimeError("diff_evol() got error.")
-            print("excerpt in DE_fit, after error in diff_evol() ")
-            return "Something"
+        #     # raise RuntimeError("diff_evol() got error.")
+        #     print("excerpt in DE_fit, after error in diff_evol() ")
+        #     return "Something"
 
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
@@ -284,8 +295,8 @@ if __name__ == "__main__":
     # models1 = fit_models(models, X, y)
     # print(models1, models1[-1].params, [model.params for model in models1])
     # models2_old = fit_models(models, X[:,0], y, np.linspace(1,50,X.shape[0]))    
-    models2 = fit_models(models, X[:,[0]], np.array([y]).T, np.linspace(1,50,X.shape[0]))    
-    print(models2, models2[-1].params, [model.params for model in models2])
+    # models2 = fit_models(models, X[:,[0]], np.array([y]).T, np.linspace(1,50,X.shape[0]))    
+    # print(models2, models2[-1].params, [model.params for model in models2])
 
     # m = models[-1]
     # print(model_error(m,m.params, X, y), m.params)
