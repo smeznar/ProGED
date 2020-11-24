@@ -59,7 +59,7 @@ def ode1d(model, params, T, X_data, y0):
     print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
     return Yode.y[0]
 
-def ode_almost(models_list, params_matrix, T, X_data, y0):
+def ode(models_list, params_matrix, T, X_data, y0):
     """Solves ode defined by model.
         Input specs:
         - models_list is list (not dictionary) of models that e.g.
@@ -126,7 +126,7 @@ def model_ode_error (model, params, T, X, Y):
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
 
     # odeY = ode1d(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
-    odeY = ode_almost(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+    odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
     odeY = odeY.T  # solve_ivp() returns in oposite (DxN) form
     res = np.mean((Y-odeY)**2)
     print(f"Before isnan. Result:{res}, isnan:{np.isnan(res)}, isinf:{np.isinf(res)}, isreal:{np.isreal(res)}")
