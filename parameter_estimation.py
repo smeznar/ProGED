@@ -59,17 +59,75 @@ def ode1d(model, params, T, X_data, y0):
     print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
     return Yode.y[0]
 
+def ode_almost(models_list, params_matrix, T, X_data, y0):
+    """Solves ode defined by model.
+        Input specs:
+        - models_list is list (not dictionary) of models that e.g.
+        generate_models() generates.
+        - params_matrix is list of lists or ndarrays of parameters for
+        corresponding models.
+        - y0 is array (1-dim) of initial value of vector function y(t)
+        i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...].
+        - X_data is 2-dim array (matrix) i.e. X = [X[0,:], X[1,:],...].
+        - T is (1-dim) array, i.e. of shape (N,)
+    """
+    if not (isinstance(models_list, list)
+            and (isinstance(params_matrix, list) 
+                and len(params_matrix)>0 
+                and isinstance(params_matrix[0], (list, np.ndarray)))
+            and X_data.ndim == 2
+            and y0.ndim == 1):
+        print(type(params_matrix[0]))
+        print(isinstance(models_list, list), 
+            isinstance(params_matrix, list), 
+            len(params_matrix)>0, 
+            isinstance(params_matrix[0], (list, np.ndarray)),
+            X_data.ndim == 2,
+            y0.ndim == 1 )
+        print("Programmer's defined error: Input arguments are not"
+                        +" in required form! Bugs can happen.")
+        raise TypeError("Programmer's defined error: Input arguments are not"
+                        +" in required form! Bugs can happen.")
+    elif not T.shape[0] == X_data.shape[0]: 
+        print("Number of samples in T and X does not match.")
+        raise IndexError("Number of samples in T and X does not match.")
+    elif not (y0.shape[0] == len(models_list)  #len(equations)=len(models used)
+            and len(models_list[0].sym_vars) == X_data.shape[1] + y0.shape[0]): 
+        print("Number of symbols in models and combination of "
+                        + "number of equations and dimensions of input data"
+                        + " does not match.")
+        raise IndexError("Number of symbols in models and combination of "
+                        + "number of equations and dimensions of input data"
+                        + " does not match.")
+    ### 1-dim version of X_data currently: ###
+    X = interp1d(T, X_data.T[0], kind='cubic')  # 1 -dim
+    lamb_exprs = [
+        sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
+        for model, params in zip(models_list, params_matrix)
+    ]
+    def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
+        ### 1-dim interpol causes ###
+        b = np.concatenate((y,np.array([X(t)]))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        return np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
+    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
+    print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
+    return Yode.y
+
 def model_ode_error (model, params, T, X, Y):
     """Defines mean squared error of solution to differential equation
     as the error metric.
         Input:
         - T is column of times at which samples in X and Y happen.
-        - X are columns that do not contain variables that are derived.
-        - Y is column containing variable that is derived.
-    """
-    
+        - X are columns without features that are derived.
+        - Y are columns of features that are derived via ode fitting.
+    """   
     # print("inside ode error. Model:", model)
-    odeY = ode1d(model, params, T, X, y0=Y[0]) # spremeni v Y[:1]
+
+    model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
+
+    # odeY = ode1d(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+    odeY = ode_almost(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+    odeY = odeY.T  # solve_ivp() returns in oposite (DxN) form
     res = np.mean((Y-odeY)**2)
     print(f"Before isnan. Result:{res}, isnan:{np.isnan(res)}, isinf:{np.isinf(res)}, isreal:{np.isreal(res)}")
     try:
@@ -110,15 +168,15 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
         return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
                                     maxiter=10**2, popsize=10)
     else:
-        # print("If in ode DEfit. Model:", model)
+        print("If in ODE! DEfit. Model:", model)
         try:
             return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
                                         maxiter=10**2, popsize=10)
         except:
-            print("excerpet in DE_fit. ")
+            print("excerpted in DE_fit. ")
             
             # raise RuntimeError("diff_evol() got error.")
-            print("excerpt in DE_fit, after error ")
+            print("excerpt in DE_fit, after error in diff_evol() ")
             return "Something"
 
 def min_fit (model, X, Y):
@@ -139,7 +197,7 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    opt_params = popt; othr = pcov
     print("in find_parametres")
     res = DE_fit(model, X, Y, p0=model.params, T=T)
-    print("in find_parametres, after succesful DE_fit. res:", res)
+    print("in find_parametres, after successful DE_fit. res:", res)
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
     
@@ -221,11 +279,12 @@ if __name__ == "__main__":
     N = 10
 
     models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
-    
+    T = np.linspace(1,50,X.shape[0])
     print(models, models[-1].params)
-    # models1 = fit_models(models, X, y)    
+    # models1 = fit_models(models, X, y)
     # print(models1, models1[-1].params, [model.params for model in models1])
-    models2 = fit_models(models, X[:,0], y, np.linspace(1,50,X.shape[0]))    
+    # models2_old = fit_models(models, X[:,0], y, np.linspace(1,50,X.shape[0]))    
+    models2 = fit_models(models, X[:,[0]], np.array([y]).T, np.linspace(1,50,X.shape[0]))    
     print(models2, models2[-1].params, [model.params for model in models2])
 
     # m = models[-1]

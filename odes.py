@@ -1,8 +1,8 @@
 #%% dataset
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp #,  odeint
-from scipy.interpolate import interp1d
+# import matplotlib.pyplot as plt
+# from scipy.integrate import solve_ivp #,  odeint
+# from scipy.interpolate import interp1d
 
 
 # # go-away message: odeint works perfectly.
@@ -18,7 +18,7 @@ from scipy.interpolate import interp1d
 # # %%
 # # urejeni exampli:
 
-# # diff eq no.1
+# # diff eq no.1 ( dot{x} = a*x + c )
 
 # def ode_plot(ts, Xs, dx):
 #     Xode = solve_ivp(dx, (ts[0],ts[-1]), Xs[:1], t_eval=ts)
@@ -75,19 +75,19 @@ from scipy.interpolate import interp1d
 
 
 
-# # diff eq no.2
+# diff eq no.2 ( dot{x} = a*x + e^(a*t) )
 
-# def example_tB_data(
-#     n = 1000,
-#     t_start = 0.45,
-#     t_end = 0.87,
-#     B = -2.56, # B = 0,
-#     a = 0.4
-#     ):
-#     ts = np.linspace(t_start, t_end, n)
-#     Xs = (ts+B)*np.exp(a*ts)
-#     Ys = np.exp(a*ts)
-#     return ts, Xs, Ys, B, a
+def example_tB_data(
+    n = 1000,
+    t_start = 0.45,
+    t_end = 0.87,
+    B = -2.56, # B = 0,
+    a = 0.4
+    ):
+    ts = np.linspace(t_start, t_end, n)
+    Xs = (ts+B)*np.exp(a*ts)
+    Ys = np.exp(a*ts)
+    return ts, Xs, Ys, B, a
 
 # def example4tB(n=1000, t1=0.45, t2=0.87, B=-2.56, a=0.4):
 #     ts, Xs, Ys, _, a = example_tB_data(n,t1,t2,B,a)
@@ -255,79 +255,79 @@ from scipy.interpolate import interp1d
 
 # # %%
 
-def ode1d(model, params, T, X_data, y0):
-    if T.shape[0] != X_data.shape[0]: 
-        raise IndexError("Number of samples in T and X does not match.")
-    X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
-    def dy_dt(t, y):  # \frac{dy}{dt}
-        # model.evaluate(np.array([[y]+X(t)]), *params)  # if X is vector(array)
-        # b = np.array([[y]+[X(t)q]])
-        # b = np.array([[y[0], X(t)]])
-        # print(b, y,X(t),y.shape, X(t).shape, "in dy_dt")
-        # b = np.array([[1,2]])
-        # return 1
-        return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-    Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T)
-    # plt.plot(T, Y, "r-")
-    # plt.plot(T, Yode.y[0],'k--')
-    return Yode.y[0]
-    # return dy_dt(11,3)
+# def ode1d(model, params, T, X_data, y0):
+#     if T.shape[0] != X_data.shape[0]: 
+#         raise IndexError("Number of samples in T and X does not match.")
+#     X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
+#     def dy_dt(t, y):  # \frac{dy}{dt}
+#         # model.evaluate(np.array([[y]+X(t)]), *params)  # if X is vector(array)
+#         # b = np.array([[y]+[X(t)q]])
+#         # b = np.array([[y[0], X(t)]])
+#         # print(b, y,X(t),y.shape, X(t).shape, "in dy_dt")
+#         # b = np.array([[1,2]])
+#         # return 1
+#         return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+#     Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T)
+#     # plt.plot(T, Y, "r-")
+#     # plt.plot(T, Yode.y[0],'k--')
+#     return Yode.y[0]
+#     # return dy_dt(11,3)
 
 
 
-np.random.seed(2)
-import sympy as sp
-from generate import generate_models    
-from generators.grammar import GeneratorGrammar
-from pyDOE import lhs
+# np.random.seed(2)
+# import sympy as sp
+# from generate import generate_models    
+# from generators.grammar import GeneratorGrammar
+# from pyDOE import lhs
 
-from parameter_estimation import *
-def testf (x):
-    return 3*x[:,0]*x[:,1]**2 + 0.5
+# from parameter_estimation import *
+# def testf (x):
+#     return 3*x[:,0]*x[:,1]**2 + 0.5
 
-X = lhs(2, 10)*5
-y = testf(X)
+# X = lhs(2, 10)*5
+# y = testf(X)
 
-grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
-                            T -> 'C' [0.6] | T "*" V [0.4]
-                            V -> 'x' [0.5] | 'y' [0.5]""")
-symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
-N = 10
-models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
-m = models[-1]
-print(m)
-x1 = X[:,0]
-ts = np.linspace(10, 50, X.shape[0])
-X = interp1d(ts, x1, kind='cubic')
-odey = ode1d(m, m.params, ts, x1, y[0])
-plt.plot(ts,X[:,1],"r-")
-plt.plot(ts, odey,'k--')
-print(ts.shape)
+# grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
+#                             T -> 'C' [0.6] | T "*" V [0.4]
+#                             V -> 'x' [0.5] | 'y' [0.5]""")
+# symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
+# N = 10
+# models = generate_models(grammar, symbols, strategy_parameters = {"N":1})
+# m = models[-1]
+# print(m)
+# x1 = X[:,0]
+# ts = np.linspace(10, 50, X.shape[0])
+# X = interp1d(ts, x1, kind='cubic')
+# odey = ode1d(m, m.params, ts, x1, y[0])
+# plt.plot(ts,X[:,1],"r-")
+# plt.plot(ts, odey,'k--')
+# print(ts.shape)
 
     
-def ode(model, params, T, X_data, y0):
-    """Solves ode defined by model.
-        Input worth mentioning:
-        - y0 is array (1-dim) of initial value of vector function y(t)
-        i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...]."""
-    if T.shape[0] != X_data.shape[0]: 
-        raise IndexError("Number of samples in T and X does not match.")
-    X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
-    if X(T[0]).ndim == 0:  # in case X_data is one dimensional array
-            X = lambda t: X(t).reshape(1)  # convert 0-dim. number to 1-dim. array
-            print("Opazil, da je X 0-dim")
-    lamb_expr = sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
-    def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
-        # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-        b = np.array([np.concatenate((y,X(t)))]) # popravi
-        print("b:", b)
-        # return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-        return lamb_expr(*b.T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
-    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T, atol=0) # spremeni v y0
-    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T, atol=0) 
-    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T) 
-    print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
-    return Yode.y[0]
+# def ode(model, params, T, X_data, y0):
+#     """Solves ode defined by model.
+#         Input worth mentioning:
+#         - y0 is array (1-dim) of initial value of vector function y(t)
+#         i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...]."""
+#     if T.shape[0] != X_data.shape[0]: 
+#         raise IndexError("Number of samples in T and X does not match.")
+#     X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
+#     if X(T[0]).ndim == 0:  # in case X_data is one dimensional array
+#             X = lambda t: X(t).reshape(1)  # convert 0-dim. number to 1-dim. array
+#             print("Opazil, da je X 0-dim")
+#     lamb_expr = sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
+#     def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
+#         # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+#         b = np.array([np.concatenate((y,X(t)))]) # popravi
+#         print("b:", b)
+#         # return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+#         return lamb_expr(*b.T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
+#     Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
+#     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T, atol=0) # spremeni v y0
+#     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T, atol=0) 
+#     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T) 
+#     print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
+#     return Yode.y[0]
 
-# X = interp1d(T, X_data, kind='cubic') 
+# # X = interp1d(T, X_data, kind='cubic') 
