@@ -85,9 +85,9 @@ def ode(models_list, params_matrix, T, X_data, y0):
             X_data.ndim == 2,
             y0.ndim == 1 )
         print("Programmer's defined error: Input arguments are not"
-                        +" in required form! Bugs can happen.")
+                        +" in required form!")
         raise TypeError("Programmer's defined error: Input arguments are not"
-                        +" in required form! Bugs can happen.")
+                        +" in required form!")
     elif not T.shape[0] == X_data.shape[0]: 
         print("Number of samples in T and X does not match.")
         raise IndexError("Number of samples in T and X does not match.")
@@ -130,7 +130,7 @@ def model_ode_error (model, params, T, X, Y):
         print("error inside ode() of model_ode_error.")
         print("params at error:", params, "Error message:", error)
         odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
-    print("Successful ode(). params:", params)
+    # print("Successful ode(). params:", params)
     odeY = odeY.T  # solve_ivp() returns in oposite (DxN) form
     res = np.mean((Y-odeY)**2)  
 
