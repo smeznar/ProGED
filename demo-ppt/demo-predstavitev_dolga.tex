@@ -10,6 +10,7 @@
 % \usepackage{amsmath}
 %\usepackage{diagrams}
 
+\useoutertheme{infolines}
 
 \setbeamercovered{invisible} %default
 % \setbeamercovered{transparent}
@@ -49,6 +50,7 @@
 % \setbeamercolor{structure}{fg=vscodeLightBlue}
 % \setbeamercolor{structure}{bg=black}
 
+% \setbeamercolor{background canvas}{bg=black}
 
 % \usepackage{layout}
 
@@ -66,8 +68,17 @@
 % \setlength{\hoffset}{\mywidth}
 % \setlength{\hoffset}{-27pt}
 % \setlength{\hoffset}{-0.96cm}
+% \addtolength{\hoffset}{-0.5cm}
+% \addtolength{\hoffset}{-0.5cm}
+% \addtolength{\topmargin}{2cm}
+\addtolength{\headsep}{0.65cm}
+% \addtolength{\headsep}{-0.6cm}
+% \addtolength{\topmargin}{-2cm}
+% \addtolength{\headheight}{-2cm}
+% \addtolength{\headheight}{0cm}
+
 % \setlength{}{-0.96cm}
-% \setlength{\oddsidemargin}{0pt}
+% \addtolength{\oddsidemargin}{-0.4cm}
 % \setlength{\marginparsep}{0pt}
 % \setlength{\marginparwidth}{0pt}
 % \addtolength{\paperwidth}{3cm}
@@ -77,13 +88,28 @@
 % \setlength{\paperheight}{1080pt}
 \setlength{\paperwidth}{\mywidth}
 \setlength{\paperheight}{\myheight}
-% \addtolength{\marginparsep}{0.1\mywidth}
-\addtolength{\marginparwidth}{0.1\mywidth}
+% \addtolength{\marginparsep}{-0.5cm}
+% \addtolength{\marginparwidth}{-2cm}
+\addtolength{\footskip}{1.2cm}
+% \setlength{\textheight}{\myheight minus \footskip}
+% \setlength{\textheight}{0.1\myheight}
+
 
 \usepackage{geometry}
 
+% \usetheme{CambridgeUS}
+% \setbeamertemplate{page number in head/foot}[appendixframenumber]
 
-% \usepackage{showframe}
+\usepackage{showframe}
+
+
+% \useoutertheme{miniframes}
+% \useoutertheme{shadow}
+% \useoutertheme{sidebar}
+% \useoutertheme{smoothbars}
+% \useoutertheme{smoothtree}
+% \useoutertheme{split}
+% \useoutertheme{tree}
 
 \begin{document}
 
@@ -91,89 +117,84 @@
 \begin{frame}
   \maketitle
 \end{frame}
-\newgeometry{top=-0.7cm}
-\begin{frame}
-	% \includegraphics[width=\paperwidth]{fullcode3.png}
-	\includegraphics[height=1.1\paperheight]{fullcode3.png}
-\end{frame}
-
-
-% \newgeometry{margin=0cm}
-
-% \begin{frame}[plain]
-% 	dsadsa \\ dsadsa \\
-% 	voffset: \the\hoffset
-% 	paperheight: \the\paperheight
-% 	paperwidth: \the\paperwidth
-% % \setlength{\paperwidth}{1820pt}
-% 	paperwidth2: \the\paperwidth
-% 	after voffset: \the\hoffset
-% 	oddsidemargin: \the\oddsidemargin
-% % dsadsa \the\sidemargin
-% marginparsep: \the\marginparsep
-% marginparwidth: \the\marginparwidth
-
-% \newgeometry{margin=0cm}
-% \begin{center}
-%    % \includegraphics[height=20cm]{nal2foto.jpg}
-% %    \includegraphics[height=\paperheight]{nal2foto.jpg}	 
-% \includegraphics[width=\paperwidth]{imports.png}
-% \end{center}
-
-% 	\includegraphics[width=\paperwidth]{0imports.png}
-	
-% \end{frame}
-
 
 % \begin{frame}[shrink]
 
-
-\newgeometry{margin=0cm}
-
-\begin{frame}
-	\includegraphics[width=\paperwidth]{code-shots/0imports.png}
-\end{frame}
-
-\begin{frame}
-	\includegraphics[width=\paperwidth]{code-shots/1dataset-construction.png}
-\end{frame}
-
-\newgeometry{left=-1.5cm}
-
-\begin{frame}
-	\includegraphics[width=1.15\paperwidth]{code-shots/2grammar.png}
-\end{frame}
-
-\begin{frame}
+\newgeometry{margin=-0.5cm}
+\begin{frame}[plain]
 	\begin{center}
-		\includegraphics[width=1.2\paperwidth]{code-shots/3eqDisco.png}	
+	% \includegraphics[width=\paperwidth]{fullcode3.png}
+\includegraphics[height=1.1\paperheight]
+{fullcode3.png}
 	\end{center}
 \end{frame}
+\restoregeometry
+
+% \newgeometry{top=0cm, left=0cm}
+\newgeometry{left=0cm}
+	% dsadsadsadsadsadsadsadsadsa \the\footskip 
+	% textheight: \the\textheight
+\begin{frame}
+	\begin{center}
+\includegraphics[width=\paperwidth]
+{code-shots/0imports.png}				
+	\end{center}
+	% \insertframenumber/\inserttotalframenumber
+\end{frame}
+
+\begin{frame}
+	\includegraphics[width=\paperwidth]
+{code-shots/1dataset-construction.png}
+\end{frame}
+\restoregeometry
+
+\newgeometry{left=-1cm}
+\begin{frame}
+	\includegraphics[width=1.15\paperwidth]
+{code-shots/2grammar.png}
+\end{frame}
+\restoregeometry
+
+\newgeometry{left=-1.5cm}
+\begin{frame}
+	\begin{center}
+		\includegraphics[width=1.2\paperwidth]
+{code-shots/3eqDisco.png}	
+	\end{center}
+\end{frame}
+\restoregeometry
 
 \newgeometry{left=0cm}
 \begin{frame}
-\includegraphics[width=1\paperwidth]{code-shots/4print-models.png}
+\includegraphics[width=1\paperwidth]
+{code-shots/4print-models.png}
 \end{frame}
+\restoregeometry
 
-\newgeometry{margin=0cm}
-\begin{frame}
+\newgeometry{left=0cm, top=0.5cm}
+% \newgeometry{left=0cm}
+\begin{frame}[plain]
 \includegraphics[height=1cm]
 {code-shots/4_1runInTerminal2.png} \pause
-\includegraphics[width=1\paperwidth]
+\includegraphics[width=\paperwidth]
 {code-shots/4_2run-result-edd.png} 
 \end{frame}
+\restoregeometry
 
 \newgeometry{left=-1cm}
 \begin{frame}
 	\includegraphics[width=1.1\paperwidth]
 	{code-shots/5graphic-check.png}
 \end{frame}
+\restoregeometry
 
+% \newgeometry{top=-0.1cm, left=0cm}
+\newgeometry{left=1.5cm}
 \begin{frame}
-	\begin{center}
-\includegraphics[height=1\paperheight]
+	% \begin{center}
+\includegraphics[height=0.85\paperheight]
 {code-shots/5_1plotScr.png}
-	\end{center}
+	% \end{center}
 \end{frame}
 
 
