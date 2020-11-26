@@ -1,0 +1,235 @@
+\documentclass[t,usenames,dvipsnames]{beamer} % [t] pomeni poravnavo na vrh slida
+
+% \usepackage{etex} % vključi ta paket, če ti javi napako, da imaš naloženih preveč paketov.
+
+% standardni paketi
+\usepackage[slovene]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% \usepackage{amssymb}
+% \usepackage{amsmath}
+%\usepackage{diagrams}
+
+
+\setbeamercovered{invisible} %default
+% \setbeamercovered{transparent}
+%\setbeamercovered{dynamic}
+
+
+% podatki
+\title{Demo}
+% \author{Boštjan Gec}
+
+% \usetheme{Singapore}
+% \usetheme{Luebeck}
+\usetheme{Frankfurt}
+% \usecolortheme{crane}
+% \usecolortheme{red}
+
+% DIY  % % % % % % % % % % % % % % % % % % % % % 
+%colors:
+%\documentclass[usenames,dvipsnames]{beamer}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+% \setbeamercolor{structure}{fg=Bittersweet} 
+
+% vscode colors (in rgb):
+% green: 22,130,93
+% blue: 0,122,204
+% windowsLightBlue 210,228,239
+% vscodegray = 44,44,44
+\definecolor{greenvscode}{RGB}{22,130,93}
+% \definecolor{bluevscode}{RGB}{0,122,204}
+% \definecolor{vscodeGray}{RGB}{44,44,44}
+% \definecolor{vscodeLightBlue}{RGB}{210,228,239}
+
+\setbeamercolor{structure}{fg=greenvscode}
+% \setbeamercolor{structure}{fg=bluevscode}
+% \setbeamercolor{structure}{fg=vscodeGray}
+% \setbeamercolor{structure}{fg=vscodeLightBlue}
+% \setbeamercolor{structure}{bg=black}
+
+
+% \usepackage{layout}
+
+\newlength{\fullHDwidth}
+\newlength{\fullHDheight}
+\setlength{\fullHDwidth}{1920pt}
+\setlength{\fullHDheight}{1080pt}
+\newlength{\mywidth}
+\newlength{\myheight}
+\setlength{\mywidth}{0.25\fullHDwidth}
+\setlength{\myheight}{0.25\fullHDheight}
+
+% \setlength{\textwidth}{6.5in}
+% \setlength{\hoffset}{-72.27pt}
+% \setlength{\hoffset}{\mywidth}
+% \setlength{\hoffset}{-27pt}
+% \setlength{\hoffset}{-0.96cm}
+% \setlength{}{-0.96cm}
+% \setlength{\oddsidemargin}{0pt}
+% \setlength{\marginparsep}{0pt}
+% \setlength{\marginparwidth}{0pt}
+% \addtolength{\paperwidth}{3cm}
+% \setlength{\paperwidth}{1280pt}
+% \setlength{\paperheight}{720pt}
+% \setlength{\paperwidth}{1920pt}
+% \setlength{\paperheight}{1080pt}
+\setlength{\paperwidth}{\mywidth}
+\setlength{\paperheight}{\myheight}
+% \addtolength{\marginparsep}{0.1\mywidth}
+\addtolength{\marginparwidth}{0.1\mywidth}
+
+\usepackage{geometry}
+
+
+% \usepackage{showframe}
+
+\begin{document}
+
+
+\begin{frame}
+  \maketitle
+\end{frame}
+\newgeometry{top=-0.7cm}
+\begin{frame}
+	% \includegraphics[width=\paperwidth]{fullcode3.png}
+	\includegraphics[height=1.1\paperheight]{fullcode3.png}
+\end{frame}
+
+
+% \newgeometry{margin=0cm}
+
+% \begin{frame}[plain]
+% 	dsadsa \\ dsadsa \\
+% 	voffset: \the\hoffset
+% 	paperheight: \the\paperheight
+% 	paperwidth: \the\paperwidth
+% % \setlength{\paperwidth}{1820pt}
+% 	paperwidth2: \the\paperwidth
+% 	after voffset: \the\hoffset
+% 	oddsidemargin: \the\oddsidemargin
+% % dsadsa \the\sidemargin
+% marginparsep: \the\marginparsep
+% marginparwidth: \the\marginparwidth
+
+% \newgeometry{margin=0cm}
+% \begin{center}
+%    % \includegraphics[height=20cm]{nal2foto.jpg}
+% %    \includegraphics[height=\paperheight]{nal2foto.jpg}	 
+% \includegraphics[width=\paperwidth]{imports.png}
+% \end{center}
+
+% 	\includegraphics[width=\paperwidth]{0imports.png}
+	
+% \end{frame}
+
+
+% \begin{frame}[shrink]
+
+
+\newgeometry{margin=0cm}
+
+\begin{frame}
+	\includegraphics[width=\paperwidth]{code-shots/0imports.png}
+\end{frame}
+
+\begin{frame}
+	\includegraphics[width=\paperwidth]{code-shots/1dataset-construction.png}
+\end{frame}
+
+\newgeometry{left=-1.5cm}
+
+\begin{frame}
+	\includegraphics[width=1.15\paperwidth]{code-shots/2grammar.png}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\includegraphics[width=1.2\paperwidth]{code-shots/3eqDisco.png}	
+	\end{center}
+\end{frame}
+
+\newgeometry{left=0cm}
+\begin{frame}
+\includegraphics[width=1\paperwidth]{code-shots/4print-models.png}
+\end{frame}
+
+\newgeometry{margin=0cm}
+\begin{frame}
+\includegraphics[height=1cm]
+{code-shots/4_1runInTerminal2.png} \pause
+\includegraphics[width=1\paperwidth]
+{code-shots/4_2run-result-edd.png} 
+\end{frame}
+
+\newgeometry{left=-1cm}
+\begin{frame}
+	\includegraphics[width=1.1\paperwidth]
+	{code-shots/5graphic-check.png}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+\includegraphics[height=1\paperheight]
+{code-shots/5_1plotScr.png}
+	\end{center}
+\end{frame}
+
+
+\section{Uvod}
+
+\begin{frame}
+	% {Uvod}
+
+	\begin{itemize}
+		\item V programiranju so seznami in drevesa pomembne (in uporabne) podatkovne strukture.
+		
+		\item V modernih programskih jezikih (npr. jaz bom uporabljal Haskell) lahko skonstruiramo podatkovne tipe za sezname in drevesa.
+		
+		\item Te podatkovne tipe lahko karakteriziramo z za"cetnimi algebrami in tudi kon"cnimi koalgebrami.
+		
+		\item Ta karakterizacija nam daje metode in na"cine pri programiranju s seznami in drevesi.
+	\end{itemize}
+\end{frame}
+
+\section{demo}
+
+\begin{frame}
+	% {Za"cetne algebre in kon"cne koalgebre}
+	\begin{itemize}
+		\item 	Za"cetna algebra in kon"cna koalgebra sta koncepta iz teorije kategorij.
+		
+		\item 
+		
+		\item V predstavitvi bom namesto splo"sne definicije predstavil njeno bolj zo"zeno verzijo na enem pomembnem primeru.
+		
+		\item Izbran primer: seznami v programiranju in njihov analog v matematiki: zaporedja.
+		
+		\item 
+	\end{itemize}
+\end{frame}
+
+\section{todo}
+
+\begin{frame}
+	% {Seznami}
+	Nekaj primerov seznamov:
+	\begin{itemize}
+		\item	 \text{[1, 2, 3, 4, 5]}
+		\item	\text{[1, 3, 5]}
+		\item	\text{[  \ ]}
+	\end{itemize}
+	
+	... [Int]	\\
+	Seznami razli"cnih tipov:
+	\begin{itemize}
+		\item	$[\frac{1}{2},\frac{2}{3},\frac{10}{7}]$ ... \text{[Fractional]}
+		\item	\text{[0.01, pi, e, 2.04]}  ... \text{[Floating]}
+		\item	\text{['p', 'i', 'e'] }      ... \text{[Char]}
+		\item	\text{[ [0,1,2,3], [\ \  ], [3] ]}  ... \text{[[Int]]}
+	\end{itemize}	
+\end{frame}
+\restoregeometry
+
+\end{document}
