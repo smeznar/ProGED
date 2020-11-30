@@ -1,0 +1,535 @@
+$ /usr/bin/python3 "lorentz.py"
+(1000,) (1000, 1) (1000, 2)
+Estimating model C0*x
+Obicno, find parameters! Model: C0*x
+in find_parametres
+If in ODE! DEfit. Model: C0*x
+in find_parametres, after successful DE_fit. res:      fun: 0.0003270905768185031
+     jac: array([1.82027787e-05])
+ message: 'Optimization terminated successfully.'
+    nfev: 94
+     nit: 8
+ success: True
+       x: array([0.12363663])
+find_parameter output:      fun: 0.0003270905768185031
+     jac: array([1.82027787e-05])
+ message: 'Optimization terminated successfully.'
+    nfev: 94
+     nit: 8
+ success: True
+       x: array([0.12363663])
+Estimating model C0*y**2 + C1
+Obicno, find parameters! Model: C0*y**2 + C1
+in find_parametres
+If in ODE! DEfit. Model: C0*y**2 + C1
+in find_parametres, after successful DE_fit. res:      fun: 6.0035662793011965e-05
+ message: 'Optimization terminated successfully.'
+    nfev: 383
+     nit: 18
+ success: True
+       x: array([ 5.62519398, -0.23963376])
+find_parameter output:      fun: 6.0035662793011965e-05
+ message: 'Optimization terminated successfully.'
+    nfev: 383
+     nit: 18
+ success: True
+       x: array([ 5.62519398, -0.23963376])
+Estimating model C0*x*y + C1
+Obicno, find parameters! Model: C0*x*y + C1
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y + C1
+in find_parametres, after successful DE_fit. res:      fun: 8.93869582918614e-06
+ message: 'Optimization terminated successfully.'
+    nfev: 523
+     nit: 25
+ success: True
+       x: array([ 9.99740307, -0.13036524])
+find_parameter output:      fun: 8.93869582918614e-06
+ message: 'Optimization terminated successfully.'
+    nfev: 523
+     nit: 25
+ success: True
+       x: array([ 9.99740307, -0.13036524])
+Estimating model C0*x**3*y + C1*y + C2
+Obicno, find parameters! Model: C0*x**3*y + C1*y + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*x**3*y + C1*y + C2
+Error occured inside model_ode_error
+model.params: [-1.747981050987878, 3.4256849082140683, -1.9630279751080981] model: C0*x**3*y + C1*y + C2
+Excepted an error!! Model: C0*x**3*y + C1*y + C2
+Estimating model C0*y
+Obicno, find parameters! Model: C0*y
+in find_parametres
+If in ODE! DEfit. Model: C0*y
+in find_parametres, after successful DE_fit. res:      fun: 0.00021742667812422884
+ message: 'Optimization terminated successfully.'
+    nfev: 102
+     nit: 9
+ success: True
+       x: array([0.35586395])
+find_parameter output:      fun: 0.00021742667812422884
+ message: 'Optimization terminated successfully.'
+    nfev: 102
+     nit: 9
+ success: True
+       x: array([0.35586395])
+Estimating model C0*y**2
+Obicno, find parameters! Model: C0*y**2
+in find_parametres
+If in ODE! DEfit. Model: C0*y**2
+in find_parametres, after successful DE_fit. res:      fun: 0.0002826123219820765
+ message: 'Optimization terminated successfully.'
+    nfev: 92
+     nit: 8
+ success: True
+       x: array([0.72969787])
+find_parameter output:      fun: 0.0002826123219820765
+ message: 'Optimization terminated successfully.'
+    nfev: 92
+     nit: 8
+ success: True
+       x: array([0.72969787])
+Estimating model C0*x*y**2 + C1*x*y + C2
+Obicno, find parameters! Model: C0*x*y**2 + C1*x*y + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y**2 + C1*x*y + C2
+in find_parametres, after successful DE_fit. res:      fun: 6.349687195680875e-07
+ message: 'Optimization terminated successfully.'
+    nfev: 1114
+     nit: 36
+ success: True
+       x: array([ 8.11049901,  9.99955083, -0.17649668])
+find_parameter output:      fun: 6.349687195680875e-07
+ message: 'Optimization terminated successfully.'
+    nfev: 1114
+     nit: 36
+ success: True
+       x: array([ 8.11049901,  9.99955083, -0.17649668])
+Estimating model C0*x**2*y
+Obicno, find parameters! Model: C0*x**2*y
+in find_parametres
+If in ODE! DEfit. Model: C0*x**2*y
+in find_parametres, after successful DE_fit. res:      fun: 0.00027554220382792127
+ message: 'Optimization terminated successfully.'
+    nfev: 72
+     nit: 6
+ success: True
+       x: array([9.9328598])
+find_parameter output:      fun: 0.00027554220382792127
+ message: 'Optimization terminated successfully.'
+    nfev: 72
+     nit: 6
+ success: True
+       x: array([9.9328598])
+Estimating model C0*x + C1
+Obicno, find parameters! Model: C0*x + C1
+in find_parametres
+If in ODE! DEfit. Model: C0*x + C1
+in find_parametres, after successful DE_fit. res:      fun: 0.00028512872431343437
+     jac: array([ 2.11641125e-06, -1.26243472e-05])
+ message: 'Optimization terminated successfully.'
+    nfev: 386
+     nit: 18
+ success: True
+       x: array([-9.95295566,  1.08205285])
+find_parameter output:      fun: 0.00028512872431343437
+     jac: array([ 2.11641125e-06, -1.26243472e-05])
+ message: 'Optimization terminated successfully.'
+    nfev: 386
+     nit: 18
+ success: True
+       x: array([-9.95295566,  1.08205285])
+Estimating model C0*y + C1
+Obicno, find parameters! Model: C0*y + C1
+in find_parametres
+If in ODE! DEfit. Model: C0*y + C1
+in find_parametres, after successful DE_fit. res:      fun: 4.63693101211038e-07
+ message: 'Optimization terminated successfully.'
+    nfev: 583
+     nit: 28
+ success: True
+       x: array([ 1.26313864, -0.14519139])
+find_parameter output:      fun: 4.63693101211038e-07
+ message: 'Optimization terminated successfully.'
+    nfev: 583
+     nit: 28
+ success: True
+       x: array([ 1.26313864, -0.14519139])
+Estimating model C0*x*y
+Obicno, find parameters! Model: C0*x*y
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y
+in find_parametres, after successful DE_fit. res:      fun: 0.00021644505548928155
+ message: 'Optimization terminated successfully.'
+    nfev: 72
+     nit: 6
+ success: True
+       x: array([3.40105064])
+find_parameter output:      fun: 0.00021644505548928155
+ message: 'Optimization terminated successfully.'
+    nfev: 72
+     nit: 6
+ success: True
+       x: array([3.40105064])
+Estimating model C0*x*y**2
+Obicno, find parameters! Model: C0*x*y**2
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y**2
+in find_parametres, after successful DE_fit. res:      fun: 0.0002837734624559287
+ message: 'Optimization terminated successfully.'
+    nfev: 32
+     nit: 2
+ success: True
+       x: array([6.7104943])
+find_parameter output:      fun: 0.0002837734624559287
+ message: 'Optimization terminated successfully.'
+    nfev: 32
+     nit: 2
+ success: True
+       x: array([6.7104943])
+Estimating model C0*x*y + C1*x + C2
+Obicno, find parameters! Model: C0*x*y + C1*x + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y + C1*x + C2
+in find_parametres, after successful DE_fit. res:      fun: 7.929906023521137e-06
+     jac: array([-8.38188211e-06, -3.39605174e-06, -3.06297702e-05])
+ message: 'Optimization terminated successfully.'
+    nfev: 1478
+     nit: 48
+ success: True
+       x: array([ 9.99975653,  1.61393622, -0.31312048])
+find_parameter output:      fun: 7.929906023521137e-06
+     jac: array([-8.38188211e-06, -3.39605174e-06, -3.06297702e-05])
+ message: 'Optimization terminated successfully.'
+    nfev: 1478
+     nit: 48
+ success: True
+       x: array([ 9.99975653,  1.61393622, -0.31312048])
+Estimating model C0*x**6*y**2 + C1*x*y**2
+Obicno, find parameters! Model: C0*x**6*y**2 + C1*x*y**2
+in find_parametres
+If in ODE! DEfit. Model: C0*x**6*y**2 + C1*x*y**2
+in find_parametres, after successful DE_fit. res:      fun: 0.00028377229924593056
+ message: 'Optimization terminated successfully.'
+    nfev: 103
+     nit: 4
+ success: True
+       x: array([-2.55362833,  6.6670491 ])
+find_parameter output:      fun: 0.00028377229924593056
+ message: 'Optimization terminated successfully.'
+    nfev: 103
+     nit: 4
+ success: True
+       x: array([-2.55362833,  6.6670491 ])
+Estimating model C0*x**4*y**2 + C1*x**2*y**3 + C2*y**2 + C3*y + C4
+Obicno, find parameters! Model: C0*x**4*y**2 + C1*x**2*y**3 + C2*y**2 + C3*y + C4
+in find_parametres
+If in ODE! DEfit. Model: C0*x**4*y**2 + C1*x**2*y**3 + C2*y**2 + C3*y + C4
+Error occured inside model_ode_error
+model.params: [3.260353250887882, 3.4386871825526155, 0.33806342210170315, -3.5479105678995246, -0.1282210605546652] model: C0*x**4*y**2 + C1*x**2*y**3 + C2*y**2 + C3*y + C4
+Excepted an error!! Model: C0*x**4*y**2 + C1*x**2*y**3 + C2*y**2 + C3*y + C4
+Estimating model C0*x**2 + C1
+Obicno, find parameters! Model: C0*x**2 + C1
+in find_parametres
+If in ODE! DEfit. Model: C0*x**2 + C1
+Error occured inside model_ode_error
+model.params: [-1.3942707138035204, 0.31681625187315765] model: C0*x**2 + C1
+Excepted an error!! Model: C0*x**2 + C1
+Estimating model C0*y**4
+Obicno, find parameters! Model: C0*y**4
+in find_parametres
+If in ODE! DEfit. Model: C0*y**4
+in find_parametres, after successful DE_fit. res:      fun: 0.00025717578709995846
+ message: 'Optimization terminated successfully.'
+    nfev: 42
+     nit: 3
+ success: True
+       x: array([8.89566363])
+find_parameter output:      fun: 0.00025717578709995846
+ message: 'Optimization terminated successfully.'
+    nfev: 42
+     nit: 3
+ success: True
+       x: array([8.89566363])
+Estimating model C0*x**2
+Obicno, find parameters! Model: C0*x**2
+in find_parametres
+If in ODE! DEfit. Model: C0*x**2
+in find_parametres, after successful DE_fit. res:      fun: 0.0003272879949131756
+ message: 'Optimization terminated successfully.'
+    nfev: 42
+     nit: 3
+ success: True
+       x: array([1.08859778])
+find_parameter output:      fun: 0.0003272879949131756
+ message: 'Optimization terminated successfully.'
+    nfev: 42
+     nit: 3
+ success: True
+       x: array([1.08859778])
+Estimating model C0*x*y + C1*y + C2
+Obicno, find parameters! Model: C0*x*y + C1*y + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y + C1*y + C2
+in find_parametres, after successful DE_fit. res:      fun: 4.2759620778104405e-07
+ message: 'Optimization terminated successfully.'
+    nfev: 964
+     nit: 31
+ success: True
+       x: array([ 3.96859777,  0.83930104, -0.15087028])
+find_parameter output:      fun: 4.2759620778104405e-07
+ message: 'Optimization terminated successfully.'
+    nfev: 964
+     nit: 31
+ success: True
+       x: array([ 3.96859777,  0.83930104, -0.15087028])
+Estimating model C0*x + C1*y**2 + C2*y + C3
+Obicno, find parameters! Model: C0*x + C1*y**2 + C2*y + C3
+in find_parametres
+If in ODE! DEfit. Model: C0*x + C1*y**2 + C2*y + C3
+in find_parametres, after successful DE_fit. res:      fun: 3.4255188603753067e-10
+ message: 'Maximum number of iterations has been exceeded.'
+    nfev: 4045
+     nit: 100
+ success: False
+       x: array([-1.92964568, -0.22775025,  1.3616637 ,  0.0749222 ])
+find_parameter output:      fun: 3.4255188603753067e-10
+ message: 'Maximum number of iterations has been exceeded.'
+    nfev: 4045
+     nit: 100
+ success: False
+       x: array([-1.92964568, -0.22775025,  1.3616637 ,  0.0749222 ])
+Estimating model C0*x**3*y + C1*x*y
+Obicno, find parameters! Model: C0*x**3*y + C1*x*y
+in find_parametres
+If in ODE! DEfit. Model: C0*x**3*y + C1*x*y
+in find_parametres, after successful DE_fit. res:      fun: 0.00021639412241733307
+ message: 'Optimization terminated successfully.'
+    nfev: 183
+     nit: 8
+ success: True
+       x: array([9.26290183, 3.29177475])
+find_parameter output:      fun: 0.00021639412241733307
+ message: 'Optimization terminated successfully.'
+    nfev: 183
+     nit: 8
+ success: True
+       x: array([9.26290183, 3.29177475])
+Estimating model C0*x + C1*y**3 + C2*y**2
+Obicno, find parameters! Model: C0*x + C1*y**3 + C2*y**2
+in find_parametres
+If in ODE! DEfit. Model: C0*x + C1*y**3 + C2*y**2
+in find_parametres, after successful DE_fit. res:      fun: 4.415586458822732e-05
+ message: 'Optimization terminated successfully.'
+    nfev: 844
+     nit: 27
+ success: True
+       x: array([-1.54130659,  9.98904833,  1.60005944])
+find_parameter output:      fun: 4.415586458822732e-05
+ message: 'Optimization terminated successfully.'
+    nfev: 844
+     nit: 27
+ success: True
+       x: array([-1.54130659,  9.98904833,  1.60005944])
+Estimating model C0*x + C1*y
+Obicno, find parameters! Model: C0*x + C1*y
+in find_parametres
+If in ODE! DEfit. Model: C0*x + C1*y
+in find_parametres, after successful DE_fit. res:      fun: 1.2036444002238042e-09
+ message: 'Optimization terminated successfully.'
+    nfev: 563
+     nit: 27
+ success: True
+       x: array([-1.30298925,  1.30260095])
+find_parameter output:      fun: 1.2036444002238042e-09
+ message: 'Optimization terminated successfully.'
+    nfev: 563
+     nit: 27
+ success: True
+       x: array([-1.30298925,  1.30260095])
+Estimating model C0*x**2*y + C1
+Obicno, find parameters! Model: C0*x**2*y + C1
+in find_parametres
+If in ODE! DEfit. Model: C0*x**2*y + C1
+in find_parametres, after successful DE_fit. res:      fun: 0.00027557738888201355
+     jac: array([-4.96894693e-06, -1.91594787e-07])
+ message: 'Optimization terminated successfully.'
+    nfev: 409
+     nit: 19
+ success: True
+       x: array([ 9.92564698e+00, -1.12595971e-04])
+find_parameter output:      fun: 0.00027557738888201355
+     jac: array([-4.96894693e-06, -1.91594787e-07])
+ message: 'Optimization terminated successfully.'
+    nfev: 409
+     nit: 19
+ success: True
+       x: array([ 9.92564698e+00, -1.12595971e-04])
+Estimating model C0*y**2 + C1*y + C2
+Obicno, find parameters! Model: C0*y**2 + C1*y + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*y**2 + C1*y + C2
+in find_parametres, after successful DE_fit. res:      fun: 7.280211469867246e-09
+ message: 'Optimization terminated successfully.'
+    nfev: 1714
+     nit: 56
+ success: True
+       x: array([ 0.50130359,  1.17329247, -0.15630888])
+find_parameter output:      fun: 7.280211469867246e-09
+ message: 'Optimization terminated successfully.'
+    nfev: 1714
+     nit: 56
+ success: True
+       x: array([ 0.50130359,  1.17329247, -0.15630888])
+Estimating model C0*x**2*y**4 + C1*x**2 + C2
+Obicno, find parameters! Model: C0*x**2*y**4 + C1*x**2 + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*x**2*y**4 + C1*x**2 + C2
+Error occured inside model_ode_error
+model.params: [0.2268788972140856, 3.1379584151890283, -0.18577072315638543] model: C0*x**2*y**4 + C1*x**2 + C2
+Excepted an error!! Model: C0*x**2*y**4 + C1*x**2 + C2
+Estimating model C0*x + C1*y + C2
+Obicno, find parameters! Model: C0*x + C1*y + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*x + C1*y + C2
+in find_parametres, after successful DE_fit. res:      fun: 9.80606547747396e-10
+ message: 'Optimization terminated successfully.'
+    nfev: 1624
+     nit: 53
+ success: True
+       x: array([-1.33236453,  1.30348107,  0.00327742])
+find_parameter output:      fun: 9.80606547747396e-10
+ message: 'Optimization terminated successfully.'
+    nfev: 1624
+     nit: 53
+ success: True
+       x: array([-1.33236453,  1.30348107,  0.00327742])
+Estimating model C0*x*y**2 + C1*y + C2
+Obicno, find parameters! Model: C0*x*y**2 + C1*y + C2
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y**2 + C1*y + C2
+in find_parametres, after successful DE_fit. res:      fun: 1.2161250790233908e-08
+ message: 'Optimization terminated successfully.'
+    nfev: 1624
+     nit: 53
+ success: True
+       x: array([ 5.02786108,  1.16132454, -0.15730575])
+find_parameter output:      fun: 1.2161250790233908e-08
+ message: 'Optimization terminated successfully.'
+    nfev: 1624
+     nit: 53
+ success: True
+       x: array([ 5.02786108,  1.16132454, -0.15730575])
+Estimating model C0*x**2*y**4
+Obicno, find parameters! Model: C0*x**2*y**4
+in find_parametres
+If in ODE! DEfit. Model: C0*x**2*y**4
+in find_parametres, after successful DE_fit. res:      fun: 0.00033100425551791334
+ message: 'Optimization terminated successfully.'
+    nfev: 22
+     nit: 1
+ success: True
+       x: array([9.39740053])
+find_parameter output:      fun: 0.00033100425551791334
+ message: 'Optimization terminated successfully.'
+    nfev: 22
+     nit: 1
+ success: True
+       x: array([9.39740053])
+Estimating model C0*x*y + C1*x
+Obicno, find parameters! Model: C0*x*y + C1*x
+in find_parametres
+If in ODE! DEfit. Model: C0*x*y + C1*x
+in find_parametres, after successful DE_fit. res:      fun: 1.0670299940312829e-05
+ message: 'Optimization terminated successfully.'
+    nfev: 543
+     nit: 26
+ success: True
+       x: array([ 9.99917642, -1.14896806])
+find_parameter output:      fun: 1.0670299940312829e-05
+ message: 'Optimization terminated successfully.'
+    nfev: 543
+     nit: 26
+ success: True
+       x: array([ 9.99917642, -1.14896806])
+Estimating model C0*x**2*y**2 + C1*x
+Obicno, find parameters! Model: C0*x**2*y**2 + C1*x
+in find_parametres
+If in ODE! DEfit. Model: C0*x**2*y**2 + C1*x
+in find_parametres, after successful DE_fit. res:      fun: 0.0003174413033189494
+ message: 'Optimization terminated successfully.'
+    nfev: 243
+     nit: 11
+ success: True
+       x: array([9.88882207, 0.0620826 ])
+find_parameter output:      fun: 0.0003174413033189494
+ message: 'Optimization terminated successfully.'
+    nfev: 243
+     nit: 11
+ success: True
+       x: array([9.88882207, 0.0620826 ])
+ModelsBox: 31 models
+-> C0*x, p = 0.072, parse trees = 1, valid = True, error = 0.0003270905768185031
+-> C0*y**2 + C1, p = 0.0051148800000000005, parse trees = 3, valid = True, error = 6.0035662793011965e-05
+-> C0*x*y + C1, p = 0.0079736832, parse trees = 5, valid = True, error = 8.93869582918614e-06
+-> C0*x**3*y + C1*y + C2, p = 3.822059520000001e-07, parse trees = 1, valid = False
+-> C0*y, p = 0.075456, parse trees = 2, valid = True, error = 0.00021742667812422884
+-> C0*y**2, p = 0.0144, parse trees = 1, valid = True, error = 0.0002826123219820765
+-> C0*x*y**2 + C1*x*y + C2, p = 1.5925248000000004e-06, parse trees = 1, valid = True, error = 6.349687195680875e-07
+-> C0*x**2*y, p = 0.00576, parse trees = 2, valid = True, error = 0.00027554220382792127
+-> C0*x + C1, p = 0.045083934719999996, parse trees = 7, valid = True, error = 0.00028512872431343437
+-> C0*y + C1, p = 0.0357543936, parse trees = 4, valid = True, error = 4.63693101211038e-07
+-> C0*x*y, p = 0.0288, parse trees = 2, valid = True, error = 0.00021644505548928155
+-> C0*x*y**2, p = 0.00288, parse trees = 1, valid = True, error = 0.0002837734624559287
+-> C0*x*y + C1*x + C2, p = 7.962624000000002e-05, parse trees = 2, valid = True, error = 7.929906023521137e-06
+-> C0*x**6*y**2 + C1*x*y**2, p = 1.7694720000000007e-09, parse trees = 1, valid = True, error = 0.00028377229924593056
+-> C0*x**4*y**2 + C1*x**2*y**3 + C2*y**2 + C3*y + C4, p = 4.6965467381760024e-14, parse trees = 1, valid = False
+-> C0*x**2 + C1, p = 0.0034560000000000003, parse trees = 1, valid = False
+-> C0*y**4, p = 0.000576, parse trees = 1, valid = True, error = 0.00025717578709995846
+-> C0*x**2, p = 0.0144, parse trees = 1, valid = True, error = 0.0003272879949131756
+-> C0*x*y + C1*y + C2, p = 0.000165888, parse trees = 1, valid = True, error = 4.2759620778104405e-07
+-> C0*x + C1*y**2 + C2*y + C3, p = 7.962624e-06, parse trees = 1, valid = True, error = 3.4255188603753067e-10
+-> C0*x**3*y + C1*x*y, p = 5.529600000000001e-06, parse trees = 1, valid = True, error = 0.00021639412241733307
+-> C0*x + C1*y**3 + C2*y**2, p = 6.3700992e-08, parse trees = 1, valid = True, error = 4.415586458822732e-05
+-> C0*x + C1*y, p = 0.0034559999999999994, parse trees = 1, valid = True, error = 1.2036444002238042e-09
+-> C0*x**2*y + C1, p = 0.0008570880000000001, parse trees = 2, valid = True, error = 0.00027557738888201355
+-> C0*y**2 + C1*y + C2, p = 0.00016588800000000002, parse trees = 1, valid = True, error = 7.280211469867246e-09
+-> C0*x**2*y**4 + C1*x**2 + C2, p = 1.2740198400000004e-08, parse trees = 1, valid = False
+-> C0*x + C1*y + C2, p = 4.0363496570879996e-05, parse trees = 2, valid = True, error = 9.80606547747396e-10
+-> C0*x*y**2 + C1*y + C2, p = 3.3177600000000006e-05, parse trees = 1, valid = True, error = 1.2161250790233908e-08
+-> C0*x**2*y**4, p = 2.3040000000000006e-05, parse trees = 1, valid = True, error = 0.00033100425551791334
+-> C0*x*y + C1*x, p = 0.0006912, parse trees = 1, valid = True, error = 1.0670299940312829e-05
+-> C0*x**2*y**2 + C1*x, p = 2.7648000000000004e-05, parse trees = 1, valid = True, error = 0.0003174413033189494
+
+Final score:
+model: 0.123636630407332*x                                         ; error: 0.0003270905768185031
+model: 5.62519398166275*y**2 - 0.239633757554286                   ; error: 6.0035662793011965e-05
+model: 9.99740306953231*x*y - 0.130365235195963                    ; error: 8.93869582918614e-06
+model: -1.74798105098788*x**3*y + 3.42568490821407*y - 1.9630279751081; error: 100000000
+model: 0.355863945226407*y                                         ; error: 0.00021742667812422884
+model: 0.729697865104963*y**2                                      ; error: 0.0002826123219820765
+model: 8.11049901403451*x*y**2 + 9.99955083317508*x*y - 0.176496680746697; error: 6.349687195680875e-07
+model: 9.93285979642696*x**2*y                                     ; error: 0.00027554220382792127
+model: 1.08205284570585 - 9.95295565758537*x                       ; error: 0.00028512872431343437
+model: 1.26313864006636*y - 0.145191390939442                      ; error: 4.63693101211038e-07
+model: 3.40105063889688*x*y                                        ; error: 0.00021644505548928155
+model: 6.71049430181857*x*y**2                                     ; error: 0.0002837734624559287
+model: 9.99975652771417*x*y + 1.61393622297438*x - 0.313120477007003; error: 7.929906023521137e-06
+model: -2.55362833378862*x**6*y**2 + 6.66704909517721*x*y**2       ; error: 0.00028377229924593056
+model: 3.26035325088788*x**4*y**2 + 3.43868718255262*x**2*y**3 + 0.338063422101703*y**2 - 3.54791056789952*y - 0.128221060554665; error: 100000000
+model: 0.316816251873158 - 1.39427071380352*x**2                   ; error: 100000000
+model: 8.8956636326721*y**4                                        ; error: 0.00025717578709995846
+model: 1.08859777523205*x**2                                       ; error: 0.0003272879949131756
+model: 3.9685977747886*x*y + 0.839301039911093*y - 0.150870278615451; error: 4.2759620778104405e-07
+model: -1.92964567773449*x - 0.227750247887266*y**2 + 1.36166370195071*y + 0.0749221958111468; error: 3.4255188603753067e-10
+model: 9.26290183399913*x**3*y + 3.2917747463775*x*y               ; error: 0.00021639412241733307
+model: -1.54130658646207*x + 9.98904833000874*y**3 + 1.60005943927809*y**2; error: 4.415586458822732e-05
+model: -1.30298925040925*x + 1.30260094922192*y                    ; error: 1.2036444002238042e-09
+model: 9.92564698364626*x**2*y - 0.000112595971128236              ; error: 0.00027557738888201355
+model: 0.501303588892037*y**2 + 1.17329246618307*y - 0.156308881970435; error: 7.280211469867246e-09
+model: 0.226878897214086*x**2*y**4 + 3.13795841518903*x**2 - 0.185770723156385; error: 100000000
+model: -1.33236452701868*x + 1.30348107313978*y + 0.00327741877718335; error: 9.80606547747396e-10
+model: 5.02786107500349*x*y**2 + 1.16132453528352*y - 0.157305745600955; error: 1.2161250790233908e-08
+model: 9.39740053213167*x**2*y**4                                  ; error: 0.00033100425551791334
+model: 9.99917642179394*x*y - 1.14896806386663*x                   ; error: 1.0670299940312829e-05
+model: 9.88882206722682*x**2*y**2 + 0.0620825996666952*x           ; error: 0.0003174413033189494

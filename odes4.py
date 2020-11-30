@@ -4,7 +4,7 @@ import numpy as np
 # import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp #,  odeint
 from scipy.interpolate import interp1d
-from typing import List
+
 
 # # go-away message: odeint works perfectly.
 # %% 

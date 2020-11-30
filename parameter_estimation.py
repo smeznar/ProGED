@@ -100,14 +100,17 @@ def ode(models_list, params_matrix, T, X_data, y0):
                         + "number of equations and dimensions of input data"
                         + " does not match.")
     ### 1-dim version of X_data currently: ###
-    X = interp1d(T, X_data.T[0], kind='cubic', fill_value="extrapolate")  # 1 -dim
+    # X = interp1d(T, X_data.T[0], kind='cubic', fill_value="extrapolate")  # 1 -dim
+    X = interp1d(T, X_data, axis=0, kind='cubic', fill_value="extrapolate")  # N-D
     lamb_exprs = [
         sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
         for model, params in zip(models_list, params_matrix)
     ]
     def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
         ### 1-dim interpol causes ###
-        b = np.concatenate((y,np.array([X(t)]))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        # b = np.concatenate((y,np.array([X(t)]))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        # N-D:
+        b = np.concatenate((y, X(t))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
         return np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
     Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
     # print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
