@@ -211,7 +211,7 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    opt_params = popt; othr = pcov
     print("in find_parametres")
     res = DE_fit(model, X, Y, p0=model.params, T=T)
-    print("in find_parametres, after successful DE_fit. res:", res)
+    # print("in find_parametres, after successful DE_fit. res:", res)
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
     
@@ -239,9 +239,9 @@ class ParameterEstimator:
             elif len(model.params) < 1:
                 model.set_estimated({"x":[], "fun":model_error(model, [], self.X, self.Y)})
             else:
-                print("Obicno, find parameters! Model:", model)
+                # print("Obicno, find parameters! Model:", model)
                 res = find_parameters(model, self.X, self.Y, self.T)
-                print("find_parameter output:", res)
+                # print("find_parameter output:", res)
                 model.set_estimated(res) # res je lahko None, zato ta vrstica lahko vrne Error!
         except:
             print("Excepted an error!! Model:", model)

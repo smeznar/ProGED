@@ -18,7 +18,10 @@ def construct_right (right = "a", prob = 1):
     return right + " [" + str(prob) + "]"
 
 def construct_production (left = "S", items = ["a"], probs=[1]):
-    return "\n" + left + " -> " + construct_right_distribution (items=items, probs=probs)
+    if not items:
+        return ""
+    else:
+        return "\n" + left + " -> " + construct_right_distribution (items=items, probs=probs)
 
 def construct_right_distribution (items=[], probs=[]):
     p = np.array(probs)/np.sum(probs)
@@ -108,3 +111,4 @@ if __name__ == "__main__":
     print(grammar)
     for i in range(5):
         print(grammar.generate_one())
+    print(construct_production("s",[],[]))

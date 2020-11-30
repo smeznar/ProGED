@@ -41,9 +41,9 @@ class EqDisco:
         else:
             raise TypeError ("Missing task information!")
             
-        # generator_parameters.update({"variables":self.task.symbols["x"]})
-        if not generator_parameters:
-            generator_parameters.update({"variables":self.task.symbols["x"]})
+        generator_parameters.update({"variables":self.task.symbols["x"]})
+        # if not generator_parameters:
+        #     generator_parameters.update({"variables":self.task.symbols["x"]})
         if isinstance(generator, BaseExpressionGenerator):
             self.generator = generator
         elif isinstance(generator, str):

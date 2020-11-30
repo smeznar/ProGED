@@ -1,3 +1,8 @@
+import logging
+logging.basicConfig(filename="my.log", level=logging.INFO)
+
+
+
 # simulate Lorentz's system ODE
 
 import numpy as np
@@ -50,39 +55,54 @@ data = np.concatenate((T[:, np.newaxis], Yode.y.T), axis=1)
 
 from generate import generate_models
 from generators.grammar import GeneratorGrammar
+from generators.grammar_construction import grammar_from_template
 from parameter_estimation import fit_models
-# np.random.seed(2)
+np.random.seed(0)
 
-grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
-                            T -> 'C' [0.6] | T "*" V [0.4]
-                            V -> 'x' [0.5] | 'y' [0.5]""")
-symbols = {"x":['x', 'y', 'z'], "start":"S", "const":"C"}
+# grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
+#                             T -> 'C' [0.6] | T "*" V [0.4]
+#                             V -> 'x' [0.33] | 'x' [0.33] | 'y' [0.345]""")
+# symbols = {"x":['x', 'y', 'z'], "start":"S", "const":"C"}
 
 
 # # grammar = grammar_from_template("universal", {"variables":["'phi'", "'theta'", "'r'"], "p_vars":[0.2,0.4,0.4]})
 
-def eq_disco (data, grammar, features_on_left: list = [1],
+def eq_disco (data, features_on_left: list = [1],
     features_on_right: list = [1, 2, 3]):
     # stolpci_desno = [i for i in range(0, data.shape[1])]
-
+    # header = ["col1", "col2", "col3"]
+    header = ["c_x", "c_y", "c_z"]
     T = data[:, 0]  # not [0], want 1D array
     Y = data[:, features_on_left]
     X = data[:, features_on_right]
     print(T.shape, Y.shape, X.shape)
-
+    variables = ["'"+header[i-1]+"'" for i in features_on_left] # [1,3] -> ["x1", "x3"]
+    variables += ["'"+header[i-1]+"'" for i in features_on_right]
+    print(variables)
+    symbols = {"x": variables, "start":"S", "const":"C"}
     # start eq. disco.:
-    models = generate_models(grammar, symbols, strategy_parameters = {"N":100})
+    grammar = grammar_from_template("polynomial", {
+        "variables": variables,
+        "p_S": [0.4, 0.6],
+        "p_T": [0.4, 0.6],
+        "p_vars": [0.33, 0.33, 0.34],
+        "p_R": [1, 0],
+        "p_F": [],
+        "functions": []
+    })
+    print(grammar)
+    models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
     fit_models(models, X, Y, T)
 
     print(models)
     print("\nFinal score:")
     for m in models:
         print(f"model: {str(m.get_full_expr()):<60}; error: {m.get_error()}")
-    return 0
-# print(eq_disco(data, grammar, features_on_left=[1], features_on_right=[2,3]))
-# print(eq_disco(data, grammar, features_on_left=[2], features_on_right=[1,3]))
-print(eq_disco(data, grammar, features_on_left=[3], features_on_right=[1,2]))
+    return 1
 
+# print(eq_disco(data, features_on_left=[2], features_on_right=[1,3]))
+# print(eq_disco(data, features_on_left=[3], features_on_right=[1,2]))
+print(eq_disco(data, features_on_left=[1], features_on_right=[2,3]))
 
 # fit_models(models, )
 
