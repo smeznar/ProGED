@@ -15,7 +15,9 @@ from base_generator import BaseExpressionGenerator
 class GeneratorGrammar (BaseExpressionGenerator):
     def __init__ (self, grammar):
         self.generator_type = "PCFG"
-    
+        self.coverage_dict = {}
+        self.count_dict = {}
+
         if isinstance(grammar, str):
             self.grammar = PCFG.fromstring(grammar)
         elif isinstance(grammar, type(PCFG.fromstring("S -> 'x' [1]"))):
@@ -45,7 +47,10 @@ class GeneratorGrammar (BaseExpressionGenerator):
             for prod in prods:
                 combinations = 1
                 for symbol in prod.rhs():
-                    combinations *= self.count_trees(symbol, height-1)
+                    symbol_height_key = "("+str(symbol)+","+str(height-1)+")" 
+                    if not symbol_height_key in self.count_dict:
+                        self.count_dict[symbol_height_key] = self.count_trees(symbol, height-1)
+                    combinations *= self.count_dict[symbol_height_key]
                 counter += combinations
             return counter
 
@@ -65,6 +70,39 @@ class GeneratorGrammar (BaseExpressionGenerator):
                 coverage += subprobabs
             return coverage
 
+    def count_coverage_external(self, start, height):
+        """Counts coverage fast using external (objective) cache."""
+        # print("tle je count external")
+        if height == 0:
+            return 0
+        coverage = 0
+        prods = self.grammar.productions(lhs=start)
+        for prod in prods:
+            subprobabs = prod.prob()
+            for symbol in prod.rhs():
+                if not isinstance(symbol, Nonterminal):
+                    continue
+                elif (height-1) == 0:
+                    subprobabs = 0
+                    break
+                else:
+                    # if (symbol, height-1) in self.coverage_dict:
+                    if "("+str(symbol)+","+str(height-1)+")" in self.coverage_dict:
+                        # subprobabs *= self.coverage_dict[(symbol, height-1)]
+                        # subprobabs *= self.coverage_dict[(str(symbol), height-1)]
+                        subprobabs *= self.coverage_dict["("+str(symbol)+","+str(height-1)+")"]
+                        # print(self.coverage_dict)
+                    else:
+                        newprob = self.count_coverage_external(symbol, height-1)
+                        # newprob = self.count_coverage_external(str(symbol), height-1)
+                        # self.coverage_dict[(symbol, height)] = newprob
+                        # self.coverage_dict[(str(symbol), height)] = newprob
+                        self.coverage_dict["("+str(symbol)+","+str(height-1)+")"] = newprob
+                        # print(self.coverage_dict)
+                        subprobabs *= newprob
+            coverage += subprobabs
+        return coverage
+    # def ^
     def list_coverages(self, height, tol=10**(-17),
                             min_height=100, verbosity=0):
         """Counts coverage of maximal height using cache(dictionary).
@@ -324,87 +362,98 @@ if __name__ == "__main__":
     from time import time
     t1=0
     def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3), "= seconds consumed"); return t2
-    height = 10**5
+    height = 10**2*9 # 5
     p=0.9
     for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS,
-                    pgramCounterExample, pgramSSparam(p) ]:
+    # for gramm in [
+        pgramCounterExample, pgramSSparam(p) ]:
         print(f"\nFor grammar:\n {gramm}")
         for i in range(height, height+1):
         # for i in range(0, 5):
             t2=display_time(t1); t1=t2
             # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
             # print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
+            # a = gramm.count_coverage(gramm.start_symbol,i)
+            # print(a, f" = coverage(start,{i}) of height <= {i}")
+            # t2=display_time(t1); t1=t2;
+            # print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
+            b = gramm.count_coverage_external(gramm.start_symbol,i)
+            print(b, f" = coverage(start,{i}) of height <= {i}")
             # t2=display_time(t1); t1=t2;
             print(gramm.list_coverages(i, tol=10**(-17), min_height=100,
                 verbosity=1)[gramm.grammar.start()], 
                 f" = list_coverages({i})[start] of height <= {i}")
+            # c = gramm.list_coverages(i, tol=10**(-17), min_height=100,
+            #     verbosity=1)[gramm.grammar.start()] 
+            # print(c, f" = list_coverages({i})[start] of height <= {i}")
             t2=display_time(t1); t1=t2
-        print("\nRenormalized grammar:\n %s" % gramm.renormalize())
+            # if not (b == c): raise ValueError("Coveragi se ne ujemajo!!!!")
+        # print("\nRenormalized grammar:\n %s" % gramm.renormalize())
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
     # print(pgramw)
     # # print([type(i) for i in pgramw.grammar.productions()])
     # print(pgramw.renormalize())
-
-    print(pgramSSparam(0.5),"\n", pgramSSparam(0.6))
-    print(pgramSSparam(0.5).renormalize(),"\n", pgramSSparam(0.6).renormalize())
-    pgram2 = pgramSSparam(0.6)
-    print("\n\n")
-    print(pgram2,"\n to je bil pgram2")
-    t2=display_time(t1); t1=t2
-    print(pgram2.list_coverages(10**5,10**(-17),100,1)[pgram2.grammar.start()], " original coverage")
-    t2=display_time(t1); t1=t2
-    pgram2.grammar = pgram2.renormalize()
-    print(pgram2,"\n to je bil pgram2")
-    print(pgram2.list_coverages(1000)[pgram2.grammar.start()], "new coverage")
-
-    p=0.51 # nekako meja?
-    pgram2 = pgramSSparam(p)
-    print(pgram2,"\n to je bil pgram2")
-    t2=display_time(t1); t1=t2
-    print(pgram2.list_coverages(height=1000,tol=10**(-9),min_height=100,verbosity=1)[pgram2.grammar.start()], " original coverage")
-    t2=display_time(t1); t1=t2
-    print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
-    pgram2.grammar = pgram2.renormalize()
-    print(pgram2,"\n to je bil pgram2")
-    print(pgram2.list_coverages(10**5)[pgram2.grammar.start()], "new coverage")
-
-    pgram2 = pgramSSparam(0.5)
-    print(pgram2,"\n to je bil pgram2")
-    t2=display_time(t1); t1=t2
-    print(pgram2.list_coverages(10**5,10**(-17),100,1)[pgram2.grammar.start()], " original coverage")
-    t2=display_time(t1); t1=t2
-    pgram2.grammar = pgram2.renormalize()
-    print(pgram2,"\n to je bil pgram2")
-    print(pgram2.list_coverages(1000)[pgram2.grammar.start()], "new coverage")
-
-    pgramZoo = GeneratorGrammar("""
-        S -> A S [1]
-        A -> A 'a' [1]  
-    """)
-    pgramRe = GeneratorGrammar("""
-        S -> A [0.1]
-        S -> 'a' [0.9]
-        A -> A 'a' [1]  
-    """)
-    pgramCounterExample = GeneratorGrammar("""
-        A -> S 'c' [0.7] 
-        A -> 'b' [0.3] 
-        S -> S S [0.8]
-        S -> 'a' [0.2]
-    """)
-    print(pgramZoo,"\n to je bil pgramZoo")
-    print(pgramZoo.list_coverages(10**5)[pgramZoo.grammar.start()], " original coverage")
-    # pgramZoo.grammar = pgramZoo.renormalize()
-    # print(pgramZoo, pgramZoo.list_coverages(10**5)[pgramZoo.grammar.start()], " renormalized coverage")
-
+# 
+    # print(pgramSSparam(0.5),"\n", pgramSSparam(0.6))
+    # print(pgramSSparam(0.5).renormalize(),"\n", pgramSSparam(0.6).renormalize())
+    # pgram2 = pgramSSparam(0.6)
+    # print("\n\n")
+    # print(pgram2,"\n to je bil pgram2")
+    # t2=display_time(t1); t1=t2
+    # print(pgram2.list_coverages(10**5,10**(-17),100,1)[pgram2.grammar.start()], " original coverage")
+    # t2=display_time(t1); t1=t2
+    # pgram2.grammar = pgram2.renormalize()
+    # print(pgram2,"\n to je bil pgram2")
+    # print(pgram2.list_coverages(1000)[pgram2.grammar.start()], "new coverage")
+# 
+    # p=0.51 # nekako meja?
+    # pgram2 = pgramSSparam(p)
+    # print(pgram2,"\n to je bil pgram2")
+    # t2=display_time(t1); t1=t2
+    # print(pgram2.list_coverages(height=1000,tol=10**(-9),min_height=100,verbosity=1)[pgram2.grammar.start()], " original coverage")
+    # t2=display_time(t1); t1=t2
+    # print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
+    # pgram2.grammar = pgram2.renormalize()
+    # print(pgram2,"\n to je bil pgram2")
+    # print(pgram2.list_coverages(10**5)[pgram2.grammar.start()], "new coverage")
+# 
+    # pgram2 = pgramSSparam(0.5)
+    # print(pgram2,"\n to je bil pgram2")
+    # t2=display_time(t1); t1=t2
+    # print(pgram2.list_coverages(10**5,10**(-17),100,1)[pgram2.grammar.start()], " original coverage")
+    # t2=display_time(t1); t1=t2
+    # pgram2.grammar = pgram2.renormalize()
+    # print(pgram2,"\n to je bil pgram2")
+    # print(pgram2.list_coverages(1000)[pgram2.grammar.start()], "new coverage")
+# 
+    # pgramZoo = GeneratorGrammar("""
+        # S -> A S [1]
+        # A -> A 'a' [1]  
+    # """)
+    # pgramRe = GeneratorGrammar("""
+        # S -> A [0.1]
+        # S -> 'a' [0.9]
+        # A -> A 'a' [1]  
+    # """)
+    # pgramCounterExample = GeneratorGrammar("""
+        # A -> S 'c' [0.7] 
+        # A -> 'b' [0.3] 
+        # S -> S S [0.8]
+        # S -> 'a' [0.2]
+    # """)
+    # print(pgramZoo,"\n to je bil pgramZoo")
+    # print(pgramZoo.list_coverages(10**5)[pgramZoo.grammar.start()], " original coverage")
+    # # pgramZoo.grammar = pgramZoo.renormalize()
+    # # print(pgramZoo, pgramZoo.list_coverages(10**5)[pgramZoo.grammar.start()], " renormalized coverage")
+# 
     # print(pgramRe,"\n to je bil pgramRe")
-    # print(pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " original coverage")
-    # pgramRe.grammar = pgramRe.renormalize()
-    # print(pgramRe, pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " renormalized coverage")
-
-    print(pgramCounterExample,"\n to je bil pgramCounter")
-    print(pgramCounterExample.list_coverages(10**5), " original coverage")
-    print("Chi says: 1/p-1 = %f" % (1/0.8-1))
-    pgramCounterExample.grammar = pgramCounterExample.renormalize()
-    print(pgramCounterExample, pgramCounterExample.list_coverages(10**5), " renormalized coverage")
-    print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
+    # # print(pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " original coverage")
+    # # pgramRe.grammar = pgramRe.renormalize()
+    # # print(pgramRe, pgramRe.list_coverages(10**5)[pgramRe.grammar.start()], " renormalized coverage")
+# 
+    # print(pgramCounterExample,"\n to je bil pgramCounter")
+    # print(pgramCounterExample.list_coverages(10**5), " original coverage")
+    # print("Chi says: 1/p-1 = %f" % (1/0.8-1))
+    # pgramCounterExample.grammar = pgramCounterExample.renormalize()
+    # print(pgramCounterExample, pgramCounterExample.list_coverages(10**5), " renormalized coverage")
+    # print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
