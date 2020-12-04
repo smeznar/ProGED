@@ -5,9 +5,9 @@ Created on Thu Oct 22 10:07:25 2020
 @author: Jure
 """
 
-import numpy as np
-from generators.grammar import GeneratorGrammar
-# from grammar import GeneratorGrammar
+# import numpy as np
+# from generators.grammar import GeneratorGrammar
+from grammar import GeneratorGrammar
 
 def grammar_from_template (template_name, grammar_parameters):
     if template_name in GRAMMAR_LIBRARY:
@@ -30,20 +30,21 @@ def construct_right_distribution (items=[], probs=[]):
         S += " | " + construct_right(right=items[i], prob=p[i])
     return S
 
-def construct_grammar_trigonometric (probs1 = [0.8,0.2], probs2=[0.4,0.4,0.2], symbols = {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}):
+def construct_grammar_trigonometric (probs1 = [0.8,0.2], probs2=[0.4,0.4,0.2], variables = {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}):
     items1 = ["'sin'", "'cos'", "'tan'"]
-    grammar = construct_production(left=symbols["start"], items=[symbols["T1"]+"'('"+symbols["x"]+"')'",
-                                                symbols["T1"]+" "+symbols["T2"]+"'('"+symbols["x"]+"')'"], probs=probs1)
-    grammar += construct_production(left=symbols["T1"], items=items1, probs=probs2)
-    grammar += construct_production(left=symbols["T2"], items=["'h'"], probs=[1])
+    grammar = construct_production(left=variables["start"], items=[variables["T1"]+"'('"+variables["x"]+"')'",
+                                                variables["T1"]+" "+variables["T2"]+"'('"+variables["x"]+"')'"], probs=probs1)
+    grammar += construct_production(left=variables["T1"], items=items1, probs=probs2)
+    grammar += construct_production(left=variables["T2"], items=["'h'"], probs=[1])
     return grammar
     
-def construct_grammar_function (functions=["'sin'", "'cos'"], probs=[0.5,0.5], symbols = {"x":"'x'", "start":"S", "A":"A1"}, string=True):
-    grammar = construct_production(left=symbols["start"], items=[symbols["A"]+"'('"+symbols["x"]+"')'"], probs=[1])
-    grammar += construct_production(left=symbols["A"], items=functions, probs=probs)
+def construct_grammar_function (functions=["'sin'", "'cos'"], probs=[0.5,0.5], string=True):
+    grammar = construct_production(left="S", items=["A'(''x'')'"], probs=[1])
+    grammar += construct_production(left="A", items=functions, probs=probs)
     return grammar
     
-def construct_grammar_polytrig (p_more_terms=[0.7,0.15,0.15], p_higher_terms=0.5, p_vars = [0.5,0.3,0.2], variables = ["'x'", "'v'", "'a'", "'sin(C*x + C)'"]):
+def construct_grammar_polytrig (p_more_terms=[0.7,0.15,0.15], p_higher_terms=0.5, p_vars = [0.5,0.3,0.2], 
+        variables = ["'x'", "'v'", "'a'", "'sin(C*x + C)'"]):
     grammar = construct_production(left="S", items=["'C' '+' S2"], probs=[1])
     grammar += construct_production(left="S2", items=["'C' '*' T '+' S2", "'C' '*' T", "'C'"], probs=p_more_terms)
     grammar += construct_production(left="T", items=["T '*' V", "V"], probs=[p_higher_terms, 1-p_higher_terms])
@@ -89,7 +90,7 @@ def construct_grammar_universal (p_sum=[0.2, 0.2, 0.6], p_mul = [0.2, 0.2, 0.6],
     grammar += construct_production(left="R", items=["'(' S ')'"] + ["'"+f+"(' S ')'" for f in functions], probs=p_functs)
     grammar += construct_production(left="V", items=variables, probs=p_vars)
     return grammar
-
+  
 
 GRAMMAR_LIBRARY = {
     "universal": construct_grammar_universal,
@@ -97,17 +98,21 @@ GRAMMAR_LIBRARY = {
     "simplerational": construct_grammar_simplerational,
     "polytrig": construct_grammar_polytrig,
     "trigonometric": construct_grammar_trigonometric,
-    "polynomial": construct_grammar_polynomial}
+    "polynomial": construct_grammar_polynomial,
+    "function": construct_grammar_function}
+
 
 if __name__ == "__main__":
     print("--- grammar_construction.py test ---")
+    import numpy as np
     np.random.seed(0)
     from nltk import PCFG
-    # grammar = grammar_from_template("universal", {"variables":["'phi'", "'theta'", "'r'"], "p_vars":[0.2,0.4,0.4]})
-    # grammar = grammar_from_template("trigonometric", {}) 
-    # grammar = grammar_from_template("trigonometric", {"variables":["'phi'", "'theta'", "'r'"]})
-    grammar = grammar_from_template("trigonometric", {"probs1":[0.8,0.2], "probs2":[0.4,0.4,0.2],
-                                            "symbols": {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}})
+    grammar = grammar_from_template("universal", {"variables":["'phi'", "'theta'", "'r'"], "p_vars":[0.2,0.4,0.4]})
+    grammar = grammar_from_template("trigonometric", {}) 
+    grammar = grammar_from_template("trigonometric", {"variables":["'phi'", "'theta'", "'r'"]})
+    # grammar = grammar_from_template("trigonometric", {"probs1":[0.8,0.2], "probs2":[0.4,0.4,0.2],
+                                            # "variables": {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}})
+    # grammar = grammar_from_template("function", {"functions":["'sin'", "'cos'"], "probs":[0.5,0.5]}) 
     print(grammar)
     for i in range(5):
         print(grammar.generate_one())
