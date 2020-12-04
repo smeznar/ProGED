@@ -30,12 +30,12 @@ def construct_right_distribution (items=[], probs=[]):
         S += " | " + construct_right(right=items[i], prob=p[i])
     return S
 
-def construct_grammar_trigonometric (probs1 = [0.8,0.2], probs2=[0.4,0.4,0.2], variables = {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}):
+def construct_grammar_trigonometric (probs1 = [0.8,0.2], probs2=[0.4,0.4,0.2]):
     items1 = ["'sin'", "'cos'", "'tan'"]
-    grammar = construct_production(left=variables["start"], items=[variables["T1"]+"'('"+variables["x"]+"')'",
-                                                variables["T1"]+" "+variables["T2"]+"'('"+variables["x"]+"')'"], probs=probs1)
-    grammar += construct_production(left=variables["T1"], items=items1, probs=probs2)
-    grammar += construct_production(left=variables["T2"], items=["'h'"], probs=[1])
+    grammar = construct_production(left="S", items=["T1"+"'('"+"'x'"+"')'",
+                                                    "T1"+" "+"T2"+"'('"+"'x'"+"')'"], probs=probs1)
+    grammar += construct_production(left="T1", items=items1, probs=probs2)
+    grammar += construct_production(left="T2", items=["'h'"], probs=[1])
     return grammar
     
 def construct_grammar_function (functions=["'sin'", "'cos'"], probs=[0.5,0.5], string=True):
@@ -109,7 +109,8 @@ if __name__ == "__main__":
     from nltk import PCFG
     grammar = grammar_from_template("universal", {"variables":["'phi'", "'theta'", "'r'"], "p_vars":[0.2,0.4,0.4]})
     grammar = grammar_from_template("trigonometric", {}) 
-    grammar = grammar_from_template("trigonometric", {"variables":["'phi'", "'theta'", "'r'"]})
+    # grammar = grammar_from_template("trigonometric", {"variables":["'phi'", "'theta'", "'r'"]})
+    # grammar = grammar_from_template("function", {"variables":["'phi'", "'theta'", "'r'"]})
     # grammar = grammar_from_template("trigonometric", {"probs1":[0.8,0.2], "probs2":[0.4,0.4,0.2],
                                             # "variables": {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}})
     # grammar = grammar_from_template("function", {"functions":["'sin'", "'cos'"], "probs":[0.5,0.5]}) 
