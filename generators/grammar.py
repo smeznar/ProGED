@@ -34,6 +34,22 @@ class GeneratorGrammar (BaseExpressionGenerator):
     
     def code_to_expression (self, code):
         return code_to_sample(code, self.grammar, items=[self.start_symbol])
+ 
+    def count_trees_old(self, start, height):
+        """Counts all trees of height <= height."""
+        if not isinstance(start, Nonterminal):
+            return 1
+        elif height == 0:
+            return 0
+        else:
+            counter = 0
+            prods = self.grammar.productions(lhs=start)
+            for prod in prods:
+                combinations = 1
+                for symbol in prod.rhs():
+                    combinations *= self.count_trees(symbol, height-1)
+                counter += combinations
+            return counter
 
     def count_trees(self, start, height):
         """Counts all trees of height <= height."""
@@ -51,6 +67,17 @@ class GeneratorGrammar (BaseExpressionGenerator):
                     if not symbol_height_key in self.count_dict:
                         self.count_dict[symbol_height_key] = self.count_trees(symbol, height-1)
                     combinations *= self.count_dict[symbol_height_key]
+
+                # for symbol in prod.rhs():
+                #     symbol_height_key = "("+str(symbol)+","+str(height-1)+")" 
+                #     if not symbol_height_key in self.count_dict:
+                #         new_combo = self.count_trees(symbol, height-1)
+                #         self.count_dict[symbol_height_key] = new_combo 
+                #         combinations *= new_combo
+                        # # print(self.count_dict)
+                    # else:
+                    #     combinations *= self.count_dict[symbol_height_key]
+                        # # print(self.count_dict)
                 counter += combinations
             return counter
 
@@ -362,7 +389,8 @@ if __name__ == "__main__":
     from time import time
     t1=0
     def display_time(t1): t2 = time(); print(10**(-3)*int((t2-t1)*10**3), "= seconds consumed"); return t2
-    height = 10**2*9 # 5
+    # height = 10**1*1 +7+9#  This is maximum for count_tree (with count_dict cache).
+    height = 10**1*1 +15#*9 # 5
     p=0.9
     for gramm in [grammar, pgram0, pgram1, pgrama, pgramw, pgramSS,
     # for gramm in [
@@ -371,23 +399,30 @@ if __name__ == "__main__":
         for i in range(height, height+1):
         # for i in range(0, 5):
             t2=display_time(t1); t1=t2
-            # print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
+            # if i < 15:
+            #     print(gramm.count_trees(gramm.start_symbol,i), f" = count trees of height <= {i}")
+            b = gramm.count_trees(gramm.start_symbol, i)
+            print("zracunal count_tree")
+            t2=display_time(t1); t1=t2
+            # if i < 15:
+            #     print(gramm.count_trees_old(gramm.start_symbol,i), f" = count trees of height <= {i}")
             # print(gramm.count_coverage(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
-            # a = gramm.count_coverage(gramm.start_symbol,i)
-            # print(a, f" = coverage(start,{i}) of height <= {i}")
+            a = gramm.count_trees_old(gramm.start_symbol,i)
+            print("zracunal count_tree_old")
+            # print(f"{b:.120e}" , " = count_tree(start,{i}) of height <= {i}")
             # t2=display_time(t1); t1=t2;
             # print(gramm.count_coverage_external(gramm.start_symbol,i), f" = coverage(start,{i}) of height <= {i}")
-            b = gramm.count_coverage_external(gramm.start_symbol,i)
-            print(b, f" = coverage(start,{i}) of height <= {i}")
+            # b = gramm.count_coverage_external(gramm.start_symbol,i)
+            # print(b, f" = coverage(start,{i}) of height <= {i}")
             # t2=display_time(t1); t1=t2;
-            print(gramm.list_coverages(i, tol=10**(-17), min_height=100,
-                verbosity=1)[gramm.grammar.start()], 
-                f" = list_coverages({i})[start] of height <= {i}")
+            # print(gramm.list_coverages(i, tol=10**(-17), min_height=100,
+                # verbosity=1)[gramm.grammar.start()], 
+                # f" = list_coverages({i})[start] of height <= {i}")
             # c = gramm.list_coverages(i, tol=10**(-17), min_height=100,
             #     verbosity=1)[gramm.grammar.start()] 
             # print(c, f" = list_coverages({i})[start] of height <= {i}")
             t2=display_time(t1); t1=t2
-            # if not (b == c): raise ValueError("Coveragi se ne ujemajo!!!!")
+            # if not (b == a): raise ValueError("Coveragi se ne ujemajo!!!!")
         # print("\nRenormalized grammar:\n %s" % gramm.renormalize())
     print(f"Chi says: limit probablity = 1/p - 1, i.e. p={p} => prob={1/p-1}")
     # print(pgramw)
