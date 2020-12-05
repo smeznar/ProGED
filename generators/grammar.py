@@ -9,8 +9,8 @@ import numpy as np
 from nltk import PCFG
 from nltk.grammar import Nonterminal, ProbabilisticProduction
 
-# from generators.base_generator import BaseExpressionGenerator
-from base_generator import BaseExpressionGenerator
+from generators.base_generator import BaseExpressionGenerator
+# from base_generator import BaseExpressionGenerator
 
 class GeneratorGrammar (BaseExpressionGenerator):
     def __init__ (self, grammar):
@@ -185,7 +185,12 @@ class GeneratorGrammar (BaseExpressionGenerator):
         return {A: probs_dict[(A, height)] for A in nonterminals}
 
     def renormalize(self, height=10**4, tol=10**(-17), min_height=100):
-        """Returns renormalized grammar. Inputs like list_coverages."""
+        """Return renormalized grammar. 
+        
+        Raise ValueError if for at least one nonterminal, its coverage
+        equals zero.
+        Inputs are like in list_coverages.
+        """
         coverages_dict = self.list_coverages(height, tol, min_height)
         if min(coverages_dict[A] for A in coverages_dict) < tol:  # input tol
             raise ValueError("Not all coverages are positive, so"

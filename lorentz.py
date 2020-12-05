@@ -1,7 +1,7 @@
 # Simulate Lorentz's system ODE and discover edes
 
 import logging
-logging.basicConfig(filename="myfile.log", level=logging.INFO)  # Overwrites
+logging.basicConfig(filename="my.log", level=logging.INFO)  # Overwrites
 # my.log with program output.
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,7 +31,7 @@ plt.plot(T, Yode.y[0], label="solution x")
 plt.plot(T, Yode.y[1], label="solution y")
 plt.plot(T, Yode.y[2], label="solution z")
 plt.legend()
-plt.show()
+# plt.show()
 
 data = np.concatenate((T[:, np.newaxis], Yode.y.T), axis=1)  # Embed Time column into dataset
 
@@ -45,16 +45,19 @@ from generators.grammar_construction import grammar_from_template  # Grammar
 from parameter_estimation import fit_models
 np.random.seed(0)
 
-def eq_disco_demo (data, lhs_variables: list = ["stolpec 1"],
-    rhs_variables: list = [2, 3],
-    dimension = [0]):
+def eq_disco_demo (data, lhs_variables: list = [1],
+                  # ["stolpec 1"], # in case of header string reference
+                    rhs_variables: list = [2, 3],
+                    dimensions: list = [0]):
     # header = ["column for x", "column for y", "column for z"]
-    header = ["c_x", "c_y", "c_z"]
-    T = data[:, 0]
-    Y = data[:, features_on_left]
-    X = data[:, features_on_right]
-    variables = ["'"+header[i-1]+"'" for i in features_on_left] # [1,3] -> ["x1", "x3"]
-    variables += ["'"+header[i-1]+"'" for i in features_on_right]
+    header = ["x", "y", "z"]
+    T = data[:, dimensions]
+    print(T.shape, "T")
+    T = T.T[0]  # Temporary line since T is for still 1-D array.
+    Y = data[:, lhs_variables]
+    X = data[:, rhs_variables]
+    variables = ["'"+header[i-1]+"'" for i in lhs_variables] # [1,3] -> ["x1", "x3"]
+    variables += ["'"+header[i-1]+"'" for i in rhs_variables]
     print(variables)
     symbols = {"x": variables, "start":"S", "const":"C"}
     # start eq. disco.:
@@ -68,7 +71,7 @@ def eq_disco_demo (data, lhs_variables: list = ["stolpec 1"],
         "functions": []
     })
     print(grammar)
-    models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
+    models = generate_models(grammar, symbols, strategy_parameters = {"N":5})
     fit_models(models, X, Y, T)
     # print results:
     print(models)
@@ -77,6 +80,6 @@ def eq_disco_demo (data, lhs_variables: list = ["stolpec 1"],
         print(f"model: {str(m.get_full_expr()):<70}; error: {m.get_error()}")
     return 1
 
-# eq_disco_demo(data, features_on_left=[2], features_on_right=[1,3])
-eq_disco_demo(data, features_on_left=[3], features_on_right=[1,2])
-# eq_disco_demo(data, features_on_left=[1], features_on_right=[2,3])
+# eq_disco_demo(data, lhs_variables=[2], rhs_variables=[1,3])
+eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
+# eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])

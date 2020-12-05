@@ -243,8 +243,8 @@ class ParameterEstimator:
                 res = find_parameters(model, self.X, self.Y, self.T)
                 # print("find_parameter output:", res)
                 model.set_estimated(res) # res je lahko None, zato ta vrstica lahko vrne Error!
-        except:
-            print("Excepted an error!! Model:", model)
+        except Exception as error:
+            print(f"Excepted an error: {error}!! Model:", model)
             model.set_estimated({}, valid=False)
         return model
     

@@ -42,8 +42,6 @@ class EqDisco:
             raise TypeError ("Missing task information!")
             
         generator_parameters.update({"variables":self.task.symbols["x"]})
-        # if not generator_parameters:
-        #     generator_parameters.update({"variables":self.task.symbols["x"]})
         if isinstance(generator, BaseExpressionGenerator):
             self.generator = generator
         elif isinstance(generator, str):
@@ -55,7 +53,7 @@ class EqDisco:
         else:
             raise TypeError ("Invalid generator specification. Expected: class that inherits from "\
                              "generators.base_generator.BaseExpressionGenerator or string, corresponding to template name.\n"\
-                             "Input: " + str(type(task))) # spremeni
+                             "Input: " + str(type(generator)))
             
         self.strategy = strategy
         self.strategy_parameters = strategy_parameters

@@ -6,7 +6,6 @@ Created on Wed Oct 21 11:25:27 2020
 """
 
 # from nltk.grammar import Nonterminal
-# import PCFG sem dal na dno (v name())
 import numpy as np
 import sympy as sp
 
