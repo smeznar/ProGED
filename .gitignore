@@ -2,3 +2,5 @@
 # .gitignore
 .gitignore.swp
 __pycache__/
+lorenz/
+
