@@ -17,7 +17,7 @@ class GeneratorGrammar (BaseExpressionGenerator):
         self.generator_type = "PCFG"
         self.coverage_dict = {}
         self.count_dict = {}
-
+    
         if isinstance(grammar, str):
             self.grammar = PCFG.fromstring(grammar)
         elif isinstance(grammar, type(PCFG.fromstring("S -> 'x' [1]"))):
@@ -99,7 +99,6 @@ class GeneratorGrammar (BaseExpressionGenerator):
 
     def count_coverage_external(self, start, height):
         """Counts coverage fast using external (objective) cache."""
-        # print("tle je count external")
         if height == 0:
             return 0
         coverage = 0
@@ -113,7 +112,6 @@ class GeneratorGrammar (BaseExpressionGenerator):
                     subprobabs = 0
                     break
                 else:
-                    # if (symbol, height-1) in self.coverage_dict:
                     if "("+str(symbol)+","+str(height-1)+")" in self.coverage_dict:
                         # subprobabs *= self.coverage_dict[(symbol, height-1)]
                         # subprobabs *= self.coverage_dict[(str(symbol), height-1)]
@@ -129,10 +127,11 @@ class GeneratorGrammar (BaseExpressionGenerator):
                         subprobabs *= newprob
             coverage += subprobabs
         return coverage
-    # def ^
+
     def list_coverages(self, height, tol=10**(-17),
                             min_height=100, verbosity=0):
         """Counts coverage of maximal height using cache(dictionary).
+
         Input:
             height - maximal height of parse trees of which the
                 coverage is calculated of.
@@ -189,7 +188,17 @@ class GeneratorGrammar (BaseExpressionGenerator):
         
         Raise ValueError if for at least one nonterminal, its coverage
         equals zero.
-        Inputs are like in list_coverages.
+        Input:
+            height - maximal height of parse trees of which the
+                coverage is calculated of.
+            tol - tolerance as a stopping condition. If change
+                is smaller than the input tolerance, then it stops.
+            min_height - overrides tolerance stopping condition and
+                calculates coverage of all heights <= min_height. It
+                also determines for how many previous steps the change
+                is measured, i.e. for levels (height-1 - min_height/2).
+            verbosity - if set to > 0, it prints stopping probability
+                change, height and input tolerance.
         """
         coverages_dict = self.list_coverages(height, tol, min_height)
         if min(coverages_dict[A] for A in coverages_dict) < tol:  # input tol

@@ -31,10 +31,10 @@ def construct_right_distribution (items=[], probs=[]):
     return S
 
 def construct_grammar_trigonometric (probs1 = [0.8,0.2], probs2=[0.4,0.4,0.2]):
-    items1 = ["'sin'", "'cos'", "'tan'"]
+    functions = ["'sin'", "'cos'", "'tan'"]
     grammar = construct_production(left="S", items=["T1"+"'('"+"'x'"+"')'",
                                                     "T1"+" "+"T2"+"'('"+"'x'"+"')'"], probs=probs1)
-    grammar += construct_production(left="T1", items=items1, probs=probs2)
+    grammar += construct_production(left="T1", items=functions, probs=probs2)
     grammar += construct_production(left="T2", items=["'h'"], probs=[1])
     return grammar
     
@@ -43,8 +43,7 @@ def construct_grammar_function (functions=["'sin'", "'cos'"], probs=[0.5,0.5], s
     grammar += construct_production(left="A", items=functions, probs=probs)
     return grammar
     
-def construct_grammar_polytrig (p_more_terms=[0.7,0.15,0.15], p_higher_terms=0.5, p_vars = [0.5,0.3,0.2], 
-        variables = ["'x'", "'v'", "'a'", "'sin(C*x + C)'"]):
+def construct_grammar_polytrig (p_more_terms=[0.7,0.15,0.15], p_higher_terms=0.5, p_vars = [0.5,0.3,0.2], variables = ["'x'", "'v'", "'a'", "'sin(C*x + C)'"]):
     grammar = construct_production(left="S", items=["'C' '+' S2"], probs=[1])
     grammar += construct_production(left="S2", items=["'C' '*' T '+' S2", "'C' '*' T", "'C'"], probs=p_more_terms)
     grammar += construct_production(left="T", items=["T '*' V", "V"], probs=[p_higher_terms, 1-p_higher_terms])
@@ -90,7 +89,7 @@ def construct_grammar_universal (p_sum=[0.2, 0.2, 0.6], p_mul = [0.2, 0.2, 0.6],
     grammar += construct_production(left="R", items=["'(' S ')'"] + ["'"+f+"(' S ')'" for f in functions], probs=p_functs)
     grammar += construct_production(left="V", items=variables, probs=p_vars)
     return grammar
-  
+
 
 GRAMMAR_LIBRARY = {
     "universal": construct_grammar_universal,
@@ -98,13 +97,11 @@ GRAMMAR_LIBRARY = {
     "simplerational": construct_grammar_simplerational,
     "polytrig": construct_grammar_polytrig,
     "trigonometric": construct_grammar_trigonometric,
-    "polynomial": construct_grammar_polynomial,
-    "function": construct_grammar_function}
+    "polynomial": construct_grammar_polynomial}
 
 
 if __name__ == "__main__":
     print("--- grammar_construction.py test ---")
-    import numpy as np
     np.random.seed(0)
     from nltk import PCFG
     grammar = grammar_from_template("universal", {"variables":["'phi'", "'theta'", "'r'"], "p_vars":[0.2,0.4,0.4]})
