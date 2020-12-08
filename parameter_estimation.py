@@ -178,9 +178,9 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    except RuntimeError:
 #        popt, pcov = model.params, 0
 #    opt_params = popt; othr = pcov
-
+    
     res = DE_fit(model, X, Y, p0=model.params, T=T)
-
+    
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
     
