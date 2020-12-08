@@ -1,5 +1,5 @@
 .vscode/
-# .gitignore
+.gitignore
 .gitignore.swp
 __pycache__/
 # */__pycache__/
