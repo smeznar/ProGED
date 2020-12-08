@@ -1,15 +1,20 @@
 # Simulate Lorentz's system ODE and discover edes
 
 import logging
-# logging.basicConfig(filename="my.log", level=logging.INFO)  # Overwrites
-# my.log with program output.
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
+# # 0.) Log output to lorenz_log_<random>.log file
+
+random = str(np.random.random())
+print(random)
+logging.basicConfig(filename="lorenz/lorenz_log_" + random + ".log", level=logging.INFO)
+
 
 # # 1.) Data construction (simulation of Lorenz):
 
+np.random.seed(0)
 T = np.linspace(0.48, 0.85, 1000)
 # # Lorenz's sode:
 # dx/dt = \sigma * (y-x)
@@ -43,7 +48,6 @@ from generate import generate_models
 from generators.grammar_construction import grammar_from_template  # Grammar
 #nonterminals will depend on given dataset.
 from parameter_estimation import fit_models
-np.random.seed(0)
 
 def eq_disco_demo (data, lhs_variables: list = [1],
                   # ["stolpec 1"], # in case of header string reference
@@ -71,7 +75,7 @@ def eq_disco_demo (data, lhs_variables: list = [1],
         "functions": []
     })
     print(grammar)
-    models = generate_models(grammar, symbols, strategy_parameters = {"N":5})
+    models = generate_models(grammar, symbols, strategy_parameters = {"N":100})
     fit_models(models, X, Y, T)
     # print results:
     print(models)
