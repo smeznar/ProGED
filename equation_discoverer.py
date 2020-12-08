@@ -5,9 +5,9 @@ Created on Thu Oct 22 14:43:01 2020
 @author: Jure
 """
 
-import numpy as np # res potreben ( dataX.shape())
+import numpy as np
 # import sympy as sp
-# import PCFG zbrisal
+# from nltk import PCFG
 
 # from model import Model
 # from model_box import ModelBox
@@ -67,8 +67,7 @@ class EqDisco:
     def generate_models (self, strategy_parameters = None):
         if not strategy_parameters:
             strategy_parameters = self.strategy_parameters
-        self.models = generate_models(self.generator, self.task.symbols, self.strategy, 
-                                    strategy_parameters, verbosity=self.verbosity)
+        self.models = generate_models(self.generator, self.task.symbols, self.strategy, strategy_parameters, verbosity=self.verbosity)
         return self.models
     
     def fit_models (self, pool_map = map):
@@ -79,6 +78,7 @@ class EqDisco:
 if __name__ == "__main__":
     print("--- equation_discoverer.py test --- ")
     np.random.seed(2)
+    
     from pyDOE import lhs
     
     def testf (x):
@@ -90,11 +90,6 @@ if __name__ == "__main__":
     N = 2
     disco = EqDisco(dataX = X, dataY = y, strategy_parameters = {"N":10}, verbosity = 0,
                     generator="grammar", generator_template_name="universal")
-    # disco = EqDisco(dataX = X, dataY = y, strategy_parameters = {"N":10}, verbosity = 0,
-    #                 generator="grammar", generator_template_name="trigonometric", 
-    #                 generator_parameters = {"probs1":[0.8,0.2], "probs2":[0.4,0.4,0.2],
-    #                                         "symbols": {"x":"'x'", "start":"S", "T1":"T1", "T2":"T2"}}
-    #                 )
-                    
+    
     print(disco.generate_models())
     print(disco.fit_models())

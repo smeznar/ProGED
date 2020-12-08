@@ -1,10 +1,9 @@
-# # -*- coding: utf-8 -*-
-# """
-# Created on Thu Oct 22 09:12:29 2020
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Oct 22 09:12:29 2020
 
-# @author: Jure
-# """
-
+@author: Jure
+"""
 
 import numpy as np
 from scipy.optimize import differential_evolution, minimize
@@ -19,13 +18,11 @@ from model_box import ModelBox
 # from generate import generate_models
 # from generators.grammar import GeneratorGrammar
 
+"""Methods for estimating model parameters. Currently implemented: differential evolution.
 
-
-# """Methods for estimating model parameters. Currently implemented: differential evolution.
-
-# Methods:
-#     fit_models: Performs parameter estimation on given models. Main interface to the module.
-# """
+Methods:
+    fit_models: Performs parameter estimation on given models. Main interface to the module.
+"""
 
 def model_error (model, params, X, Y):
     """Defines mean squared error as the error metric."""
@@ -42,45 +39,33 @@ def model_constant_error (model, params, X, Y):
     
     testY = model.evaluate(X, *params)
     return np.std(testY)#/np.linalg.norm(params)
-    
 
-def ode1d(model, params, T, X_data, y0):
-    if T.shape[0] != X_data.shape[0]: 
-        raise IndexError("Number of samples in T and X does not match.")
-    X = interp1d(T, X_data, kind='cubic')  # testiral, zgleda da dela.
-    lamb_expr = sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
-    def dy_dt(t, y):  # \frac{dy}{dt}
-        # return model.evaluate(np.array([[y[0], X(t)]]), *params)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-        return lamb_expr(*np.array([[y[0], X(t)]]).T)  # =[y,X(t)] =[y,X1(t),X2(t),...] 
-    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T) # spremeni v y0
-    Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), t_eval=T, atol=0) # spremeni v y0
-    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T, atol=0) 
-    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), np.array([y0]), method='LSODA', t_eval=T) 
-    print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
-    return Yode.y[0]
+def ode (models_list, params_matrix, T, X_data, y0):
+    """Solve system of ODEs defined by equations in models_list.
 
-def ode(models_list, params_matrix, T, X_data, y0):
-    """Solves ode defined by model.
-        Input specs:
-        - models_list is list (not dictionary) of models that e.g.
-        generate_models() generates.
-        - params_matrix is list of lists or ndarrays of parameters for
-        corresponding models.
-        - y0 is array (1-dim) of initial value of vector function y(t)
-        i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...].
-        - X_data is 2-dim array (matrix) i.e. X = [X[0,:], X[1,:],...].
-        - T is (1-dim) array, i.e. of shape (N,)
+    Raise error if input is incompatible.
+        Input:
+    models_list -- list (not dictionary) of models that e.g.
+    generate_models() generates.
+    params_matrix -- list of lists or ndarrays of parameters for
+    corresponding models.
+    y0 -- array (1-dim) of initial value of vector function y(t)
+    i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...].
+    X_data -- 2-dim array (matrix) i.e. X = [X[0,:], X[1,:],...].
+    T -- (1-dim) array, i.e. of shape (N,)
+        Output:
+    Solution of ODE evaluated at times T.
     """
     if not (isinstance(models_list, list)
-            and (isinstance(params_matrix, list) 
-                and len(params_matrix)>0 
+            and (isinstance(params_matrix, list)
+                and len(params_matrix)>0
                 and isinstance(params_matrix[0], (list, np.ndarray)))
             and X_data.ndim == 2
             and y0.ndim == 1):
         print(type(params_matrix[0]))
-        print(isinstance(models_list, list), 
-            isinstance(params_matrix, list), 
-            len(params_matrix)>0, 
+        print(isinstance(models_list, list),
+            isinstance(params_matrix, list),
+            len(params_matrix)>0,
             isinstance(params_matrix[0], (list, np.ndarray)),
             X_data.ndim == 2,
             y0.ndim == 1 )
@@ -88,44 +73,38 @@ def ode(models_list, params_matrix, T, X_data, y0):
                         +" in required form!")
         raise TypeError("Programmer's defined error: Input arguments are not"
                         +" in required form!")
-    elif not T.shape[0] == X_data.shape[0]: 
+    elif not T.shape[0] == X_data.shape[0]:
         print("Number of samples in T and X does not match.")
         raise IndexError("Number of samples in T and X does not match.")
     elif not (y0.shape[0] == len(models_list)  #len(equations)=len(models used)
-            and len(models_list[0].sym_vars) == X_data.shape[1] + y0.shape[0]): 
+            and len(models_list[0].sym_vars) == X_data.shape[1] + y0.shape[0]):
         print("Number of symbols in models and combination of "
                         + "number of equations and dimensions of input data"
                         + " does not match.")
         raise IndexError("Number of symbols in models and combination of "
                         + "number of equations and dimensions of input data"
                         + " does not match.")
-    ### 1-dim version of X_data currently: ###
-    # X = interp1d(T, X_data.T[0], kind='cubic', fill_value="extrapolate")  # 1 -dim
     X = interp1d(T, X_data, axis=0, kind='cubic', fill_value="extrapolate")  # N-D
     lamb_exprs = [
         sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
         for model, params in zip(models_list, params_matrix)
     ]
     def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
-        ### 1-dim interpol causes ###
-        # b = np.concatenate((y,np.array([X(t)]))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
         # N-D:
-        b = np.concatenate((y, X(t))) # =[y,X(t)] =[y,X1(t),X2(t),...] 
+        b = np.concatenate((y, X(t))) # =[y,X(t)] =[y,X1(t),X2(t),...]
         return np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
-    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T)
-    # print(f"Status: {Yode.status}, Success: {Yode.success}, message: {Yode.message}.")
+    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)
     return Yode.y
 
 def model_ode_error (model, params, T, X, Y):
     """Defines mean squared error of solution to differential equation
     as the error metric.
+
         Input:
         - T is column of times at which samples in X and Y happen.
         - X are columns without features that are derived.
         - Y are columns of features that are derived via ode fitting.
-    """   
-    # print("inside ode error. Model:", model)
-
+    """
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
     try:
         odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
@@ -133,19 +112,26 @@ def model_ode_error (model, params, T, X, Y):
         print("error inside ode() of model_ode_error.")
         print("params at error:", params, "Error message:", error)
         odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
-    # print("Successful ode(). params:", params)
-    odeY = odeY.T  # solve_ivp() returns in oposite (DxN) form
-    res = np.mean((Y-odeY)**2)  
+    odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
+    res = np.mean((Y-odeY)**2)
+    if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+#        print(model.expr, model.params, model.sym_params, model.sym_vars)
+        return 10**9
+    return res
 
-    # print(f"Before isnan. Result:{res}, isnan:{np.isnan(res)}, isinf:{np.isinf(res)}, isreal:{np.isreal(res)}")
-    try:
-        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-    #        print(model.expr, model.params, model.sym_params, model.sym_vars)
-            return 10**9
-        return res
-    except:
-        print("Error happened inside model_ode_error when isnan et al.")
-        raise ValueError("Error happened inside model_ode_error when isnan et al.")
+def model_error_general (model, params, X, Y, T="algebraic"):
+    """Calculate error of model with given parameters in general with
+    type of error given.
+
+        Input = TODO:
+    - T is column of times at which samples in X and Y happen.
+    - X are columns without features that are derived.
+    - Y are columns of features that are derived via ode fitting.
+    """
+    if isinstance(T, str):
+        return model_error(model, params, X, Y)
+    else:
+        return model_ode_error(model, params, T, X, Y)
 
 def optimization_wrapper (x, *args):
     """Calls the appropriate error function. The choice of error function is made here.
@@ -162,36 +148,19 @@ def optimization_wrapper_ODE (x, *args):
     TODO:
         We need to pass information on the choice of error function from fit_models all the way to here,
             and implement a library framework, similarly to grammars and generation strategies."""
-    # print("inside wrapper ode")
-    try:
-        return model_ode_error(args[0], x, args[3], args[1], args[2])
-    except:
-        print("Error occured inside model_ode_error")
-        print("model.params:", args[0].params, "model:", args[0])
-        return model_ode_error(args[0], x, args[3], args[1], args[2])
+    return model_ode_error(args[0], x, args[3], args[1], args[2])
     
 def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
     bounds = [[-10**1, 10**1] for i in range(len(p0))]
-    # print("in DEfit. before if", bo)
     if isinstance(T, str):
-        print("in DE_fit. if is in algebraic", model)
         return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
                                     maxiter=10**2, popsize=10)
     else:
-        print("If in ODE! DEfit. Model:", model)
-        # try:
-        diff_evol =  differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
+        return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
                                     maxiter=10**2, popsize=10)
-        return diff_evol
-        # except:
-        #     print("excerpted in DE_fit. ")
-            
-        #     # raise RuntimeError("diff_evol() got error.")
-        #     print("excerpt in DE_fit, after error in diff_evol() ")
-        #     return "Something"
 
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
@@ -209,9 +178,9 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    except RuntimeError:
 #        popt, pcov = model.params, 0
 #    opt_params = popt; othr = pcov
-    print("in find_parametres")
+
     res = DE_fit(model, X, Y, p0=model.params, T=T)
-    print("in find_parametres, after successful DE_fit. res:", res)
+
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
     
@@ -237,14 +206,12 @@ class ParameterEstimator:
             if len(model.params) > 5:
                 pass
             elif len(model.params) < 1:
-                model.set_estimated({"x":[], "fun":model_error(model, [], self.X, self.Y)})
+                model.set_estimated({"x":[], "fun":model_error_general(model, [], self.X, self.Y, self.T)})
             else:
-                # print("Obicno, find parameters! Model:", model)
                 res = find_parameters(model, self.X, self.Y, self.T)
-                # print("find_parameter output:", res)
-                model.set_estimated(res) # res je lahko None, zato ta vrstica lahko vrne Error!
+                model.set_estimated(res)
         except Exception as error:
-            print(f"Excepted an error: {error}!! Model:", model)
+            print(f"Excepted an error: {error}!! \nModel:", model)
             model.set_estimated({}, valid=False)
         return model
     
@@ -271,32 +238,27 @@ def fit_models (models, X, Y, T="algebraic", pool_map = map, verbosity=0):
 
 
 if __name__ == "__main__":
-    
     print("--- parameter_estimation.py test --- ")
     np.random.seed(2)
-    from generate import generate_models    
+    
     from pyDOE import lhs
     from generators.grammar import GeneratorGrammar
-    
-    
+    from generate import generate_models
+
     def testf (x):
         return 3*x[:,0]*x[:,1]**2 + 0.5
     
-    
     X = lhs(2, 10)*5
     y = testf(X)
-   
+    
     grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                               T -> 'C' [0.6] | T "*" V [0.4]
                               V -> 'x' [0.5] | 'y' [0.5]""")
     symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
     N = 10
-
+    
     models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
-    T = np.linspace(1,50,X.shape[0])
-    print(models, models[-1].params)
-    # models1 = fit_models(models, X, y)
-    # print(models1, models1[-1].params, [model.params for model in models1])
-    # models2_old = fit_models(models, X[:,0], y, np.linspace(1,50,X.shape[0]))    
-    # models2 = fit_models(models, X[:,[0]], np.array([y]).T, np.linspace(1,50,X.shape[0]))    
-    # print(models2, models2[-1].params, [model.params for model in models2])
+    
+    models = fit_models(models, X, y)    
+    print(models)
+

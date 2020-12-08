@@ -6,7 +6,7 @@ Created on Wed Oct 21 14:05:57 2020
 """
 
 # from nltk.grammar import Nonterminal
-# import PCFG sem dal na dno
+# from nltk import PCFG  # moved to bottom
 import numpy as np
 # import sympy as sp  # Intentionally commented to avoid warning, look next line.
 # May be a better call to avoid warnning in Sympy version >= 1.6.2.:
@@ -129,11 +129,11 @@ class ModelBox:
         """Convert the string into the canonical Sympy expression.
 
         Input:
-            expr_str -- String expression e.g. joined sample string 
+            expr_str -- String expression e.g. joined sample string
                 generated from grammar.
         Output:
             expr -- Sympy expression object in canonical form.
-            symbols_params -- Tuple of enumerated constants. 
+            symbols_params -- Tuple of enumerated constants.
         """
         x = [sp.symbols(s.strip("'")) for s in symbols["x"]]
         c = sp.symbols(symbols["const"].strip("'"))
@@ -143,7 +143,7 @@ class ModelBox:
         return expr, symbols_params
 
     def __str__(self):
-        txt = "ModelsBox: " + str(len(self.models_dict)) + " models"
+        txt = "ModelBox: " + str(len(self.models_dict)) + " models"
         for m in self.models_dict:
             txt += "\n-> " + str(self.models_dict[m].expr) + ", p = " + str(self.models_dict[m].p)
             txt += ", parse trees = " + str(len(self.models_dict[m].trees))

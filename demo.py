@@ -1,8 +1,8 @@
 # %% # 0.) import modules and set a random seed
 import numpy as np
-from odes import example_tB_data  # import datasets T, X and Y
+from ode_examples import example_tB_data  # import datasets T, X and Y
 from parameter_estimation import fit_models
-from generate import generate_models    
+from generate import generate_models
 from generators.grammar import GeneratorGrammar
 np.random.seed(2)
 
@@ -15,11 +15,11 @@ grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                             T -> V [0.6] | 'C' "*" V [0.4]
                             V -> 'x' [0.5] | 'y' [0.5]""")
 symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
-models = generate_models(grammar, symbols, strategy_parameters = {"N":2})
+models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
 
 # 3.) discover the right equation
-# fit_models(models, X, Y, T)
-fit_models(models, X, Y)
+fit_models(models, X, Y, T)
+# fit_models(models, X, Y)
 
 # 4.) print models' results
 print("\n", models, "\n\nFinal score:")

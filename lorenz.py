@@ -1,17 +1,17 @@
 # Simulate Lorentz's system ODE and discover edes
 
 import logging
-logging.basicConfig(filename="my.log", level=logging.INFO)  # Overwrites
+# logging.basicConfig(filename="my.log", level=logging.INFO)  # Overwrites
 # my.log with program output.
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 
-# # 1.) Data construction (simulation of Lorentz):
+# # 1.) Data construction (simulation of Lorenz):
 
 T = np.linspace(0.48, 0.85, 1000)
-# # Lorentz's sode:
+# # Lorenz's sode:
 # dx/dt = \sigma * (y-x)
 # dy/dt = x*(\rho-z) - y
 # dz/dt = x*y - \beta*z

@@ -3,5 +3,3 @@
 .gitignore.swp
 __pycache__/
 # */__pycache__/
-lorenz/
-
