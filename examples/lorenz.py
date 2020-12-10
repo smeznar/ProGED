@@ -1,6 +1,7 @@
 # Simulate Lorentz's system ODE and discover edes
 
 import logging
+import sys  # To import from parent directory.
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
@@ -9,7 +10,7 @@ from scipy.integrate import solve_ivp
 
 random = str(np.random.random())
 print(random)
-logging.basicConfig(filename="lorenz/lorenz_log_" + random + ".log", level=logging.INFO)
+logging.basicConfig(filename="lorenz_log_" + random + ".log", level=logging.INFO)
 
 
 # # 1.) Data construction (simulation of Lorenz):
@@ -43,9 +44,10 @@ data = np.concatenate((T[:, np.newaxis], Yode.y.T), axis=1)  # Embed Time column
 
 # # # # 2.) Discover one ode at a time.
 
+sys.path += ['.','..']
 from generate import generate_models
 # from generators.grammar import GeneratorGrammar
-from generators.grammar_construction import grammar_from_template  # Grammar
+from generators.grammar_construction import grammar_from_template  # Grammar's
 #nonterminals will depend on given dataset.
 from parameter_estimation import fit_models
 
