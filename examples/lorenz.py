@@ -10,8 +10,10 @@ from scipy.integrate import solve_ivp
 
 random = str(np.random.random())
 print(random)
-logging.basicConfig(filename="lorenz_log_" + random + ".log", level=logging.INFO)
-
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger()
+logger.addHandler(logging.FileHandler("lorenz_log_" + random + ".log", 'a'))
+print = logger.info
 
 # # 1.) Data construction (simulation of Lorenz):
 
