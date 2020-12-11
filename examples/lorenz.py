@@ -1,4 +1,10 @@
-# Simulate Lorentz's system ODE and discover edes
+"""Simulate Lorentz's system ODE and discover edes.
+
+    Script accepts also optional comand line arguments:
+arg0 -- number of samples/models
+arg1 -- custom nickname of log that is added to the log filename, which is of
+    the form: log_lorenz_<custom nickname><random number>.log
+"""
 
 import sys  # To import from parent directory.
 
@@ -12,9 +18,20 @@ from scipy.integrate import solve_ivp
 
 # # 0.) Log output to lorenz_log_<random>.log file
 
+samples_cardinality = 50 
+log_nickname = ""
+if len(sys.argv) in (2, 3):
+    samples_cardinality = int(sys.argv[1])
+if len(sys.argv) == 3:
+    log_nickname = sys.argv[2]
+print(samples_cardinality, type(samples_cardinality))
+print(log_nickname, type(log_nickname))
 random = str(np.random.random())
 print(random)
-log_object = Tee("examples/log_lorenz_" + random + ".log")
+try:
+    log_object = Tee("examples/log_lorenz_" + log_nickname + random + ".log")
+except FileNotFoundError:
+    log_object = Tee("log_lorenz_" + log_nickname + random + ".log")
 
 
 # # 1.) Data construction (simulation of Lorenz):
@@ -62,7 +79,7 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     # header = ["column for x", "column for y", "column for z"]
     header = ["x", "y", "z"]
     T = data[:, dimensions]
-    print(T.shape, "T")
+    # print(T.shape, "T")
     T = T.T[0]  # Temporary line since T is for still 1-D array.
     Y = data[:, lhs_variables]
     X = data[:, rhs_variables]
@@ -81,7 +98,9 @@ def eq_disco_demo (data, lhs_variables: list = [1],
         "functions": []
     })
     print(grammar)
-    models = generate_models(grammar, symbols, strategy_parameters = {"N":100})
+    print(samples_cardinality, "=samples cardinality")
+    models = generate_models(grammar, symbols, 
+                            strategy_parameters={"N":samples_cardinality})
     fit_models(models, X, Y, T)
     # print results:
     print(models)
@@ -91,5 +110,5 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     return 1
 
 # eq_disco_demo(data, lhs_variables=[2], rhs_variables=[1,3])
-eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
-# eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
+# eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
+eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
