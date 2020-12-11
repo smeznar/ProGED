@@ -1,19 +1,21 @@
 # Simulate Lorentz's system ODE and discover edes
 
-import logging
 import sys  # To import from parent directory.
+
+from IPython.utils.io import Tee  # Log results using 3th package.
+# from tee_so import Tee  # Log using manually copied class from a forum.
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
+
 
 # # 0.) Log output to lorenz_log_<random>.log file
 
 random = str(np.random.random())
 print(random)
-logging.basicConfig(level=logging.INFO, format='%(message)s')
-logger = logging.getLogger()
-logger.addHandler(logging.FileHandler("lorenz_log_" + random + ".log", 'a'))
-print = logger.info
+log_object = Tee("examples/lorenz_log_" + random + ".log")
+
 
 # # 1.) Data construction (simulation of Lorenz):
 
@@ -91,3 +93,5 @@ def eq_disco_demo (data, lhs_variables: list = [1],
 # eq_disco_demo(data, lhs_variables=[2], rhs_variables=[1,3])
 eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
 # eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
+
+log_object.close()
