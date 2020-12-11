@@ -12,7 +12,7 @@ class Tee(object):
     def __del__(self):
         sys.stdout = self.stdout
         self.file.close()
-        print("Destructor __del__ was called inside SO's Tee.")
+        # print("Destructor __del__ was called inside SO's Tee.")
     def write(self, data):
         self.file.write(data)
         self.stdout.write(data)

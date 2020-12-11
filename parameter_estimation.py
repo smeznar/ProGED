@@ -87,6 +87,8 @@ def ode (models_list, params_matrix, T, X_data, y0):
     X = interp1d(T, X_data, axis=0, kind='cubic', fill_value="extrapolate")  # N-D
     lamb_exprs = [
         sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
+        # model.lambdify(params=params, args="numpy")
+    #    model.lambdify()
         for model, params in zip(models_list, params_matrix)
     ]
     def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
