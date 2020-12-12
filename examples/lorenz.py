@@ -18,16 +18,20 @@ from scipy.integrate import solve_ivp
 
 # # 0.) Log output to lorenz_log_<random>.log file
 
+# # # Input: # # # 
+eqation = "123"  # Code for eq_disco([1], [2,3]).
 samples_cardinality = 50 
 log_nickname = ""
-if len(sys.argv) in (2, 3):
+if len(sys.argv) >= 2:
     samples_cardinality = int(sys.argv[1])
-if len(sys.argv) == 3:
+if len(sys.argv) >= 3:
     log_nickname = sys.argv[2]
-print(samples_cardinality, type(samples_cardinality))
-print(log_nickname, type(log_nickname))
+if len(sys.argv) >= 4:
+    eqation = sys.argv[3]
+aux = [int(i) for i in eqation]
+aquation = (aux[:1], aux[1:])
 random = str(np.random.random())
-print(random)
+print(log_nickname + random)
 try:
     log_object = Tee("examples/log_lorenz_" + log_nickname + random + ".log")
 except FileNotFoundError:
@@ -106,9 +110,13 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     print(models)
     print("\nFinal score:")
     for m in models:
-        print(f"model: {str(m.get_full_expr()):<70}; error: {m.get_error()}")
+        if m.get_error() < 10**(-3):  # or True:
+            print(f"model: {str(m.get_full_expr()):<70}; error: {m.get_error()}")
     return 1
 
 # eq_disco_demo(data, lhs_variables=[2], rhs_variables=[1,3])
 # eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
-eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
+# eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
+eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
+print(aquation[0], aquation[1])
+

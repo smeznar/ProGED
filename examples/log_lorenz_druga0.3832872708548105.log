@@ -1,0 +1,84 @@
+["'y'", "'x'", "'z'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'y' [0.33]
+    V -> 'x' [0.33]
+    V -> 'z' [0.34]
+50 =samples cardinality
+Estimating model C0*z**3 + C1
+Estimating model C0*x
+Estimating model C0*z
+Estimating model C0*x*y**2*z
+Estimating model C0*y*z + C1
+Estimating model C0*y + C1
+Estimating model C0*x + C1
+Estimating model C0*x*y
+Estimating model C0*z + C1
+Estimating model C0*y
+Estimating model C0*x + C1*z + C2
+Estimating model C0*x**2*z + C1*y*z + C2*y + C3
+Estimating model C0*y + C1*z
+Estimating model C0*y*z**2
+Estimating model C0*x**3 + C1*y
+Estimating model C0*x*y + C1*y*z + C2
+Estimating model C0*y*z + C1*y + C2
+Estimating model C0*x*y*z
+Estimating model C0*x + C1*y
+Estimating model C0*y**2 + C1*z
+Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
+Model: C0*y**2 + C1*z
+Estimating model C0*x + C1*y + C2
+Estimating model C0*x*y**2 + C1
+Estimating model C0*x*z + C1
+Estimating model C0*y**2
+Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
+Model: C0*y**2
+Estimating model C0*x + C1*z**3
+Estimating model C0*x**2
+Estimating model C0*x*z + C1*z**2 + C2
+Estimating model C0*x*y + C1
+ModelBox: 28 models
+-> C0*z**3 + C1, p = 0.0002173353984000001, parse trees = 1, valid = True, error = 0.0001397652796884028
+-> C0*x, p = 0.04752, parse trees = 1, valid = True, error = 0.025164430092113322
+-> C0*z, p = 0.048960000000000004, parse trees = 1, valid = True, error = 0.0005854195740405343
+-> C0*x*y**2*z, p = 0.00011260643328000003, parse trees = 1, valid = True, error = 0.15351061967395868
+-> C0*y*z + C1, p = 8.934064128e-05, parse trees = 1, valid = True, error = 0.00011758748434139635
+-> C0*y + C1, p = 0.02371088941056, parse trees = 5, valid = True, error = 5.9137596711583445e-05
+-> C0*x + C1, p = 0.025548931491220686, parse trees = 4, valid = True, error = 0.0003139859304245378
+-> C0*x*y, p = 0.006272640000000001, parse trees = 1, valid = True, error = 0.10226340810217253
+-> C0*z + C1, p = 0.011750400000000001, parse trees = 1, valid = True, error = 7.440910494757596e-05
+-> C0*y, p = 0.04752, parse trees = 1, valid = True, error = 0.0140414500441273
+-> C0*x + C1*z + C2, p = 8.934064128000002e-05, parse trees = 1, valid = True, error = 1.1031022549701113e-05
+-> C0*x**2*z + C1*y*z + C2*y + C3, p = 2.794536378191317e-08, parse trees = 1, valid = True, error = 7.016545716438453e-07
+-> C0*y + C1*z, p = 0.0031021056, parse trees = 2, valid = True, error = 9.677571289087817e-05
+-> C0*y*z**2, p = 0.0008789299200000002, parse trees = 1, valid = True, error = 0.10093180808412433
+-> C0*x**3 + C1*y, p = 2.6230675046400015e-05, parse trees = 1, valid = True, error = 0.013863217396700218
+-> C0*x*y + C1*y*z + C2, p = 6.486130556928003e-06, parse trees = 1, valid = True, error = 7.760809880522761e-05
+-> C0*y*z + C1*y + C2, p = 1.1792964648960004e-05, parse trees = 1, valid = True, error = 6.995987344180774e-07
+-> C0*x*y*z, p = 0.0017061580800000003, parse trees = 2, valid = True, error = 0.13934505353550872
+-> C0*x + C1*y, p = 0.0015054336000000002, parse trees = 1, valid = True, error = 0.0028402235260848964
+-> C0*y**2 + C1*z, p = 0.0002047389696000001, parse trees = 1, valid = False
+-> C0*x + C1*y + C2, p = 1.5823106262171657e-07, parse trees = 1, valid = True, error = 6.897175099588442e-06
+-> C0*x*y**2 + C1, p = 0.0001987172352000001, parse trees = 1, valid = True, error = 0.0004417617474721169
+-> C0*x*z + C1, p = 0.0031021056000000006, parse trees = 2, valid = True, error = 0.00020374260507042598
+-> C0*y**2, p = 0.006272640000000001, parse trees = 1, valid = False
+-> C0*x + C1*z**3, p = 2.868827258880001e-05, parse trees = 1, valid = True, error = 0.004110592357660955
+-> C0*x**2, p = 0.006272640000000001, parse trees = 1, valid = True, error = 0.141199920662858
+-> C0*x*z + C1*z**2 + C2, p = 3.965866802675714e-07, parse trees = 1, valid = True, error = 6.885918916624255e-05
+-> C0*x*y + C1, p = 0.0015054336000000002, parse trees = 1, valid = True, error = 0.00010671972821926125
+
+Final score:
+model: 1.612771902699*x**2*z + 9.9829649452824*y*z - 5.18505124335094*y - 1.82001120155081; error: 7.016545716438453e-07
+model: 9.99668256450101*y*z - 5.17667468593525*y - 1.81457648882603          ; error: 6.995987344180774e-07
+model: -9.99757650881019*x - 1.2324209286868*y - 0.586229588444519           ; error: 6.897175099588442e-06
+[2] [1, 3]
+
+suggest:
+9.99668256450101*y*z - 5.17667468593525*y - 1.81457648882603 
+= 10*y*z - 5*y - 1.8
+= 5*y(2*z - 1) - 1.8
