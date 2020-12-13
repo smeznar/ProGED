@@ -105,6 +105,14 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     print(samples_cardinality, "=samples cardinality")
     models = generate_models(grammar, symbols, 
                             strategy_parameters={"N":samples_cardinality})
+    # models = dict([(i, models[i]) for i in models][575:585])
+    # print(dict([(i, models[i]) for i in models]))
+    # print([models[i] for i in models])
+    # print([type(i) for i in models])
+    # print(type(models))
+    # models = dict([(i, models.models_dict[i]) for i in models.models_dict][:5])
+    
+    
     fit_models(models, X, Y, T)
     # print results:
     print(models)
