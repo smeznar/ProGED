@@ -1,0 +1,91 @@
+["'z'", "'x'", "'y'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'z' [0.33]
+    V -> 'x' [0.33]
+    V -> 'y' [0.34]
+50 =samples cardinality
+Estimating model C0*y**3 + C1
+Estimating model C0*x
+Estimating model C0*y
+Estimating model C0*x*y*z**2
+Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
+Model: C0*x*y*z**2
+Estimating model C0*y*z + C1
+Estimating model C0*z + C1
+Estimating model C0*x + C1
+Estimating model C0*x*z
+Estimating model C0*y + C1
+Estimating model C0*z
+Estimating model C0*x + C1*y + C2
+Estimating model C0*x**2*y + C1*y*z + C2*z + C3
+Estimating model C0*y + C1*z
+Estimating model C0*y**2*z
+Estimating model C0*x**3 + C1*z
+Estimating model C0*x*z + C1*y*z + C2
+Estimating model C0*y*z + C1*z + C2
+Estimating model C0*x*y*z
+Estimating model C0*x + C1*z
+Estimating model C0*y + C1*z**2
+Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
+Model: C0*y + C1*z**2
+Estimating model C0*x + C1*z + C2
+Estimating model C0*x*z**2 + C1
+Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
+Model: C0*x*z**2 + C1
+Estimating model C0*x*y + C1
+Estimating model C0*z**2
+Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
+Model: C0*z**2
+Estimating model C0*x + C1*y**3
+Estimating model C0*x**2
+Estimating model C0*x*y + C1*y**2 + C2
+Estimating model C0*x*z + C1
+ModelBox: 28 models
+-> C0*y**3 + C1, p = 0.0002173353984000001, parse trees = 1, valid = True, error = 0.08567852612407452
+-> C0*x, p = 0.04752, parse trees = 1, valid = True, error = 0.6882609454220409
+-> C0*y, p = 0.048960000000000004, parse trees = 1, valid = True, error = 0.7395947787229356
+-> C0*x*y*z**2, p = 0.00011260643328000003, parse trees = 1, valid = False
+-> C0*y*z + C1, p = 8.934064128e-05, parse trees = 1, valid = True, error = 0.08194102986519859
+-> C0*z + C1, p = 0.02371088941056, parse trees = 5, valid = True, error = 0.9275841415347016
+-> C0*x + C1, p = 0.025548931491220686, parse trees = 4, valid = True, error = 0.19047432984831136
+-> C0*x*z, p = 0.006272640000000001, parse trees = 1, valid = True, error = 0.11134522842937582
+-> C0*y + C1, p = 0.011750400000000001, parse trees = 1, valid = True, error = 0.1666563212617072
+-> C0*z, p = 0.04752, parse trees = 1, valid = True, error = 1.5632960195390828
+-> C0*x + C1*y + C2, p = 8.934064128000002e-05, parse trees = 1, valid = True, error = 0.138312255939828
+-> C0*x**2*y + C1*y*z + C2*z + C3, p = 2.794536378191317e-08, parse trees = 1, valid = True, error = 0.03192363555405144
+-> C0*y + C1*z, p = 0.0031021056, parse trees = 2, valid = True, error = 0.5379997256224904
+-> C0*y**2*z, p = 0.0008789299200000002, parse trees = 1, valid = True, error = 0.8664966680368783
+-> C0*x**3 + C1*z, p = 2.6230675046400015e-05, parse trees = 1, valid = True, error = 0.1180342666178868
+-> C0*x*z + C1*y*z + C2, p = 6.486130556928003e-06, parse trees = 1, valid = True, error = 0.054122092919846675
+-> C0*y*z + C1*z + C2, p = 1.1792964648960004e-05, parse trees = 1, valid = True, error = 0.04180730830725032
+-> C0*x*y*z, p = 0.0017061580800000003, parse trees = 2, valid = True, error = 0.9200721225337126
+-> C0*x + C1*z, p = 0.0015054336000000002, parse trees = 1, valid = True, error = 0.5480232942046563
+-> C0*y + C1*z**2, p = 0.0002047389696000001, parse trees = 1, valid = False
+-> C0*x + C1*z + C2, p = 1.5823106262171657e-07, parse trees = 1, valid = True, error = 0.03136968341176622
+-> C0*x*z**2 + C1, p = 0.0001987172352000001, parse trees = 1, valid = False
+-> C0*x*y + C1, p = 0.0031021056000000006, parse trees = 2, valid = True, error = 0.00036751817563462886
+-> C0*z**2, p = 0.006272640000000001, parse trees = 1, valid = False
+-> C0*x + C1*y**3, p = 2.868827258880001e-05, parse trees = 1, valid = True, error = 0.04492557759149496
+-> C0*x**2, p = 0.006272640000000001, parse trees = 1, valid = True, error = 0.017011708360052665
+-> C0*x*y + C1*y**2 + C2, p = 3.965866802675714e-07, parse trees = 1, valid = True, error = 7.54626170383281e-05
+-> C0*x*z + C1, p = 0.0015054336000000002, parse trees = 1, valid = True, error = 0.09177354801247878
+
+Final score:
+model: 0.897328849260996*x*y - 0.989083726911499                             ; error: 0.00036751817563462886
+model: 0.2680264974207*x*y + 0.299064620902577*y**2 - 1.07078720317838       ; error: 7.54626170383281e-05
+[3] [1, 2]
+
+
+========================== discussion: ==============================
+model: -9.85764357227234*x + 9.9333747564978*y                               ; error: 2.94709382690573e-06
+model: -9.55829580188787*x + 9.78920618974904*y + 0.0232261285460231         ; error: 2.4772067855792343e-06
+
+Really: dx_dt = \rho(y-x) = -\rho*x + \rho*y,
+where \rho:= 10, tj. -10*x + 10*y.
+we can see eq_dicoverer found the right equation

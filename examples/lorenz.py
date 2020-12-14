@@ -46,9 +46,9 @@ T = np.linspace(0.48, 0.85, 1000)
 # dx/dt = \sigma * (y-x)
 # dy/dt = x*(\rho-z) - y
 # dz/dt = x*y - \beta*z
-sigma = 1.3  # 1 # 0 
-rho = -15 # 1 # 0
-beta = 3.4  # 1 # 0
+sigma = 10  # 1 # 0 
+rho = 28  # 1 # 0
+beta = 8/3  # 1 # 0
 y0 = [0.1, 0.4, 0.5]
 def dy_dt(t, ys):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
     # \dot{y} = y^. = [y1^., y2^., y3^., ...]

@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1607892175 "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.tex" "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" "porocilo" 1607892175
+["pdflatex"] 1607930583 "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.tex" "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" "porocilo" 1607930584
   "/etc/texmf/web2c/texmf.cnf" 1603526139 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.aux" 1607892175 185 9da022917da2d353b7609a6802488143 ""
-  "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.tex" 1607892174 2989 7918a5c45a16bab259ddc7080d15e7df ""
+  "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.aux" 1607930584 181 fc5219b5aedad4245263e059047c7603 ""
+  "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.tex" 1607930583 3698 1a003bdbaefb29e245179af92db6ad5b ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -23,6 +23,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/share/texlive/texmf-dist/tex/generic/babel-slovenian/slovene.ldf" 1368139852 4777 21f878109acb95e5bd302f09eef70619 ""
@@ -52,11 +53,11 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1581979058 38841 ce3692aa899bb693b90b87eaa5d4d84e ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1603526489 131035 efcb10a2e27152a282b9ad10f532e04c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1603526513 6424995 b92157e7ab4757dc8062d5272ea59622 ""
-  "porocilo.aux" 1607892175 185 9da022917da2d353b7609a6802488143 "pdflatex"
-  "porocilo.tex" 1607892174 2989 7918a5c45a16bab259ddc7080d15e7df ""
+  "porocilo.aux" 1607930584 181 fc5219b5aedad4245263e059047c7603 "pdflatex"
+  "porocilo.tex" 1607930583 3698 1a003bdbaefb29e245179af92db6ad5b ""
   (generated)
-  "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.log"
-  "porocilo.pdf"
   "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf"
   "porocilo.aux"
+  "porocilo.pdf"
+  "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.log"
   "porocilo.log"
