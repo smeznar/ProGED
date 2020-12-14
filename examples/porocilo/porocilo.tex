@@ -39,8 +39,7 @@ $\sigma:=1.3, \rho:=-15, \beta:=3.4$
 Za"cetni pogoji so isti v vseh primerih skozi celotno poro"cilo.
 Izbrani parametri se splo"sno smatrajo kot nenormalni, saj je eden izmed parametrov
 ($\rho$) negativen.
-Podatkovno mno"zico sem generiral tako, da sem simuliral Lorenzov sistemu
-:
+Podatkovno mno"zico sem generiral tako, da sem simuliral Lorenzov sistemu:
 
 prva enacba  $dx/dt = \sigma*(y-x)$: najde re"sitev 
 $ -1.3*x + 1.3*y$ ali 
@@ -74,7 +73,23 @@ v nekaoti"cnem primeru. Oziroma, pri drugi ena"bi pri"cakujem
 $\sigma* = 10, \rho*= 10, \beta*=7$. 
 
 
+\subsection{Kaoti"cni rezultati}
 
+V odkrivanju prve ena"cbe algoritem odkrije ena"cbo
+$-9.85764357227234*x + 9.9333747564978*y$ oz. 
+$-9.55829580188787*x + 9.78920618974904*y + 0.0232261285460231$
+v manj kot 50 vzorcih, re"sitev ima napako velikosti
+$2.94709382690573e-06$ oz. $2.4772067855792343e-06$.
+
+V odkrivanju druge ena"cbe algoritem odkrije ena"cbo
+$-9.85764357227234*x + 9.9333747564978*y$ oz. 
+$-9.55829580188787*x + 9.78920618974904*y + 0.0232261285460231$
+v 6500 samplih, re"sitev ima napako velikosti
+$2.94709382690573e-06$.
+% -0.877950876789105*x*z + 9.99535400929563*x + 7.38550161602604*y - 0.617064542958862; error: 0.00018803715641311185
+
+
+model: 0.991337569095305*x*y - 2.56521319047224*z                            ; error: 9.178140365155879e-05
 \section{Poro"cilo v tabeli}
 \newcommand{\asui}{rf-100,10  }
  \newcommand{\asuii}{glm        }

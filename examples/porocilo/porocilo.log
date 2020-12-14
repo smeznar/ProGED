@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  14 DEC 2020 08:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  14 DEC 2020 10:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -162,19 +162,34 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 
 LaTeX Warning: No \author given.
 
+
+Overfull \hbox (44.20253pt too wide) in paragraph at lines 78--83
+\OT1/cmr/m/n/10 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 9333747564978 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y$ \OT1/cmr/m/n/10 oz. $\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 55829580188787 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OT1/cmr/m/n/10 + 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 78920618974904 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y \OT1/cmr/m/n/10 + 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0232261285460231$
+ []
+
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (24.5183pt too wide) in paragraph at lines 84--90
+\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0232261285460231$ v 6500 sam-plih, re^^Tsitev ima na-pako ve-li-ko-sti $2\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 94709382690573\OML/cmm/m/it/10 e \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (27.39906pt too wide) in paragraph at lines 92--93
+[]\OT1/cmr/m/n/10 model: 0.991337569095305*x*y - 2.56521319047224*z ; er-ror: 9.178140365155879e-
+ []
+
+[2] (/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.aux) ) 
 Here is how much of TeX's memory you used:
- 2510 strings out of 482600
- 34778 string characters out of 5949959
- 281712 words of memory out of 5000000
- 17557 multiletter control sequences out of 15000+600000
- 537106 words of font info for 41 fonts, out of 8000000 for 9000
+ 2511 strings out of 482600
+ 34793 string characters out of 5949959
+ 282712 words of memory out of 5000000
+ 17558 multiletter control sequences out of 15000+600000
+ 537413 words of font info for 42 fonts, out of 8000000 for 9000
  350 hyphenation exceptions out of 8191
  30i,6n,27p,273b,195s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (2 pages, 75143 bytes).
+Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (2 pages, 78505 bytes).
 PDF statistics:
  39 PDF objects out of 1000 (max. 8388607)
  27 compressed objects within 1 object stream

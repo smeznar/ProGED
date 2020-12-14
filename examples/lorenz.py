@@ -113,12 +113,12 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     # models = dict([(i, models.models_dict[i]) for i in models.models_dict][:5])
     
     
-    fit_models(models, X, Y, T)
+    ## fit_models(models, X, Y, T)
     # print results:
     print(models)
     print("\nFinal score:")
     for m in models:
-        if m.get_error() < 10**(-3):  # or True:
+        if m.get_error() < 10**(-3) or True:
             print(f"model: {str(m.get_full_expr()):<70}; error: {m.get_error()}")
     return 1
 

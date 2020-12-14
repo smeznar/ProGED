@@ -1,0 +1,78 @@
+["'z'", "'x'", "'y'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'z' [0.33]
+    V -> 'x' [0.33]
+    V -> 'y' [0.34]
+70 =samples cardinality
+ModelBox: 31 models
+-> C0*y**3 + C1, p = 0.0002173353984000001, parse trees = 1, valid = False
+-> C0*x, p = 0.04752, parse trees = 1, valid = False
+-> C0*y, p = 0.048960000000000004, parse trees = 1, valid = False
+-> C0*x*y*z**2, p = 0.00011260643328000003, parse trees = 1, valid = False
+-> C0*y*z + C1, p = 0.0020126461132800003, parse trees = 3, valid = False
+-> C0*z + C1, p = 0.02371088941056, parse trees = 5, valid = False
+-> C0*x + C1, p = 0.025548931491220686, parse trees = 4, valid = False
+-> C0*x*z, p = 0.006272640000000001, parse trees = 1, valid = False
+-> C0*y + C1, p = 0.014754591866880003, parse trees = 4, valid = False
+-> C0*z, p = 0.04752, parse trees = 1, valid = False
+-> C0*x + C1*y + C2, p = 8.934064128000002e-05, parse trees = 1, valid = False
+-> C0*x**2*y + C1*y*z + C2*z + C3, p = 2.794536378191317e-08, parse trees = 1, valid = False
+-> C0*y + C1*z, p = 0.0031021056, parse trees = 2, valid = False
+-> C0*y**2*z, p = 0.0008789299200000002, parse trees = 1, valid = False
+-> C0*x**3 + C1*z, p = 2.6230675046400015e-05, parse trees = 1, valid = False
+-> C0*x*z + C1*y*z + C2, p = 6.486130556928003e-06, parse trees = 1, valid = False
+-> C0*y*z + C1*z + C2, p = 1.1792964648960004e-05, parse trees = 1, valid = False
+-> C0*x*y*z, p = 0.00255923712, parse trees = 3, valid = False
+-> C0*x + C1*z, p = 0.0030108672000000005, parse trees = 2, valid = False
+-> C0*y + C1*z**2, p = 0.0002047389696000001, parse trees = 1, valid = False
+-> C0*x + C1*z + C2, p = 1.5823106262171657e-07, parse trees = 1, valid = False
+-> C0*x*z**2 + C1, p = 0.0001987172352000001, parse trees = 1, valid = False
+-> C0*x*y + C1, p = 0.0034743582720000005, parse trees = 3, valid = False
+-> C0*z**2, p = 0.006272640000000001, parse trees = 1, valid = False
+-> C0*x + C1*y**3, p = 2.868827258880001e-05, parse trees = 1, valid = False
+-> C0*x**2, p = 0.006272640000000001, parse trees = 1, valid = False
+-> C0*x*y + C1*y**2 + C2, p = 3.965866802675714e-07, parse trees = 1, valid = False
+-> C0*x*z + C1, p = 0.0018667376640000004, parse trees = 2, valid = False
+-> C0*x**2*z**2 + C1*y + C2, p = 2.054806160434792e-07, parse trees = 1, valid = False
+-> C0*x*y + C1*z, p = 0.00020473896960000005, parse trees = 1, valid = False
+-> C0*x*z + C1*y + C2, p = 4.913735270400001e-05, parse trees = 1, valid = False
+
+Final score:
+model: 2.99158564216724*y**3 - 0.385206377470682                             ; error: 100000000
+model: 1.16933996874757*x                                                    ; error: 100000000
+model: -4.3977452837073*y                                                    ; error: 100000000
+model: -3.38690482115004*x*y*z**2                                            ; error: 100000000
+model: -4.60812207745679*y*z - 2.1719303742359                               ; error: 100000000
+model: -2.10593907052799*z - 3.16808637992883                                ; error: 100000000
+model: 0.722519057908734*x - 2.76918367359382                                ; error: 100000000
+model: -0.712312990542339*x*z                                                ; error: 100000000
+model: 4.98847006567867*y - 3.50551695342006                                 ; error: 100000000
+model: 0.210366062041293*z                                                   ; error: 100000000
+model: 0.89909976354571*x + 2.3012202951677*y - 1.88055004520398             ; error: 100000000
+model: -4.79349000534271*x**2*y + 2.58378653836141*y*z - 1.79982849177532*z - 1.16536105828102; error: 100000000
+model: -2.92529924558891*y - 0.753145312484937*z                             ; error: 100000000
+model: 0.864101661863267*y**2*z                                              ; error: 100000000
+model: 0.11318982546456*x**3 - 2.75682971025261*z                            ; error: 100000000
+model: 2.27044262711328*x*z - 2.29672094761285*y*z - 3.68517200708872        ; error: 100000000
+model: -1.29147200782111*y*z - 3.0294571981436*z - 0.401441162439926         ; error: 100000000
+model: -0.430885783542342*x*y*z                                              ; error: 100000000
+model: -1.43293109597457*x - 4.83671497316292*z                              ; error: 100000000
+model: -0.712042775017622*y - 4.3192592602528*z**2                           ; error: 100000000
+model: -1.39454439514108*x + 3.28656914555738*z + 4.24966911953192           ; error: 100000000
+model: -2.62258173984361*x*z**2 + 0.0238945748926145                         ; error: 100000000
+model: -2.17300349054463*x*y - 4.69764741994017                              ; error: 100000000
+model: 3.8630466608656*z**2                                                  ; error: 100000000
+model: -0.293510507860905*x - 1.21754825076538*y**3                          ; error: 100000000
+model: -1.6252261823576*x**2                                                 ; error: 100000000
+model: 0.810819296720631*x*y - 2.58442959960082*y**2 - 3.30974593870839      ; error: 100000000
+model: 4.59142251977975*x*z - 3.96701844914861                               ; error: 100000000
+model: -3.82474357096362*x**2*z**2 + 4.75883868418533*y + 4.3256120385734    ; error: 100000000
+model: -2.91746747878516*x*y + 4.32393938960494*z                            ; error: 100000000
+model: -3.37642052087333*x*z - 2.09159093343257*y - 3.20204709166458         ; error: 100000000
+[3] [1, 2]
