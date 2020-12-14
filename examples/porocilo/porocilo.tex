@@ -17,29 +17,33 @@
 
 
 
-\title{Poro"cilo okrivanja 1-D ode v Lorenzovemu sistemu}
+\title{Poročilo okrivanja 1-D ODE v Lorenzovemu sistemu}
 
 
 \begin{document}
 	\maketitle
     
-Odkrivanje 1-D ena"cb sem poganjal na Lorenzovemu sistemu enacb:
+Odkrivanje 1-D ODE ena"cb sem poganjal na Lorenzovemu sistemu ena"cb:
 $$
 \frac{dx}{dt} = \sigma (y-x),
 $$ $$
 \frac{dy}{dt} = x(\rho-z) - y,
 $$ $$
-\frac{dz}{dt} = xy - \beta z.
+\frac{dz}{dt} = xy - \beta z,
 $$
-
-Pri za"cetnih pogojih $x_0:=0.1, y_0:=0.3, z_0:=0.4$.
-Najprej sem pognaj pri naklju"cno parametrih:
-$\sigma:=1.3, \rho:=-15, \beta:=3.4$
-
+pri za"cetnih pogojih $x_0:=0.1, y_0:=0.3, z_0:=0.4$.
 Za"cetni pogoji so isti v vseh primerih skozi celotno poro"cilo.
-Izbrani parametri se splo"sno smatrajo kot nenormalni, saj je eden izmed parametrov
+Parametri $\sigma, \rho$ in $\beta$ pa se sredi poro"cila
+spremenijo. Najprej sem obravnaval nekaoti"cne parametre, nato 
+pa "se znano kaoti"cne parametre z vrednostmi
+$\sigma:=10, \rho:=28$ in $\beta:=8/3$.
+
+\subsection{Domnevno nekaoti"cni parametri}
+Najprej sem algoritem pognal pri nekaoti"cnih subjektivno naklju"cno izbranih parametrih
+$\sigma:=1.3, \rho:=-15$ in $\beta:=3.4$.
+Navedeni izbrani parametri se na splo"sno smatrajo kot nenormalni, saj je vsaj eden izmed parametrov
 ($\rho$) negativen.
-Podatkovno mno"zico sem generiral tako, da sem simuliral Lorenzov sistemu:
+Podatkovno mno"zico sem generiral tako, da sem simuliral Lorenzov sistem:
 
 prva enacba  $dx/dt = \sigma*(y-x)$: najde re"sitev 
 $ -1.3*x + 1.3*y$ ali 
@@ -82,14 +86,41 @@ v manj kot 50 vzorcih, re"sitev ima napako velikosti
 $2.94709382690573e-06$ oz. $2.4772067855792343e-06$.
 
 V odkrivanju druge ena"cbe algoritem odkrije ena"cbo
-$-9.85764357227234*x + 9.9333747564978*y$ oz. 
-$-9.55829580188787*x + 9.78920618974904*y + 0.0232261285460231$
-v 6500 samplih, re"sitev ima napako velikosti
-$2.94709382690573e-06$.
-% -0.877950876789105*x*z + 9.99535400929563*x + 7.38550161602604*y - 0.617064542958862; error: 0.00018803715641311185
+$ -0.670382396435091*x*z + 10.0*x + 6.94013313376156*y $  
+$ -0.877950876789105*x*z + 9.99535400929563*x + 7.38550161602604*y - 0.617064542958862 $ 
+v 6500 vzorcih, ena"cba ima napako velikosti
+$0.0033668325250160443 = 3.4\cdot 10^ {-3}$ oz. $0.00018803715641311185 = 1.9\cdot 10^ {-4}$.
+Medtem, ko je izmed vseh vzor"cenih ena"cb, najmanj"sa opa"zena napaka
+reda $10^ {-5}$.
+
+V odkrivanju tretje ena"cbe algoritem odkrije ena"cbo
+$\frac{dz}{dt} = 0.991337569095305*x*y - 2.56521319047224*z$ 
+v manj kot 100 vzorcih, ena"cba ima napako velikosti
+$9.178140365155879e-05 = 9.2\cdot 10^ {-5}$,
+kar je v okviru najmanj"sega opa"zenega reda velikosti napake.
 
 
-model: 0.991337569095305*x*y - 2.56521319047224*z                            ; error: 9.178140365155879e-05
+\begin{table}[h]
+	\begin{tabular}{*{15}{c|}ccccc}
+		\multicolumn{1}{p{1cm}|}{tip ena"cbe oz. parametri} & 
+		\multicolumn{1}{p{1cm}|}{leva stran ena"cbe} &
+		 \multicolumn{1}{p{1.3cm}|}{najdena ena"cba oz. desna stran ena"cbe} &
+		  \multicolumn{1}{p{3cm}|}{napaka enac"be} &
+		   \multicolumn{1}{p{1cm}|}{"stevilo potrebnih samplov} & 
+		   \multicolumn{1}{p{1cm}|}{hramba rezultatov} & \multicolumn{1}{p{1cm}|}{top 1\%} \\
+		   \hline
+		nekaoti"cna & $\rho$ & $\frac{dx}{dt}$ & $ -1.303*x + 1.303*y $ & $10**(-9)$ & 50 & &  \\
+		nekaoti"cna & $\rho$ & $\frac{dy}{dt}$ & $10*x*z -10*x +2*y$ & $10**(-4)$ & 100 &  \\
+		nekaoti"cna & $\rho$ & $\frac{dz}{dt}$ & $1.054*x*y - 3.402*z$ & $2.205-09$ & 6500 \\
+		\hline
+		kaoti"cna & $\rho$ & $\frac{dx}{dt}$ & $-9.857*x + 9.933*y$ & $2.947-06$  & 50 \\
+		kaoti"cna & $\rho$ & $\frac{dy}{dt}$ & $ -0.670*x*z + 10.0*x + 6.940*y $ & $ 1.9\cdot 10^ {-4}$ & 500 \\
+		kaoti"cna & $\rho$ & $\frac{dz}{dt}$ & $0.991*x*y - 2.565*z$ & $9.2\cdot 10^ {-5}$ & 6500 \\
+
+	\end{tabular}
+\end{table}
+
+
 \section{Poro"cilo v tabeli}
 \newcommand{\asui}{rf-100,10  }
  \newcommand{\asuii}{glm        }
@@ -114,9 +145,7 @@ model: 0.991337569095305*x*y - 2.56521319047224*z                            ; e
 
 % \begin{table}[h]
 % \begin{tabular}{ *{5}{c|}c  }		
-%   &  Algoritem  &
-%     \multicolumn{2}{c|}{U"cna mno"zica}  & \multicolumn{2}{c}{Testna mno"zica} \\
-%      Segment & strojnega u"cenja & "Stevilo primerov & Napaka & "Stevilo primerov & Napaka \\
+%     \multicolumn{2}{c|}{nekaj}  & \multicolumn{2}{c}{nekaj2} \\
 %      \hline
 %      \#1 & \asui   & \nui   & \eui   & \nti   & \eti  \\
 %      \#2 & \asuii  & \nuii  & \euii  & \ntii  & \etii  \\

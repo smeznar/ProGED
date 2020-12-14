@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  14 DEC 2020 10:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  14 DEC 2020 18:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -162,37 +162,142 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 
 LaTeX Warning: No \author given.
 
-
-Overfull \hbox (44.20253pt too wide) in paragraph at lines 78--83
-\OT1/cmr/m/n/10 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 9333747564978 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y$ \OT1/cmr/m/n/10 oz. $\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 55829580188787 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OT1/cmr/m/n/10 + 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 78920618974904 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y \OT1/cmr/m/n/10 + 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0232261285460231$
- []
-
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (24.5183pt too wide) in paragraph at lines 84--90
-\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0232261285460231$ v 6500 sam-plih, re^^Tsitev ima na-pako ve-li-ko-sti $2\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 94709382690573\OML/cmm/m/it/10 e \OMS/cmsy/m/n/10 ^^@
+Overfull \hbox (44.20253pt too wide) in paragraph at lines 82--87
+\OT1/cmr/m/n/10 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 9333747564978 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y$ \OT1/cmr/m/n/10 oz. $\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 55829580188787 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OT1/cmr/m/n/10 + 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 78920618974904 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y \OT1/cmr/m/n/10 + 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0232261285460231$
  []
 
 
-Overfull \hbox (27.39906pt too wide) in paragraph at lines 92--93
-[]\OT1/cmr/m/n/10 model: 0.991337569095305*x*y - 2.56521319047224*z ; er-ror: 9.178140365155879e-
+Overfull \hbox (7.03342pt too wide) in paragraph at lines 88--95
+\OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 z \OT1/cmr/m/n/10 + 10\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OT1/cmr/m/n/10 + 6\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 94013313376156 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y$ $\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 877950876789105 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 z \OT1/cmr/m/n/10 + 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 99535400929563 \OMS/cmsy/m/n/10 ^^C
+ []
+
+
+Overfull \hbox (6.61453pt too wide) in paragraph at lines 96--101
+[]\OT1/cmr/m/n/10 V od-kri-va-nju tre-tje ena^^Tcbe al-go-ri-tem od-krije ena^^Tcbo $[] = 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 991337569095305 \OMS/cmsy/m/n/10 ^^C
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--105
+[]\OT1/cmr/m/n/10 tip
+ []
+
+
+Overfull \hbox (1.26953pt too wide) in paragraph at lines 105--105
+\OT1/cmr/m/n/10 ena^^Tcbe
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--105
+\OT1/cmr/m/n/10 oz.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--105
+\OT1/cmr/m/n/10 pa-ra-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
+[]\OT1/cmr/m/n/10 leva
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
+\OT1/cmr/m/n/10 stran
+ []
+
+
+Overfull \hbox (1.26953pt too wide) in paragraph at lines 106--106
+\OT1/cmr/m/n/10 ena^^Tcbe| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
+[]\OT1/cmr/m/n/10 najdena
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
+\OT1/cmr/m/n/10 ena^^Tcba
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
+\OT1/cmr/m/n/10 oz.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
+\OT1/cmr/m/n/10 de-sna
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
+\OT1/cmr/m/n/10 stran
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--109
+[]\OT1/cmr/m/n/10 ^^Tstevilo
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--109
+\OT1/cmr/m/n/10 po-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--109
+\OT1/cmr/m/n/10 treb-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--109
+\OT1/cmr/m/n/10 nih
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--109
+\OT1/cmr/m/n/10 sam-
+ []
+
+
+Overfull \hbox (4.63068pt too wide) in paragraph at lines 110--110
+[]\OT1/cmr/m/n/10 hramba
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--110
+\OT1/cmr/m/n/10 re-zul-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--110
+[]\OT1/cmr/m/n/10 top
+ []
+
+
+Overfull \hbox (119.85141pt too wide) in paragraph at lines 104--121
+[][] 
  []
 
 [2] (/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.aux) ) 
 Here is how much of TeX's memory you used:
  2511 strings out of 482600
  34793 string characters out of 5949959
- 282712 words of memory out of 5000000
+ 285712 words of memory out of 5000000
  17558 multiletter control sequences out of 15000+600000
  537413 words of font info for 42 fonts, out of 8000000 for 9000
  350 hyphenation exceptions out of 8191
- 30i,6n,27p,273b,195s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (2 pages, 78505 bytes).
+ 30i,10n,27p,273b,227s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (2 pages, 97225 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 47 PDF objects out of 1000 (max. 8388607)
+ 33 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
