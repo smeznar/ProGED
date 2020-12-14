@@ -1,0 +1,18 @@
+["'x'", "'y'", "'z'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'x' [0.33]
+    V -> 'y' [0.33]
+    V -> 'z' [0.34]
+1 =samples cardinality
+Estimating model C0*z**3 + C1
+ModelBox: 1 models
+-> C0*z**3 + C1, p = 0.0002173353984000001, parse trees = 1, valid = True, error = 8.175299129424417e-06
+
+Final score:
+model: 7.17129905030047*z**3 - 0.305438606942114                             ; error: 8.175299129424417e-06

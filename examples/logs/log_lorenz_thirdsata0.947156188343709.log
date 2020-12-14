@@ -1,0 +1,30 @@
+["'z'", "'x'", "'y'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'z' [0.33]
+    V -> 'x' [0.33]
+    V -> 'y' [0.34]
+6 =samples cardinality
+Estimating model C0*y**3 + C1
+Estimating model C0*x
+Estimating model C0*y
+Estimating model C0*x*y*z**2
+Estimating model C0*y*z + C1
+Estimating model C0*z + C1
+ModelBox: 6 models
+-> C0*y**3 + C1, p = 0.0002173353984000001, parse trees = 1, valid = True, error = 0.00017760148956888418
+-> C0*x, p = 0.04752, parse trees = 1, valid = True, error = 0.0004527401418232756
+-> C0*y, p = 0.048960000000000004, parse trees = 1, valid = True, error = 0.008138588904271445
+-> C0*x*y*z**2, p = 0.00011260643328000003, parse trees = 1, valid = True, error = 0.05228399058830974
+-> C0*y*z + C1, p = 8.934064128e-05, parse trees = 1, valid = True, error = 6.7678888313828545e-06
+-> C0*z + C1, p = 0.00015765995520000003, parse trees = 1, valid = True, error = 1.7543831850181012e-08
+
+Final score:
+model: -4.66616404962256*y*z - 0.838513593192594                             ; error: 6.7678888313828545e-06
+model: -3.19036912684562*z - 0.053644944255733                               ; error: 1.7543831850181012e-08
+[3] [1, 2]

@@ -1,0 +1,24 @@
+["'y'", "'x'", "'z'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'y' [0.33]
+    V -> 'x' [0.33]
+    V -> 'z' [0.34]
+10 =samples cardinality
+{'C0*z**3 + C1': C0*z**3 + C1, 'C0*x': C0*x, 'C0*z': C0*z, 'C0*x*y**2*z': C0*x*y**2*z, 'C0*y*z + C1': C0*y*z + C1}
+[C0*z**3 + C1, C0*x, C0*z, C0*x*y**2*z, C0*y*z + C1]
+[<class 'str'>, <class 'str'>, <class 'str'>, <class 'str'>, <class 'str'>]
+<class 'dict'>
+Estimating model C0*z**3 + C1
+Estimating model C0*x
+Estimating model C0*z
+Estimating model C0*x*y**2*z
+Estimating model C0*y*z + C1
+{'C0*z**3 + C1': C0*z**3 + C1, 'C0*x': C0*x, 'C0*z': C0*z, 'C0*x*y**2*z': C0*x*y**2*z, 'C0*y*z + C1': C0*y*z + C1}
+
+Final score:

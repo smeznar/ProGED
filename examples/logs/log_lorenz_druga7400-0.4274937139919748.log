@@ -1,0 +1,12 @@
+["'y'", "'x'", "'z'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'y' [0.33]
+    V -> 'x' [0.33]
+    V -> 'z' [0.34]
+7400 =samples cardinality
