@@ -4,3 +4,11 @@
 __pycache__/
 # */__pycache__/
 todoB.txt
+*/*/*.fdb_latexmk
+*/*/*.aux
+*/*/*.syntex.gz
+*/*/*.fls
+*/*.fdb_latexmk
+*/*.aux
+*/*.syntex.gz
+*/*.fls
