@@ -37,67 +37,73 @@ Parametri $\sigma, \rho$ in $\beta$ pa se sredi poro"cila
 spremenijo. Najprej sem obravnaval nekaoti"cne parametre, nato 
 pa "se znano kaoti"cne parametre z vrednostmi
 $\sigma:=10, \rho:=28$ in $\beta:=8/3$.
+Algoritem sem poganjal s pomo"cjo datoteke \verb|lorenz.py|, kjer sem ob poganjanju
+ustrezno nastavil parametre in "stevilo vzorcev.
 
 \subsection{Domnevno nekaoti"cni parametri}
 Najprej sem algoritem pognal pri nekaoti"cnih subjektivno naklju"cno izbranih parametrih
 $\sigma:=1.3, \rho:=-15$ in $\beta:=3.4$.
 Navedeni izbrani parametri se na splo"sno smatrajo kot nenormalni, saj je vsaj eden izmed parametrov
-($\rho$) negativen.
-Podatkovno mno"zico sem generiral tako, da sem simuliral Lorenzov sistem:
+($\rho$) nepozitiven.
+% Podatkovno mno"zico sem generiral tako, da sem simuliral Lorenzov sistem:
 
-prva enacba  $dx/dt = \sigma*(y-x)$: najde re"sitev 
-$ -1.3*x + 1.3*y$ ali 
-v 50 samplih, resitev ima napako reda $10**(-9)$.
+Za prvo ena"cbo $\frac{dx}{dt} = \sigma \cdot(y-x)$, algoritem najde re"sitev 
+$$\frac{dx}{dt} =  -1.3*x + 1.3*y$$ 
+v 50 vzorcih, medtem ko ima re"sitev napako reda $10^{-9}$.
 
+Za drugo ena"cbo 
+$\frac{dy}{dt} = x(\rho-z) - y$,
+algoritem najde re"sitev  \\
+$\frac{dy}{dt} = -9.99969912689157*x*z - 9.99918437188885*x 
++ 0.0193086499353945*y - 1.09610736513107*z \\ 
+\dot{=} -10*x*z -10*x +0.02*y -z $
+\enspace oz. $$-10.0*x*z - 10.0*x - 2.28910354326151*y = 10*x*z -10*x +2*y$$ v 
+4500 ali 6500 vzorcih, re"sitev ima pri tem napako 
+reda velikosti $10^{-6}$ oz. $10^{-4}$. 
 
-druga enacba  $dx/dt = \sigma*(y-x)$: najde re"sitev v 4500 ali 6500 samplih, resitev 
-$-9.99969912689157*x*z - 9.99918437188885*x + 0.0193086499353945*y - 1.09610736513107*z = -10*x*z -10*x +0.02*y -z $ oz. $-10.0*x*z - 10.0*x - 2.28910354326151*y = 10*x*z -10*x +2*y$ ima napako
-velikosti
-004348586258407
-reda $10**(-6)$ oz. $10**(-4)$. 
-
-Tako velik odmik od pravilne resitve  
-$-15*x-x*z-y$ pripisujem trenutno nastavljeni omejitvi v implementaciji optimizacijskega
+Tako velik odmik od prave re"sitve  
+$-x*z-15*x-y$ pripisujem trenutno nastavljeni omejitvi v implementaciji optimizacijskega
 algoritma, ki omejuje parametre na interval [-10, 10]. Parameter v "clenu $-10*x$ je tako
 lahko po absolutni vrednosti najve"c 10, torej ne more biti -15, kot je v izvorni ena"cbi.
 Predvidevam, da se zato zgodi kompenzacija nad ostalimi parametri v ostalih "clenih ena"cbe.
 Predvidevam "se, da se bo pri rahljanju omejitve iz [-10, 10] na [-20, 20] napaka popravila
-na napako reda $10**(-9)$ kot pri ostalih dveh ena"cbah.
+na napako reda $10^{-9}$ kot pri ostalih dveh ena"cbah.
 
-tretja ena"cba  $dx/dt = \sigma*(y-x)$: najde re"sitev 
-$ -1.3*x + 1.3*y$ ali 
-v 50 samplih, resitev ima napako velikosti
-reda $10**(-9)$.
-
-Sledi poro"cilo o poganjanju pri kaoti"cnih parametrih:
-$\sigma:=10, \rho:=28, \beta:=8/3$
-
-Ker je $\rho$ po absolutni vrednosti spet ve"cji od 10, tj. od nastavljenih 
-mej za parametre optimizacijskega algoritma in so ostali dve vrednosti 
-znotraj mej, napovedujem, da bodo v najbolj"sem primeru podobni rezultati kot 
-v nekaoti"cnem primeru. Oziroma, pri drugi ena"bi pri"cakujem 
-$\sigma* = 10, \rho*= 10, \beta*=7$. 
-
+Za tretjo ena"cbo 
+$\frac{dz}{dt} = xy - \beta z$,
+ algoritem najde re"sitev 
+ $$\frac{dz}{dt} = 1.054*x*y - 3.402*z$$
+v 100 vzorcih, medtem ko ima re"sitev napako velikosti 
+$2.205\cdot 10^{-9}$, torej reda $10^{-9}$.
 
 \subsection{Kaoti"cni rezultati}
 
+Sledi poro"cilo o poganjanju pri kaoti"cnih parametrih:
+$\sigma:=10, \rho:=28, \beta:=8/3$.
+
+Ker je $\rho$ po absolutni vrednosti spet ve"cji od 10, tj. od nastavljenih 
+mej za parametre optimizacijskega algoritma in so ostali dve vrednosti 
+znotraj mej, predvidevamo da bodo v najbolj"sem primeru podobni rezultati kot 
+v nekaoti"cnem primeru. Natan"cneje, pri drugi ena"cbi "spekuliramo
+ena"cbo $10*x*z -10*x +7*y$.
+
 V odkrivanju prve ena"cbe algoritem odkrije ena"cbo: 
-$$-9.85764357227234*x + 9.9333747564978*y$$  
-oz. $$-9.55829580188787*x + 9.78920618974904*y + 0.0232261285460231$$
+$$\frac{dx}{dt} = -9.85764357227234*x + 9.9333747564978*y$$  
+oz. $$\frac{dx}{dt} = -9.55829580188787*x + 9.78920618974904*y + 0.0232261285460231$$
 v manj kot 50 vzorcih, medtem ko ima re"sitev napako velikosti
-$2.94709382690573e-06$ oz. $2.4772067855792343e-06$.
+$2.94709382690573e-06$ oz. $2.4772067855792343e-06$, torej reda $10^{-6}$.
 
 V odkrivanju druge ena"cbe algoritem odkrije ena"cbo:
-$$ -0.670382396435091*x*z + 10.0*x + 6.94013313376156*y $$
-$$ -0.877950876789105*x*z + 9.99535400929563*x + 7.38550161602604*y - 0.617064542958862 $$ 
-v 6500 vzorcih, ena"cba ima napako velikosti
+$$ \frac{dy}{dt} = -0.670382396435091*x*z + 10.0*x + 6.94013313376156*y $$
+oz. $$ \frac{dy}{dt} = -0.877950876789105*x*z + 9.99535400929563*x + 7.38550161602604*y - 0.617064542958862 $$ 
+v 4500 oz. 6500 vzorcih, medtem ko ima ena"cba napako velikosti
 $0.0033668325250160443 = 3.4\cdot 10^ {-3}$ oz. $0.00018803715641311185 = 1.9\cdot 10^ {-4}$.
-Medtem, ko je izmed vseh vzor"cenih ena"cb, najmanj"sa opa"zena napaka
+Za primerjavo, je izmed vseh vzor"cenih ena"cb, najmanj"sa opa"zena napaka
 reda $10^ {-5}$.
 
 V odkrivanju tretje ena"cbe algoritem odkrije ena"cbo: 
 $$\frac{dz}{dt} = 0.991337569095305*x*y - 2.56521319047224*z$$ 
-v manj kot 100 vzorcih, ena"cba ima napako velikosti
+v manj kot 100 vzorcih, medtem ko ima ena"cba napako velikosti
 $9.178140365155879e-05 = 9.2\cdot 10^ {-5}$,
 kar je v okviru najmanj"sega opa"zenega reda velikosti napake.
 
@@ -110,7 +116,7 @@ Celotno poro"cilo je stisnjeno tudi v naslednji tabeli:
 		\multicolumn{1}{p{1cm}|}{tip ena"cbe oz. parametri} & 
 		\multicolumn{1}{p{1cm}|}{leva stran ena"cbe} &
 		 \multicolumn{1}{p{5cm}|}{najdena desna stran ena"cbe vs. izvorna ena"cba} &
-		  \multicolumn{1}{p{2cm}|}{napaka enac"be} &
+		  \multicolumn{1}{p{2cm}|}{napaka ena"cbe} &
 		   \multicolumn{1}{p{1cm}|}{"stevilo potrebnih vzorcev} & 
 		   \multicolumn{1}{p{1cm}|}{hramba rezultatov} & \multicolumn{1}{p{1cm}|}{top 1\%} \\
 		   \hline
@@ -123,7 +129,7 @@ Celotno poro"cilo je stisnjeno tudi v naslednji tabeli:
 		& \multirow{2}{1.5cm}{$\frac{dz}{dt}$} & $1.054*x*y - 3.402*z$ & $2.205\cdot 10^{-9}$ & 6500 \\
 								 & & $ x*y - 3.4*z $ & & & \\
 		\hline
-		\multirow{6}{1.5cm}{nekaoti"cna, tj. $\sigma=10, \rho=28, \beta=2.66666$} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $-9.857*x + 9.933*y$ & $2.947\cdot 10^{-6}$  & 50 \\
+		\multirow{6}{1.5cm}{kaoti"cna, tj. $\sigma=10, \rho=28, \beta=2.66666$} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $-9.857*x + 9.933*y$ & $2.947\cdot 10^{-6}$  & 50 \\
 								 & & $ -10*x + 10*y $ & & & \\
 								\cline{3-6}
 		& \multirow{2}{1.5cm}{$\frac{dy}{dt}$} & $ -0.670*x*z + 10.0*x + 6.940*y $ & $ 1.9\cdot 10^ {-4}$ & 100 \\
