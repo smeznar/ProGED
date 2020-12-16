@@ -88,7 +88,9 @@ model: 9.99980094875047*x*y - 0.13041284430991                               ; e
 
 2 solutions below threshold are recognised as the true underlying equations:
 model: -1.30300426258037*x + 1.30263576311636*y                              ; error: 1.2071533035881086e-09
+p = 0.0015054336000000002, # ln 61
 model: -1.33220927167105*x + 1.30344790256477*y + 0.0032648379470146         ; error: 9.817126369042551e-10
+p = 1.5823106262171657e-07,
 
 where: solution is 
 # dx/dt = \sigma * (y-x)

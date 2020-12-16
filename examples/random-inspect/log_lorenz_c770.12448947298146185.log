@@ -1,0 +1,39 @@
+["'x'", "'y'", "'z'"]
+Grammar with 9 productions (start state = S)
+    S -> S '+' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    R -> 'C' '*' F '(' T ')' [0]
+    T -> T '*' V [0.4]
+    T -> 'C' [0.6]
+    V -> 'x' [0.33]
+    V -> 'y' [0.33]
+    V -> 'z' [0.34]
+7 =samples cardinality
+Estimating model C0*z**3 + C1
+Estimating model C0*y
+Estimating model C0*z
+Estimating model C0*x**2*y*z
+Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
+Model: C0*x**2*y*z
+Estimating model C0*x*z + C1
+Estimating model C0*x + C1
+Estimating model C0*y + C1
+ModelBox: 7 models
+-> C0*z**3 + C1, p = 0.0002173353984000001, parse trees = 1, valid = True, error = 1.3211318959746643
+-> C0*y, p = 0.04752, parse trees = 1, valid = True, error = 0.0018941730115754334
+-> C0*z, p = 0.048960000000000004, parse trees = 1, valid = True, error = 4.248228244228097
+-> C0*x**2*y*z, p = 0.00011260643328000003, parse trees = 1, valid = False
+-> C0*x*z + C1, p = 8.934064128e-05, parse trees = 1, valid = True, error = 0.46131563972456685
+-> C0*x + C1, p = 0.00015765995520000003, parse trees = 1, valid = True, error = 0.02096388066322653
+-> C0*y + C1, p = 0.011404800000000001, parse trees = 1, valid = True, error = 0.00014480307840211126
+
+Final score:
+model: 0.650706030970904*z**3 + 10.0                                         ; p: 0.0002173353984000001; error: 1.3211318959746643
+model: 5.3597277984132*y                                                     ; p: 0.04752; error: 0.0018941730115754334
+model: 10.0*z                                                                ; p: 0.048960000000000004; error: 4.248228244228097
+model: -3.38690482115004*x**2*y*z                                            ; p: 0.00011260643328000003; error: 100000000
+model: 2.69470406714461*x*z + 9.70787572694153                               ; p: 8.934064128e-05; error: 0.46131563972456685
+model: 10.0*x + 1.65163322229208                                             ; p: 0.00015765995520000003; error: 0.02096388066322653
+model: 5.23387166106292*y + 0.458249780915284                                ; p: 0.011404800000000001; error: 0.00014480307840211126
+[1] [2, 3]

@@ -1,4 +1,4 @@
-["'y'", "'x'", "'z'"]
+["'x'", "'y'", "'z'"]
 Grammar with 9 productions (start state = S)
     S -> S '+' R [0.4]
     S -> R [0.6]
@@ -6,15 +6,14 @@ Grammar with 9 productions (start state = S)
     R -> 'C' '*' F '(' T ')' [0]
     T -> T '*' V [0.4]
     T -> 'C' [0.6]
-    V -> 'y' [0.33]
     V -> 'x' [0.33]
+    V -> 'y' [0.33]
     V -> 'z' [0.34]
-6500 =samples cardinality
+20 =samples cardinality
 Estimating model C0*z**3 + C1
-Estimating model C0*x
+Estimating model C0*y
 Estimating model C0*z
-Estimating model C0*x*y**2*z
+Estimating model C0*x**2*y*z
 Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
-Model: C0*x*y**2*z
-Estimating model C0*y*z + C1
-Estimating model C0*y + C1
+Model: C0*x**2*y*z
+Estimating model C0*x*z + C1
