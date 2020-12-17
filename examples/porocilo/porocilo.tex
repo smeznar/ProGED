@@ -23,29 +23,38 @@
 \begin{document}
 	\maketitle
     
-\newcommand{\eqiiIp}{ 6.50962591625742e-09  }
 
 \newcommand{\round}[2][2]{\( \FPeval{ \p }{round(#2, #1)} \p \)}
-\newcommand{\roundNonE}[3]{\( \FPeval{ \p }{round(#1 * 10^(#2), #3)} \p\cdot 10^{-#2} \)}
+\newcommand{\roundNonE}[3][2]{\( \FPeval{ \p }{round(#2 * 10^(#3), #1)} \p\cdot 10^{-#3} \)}
+\newcommand{\roundExp}[2][2]{\(
+\StrCut{#2}{e}{\coefA}{\order}
+\FPeval{\order}{((\order) * (-1))*(-1)} 
+\FPclip\order\order  % Clipping zeros 00090000 away -> 9 
+\FPeval{\coefA}{round(\coefA, #1)} 
+\coefA \cdot 10^{\order}
+\)}
 % \StrCut
 % \StrCut⟨[*]⟩[⟨nunber⟩]{⟨string⟩}{⟨stringA⟩}{⟨macroA⟩}{⟨macroB⟩
-\StrCut{\eqiiIp}{e}{\coefA}{\order}
-\coefA = \order \\
-p == \round{\coefA}
-p == \round[4]{\coefA}
-\newcommand{\roundNonE}[3][2]{\( \FPeval{ \p }{ 10^(#2), #3)} \p\cdot 10^{-#2} \)}
-\\
+% \StrCut{\eqiiIp}{e}{\coefA}{\order}
+% \coefA = \order \\
+% p == \round{\coefA}
+% p == \round[4]{\coefA}
+% order = \( \FPclip{\o}{\order} \o \)
+% order2 = \( \FPeval{\origam}{round( 1.345 * 1, 2)} \origam a dsa \)
+% dsa2 = \( \FPeval{\o}{((-09) * (-1))*(-1)} \FPclip\o\o  \order -> \o \)
+% % order2 = \( \FPeval{\or}{\order * 1} \or \)
+% p third = \round{\coefA} \( \cdot 10^{\order}\)
+% \\
 \newcommand{\eqiIp}{0.0015054336000000002}
 \newcommand{\eqiIpRound}{\round{\eqiIp}{3}{2}}
-% \newcommand{\eqiiIp}{0.0015054336000000002}
-% \newcommand{\eqiiIp}{ 6.50962591625742e-09  }
-% \newcommand{\eqiiIpRound}{\round{\eqiiIp}{4}{2}}
+\newcommand{\eqiiIp}{ 6.50962591625742e-09  }
+\roundExp[2]{\eqiiIp}
 \newcommand{\eqiiiIp}{0.0004094779392000001}
 \newcommand{\eqiiiIpRound}{\round{\eqiiiIp}{4}{2}}
 %  \newcommand{\eq2_long}{-10.0*x*z - 10.0*x - 2.28910354326151*y
 % \( \FPeval{ \p }{round(\eqiIp * 10^3, 2)} \p\cdot 10^{-3} \)
 % p = \round{\eqiiIp}{0}{2} for lambda
-\( \FPeval{ \p }{ 10 * \eqiIp } \p = p\)
+% \( \FPeval{ \p }{ 10 * \eqiIp } \p = p\)
 
 % \( \eqiiIp \)
 

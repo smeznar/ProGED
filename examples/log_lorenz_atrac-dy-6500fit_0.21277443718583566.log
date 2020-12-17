@@ -1134,3 +1134,8 @@ Estimating model C0*x**3*y**3*z
 Excepted an error: The map-like callable must be of the form f(func, iterable), returning a sequence of numbers the same length as 'iterable'!! 
 Model: C0*x**3*y**3*z
 Estimating model C0*x*y*z**7 + C1
+
+================ notes: =================
+|| 15.43 zac -17.21-17.51 ... 
+one model (the last written down) needed more
+than 30min. Therefore manually aborted.

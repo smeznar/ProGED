@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  17 DEC 2020 18:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  17 DEC 2020 21:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -198,154 +198,139 @@ Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-)) ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) )
-
-/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.tex:36: LaTeX Error: Command \roundNonE already defined.
-               Or name \end... illegal, see p.192 of the manual.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.36 ...{ \p }{ 10^(#2), #3)} \p\cdot 10^{-#2} \)}
-                                                  
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-( FP-EVAL ( FP-UPN ( FP-MUL ) ) ) [1
+)) ( FP-EVAL ( FP-UPN ( FP-SUB ) ( FP-MUL ) ( FP-SUB ) ( FP-MUL ) ) ) ( FP-CLIP ) ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (11.71262pt too wide) in paragraph at lines 135--138
+Overfull \hbox (11.71262pt too wide) in paragraph at lines 144--147
 \OT1/cmr/m/n/10 v manj kot 50 vzor-cih, med-tem ko ima re^^Tsitev na-pako ve-li-ko-sti $2\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 94709382690573\OML/cmm/m/it/10 e \OMS/cmsy/m/n/10 ^^@
  []
 
 
-Overfull \hbox (75.20547pt too wide) detected at line 141
+Overfull \hbox (75.20547pt too wide) detected at line 150
 [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 877950876789105 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 z \OT1/cmr/m/n/10 + 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 99535400929563 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OT1/cmr/m/n/10 + 7\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 38550161602604 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 617064542958862
  []
 
 
-Overfull \hbox (44.38046pt too wide) in paragraph at lines 141--146
+Overfull \hbox (44.38046pt too wide) in paragraph at lines 150--155
 \OT1/cmr/m/n/10 v 4500 oz. 6500 vzor-cih, med-tem ko ima ena^^Tcba na-pako ve-li-ko-sti $0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0033668325250160443 =
  []
 
 
-Overfull \hbox (23.01822pt too wide) in paragraph at lines 148--152
+Overfull \hbox (23.01822pt too wide) in paragraph at lines 157--161
 \OT1/cmr/m/n/10 v manj kot 100 vzor-cih, med-tem ko ima ena^^Tcba na-pako ve-li-ko-sti $9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 178140365155879\OML/cmm/m/it/10 e \OMS/cmsy/m/n/10 ^^@
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 162--162
+Underfull \hbox (badness 10000) in paragraph at lines 171--171
 []\OT1/cmr/m/n/10 tip
  []
 
 
-Overfull \hbox (1.26953pt too wide) in paragraph at lines 162--162
+Overfull \hbox (1.26953pt too wide) in paragraph at lines 171--171
 \OT1/cmr/m/n/10 ena^^Tcbe
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--162
+Underfull \hbox (badness 10000) in paragraph at lines 171--171
 \OT1/cmr/m/n/10 oz.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--162
+Underfull \hbox (badness 10000) in paragraph at lines 171--171
 \OT1/cmr/m/n/10 pa-ra-
  []
 
 
-Overfull \hbox (2.71812pt too wide) in paragraph at lines 163--163
+Overfull \hbox (2.71812pt too wide) in paragraph at lines 172--172
 []\OT1/cmr/m/n/10 leva
  []
 
 
-Overfull \hbox (8.07924pt too wide) in paragraph at lines 163--163
+Overfull \hbox (8.07924pt too wide) in paragraph at lines 172--172
 \OT1/cmr/m/n/10 stran
  []
 
 
-Overfull \hbox (15.49591pt too wide) in paragraph at lines 163--163
+Overfull \hbox (15.49591pt too wide) in paragraph at lines 172--172
 \OT1/cmr/m/n/10 ena^^Tcbe| 
  []
 
 
-Overfull \hbox (14.68623pt too wide) in paragraph at lines 165--165
+Overfull \hbox (14.68623pt too wide) in paragraph at lines 174--174
 []\OT1/cmr/m/n/10 verjetnost
  []
 
 
-Overfull \hbox (1.26953pt too wide) in paragraph at lines 165--165
+Overfull \hbox (1.26953pt too wide) in paragraph at lines 174--174
 \OT1/cmr/m/n/10 ena^^Tcbe| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 166--166
+Underfull \hbox (badness 10000) in paragraph at lines 175--175
 []\OT1/cmr/m/n/10 napaka
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--167
+Underfull \hbox (badness 10000) in paragraph at lines 176--176
 []\OT1/cmr/m/n/10 ^^Tstevilo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--167
+Underfull \hbox (badness 10000) in paragraph at lines 176--176
 \OT1/cmr/m/n/10 po-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--167
+Underfull \hbox (badness 10000) in paragraph at lines 176--176
 \OT1/cmr/m/n/10 treb-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--167
+Underfull \hbox (badness 10000) in paragraph at lines 176--176
 \OT1/cmr/m/n/10 nih
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--167
+Underfull \hbox (badness 10000) in paragraph at lines 176--176
 \OT1/cmr/m/n/10 vzor-
  []
 
 
-Overfull \hbox (4.63068pt too wide) in paragraph at lines 168--168
+Overfull \hbox (4.63068pt too wide) in paragraph at lines 177--177
 []\OT1/cmr/m/n/10 hramba
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 168--168
+Underfull \hbox (badness 10000) in paragraph at lines 177--177
 \OT1/cmr/m/n/10 re-zul-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 168--168
+Underfull \hbox (badness 10000) in paragraph at lines 177--177
 []\OT1/cmr/m/n/10 top
  []
 
 
-Overfull \hbox (3.70988pt too wide) in paragraph at lines 170--170
+Overfull \hbox (3.70988pt too wide) in paragraph at lines 179--179
 []|\OT1/cmr/m/n/10 nekaoti^^Tcna|  
  []
 
 ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-POW ) ( FP-MUL ) ( FP-ROUND ) ) )
-Overfull \hbox (184.47363pt too wide) in paragraph at lines 161--188
+Overfull \hbox (184.47363pt too wide) in paragraph at lines 170--197
 [][] 
  []
 
 ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) [3] (/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.aux) ) 
 Here is how much of TeX's memory you used:
- 3428 strings out of 482600
- 45672 string characters out of 5949959
+ 3431 strings out of 482600
+ 45699 string characters out of 5949959
  316451 words of memory out of 5000000
- 18432 multiletter control sequences out of 15000+600000
+ 18435 multiletter control sequences out of 15000+600000
  537581 words of font info for 43 fonts, out of 8000000 for 9000
  350 hyphenation exceptions out of 8191
  30i,14n,41p,299b,366s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (3 pages, 110619 bytes).
+Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (3 pages, 110342 bytes).
 PDF statistics:
  54 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream
