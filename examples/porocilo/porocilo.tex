@@ -11,9 +11,9 @@
 
 % \usepackage{graphics}
 \usepackage{graphicx}
+
 \usepackage{fp}
-% \usepackage{caption}
-% \captionsetup[table]{name=Tabela}
+\usepackage{xstring}
 
 
 
@@ -23,26 +23,48 @@
 \begin{document}
 	\maketitle
     
+\newcommand{\eqiiIp}{ 6.50962591625742e-09  }
 
+\newcommand{\round}[2][2]{\( \FPeval{ \p }{round(#2, #1)} \p \)}
+\newcommand{\roundNonE}[3]{\( \FPeval{ \p }{round(#1 * 10^(#2), #3)} \p\cdot 10^{-#2} \)}
+% \StrCut
+% \StrCut⟨[*]⟩[⟨nunber⟩]{⟨string⟩}{⟨stringA⟩}{⟨macroA⟩}{⟨macroB⟩
+\StrCut{\eqiiIp}{e}{\coefA}{\order}
+\coefA = \order \\
+p == \round{\coefA}
+p == \round[4]{\coefA}
+\newcommand{\roundNonE}[3][2]{\( \FPeval{ \p }{ 10^(#2), #3)} \p\cdot 10^{-#2} \)}
+\\
 \newcommand{\eqiIp}{0.0015054336000000002}
+\newcommand{\eqiIpRound}{\round{\eqiIp}{3}{2}}
 % \newcommand{\eqiiIp}{0.0015054336000000002}
-\newcommand{\eqiiIp}{ 6.50962591625742e-09}
- \newcommand{\eqiiiIp}{0.0004094779392000001}
+% \newcommand{\eqiiIp}{ 6.50962591625742e-09  }
+% \newcommand{\eqiiIpRound}{\round{\eqiiIp}{4}{2}}
+\newcommand{\eqiiiIp}{0.0004094779392000001}
+\newcommand{\eqiiiIpRound}{\round{\eqiiiIp}{4}{2}}
 %  \newcommand{\eq2_long}{-10.0*x*z - 10.0*x - 2.28910354326151*y
+% \( \FPeval{ \p }{round(\eqiIp * 10^3, 2)} \p\cdot 10^{-3} \)
+% p = \round{\eqiiIp}{0}{2} for lambda
+\( \FPeval{ \p }{ 10 * \eqiIp } \p = p\)
 
-p = \eqiIp \\
-\[ \FPeval\echo{round(\eqiIp,6)} 
-p = \echo \]
-aftermath
+% \( \eqiiIp \)
 
- \( \FPeval{ \echo }{round(\eqiIp, 10)} \echo lambda \)
-\[
-\FPmul\result{2.343949595939494939}{7}
-% \FPclip\result\result
-\FPtrunc\result\result{3}
-\FPeval\result{round(root(2,sin(result + 2.5)),2)}
-2*7 = \result
-\]
+% p = \round{\eqiIp}{3}{2} for lambda
+
+% \( \FPeval{ \echo }{round(\eqiIp * 10^3, 10)} \echo lambda \)
+% p = \eqiIp \\
+% \[ \FPeval\echo{round(\eqiIp,6)} 
+% p = \echo \]
+% aftermath
+% \newcommand{\result}{1.23456789}
+%  \( \FPeval{ \echo }{round(\eqiIp, 10)} \echo lambda \)
+% \[
+% % \FPmul\result{2.343949595939494939}{7}
+% % \FPclip\result\result
+% \FPtrunc\ult\eqiIp{3}
+% % \FPeval\result{round(root(2,sin(result + 2.5)),2)}
+% result =  \ult
+% \]
 
 Odkrivanje 1-D ODE ena"cb sem poganjal na Lorenzovemu sistemu ena"cb:
 $$
@@ -136,7 +158,7 @@ kar je v okviru najmanj"sega opa"zenega reda velikosti napake.
 \section{Poro"cilo v tabeli}
 
 \begin{table}
-	\begin{tabular}{cc *{15}{c}ccccc}
+	\begin{tabular}{cc *{15}{c}cccccccc}
 		\multicolumn{1}{p{1cm}|}{tip ena"cbe oz. parametri} & 
 		\multicolumn{1}{p{0.5cm}|}{leva stran ena"cbe} &
 		 \multicolumn{1}{p{5cm}|}{najdena desna stran ena"cbe vs. izvorna ena"cba} &
@@ -148,7 +170,7 @@ kar je v okviru najmanj"sega opa"zenega reda velikosti napake.
 		\multirow{6}{1.5cm}{nekaoti"cna} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $ -1.303*x + 1.303*y $ & $\cdot 10^{-9}$ & 50 & &  \\
 								 & & $ -1.3*x + 1.3*y $ & & & \\
 								\cline{3-6}
-		 & \multirow{2}{1.5cm}{$\frac{dy}{dt}$} & $-10.0*x*z - 10.0*x - 2.289*y$ & $8\cdot 10^{-4}$ & 100 &  \\
+		 & \multirow{2}{1.5cm}{$\frac{dy}{dt}$} & $-10.0*x*z - 10.0*x - 2.289*y$ & p = \( 1.3 \) & $8\cdot 10^{-4}$ & 100 &  \\
 								 & & $ -x*z -15*x -y $ & & & \\
 								\cline{3-6}
 		& \multirow{2}{1.5cm}{$\frac{dz}{dt}$} & $1.054*x*y - 3.402*z$ & $2.205\cdot 10^{-9}$ & 6500 \\
@@ -157,32 +179,19 @@ kar je v okviru najmanj"sega opa"zenega reda velikosti napake.
 		\multirow{6}{1.5cm}{kaoti"cna} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $-9.857*x + 9.933*y$ & $2.947\cdot 10^{-6}$  & 50 \\
 								 & & $ -10*x + 10*y $ & & & \\
 								\cline{3-6}
-		& \multirow{2}{1.5cm}{$\frac{dy}{dt}$} & $ -0.670*x*z + 10.0*x + 6.940*y $ & $ 1.9\cdot 10^ {-4}$ & 100 \\
+		& \multirow{2}{1.5cm}{$\frac{dy}{dt}$} & $ -0.670*x*z + 10.0*x + 6.940*y $ & \round{\eqiIp}{3}{2} & $ 1.9\cdot 10^ {-4}$ & 100 \\
 								 & & $ -x*z + 28*x -y $ & & & \\
 								\cline{3-6}
-		& \multirow{2}{1.5cm}{$\frac{dz}{dt}$} & $0.991*x*y - 2.565*z$ & $9.2\cdot 10^ {-5}$ & 6500 \\
+		& \multirow{2}{1.5cm}{$\frac{dz}{dt}$} & $0.991*x*y - 2.565*z$ & \(\FPeval\p{ round(\eqiIp * 10^{3}, 2)} \p \cdot 10^{-3} \) & $9.2\cdot 10^ {-5}$ & 6500 \\
 								 & & $ x*y - 2.66666*z $ & & & \\
 	\end{tabular}
 	 \caption{ Celotno poro"cilo je stisnjeno tudi v tej tabeli. }
 \end{table}
 
+%  \( \FPtrunc\p\eqiiIp{6} \p \) 
 
 
-%  \newcommand{\nui}{625}
-%  \newcommand{\nuii}{562}
-%  \newcommand{\nuiii}{500}
-%  \newcommand{\nuiv}{438}
-%  \newcommand{\eui}{0.00000}
-%  \newcommand{\euii}{0.00000}
-%  \newcommand{\euiii}{0.00000}
-%  \newcommand{\euiv}{0.00000}
-%  \newcommand{\nti}{625}
-%  \newcommand{\ntii}{563}
-%  \newcommand{\ntiii}{500}
-%  \newcommand{\ntiv}{438}
-%  \newcommand{\eti}{0.00000}
-%  \newcommand{\etii}{0.00000}
-%  \newcommand{\etiii}{0.00000}
-%  \newcommand{\etiv}{0.00000}
-
+% \(\FPeval\p{1.2}\p\)
+% \( \FPeval{ \p }{round(\eqiIp * 10^3, 2)} \p\cdot 10^{-3} \)
+\round{\eqiIp}{3}{2}
 \end{document}
