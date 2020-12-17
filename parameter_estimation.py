@@ -156,7 +156,7 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
-    bounds = [[-10**1, 10**1] for i in range(len(p0))]
+    bounds = [[-3*10**1, 3*10**1] for i in range(len(p0))]
     if isinstance(T, str):
         return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
                                     maxiter=10**2, popsize=10)

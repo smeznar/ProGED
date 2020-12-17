@@ -11,18 +11,39 @@
 
 % \usepackage{graphics}
 \usepackage{graphicx}
-
+\usepackage{fp}
 % \usepackage{caption}
 % \captionsetup[table]{name=Tabela}
 
 
 
-\title{Poročilo okrivanja 1-D ODE v Lorenzovemu sistemu}
-
+\title{Poročilo odkrivanja 1-D ODE v Lorenzovemu sistemu}
+\author{Boštjan Gec}
 
 \begin{document}
 	\maketitle
     
+
+\newcommand{\eqiIp}{0.0015054336000000002}
+% \newcommand{\eqiiIp}{0.0015054336000000002}
+\newcommand{\eqiiIp}{ 6.50962591625742e-09}
+ \newcommand{\eqiiiIp}{0.0004094779392000001}
+%  \newcommand{\eq2_long}{-10.0*x*z - 10.0*x - 2.28910354326151*y
+
+p = \eqiIp \\
+\[ \FPeval\echo{round(\eqiIp,6)} 
+p = \echo \]
+aftermath
+
+ \( \FPeval{ \echo }{round(\eqiIp, 10)} \echo lambda \)
+\[
+\FPmul\result{2.343949595939494939}{7}
+% \FPclip\result\result
+\FPtrunc\result\result{3}
+\FPeval\result{round(root(2,sin(result + 2.5)),2)}
+2*7 = \result
+\]
+
 Odkrivanje 1-D ODE ena"cb sem poganjal na Lorenzovemu sistemu ena"cb:
 $$
 \frac{dx}{dt} = \sigma (y-x),
@@ -95,8 +116,7 @@ $2.94709382690573e-06$ oz. $2.4772067855792343e-06$, torej reda $10^{-6}$.
 
 V odkrivanju druge ena"cbe algoritem odkrije ena"cbo:
 $$ \frac{dy}{dt} = -0.670382396435091*x*z + 10.0*x + 6.94013313376156*y $$
-oz. $$ \frac{dy}{dt} = -0.877950876789105*x*z + 9.99535400929563*x 
-+ 7.38550161602604*y - 0.617064542958862 $$ 
+oz. $$ \frac{dy}{dt} = -0.877950876789105*x*z + 9.99535400929563*x + 7.38550161602604*y - 0.617064542958862 $$ 
 v 4500 oz. 6500 vzorcih, medtem ko ima ena"cba napako velikosti
 $0.0033668325250160443 = 3.4\cdot 10^ {-3}$ oz. $0.00018803715641311185 = 1.9\cdot 10^ {-4}$.
 Za primerjavo, je izmed vseh vzor"cenih ena"cb, najmanj"sa opa"zena napaka
@@ -108,20 +128,24 @@ v manj kot 100 vzorcih, medtem ko ima ena"cba napako velikosti
 $9.178140365155879e-05 = 9.2\cdot 10^ {-5}$,
 kar je v okviru najmanj"sega opa"zenega reda velikosti napake.
 
+% verjetnosti:
+% prva: 0.0015054336000000002
+% druga:  6.50962591625742e-09
+% tretja: 0.0004094779392000001
 \pagebreak
 \section{Poro"cilo v tabeli}
 
-Celotno poro"cilo je stisnjeno tudi v naslednji tabeli:
-\begin{table}[h]
+\begin{table}
 	\begin{tabular}{cc *{15}{c}ccccc}
 		\multicolumn{1}{p{1cm}|}{tip ena"cbe oz. parametri} & 
-		\multicolumn{1}{p{1cm}|}{leva stran ena"cbe} &
+		\multicolumn{1}{p{0.5cm}|}{leva stran ena"cbe} &
 		 \multicolumn{1}{p{5cm}|}{najdena desna stran ena"cbe vs. izvorna ena"cba} &
+		 \multicolumn{1}{p{1cm}|}{verjetnost ena"cbe} &
 		  \multicolumn{1}{p{2cm}|}{napaka ena"cbe} &
 		   \multicolumn{1}{p{1cm}|}{"stevilo potrebnih vzorcev} & 
 		   \multicolumn{1}{p{1cm}|}{hramba rezultatov} & \multicolumn{1}{p{1cm}|}{top 1\%} \\
 		   \hline
-		\multirow{6}{1.5cm}{nekaoti"cna, tj. $\sigma=1.3, \rho=-15, \beta=3.4$} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $ -1.303*x + 1.303*y $ & $\cdot 10^{-9}$ & 50 & &  \\
+		\multirow{6}{1.5cm}{nekaoti"cna} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $ -1.303*x + 1.303*y $ & $\cdot 10^{-9}$ & 50 & &  \\
 								 & & $ -1.3*x + 1.3*y $ & & & \\
 								\cline{3-6}
 		 & \multirow{2}{1.5cm}{$\frac{dy}{dt}$} & $-10.0*x*z - 10.0*x - 2.289*y$ & $8\cdot 10^{-4}$ & 100 &  \\
@@ -130,7 +154,7 @@ Celotno poro"cilo je stisnjeno tudi v naslednji tabeli:
 		& \multirow{2}{1.5cm}{$\frac{dz}{dt}$} & $1.054*x*y - 3.402*z$ & $2.205\cdot 10^{-9}$ & 6500 \\
 								 & & $ x*y - 3.4*z $ & & & \\
 		\hline
-		\multirow{6}{1.5cm}{kaoti"cna, tj. $\sigma=10, \rho=28, \beta=2.66666$} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $-9.857*x + 9.933*y$ & $2.947\cdot 10^{-6}$  & 50 \\
+		\multirow{6}{1.5cm}{kaoti"cna} & \multirow{2}{1.5cm}{$\frac{dx}{dt}$} & $-9.857*x + 9.933*y$ & $2.947\cdot 10^{-6}$  & 50 \\
 								 & & $ -10*x + 10*y $ & & & \\
 								\cline{3-6}
 		& \multirow{2}{1.5cm}{$\frac{dy}{dt}$} & $ -0.670*x*z + 10.0*x + 6.940*y $ & $ 1.9\cdot 10^ {-4}$ & 100 \\
@@ -139,13 +163,11 @@ Celotno poro"cilo je stisnjeno tudi v naslednji tabeli:
 		& \multirow{2}{1.5cm}{$\frac{dz}{dt}$} & $0.991*x*y - 2.565*z$ & $9.2\cdot 10^ {-5}$ & 6500 \\
 								 & & $ x*y - 2.66666*z $ & & & \\
 	\end{tabular}
+	 \caption{ Celotno poro"cilo je stisnjeno tudi v tej tabeli. }
 \end{table}
 
 
-% \newcommand{\asui}{rf-100,10  }
-%  \newcommand{\asuii}{glm        }
-%  \newcommand{\asuiii}{glm        }
-%  \newcommand{\asuiv}{squared+glm}
+
 %  \newcommand{\nui}{625}
 %  \newcommand{\nuii}{562}
 %  \newcommand{\nuiii}{500}
@@ -162,17 +184,5 @@ Celotno poro"cilo je stisnjeno tudi v naslednji tabeli:
 %  \newcommand{\etii}{0.00000}
 %  \newcommand{\etiii}{0.00000}
 %  \newcommand{\etiv}{0.00000}
-
-% \begin{table}[h]
-% \begin{tabular}{ *{5}{c|}c  }		
-%     \multicolumn{2}{c|}{nekaj}  & \multicolumn{2}{c}{nekaj2} \\
-%      \hline
-%      \#1 & \asui   & \nui   & \eui   & \nti   & \eti  \\
-%      \#2 & \asuii  & \nuii  & \euii  & \ntii  & \etii  \\
-%      \#3 & \asuiii & \nuiii & \euiii & \ntiii & \etiii  \\
-%      \#4 & \asuiv  & \nuiv  & \euiv  & \ntiv  & \etiv  \\
-% \end{tabular}
-% \caption{Tabela s poro"cilom o rezultatih}
-% \end{table}
 
 \end{document}
