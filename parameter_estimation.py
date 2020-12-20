@@ -5,6 +5,8 @@ Created on Thu Oct 22 09:12:29 2020
 @author: Jure
 """
 
+import multiprocessing as mp
+
 import numpy as np
 from scipy.optimize import differential_evolution, minimize
 from scipy.interpolate import interp1d
@@ -94,8 +96,19 @@ def ode (models_list, params_matrix, T, X_data, y0):
     def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
         # N-D:
         b = np.concatenate((y, X(t))) # =[y,X(t)] =[y,X1(t),X2(t),...]
-        return np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])  # older version with *b.T
-    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)
+        # Older version with *b.T:
+        return np.array([lamb_expr(*b) for lamb_expr in lamb_exprs])
+    # Older (default RK45) method:
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)  
+    # Set min_step via prescribing maximum number of steps:
+    max_steps = 10**6 #100 #3 
+    # Convert max_steps to min_steps:
+    min_step_from_max_steps = abs(T[-1] - T[0])/max_steps
+    # The minimal min_step to avoid min step error in LSODA:
+    min_step_error = 10**(-15)
+    min_step = max(min_step_from_max_steps, min_step_error)  # Force them both.
+    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, method="LSODA", 
+                    min_step=min_step, t_eval=T, atol=0)
     return Yode.y
 
 def model_ode_error (model, params, T, X, Y):
@@ -108,18 +121,28 @@ def model_ode_error (model, params, T, X, Y):
         - Y are columns of features that are derived via ode fitting.
     """
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
+    dummy = 10**9
     try:
         odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+        odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
+        if not odeY.shape == Y.shape:
+            # print("The ODE solver did not found ys at all times -> returning dummy error.")
+            return dummy
+        try:
+            res = np.mean((Y-odeY)**2)
+            if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+                return dummy
+            return res
+        except Exception as error:
+            print("Programmer1: Params at error:", params, f"and {type(error)} with message:", error)
+            return dummy
+
     except Exception as error:
-        print("error inside ode() of model_ode_error.")
-        print("params at error:", params, "Error message:", error)
-        odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
-    odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
-    res = np.mean((Y-odeY)**2)
-    if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-#        print(model.expr, model.params, model.sym_params, model.sym_vars)
-        return 10**9
-    return res
+        print("Programmer: Excerpted an error inside ode() of model_ode_error.")
+        print("Programmer: Params at error:", params, f"and {type(error)} with message:", error)
+        # odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+        print("Returning dummy error. All is well.")
+        return dummy
 
 def model_error_general (model, params, X, Y, T="algebraic"):
     """Calculate error of model with given parameters in general with
@@ -215,7 +238,21 @@ class ParameterEstimator:
         except Exception as error:
             print(f"Excepted an error: {error}!! \nModel:", model)
             model.set_estimated({}, valid=False)
+        print(f"model: {str(model.get_full_expr()):<70}; "
+                + f"p: {model.p}; "
+                + f"error: {model.get_error()}")
+
         return model
+
+    def fit_one_timeout(self, model):
+        """Timeout the fit_one function."""
+
+        p = mp.Process(target=self.fit_one, args=(model,))
+        p.start()
+        p.join(10)
+        if p.is_alive():
+            print("running... let's kill it...")
+            p.terminate()
     
 def fit_models (models, X, Y, T="algebraic", pool_map = map, verbosity=0):
     """Performs parameter estimation on given models. Main interface to the module.
@@ -236,6 +273,7 @@ def fit_models (models, X, Y, T="algebraic", pool_map = map, verbosity=0):
     """
     estimator = ParameterEstimator(X, Y, T)
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
+    # return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one_timeout, models.values())))))
 
 
 

@@ -6,6 +6,9 @@ arg1 -- custom nickname of log that is added to the log filename, which is of
     the form: log_lorenz_<custom nickname><random number>.log
 """
 
+import multiprocessing as mp
+
+import time
 import sys  # To import from parent directory.
 
 # from IPython.utils.io import Tee  # Log results using 3th package.
@@ -18,6 +21,7 @@ from scipy.integrate import solve_ivp
 
 # # 0.) Log output to lorenz_log_<random>.log file
 
+start = time.perf_counter()
 # # # Input: # # # 
 eqation = "123"  # Code for eq_disco([1], [2,3]).
 samples_cardinality = 50 
@@ -33,9 +37,9 @@ aquation = (aux[:1], aux[1:])
 random = str(np.random.random())
 print(log_nickname + random)
 try:
-    log_object = Tee("examples/log_lorenz_" + log_nickname + random + ".log")
+    log_object = Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
 except FileNotFoundError:
-    log_object = Tee("log_lorenz_" + log_nickname + random + ".log")
+    log_object = Tee("log_lorenz_" + log_nickname + random + ".txt")
 
 
 # # 1.) Data construction (simulation of Lorenz):
@@ -46,19 +50,29 @@ T = np.linspace(0.48, 0.85, 1000)
 # dx/dt = \sigma * (y-x)
 # dy/dt = x*(\rho-z) - y
 # dz/dt = x*y - \beta*z
-sigma = 1.3  # 1 # 0 
-rho = -15  # 1 # 0
-beta = 3.4  # 1 # 0
+# sigma = 1.3  # 1 # 0 
+# rho = -15  # 1 # 0
+# beta = 3.4  # 1 # 0
 # Chaotic configuration:
-# sigma = 10  # 1 # 0 
-# rho = 28  # 1 # 0
-# beta = 8/3  # 1 # 0
+sigma = 10  # 1 # 0 
+rho = 28  # 1 # 0
+beta = 8/3  # 1 # 0
 y0 = [0.1, 0.4, 0.5]
 def dy_dt(t, ys):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
     # \dot{y} = y^. = [y1^., y2^., y3^., ...]
     x, y, z = ys
     return [sigma * (y-x), x*(rho-z) - y, x*y - beta*z]
-Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)
+# Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)
+max_steps = 10**7
+# Convert max_steps to min_steps:
+min_step_from_max_steps = abs(T[-1] - T[0])/max_steps
+# The minimal min_step to avoid min step error in LSODA:
+min_step_error = 10**(-15)
+min_step = max(min_step_from_max_steps, min_step_error)  # Force them both.
+Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, method="LSODA", 
+                min_step=min_step, t_eval=T, atol=0)
+                # min_step=min_step, max_step=min_step*10, t_eval=T)
+
 # plot simulated data:
 plt.xlabel("T [time]")
 plt.ylabel("solutions [ys(t)]")
@@ -124,13 +138,27 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     for m in models:
         if m.get_error() < 10**(-3) or True:
             print(f"model: {str(m.get_full_expr()):<70}; "
-                    + f"p: {m.p}; "
-                    + f"error: {m.get_error()}")
+                + f"p: {m.p}; "
+                + f"error: {m.get_error()}")
     return 1
+
 
 # eq_disco_demo(data, lhs_variables=[2], rhs_variables=[1,3])
 # eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
 # eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
-eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
+
+p = mp.Process(target=eq_disco_demo, args=(data, aquation[0], aquation[1]))
+# p = mp.Process(target=len, args=([],))
+print("proces defined")
+p.start()
+print("proces started")
+p.join(60*60*3)
+if p.is_alive():
+    p.terminate()
+    p.join()
+print("process joined")
+# eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
 print(aquation[0], aquation[1])
 
+finnish = time.perf_counter()
+print(f"Finnished in {round(finnish-start, 2)} seconds")
