@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  17 DEC 2020 21:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.24)  18 DEC 2020 07:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -101,24 +101,6 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
 \mathdisplay@stack=\toks20
 LaTeX Info: Redefining \[ on input line 2859.
 LaTeX Info: Redefining \] on input line 2860.
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks21
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
-)
-Package graphics Info: Driver file: pdftex.def on input line 105.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
-))
-\Gin@req@height=\dimen146
-\Gin@req@width=\dimen147
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp.sty
 Package: fp 1995/04/02
  `Fixed Point Package', Version 0.8, April 2, 1995 (C) Michael Mehlich (/usr/share/texlive/texmf-dist/tex/latex/fp/defpattern.sty
@@ -180,157 +162,139 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
 LaTeX Font Info:    ... okay on input line 23.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
 LaTeX Font Info:    ... okay on input line 23.
- (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count270
-\scratchdimen=\dimen148
-\scratchbox=\box48
-\nofMPsegments=\count271
-\nofMParguments=\count272
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count273
-\MPscratchDim=\dimen149
-\MPnumerator=\count274
-\makeMPintoPDFobject=\count275
-\everyMPtoPDFconversion=\toks23
-) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
-Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-)) ( FP-EVAL ( FP-UPN ( FP-SUB ) ( FP-MUL ) ( FP-SUB ) ( FP-MUL ) ) ) ( FP-CLIP ) ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) [1
+ [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (11.71262pt too wide) in paragraph at lines 144--147
+Overfull \hbox (11.71262pt too wide) in paragraph at lines 116--119
 \OT1/cmr/m/n/10 v manj kot 50 vzor-cih, med-tem ko ima re^^Tsitev na-pako ve-li-ko-sti $2\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 94709382690573\OML/cmm/m/it/10 e \OMS/cmsy/m/n/10 ^^@
  []
 
 
-Overfull \hbox (75.20547pt too wide) detected at line 150
+Overfull \hbox (75.20547pt too wide) detected at line 122
 [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 877950876789105 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 z \OT1/cmr/m/n/10 + 9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 99535400929563 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 x \OT1/cmr/m/n/10 + 7\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 38550161602604 \OMS/cmsy/m/n/10 ^^C \OML/cmm/m/it/10 y \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 617064542958862
  []
 
 
-Overfull \hbox (44.38046pt too wide) in paragraph at lines 150--155
+Overfull \hbox (44.38046pt too wide) in paragraph at lines 122--127
 \OT1/cmr/m/n/10 v 4500 oz. 6500 vzor-cih, med-tem ko ima ena^^Tcba na-pako ve-li-ko-sti $0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0033668325250160443 =
  []
 
 
-Overfull \hbox (23.01822pt too wide) in paragraph at lines 157--161
+Overfull \hbox (23.01822pt too wide) in paragraph at lines 129--133
 \OT1/cmr/m/n/10 v manj kot 100 vzor-cih, med-tem ko ima ena^^Tcba na-pako ve-li-ko-sti $9\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 178140365155879\OML/cmm/m/it/10 e \OMS/cmsy/m/n/10 ^^@
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 171--171
+Underfull \hbox (badness 10000) in paragraph at lines 143--143
 []\OT1/cmr/m/n/10 tip
  []
 
 
-Overfull \hbox (1.26953pt too wide) in paragraph at lines 171--171
+Overfull \hbox (1.26953pt too wide) in paragraph at lines 143--143
 \OT1/cmr/m/n/10 ena^^Tcbe
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 171--171
+Underfull \hbox (badness 10000) in paragraph at lines 143--143
 \OT1/cmr/m/n/10 oz.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 171--171
+Underfull \hbox (badness 10000) in paragraph at lines 143--143
 \OT1/cmr/m/n/10 pa-ra-
  []
 
 
-Overfull \hbox (2.71812pt too wide) in paragraph at lines 172--172
+Overfull \hbox (2.71812pt too wide) in paragraph at lines 144--144
 []\OT1/cmr/m/n/10 leva
  []
 
 
-Overfull \hbox (8.07924pt too wide) in paragraph at lines 172--172
+Overfull \hbox (8.07924pt too wide) in paragraph at lines 144--144
 \OT1/cmr/m/n/10 stran
  []
 
 
-Overfull \hbox (15.49591pt too wide) in paragraph at lines 172--172
+Overfull \hbox (15.49591pt too wide) in paragraph at lines 144--144
 \OT1/cmr/m/n/10 ena^^Tcbe| 
  []
 
 
-Overfull \hbox (14.68623pt too wide) in paragraph at lines 174--174
+Overfull \hbox (14.68623pt too wide) in paragraph at lines 146--146
 []\OT1/cmr/m/n/10 verjetnost
  []
 
 
-Overfull \hbox (1.26953pt too wide) in paragraph at lines 174--174
+Overfull \hbox (1.26953pt too wide) in paragraph at lines 146--146
 \OT1/cmr/m/n/10 ena^^Tcbe| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 175--175
+Underfull \hbox (badness 10000) in paragraph at lines 147--147
 []\OT1/cmr/m/n/10 napaka
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 148--148
 []\OT1/cmr/m/n/10 ^^Tstevilo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 148--148
 \OT1/cmr/m/n/10 po-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 148--148
 \OT1/cmr/m/n/10 treb-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 148--148
 \OT1/cmr/m/n/10 nih
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 148--148
 \OT1/cmr/m/n/10 vzor-
  []
 
 
-Overfull \hbox (4.63068pt too wide) in paragraph at lines 177--177
+Overfull \hbox (4.63068pt too wide) in paragraph at lines 149--149
 []\OT1/cmr/m/n/10 hramba
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 177--177
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
 \OT1/cmr/m/n/10 re-zul-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 177--177
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
 []\OT1/cmr/m/n/10 top
  []
 
 
-Overfull \hbox (3.70988pt too wide) in paragraph at lines 179--179
+Overfull \hbox (3.70988pt too wide) in paragraph at lines 151--151
 []|\OT1/cmr/m/n/10 nekaoti^^Tcna|  
  []
 
-( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-POW ) ( FP-MUL ) ( FP-ROUND ) ) )
-Overfull \hbox (184.47363pt too wide) in paragraph at lines 170--197
+( FP-EVAL ( FP-UPN ( FP-POW ) ( FP-MUL ) ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-SUB ) ( FP-MUL ) ( FP-SUB ) ( FP-MUL ) ) ) ( FP-CLIP ) ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-POW ) ( FP-MUL ) ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-POW ) ( FP-MUL ) ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-SUB ) ( FP-MUL ) ( FP-SUB ) ( FP-MUL ) ) ) ( FP-CLIP ) ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-POW ) ( FP-MUL ) ( FP-ROUND ) ) ) ( FP-EVAL ( FP-UPN ( FP-POW ) ( FP-MUL ) ( FP-ROUND ) ) )
+Overfull \hbox (241.44208pt too wide) in paragraph at lines 142--169
 [][] 
  []
 
 ( FP-EVAL ( FP-UPN ( FP-ROUND ) ) ) [3] (/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.aux) ) 
 Here is how much of TeX's memory you used:
- 3431 strings out of 482600
- 45699 string characters out of 5949959
- 316451 words of memory out of 5000000
- 18435 multiletter control sequences out of 15000+600000
+ 2671 strings out of 482600
+ 35319 string characters out of 5949959
+ 308883 words of memory out of 5000000
+ 17708 multiletter control sequences out of 15000+600000
  537581 words of font info for 43 fonts, out of 8000000 for 9000
  350 hyphenation exceptions out of 8191
- 30i,14n,41p,299b,366s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,14n,44p,299b,372s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (3 pages, 110342 bytes).
+Output written on "/mnt/c/Users/boss/Documents/Prog Off/PCFGproject/examples/porocilo/porocilo.pdf" (3 pages, 110396 bytes).
 PDF statistics:
  54 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream

@@ -6,15 +6,18 @@ Created on Thu Oct 22 09:12:29 2020
 """
 
 import multiprocessing as mp
+import os
+import time
 
 import numpy as np
 from scipy.optimize import differential_evolution, minimize
 from scipy.interpolate import interp1d
-from scipy.integrate import solve_ivp
+from scipy.integrate import solve_ivp, odeint
 import sympy as sp
 # import sympy.core as sp
 # from nltk import PCFG
 
+import examples.tee_so as te
 # from model import Model
 from model_box import ModelBox
 # from generate import generate_models
@@ -107,9 +110,12 @@ def ode (models_list, params_matrix, T, X_data, y0):
     # The minimal min_step to avoid min step error in LSODA:
     min_step_error = 10**(-15)
     min_step = max(min_step_from_max_steps, min_step_error)  # Force them both.
-    Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, method="LSODA", 
-                    min_step=min_step, t_eval=T, atol=0)
-    return Yode.y
+    rtol = 10**(-4)
+    atol = 10**(-6)
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, method="LSODA", rtol=rtol, atol=atol, min_step=min_step).y
+    # Alternative LSODA using odeint (may be faster?):
+    Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=atol, tfirst=True, hmin=min_step).T 
+    return Yode
 
 def model_ode_error (model, params, T, X, Y):
     """Defines mean squared error of solution to differential equation
@@ -123,7 +129,10 @@ def model_ode_error (model, params, T, X, Y):
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
     dummy = 10**9
     try:
+        # mute = te.Mute()
+        # with open(os.devnull, 'w') as f, te.stdout_redirected(f):
         odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
+        # mute.__del__()
         odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
         if not odeY.shape == Y.shape:
             # print("The ODE solver did not found ys at all times -> returning dummy error.")
@@ -174,18 +183,30 @@ def optimization_wrapper_ODE (x, *args):
         We need to pass information on the choice of error function from fit_models all the way to here,
             and implement a library framework, similarly to grammars and generation strategies."""
     return model_ode_error(args[0], x, args[3], args[1], args[2])
-    
+
 def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
     bounds = [[-3*10**1, 3*10**1] for i in range(len(p0))]
+
+    start = time.perf_counter()
+    def diff_evol_timeout(x=0, convergence=0):
+        now = time.perf_counter()
+        # print(now-start, "Time elapsed.")
+        if (now-start) > 3:
+            print("Timed out!!!")
+            return True
+        else:
+            return False
+    # print(start, "start outside")
+
     if isinstance(T, str):
         return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
                                     maxiter=10**2, popsize=10)
     else:
         return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
-                                    maxiter=10**2, popsize=10)
+                                    callback=diff_evol_timeout, maxiter=10**2, popsize=10)
 
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
