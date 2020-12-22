@@ -195,7 +195,7 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
         now = time.perf_counter()
         # print(now-start, "Time elapsed.")
         if (now-start) > 5:
-            print("Timed out!!!")
+            print("Time out!!!")
             return True
         else:
             return False

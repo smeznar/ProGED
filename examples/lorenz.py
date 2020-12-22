@@ -51,13 +51,13 @@ T = np.linspace(0.48, 0.85, 1000)
 # dx/dt = \sigma * (y-x)
 # dy/dt = x*(\rho-z) - y
 # dz/dt = x*y - \beta*z
-# sigma = 1.3  # 1 # 0 
-# rho = -15  # 1 # 0
-# beta = 3.4  # 1 # 0
+sigma = 1.3  # 1 # 0 
+rho = -15  # 1 # 0
+beta = 3.4  # 1 # 0
 # Chaotic configuration:
-sigma = 10  # 1 # 0 
-rho = 28  # 1 # 0
-beta = 8/3  # 1 # 0
+# sigma = 10  # 1 # 0 
+# rho = 28  # 1 # 0
+# beta = 8/3  # 1 # 0
 y0 = [0.1, 0.4, 0.5]
 def dy_dt(t, ys):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
     # \dot{y} = y^. = [y1^., y2^., y3^., ...]
@@ -159,15 +159,15 @@ def eq_disco_demo (data, lhs_variables: list = [1],
 
 eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
 # p = mp.Process(target=eq_disco_demo, args=(data, aquation[0], aquation[1]))
-p = mp.Process(target=len, args=([],))
-print("proces defined")
-p.start()
-print("proces started")
-p.join(60*60*3)
-if p.is_alive():
-    p.terminate()
-    p.join()
-print("process joined")
-print(aquation[0], aquation[1])
+# p = mp.Process(target=len, args=([],))
+# print("proces defined")
+# p.start()
+# print("proces started")
+# p.join(60*60*3)
+# if p.is_alive():
+#     p.terminate()
+#     p.join()
+# print("process joined")
+# print(aquation[0], aquation[1])
 finnish = time.perf_counter()
 print(f"Finnished in {round(finnish-start, 2)} seconds")
