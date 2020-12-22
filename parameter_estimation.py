@@ -194,7 +194,7 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     def diff_evol_timeout(x=0, convergence=0):
         now = time.perf_counter()
         # print(now-start, "Time elapsed.")
-        if (now-start) > 3:
+        if (now-start) > 5:
             print("Timed out!!!")
             return True
         else:
@@ -260,7 +260,7 @@ class ParameterEstimator:
             print(f"Excepted an error: {error}!! \nModel:", model)
             model.set_estimated({}, valid=False)
         print(f"model: {str(model.get_full_expr()):<70}; "
-                + f"p: {model.p}; "
+                + f"p: {model.p:<23}; "
                 + f"error: {model.get_error()}")
 
         return model

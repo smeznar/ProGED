@@ -37,10 +37,10 @@ aux = [int(i) for i in eqation]
 aquation = (aux[:1], aux[1:])
 random = str(np.random.random())
 print(log_nickname + random)
-# try:
-#         log_object = Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
-# except FileNotFoundError:
-#         log_object = Tee("log_lorenz_" + log_nickname + random + ".txt")
+try:
+        log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
+except FileNotFoundError:
+        log_object = te.Tee("log_lorenz_" + log_nickname + random + ".txt")
 
 # # 1.) Data construction (simulation of Lorenz):
 
@@ -136,31 +136,19 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     print(samples_cardinality, "=samples cardinality")
     models = generate_models(grammar, symbols, 
                             strategy_parameters={"N":samples_cardinality})
-    # models = dict([(i, models[i]) for i in models][575:585])
-    # print(dict([(i, models[i]) for i in models]))
-    # print([models[i] for i in models])
-    # print([type(i) for i in models])
-    # print(type(models))
-    # models = dict([(i, models.models_dict[i]) for i in models.models_dict][:5])
-    
-    # log_object = te.TeeFileOnly("mylog.log")
-    # with open('output.txt', 'w') as f, te.stdout_redirected(f):
     # with open(os.devnull, 'w') as f, te.stdout_redirected(f):
-    # mute_output = te.Mute()
     fit_models(models, X, Y, T)
-    # mute_output.__del__()
-    # del(mute_output)
     # Print results:
-    try:
-            log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
-    except FileNotFoundError:
-            log_object = te.Tee("log_lorenz_" + log_nickname + random + ".txt")
+    # try:
+    #         log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
+    # except FileNotFoundError:
+    #         log_object = te.Tee("log_lorenz_" + log_nickname + random + ".txt")
     print(models)
     print("\nFinal score:")
     for m in models:
         if m.get_error() < 10**(-3) or True:
             print(f"model: {str(m.get_full_expr()):<70}; "
-                + f"p: {m.p}; "
+                    + f"p: {m.p:<23}; "
                 + f"error: {m.get_error()}")
     return 1
 
