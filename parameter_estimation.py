@@ -104,7 +104,8 @@ def ode (models_list, params_matrix, T, X_data, y0):
     # Older (default RK45) method:
     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)  
     # Set min_step via prescribing maximum number of steps:
-    max_steps = 10**6 #100 #3 
+    # max_steps = 10**6  # On laptop, this would need less than 3 seconds.
+    max_steps = T.shape[0]*10**3  # Set to |timepoints|*1000.
     # Convert max_steps to min_steps:
     min_step_from_max_steps = abs(T[-1] - T[0])/max_steps
     # The minimal min_step to avoid min step error in LSODA:
