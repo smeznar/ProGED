@@ -5,8 +5,8 @@ Created on Thu Oct 22 09:12:29 2020
 @author: Jure
 """
 
-import multiprocessing as mp
 import os
+import sys
 import time
 
 import numpy as np
@@ -17,7 +17,7 @@ import sympy as sp
 # import sympy.core as sp
 # from nltk import PCFG
 
-import examples.tee_so as te
+import examples.mute_so as mt
 # from model import Model
 from model_box import ModelBox
 # from generate import generate_models
@@ -92,11 +92,14 @@ def ode (models_list, params_matrix, T, X_data, y0):
     X = interp1d(T, X_data, axis=0, kind='cubic', fill_value="extrapolate")  # N-D
     lamb_exprs = [
         sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
-        # model.lambdify(params=params, args="numpy")
-    #    model.lambdify()
+        # todo: model.lambdify(params=params, args="numpy")
         for model, params in zip(models_list, params_matrix)
     ]
-    def dy_dt(t, y):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
+    def dy_dt(t, y):
+        """Represents  \frac{dy}{dt}.
+
+        y -- [y1,y2,y3,...] i.e. ( shape= (n,) ) """
+
         # N-D:
         b = np.concatenate((y, X(t))) # =[y,X(t)] =[y,X1(t),X2(t),...]
         # Older version with *b.T:
@@ -130,10 +133,15 @@ def model_ode_error (model, params, T, X, Y):
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
     dummy = 10**9
     try:
-        # mute = te.Mute()
-        # with open(os.devnull, 'w') as f, te.stdout_redirected(f):
-        odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
-        # mute.__del__()
+        # Next line strongly suppresses any warnning messages produced by
+        # LSODA solver, called by ode() function.
+        tee = sys.stdout
+        std = tee.stdout
+        # print(sys.stdout, type(sys.stdout))
+        sys.stdout = std
+        with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
+            odeY = ode(model_list, params_matrix, T, X, y0=Y[0])  # change to Y[:1]
+        sys.stdout = tee
         odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
         if not odeY.shape == Y.shape:
             # print("The ODE solver did not found ys at all times -> returning dummy error.")
@@ -194,13 +202,11 @@ def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     start = time.perf_counter()
     def diff_evol_timeout(x=0, convergence=0):
         now = time.perf_counter()
-        # print(now-start, "Time elapsed.")
         if (now-start) > 5:
             print("Time out!!!")
             return True
         else:
             return False
-    # print(start, "start outside")
 
     if isinstance(T, str):
         return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
@@ -226,6 +232,7 @@ def find_parameters (model, X, Y, T="algebraic"):
 #        popt, pcov = model.params, 0
 #    opt_params = popt; othr = pcov
     
+    # here insert an if (alg vs diff. enacbe)
     res = DE_fit(model, X, Y, p0=model.params, T=T)
     
 #    res = min_fit (model, X, Y)
@@ -260,22 +267,13 @@ class ParameterEstimator:
         except Exception as error:
             print(f"Excepted an error: {error}!! \nModel:", model)
             model.set_estimated({}, valid=False)
+        # todo: optional kwargs: verbosity>1: print next line:
         print(f"model: {str(model.get_full_expr()):<70}; "
                 + f"p: {model.p:<23}; "
                 + f"error: {model.get_error()}")
 
         return model
 
-    def fit_one_timeout(self, model):
-        """Timeout the fit_one function."""
-
-        p = mp.Process(target=self.fit_one, args=(model,))
-        p.start()
-        p.join(10)
-        if p.is_alive():
-            print("running... let's kill it...")
-            p.terminate()
-    
 def fit_models (models, X, Y, T="algebraic", pool_map = map, verbosity=0):
     """Performs parameter estimation on given models. Main interface to the module.
     
@@ -295,7 +293,6 @@ def fit_models (models, X, Y, T="algebraic", pool_map = map, verbosity=0):
     """
     estimator = ParameterEstimator(X, Y, T)
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
-    # return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one_timeout, models.values())))))
 
 
 

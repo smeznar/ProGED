@@ -6,13 +6,10 @@ arg1 -- custom nickname of log that is added to the log filename, which is of
     the form: log_lorenz_<custom nickname><random number>.log
 """
 
-import multiprocessing as mp
-
 import time
 import os
 import sys  # To import from parent directory.
 
-# from IPython.utils.io import Tee  # Log results using 3th package.
 import tee_so as te # Log using manually copied class from a forum.
 
 import numpy as np
@@ -36,7 +33,7 @@ if len(sys.argv) >= 4:
 aux = [int(i) for i in eqation]
 aquation = (aux[:1], aux[1:])
 random = str(np.random.random())
-print(log_nickname + random)
+print("Filename id: " + log_nickname + random)
 try:
         log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
 except FileNotFoundError:
@@ -45,57 +42,46 @@ except FileNotFoundError:
 # # 1.) Data construction (simulation of Lorenz):
 
 np.random.seed(0)
-T = np.linspace(0.48, 0.85, 1000)
-# T = np.linspace(0.48, 10**2, 1000)
+T = np.linspace(0.48, 0.85, 1000)  # Times currently run at.
+# T = np.linspace(0, 40, 1000)  # Chaotic Lorenz times noted on Wiki.
 # # Lorenz's sode:
 # dx/dt = \sigma * (y-x)
 # dy/dt = x*(\rho-z) - y
 # dz/dt = x*y - \beta*z
-sigma = 1.3  # 1 # 0 
-rho = -15  # 1 # 0
-beta = 3.4  # 1 # 0
+# non-chaotic configuration:
+# sigma = 1.3  # 1 # 0 
+# rho = -15  # 1 # 0
+# beta = 3.4  # 1 # 0
 # Chaotic configuration:
-# sigma = 10  # 1 # 0 
-# rho = 28  # 1 # 0
-# beta = 8/3  # 1 # 0
-y0 = [0.1, 0.4, 0.5]
+sigma = 10  # 1 # 0 
+rho = 28  # 1 # 0
+beta = 8/3  # 1 # 0
+y0 = [0.1, 0.4, 0.5]  # Lorenz initial values run at.
+# y0 = [1, 1, 1]  # Chaotic Lorenz initial values noted on Wiki.
 def dy_dt(t, ys):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
     # \dot{y} = y^. = [y1^., y2^., y3^., ...]
     x, y, z = ys
     return [sigma * (y-x), x*(rho-z) - y, x*y - beta*z]
 # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)
 max_steps = 10**6
-# Convert max_steps to min_steps:
+# Convert max_steps to min_step:
 min_step_from_max_steps = abs(T[-1] - T[0])/max_steps
 # The minimal min_step to avoid min step error in LSODA:
 min_step_error = 10**(-15)
 min_step = max(min_step_from_max_steps, min_step_error)  # Force them both.
 rtol=10**(-6)
-# Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, method="LSODA", max_step=min_step*10, min_step=min_step, t_eval=T, rtol=rtol, atol=0).y
 Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, method="LSODA", min_step=min_step, t_eval=T, rtol=rtol, atol=0).y
-                # min_step=min_step, max_step=min_step*10, t_eval=T)
 # Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=0, tfirst=True, printmessg=0, hmin=min_step).T 
-# Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=0, tfirst=True, printmessg=0, hmin=min_step, hmax=min_step*10).T
-# print(Yode.shape, Yodei.shape) 
-# print(sum(Yode[0]-Yodei[0]))
-# print(max(Yode[1]-Yodei[1]))
-# print(sum(Yode[2]-Yodei[2]))
-# print(max(Yode[0]-Yodei[0]))
-# print(sum(Yode[1]-Yodei[1]))
-# print(max(Yode[2]-Yodei[2]))
 
-# plot simulated data:
+# Plot simulated data:
 plt.xlabel("T [time]")
 plt.ylabel("solutions [ys(t)]")
 plt.plot(T, Yode[0], label="solution x")
 plt.plot(T, Yode[1], label="solution y")
 plt.plot(T, Yode[2], label="solution z")
-# plt.plot(T, Yodei[0], label="solution odeint x")
-# plt.plot(T, Yodei[1], label="solution odeint y")
-# plt.plot(T, Yodei[2], label="solution odeint z")
 plt.legend()
 # plt.show()
-data = np.concatenate((T[:, np.newaxis], Yode.T), axis=1)  # Embed Time column into dataset
+data = np.concatenate((T[:, np.newaxis], Yode.T), axis=1)  # Embed Time column into dataset.
 
 
 # # # # 2.) Discover one ode at a time.
@@ -152,22 +138,10 @@ def eq_disco_demo (data, lhs_variables: list = [1],
                 + f"error: {m.get_error()}")
     return 1
 
-
 # eq_disco_demo(data, lhs_variables=[2], rhs_variables=[1,3])
 # eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
 # eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
 
 eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
-# p = mp.Process(target=eq_disco_demo, args=(data, aquation[0], aquation[1]))
-# p = mp.Process(target=len, args=([],))
-# print("proces defined")
-# p.start()
-# print("proces started")
-# p.join(60*60*3)
-# if p.is_alive():
-#     p.terminate()
-#     p.join()
-# print("process joined")
-# print(aquation[0], aquation[1])
 finnish = time.perf_counter()
 print(f"Finnished in {round(finnish-start, 2)} seconds")
