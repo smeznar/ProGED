@@ -13,7 +13,7 @@ import sys  # To import from parent directory.
 import tee_so as te # Log using manually copied class from a forum.
 
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp, odeint
 
 
@@ -74,12 +74,12 @@ Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, method="LSODA", min_step=min_step, t_
 # Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=0, tfirst=True, printmessg=0, hmin=min_step).T 
 
 # Plot simulated data:
-plt.xlabel("T [time]")
-plt.ylabel("solutions [ys(t)]")
-plt.plot(T, Yode[0], label="solution x")
-plt.plot(T, Yode[1], label="solution y")
-plt.plot(T, Yode[2], label="solution z")
-plt.legend()
+# plt.xlabel("T [time]")
+# plt.ylabel("solutions [ys(t)]")
+# plt.plot(T, Yode[0], label="solution x")
+# plt.plot(T, Yode[1], label="solution y")
+# plt.plot(T, Yode[2], label="solution z")
+# plt.legend()
 # plt.show()
 data = np.concatenate((T[:, np.newaxis], Yode.T), axis=1)  # Embed Time column into dataset.
 
