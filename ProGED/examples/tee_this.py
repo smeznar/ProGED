@@ -1,3 +1,7 @@
+"""Not yet finnished template for functionality like in lorenz.py file,
+which uses arguments from command line for the name of log files that it
+produces.
+"""
 import random as rand
 import sys  # To import from parent directory.
 

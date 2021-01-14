@@ -1,3 +1,8 @@
+"""Filters results, i.e. output of equation discovery from lorenz.py
+in output files, to calculate % of equations better than the right 
+equation based on their error and threshold.
+"""
+
 import re
 import sys
 

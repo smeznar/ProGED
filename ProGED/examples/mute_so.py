@@ -1,7 +1,13 @@
-# # # # # # # # # # # # # # # # # # # # # # # #
-# redirect stdout, also file descriptors
-# copied from:
-# https://stackoverflow.com/questions/4675728/redirect-stdout-to-a-file-in-python/22434262#22434262
+"""This file redirects standard output stdout, also on the file 
+descriptors level (hardcoded-like output).
+
+It is usefull and used to mute, i.e. suppress output from LSODA 
+solver from ODEPACK written in FORTRAN, which often writes warnning
+messages in such a hard way. In that case output equals os.devnull i.e.
+it goes to nowhere.
+Source code is copied from:
+https://stackoverflow.com/questions/4675728/redirect-stdout-to-a-file-in-python/22434262#22434262
+"""
 import os
 import sys
 from contextlib import contextmanager
@@ -57,10 +63,3 @@ def stdout_redirected(to=os.devnull, stdout=None):
 #     os.write(stdout_fd, b'it is redirected now\n')
 #     os.system('echo this is also redirected')
 # print('this is goes back to stdout')
-
-# for i in range(10):
-#     with open(os.devnull, 'w') as f, stdout_redirected(f):
-#         print('redirected to a file',i)
-#         os.write(stdout_fd, b'it is redirected now\n')
-#         os.system('echo this is also redirected'+str(i))
-# print('this is goes back to stdout',i)

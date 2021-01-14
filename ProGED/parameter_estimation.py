@@ -23,6 +23,15 @@ from model_box import ModelBox
 # from generate import generate_models
 # from generators.grammar import GeneratorGrammar
 
+import warnings
+warnings.filterwarnings("ignore", message="divide by zero encountered in divide")
+warnings.filterwarnings("ignore", message="divide by zero encountered in true_divide")
+warnings.filterwarnings("ignore", message="invalid value encountered in power")
+warnings.filterwarnings("ignore", message="invalid value encountered in sqrt")
+warnings.filterwarnings("ignore", message="overflow encountered in exp")
+warnings.filterwarnings("ignore", message="overflow encountered in square")
+
+
 """Methods for estimating model parameters. Currently implemented: differential evolution.
 
 Methods:
@@ -133,8 +142,8 @@ def model_ode_error (model, params, T, X, Y):
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
     dummy = 10**9
     try:
-        # Next line strongly suppresses any warnning messages produced by
-        # LSODA solver, called by ode() function.
+        # Next few lines strongly suppress any warnning messages 
+        # produced by LSODA solver, called by ode() function.
         tee = sys.stdout
         std = tee.stdout
         # print(sys.stdout, type(sys.stdout))
@@ -149,6 +158,7 @@ def model_ode_error (model, params, T, X, Y):
         try:
             res = np.mean((Y-odeY)**2)
             if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+#                print(model.expr, model.params, model.sym_params, model.sym_vars)
                 return dummy
             return res
         except Exception as error:
@@ -158,7 +168,6 @@ def model_ode_error (model, params, T, X, Y):
     except Exception as error:
         print("Programmer: Excerpted an error inside ode() of model_ode_error.")
         print("Programmer: Params at error:", params, f"and {type(error)} with message:", error)
-        # odeY = ode(model_list, params_matrix, T, X, y0=Y[0]) # spremeni v Y[:1]
         print("Returning dummy error. All is well.")
         return dummy
 
@@ -192,7 +201,7 @@ def optimization_wrapper_ODE (x, *args):
         We need to pass information on the choice of error function from fit_models all the way to here,
             and implement a library framework, similarly to grammars and generation strategies."""
     return model_ode_error(args[0], x, args[3], args[1], args[2])
-
+    
 def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
@@ -231,10 +240,10 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    except RuntimeError:
 #        popt, pcov = model.params, 0
 #    opt_params = popt; othr = pcov
-    
+
     # here insert an if (alg vs diff. enacbe)
     res = DE_fit(model, X, Y, p0=model.params, T=T)
-    
+
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
     
@@ -273,7 +282,7 @@ class ParameterEstimator:
                 + f"error: {model.get_error()}")
 
         return model
-
+    
 def fit_models (models, X, Y, T="algebraic", pool_map = map, verbosity=0):
     """Performs parameter estimation on given models. Main interface to the module.
     
