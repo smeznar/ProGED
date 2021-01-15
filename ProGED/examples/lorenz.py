@@ -11,7 +11,6 @@ import os
 import sys  # To import from parent directory.
 
 import tee_so as te # Log using manually copied class from a forum.
-import mute_so as mt # Mute any output -||- .
 
 import numpy as np
 # import matplotlib.pyplot as plt
