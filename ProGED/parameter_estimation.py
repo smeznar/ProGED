@@ -286,7 +286,9 @@ class ParameterEstimator:
 
         return model
     
-def fit_models (models, X, Y, T="algebraic", pool_map = map, verbosity=0):
+def fit_models (models, X, Y, T=np.array([]), pool_map=map, verbosity=0,
+                equation_type="algebraic", timeout=np.inf, 
+                lower_upper_bounds=(-30,30)):
     """Performs parameter estimation on given models. Main interface to the module.
     
     Supports parallelization by passing it a pooled map callable.

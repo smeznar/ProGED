@@ -1,2 +1,0 @@
-HISTTIMEFORMAT="%d/%m/%y %T " 
-HISTTIMEFORMAT="%T " 
