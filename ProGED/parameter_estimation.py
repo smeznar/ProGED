@@ -181,65 +181,51 @@ def model_ode_error (model, params, T, X, Y):
         print("Returning dummy error. All is well.")
         return dummy
 
-def model_error_general (model, params, X, Y, T="algebraic"):
-    """Calculate error of model with given parameters in general with
-    type of error given.
-
-        Input = TODO:
-    - T is column of times at which samples in X and Y happen.
-    - X are columns without features that are derived.
-    - Y are columns of features that are derived via ode fitting.
-    """
-    if isinstance(T, str):
+def optimization_wrapper (params, *args):
+    """Calls the appropriate error function. The choice of error function is made here.
+    
+    TODO:
+        We need to pass information on the choice of error function from fit_models all the way to here,
+            and implement a library framework, similarly to grammars and generation strategies."""
+    
+    model, X, Y, T, estimation_strategy = args
+    if estimation_strategy["equation_type"] == "arithmetic"
+        # return model_error (args[0], x, args[1], args[2])
         return model_error(model, params, X, Y)
-    else:
-        return model_ode_error(model, params, T, X, Y)
+    if estimation_strategy["equation_type"] == "differential"
+    # return model_ode_error(args[0], x, args[3], args[1], args[2])
+        # Model_ode_error might use estimation[verbosity] agrument for
+        # ode solver's settings and suppresing its warnnings. 
+        return model_ode_error(model, params, T, X, Y, **estimation_strategy)
 
-def optimization_wrapper (x, *args):
-    """Calls the appropriate error function. The choice of error function is made here.
-    
-    TODO:
-        We need to pass information on the choice of error function from fit_models all the way to here,
-            and implement a library framework, similarly to grammars and generation strategies."""
-    
-    return model_error (args[0], x, args[1], args[2])
-
-def optimization_wrapper_ODE (x, *args):
-    """Calls the appropriate error function. The choice of error function is made here.
-    
-    TODO:
-        We need to pass information on the choice of error function from fit_models all the way to here,
-            and implement a library framework, similarly to grammars and generation strategies."""
-    return model_ode_error(args[0], x, args[3], args[1], args[2])
-    
-def DE_fit (model, X, Y, p0, T="algebraic", **kwargs):
+def DE_fit (model, X, Y, T, p0, **estimation_strategy):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
-    bounds = [[-3*10**1, 3*10**1] for i in range(len(p0))]
+    # bounds = [[-3*10**1, 3*10**1] for i in range(len(p0))]
+    lower_bound, upper_bound = (estimation_strategy["lower_upper_bounds"][i] for i in (0, 1))
+    bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
 
     start = time.perf_counter()
     def diff_evol_timeout(x=0, convergence=0):
         now = time.perf_counter()
-        if (now-start) > 5:
+        if (now-start) > estimation_strategy[timeout]:
             print("Time out!!!")
             return True
         else:
             return False
-
-    if isinstance(T, str):
-        return differential_evolution(optimization_wrapper, bounds, args = [model, X, Y],
-                                    maxiter=10**2, popsize=10)
-    else:
-        return differential_evolution(optimization_wrapper_ODE, bounds, args = [model, X, Y, T],
-                                    callback=diff_evol_timeout, maxiter=10**2, popsize=10)
+    
+    return differential_evolution(
+        optimization_wrapper, bounds,
+        args = [model, X, Y, T, estimation_strategy],
+        callback=diff_evol_timeout, maxiter=10**2, popsize=10)
 
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
     
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
-def find_parameters (model, X, Y, T="algebraic"):
+def find_parameters (model, X, Y, T, **estimation_strategy):
     """Calls the appropriate fitting function. 
     
     TODO: 
@@ -252,7 +238,16 @@ def find_parameters (model, X, Y, T="algebraic"):
 #    opt_params = popt; othr = pcov
 
     # here insert an if (alg vs diff. enacbe)
-    res = DE_fit(model, X, Y, p0=model.params, T=T)
+    if equation_type == "arithmetic":
+        print(equation_type)
+        res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
+                    (model, X, Y, T, p0, **estimation_strategy):
+
+    if equation_type == "differential":
+        print(equation_type)
+        res = DE_fit(model, X, Y, p0=model.params, T=T, **estimation_strategy)
+
+    res = DE_fit(model, X, Y, T, p0=model.params, )
 
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
@@ -268,10 +263,11 @@ class ParameterEstimator:
             add inputs to make requirements flexible
             add verbosity input
     """
-    def __init__(self, X, Y, T="algebraic"):
+    def __init__(self, X, Y, T="algebraic", *estimation_strategy):
         self.X = X
         self.Y = Y
         self.T = T
+        self.estimation_strategy = estimation_strategy
         
     def fit_one (self, model):
         print("Estimating model " + str(model.expr))
@@ -279,9 +275,12 @@ class ParameterEstimator:
             if len(model.params) > 5:
                 pass
             elif len(model.params) < 1:
-                model.set_estimated({"x":[], "fun":model_error_general(model, [], self.X, self.Y, self.T)})
+                model.set_estimated({"x":[], "fun":model_error_general(
+                    model, [], self.X, self.Y, self.T,
+                    *self.estimation_strategy)})
             else:
-                res = find_parameters(model, self.X, self.Y, self.T)
+                res = find_parameters(model, self.X, self.Y, self.T,
+                                     *self.estimation_strategy)
                 model.set_estimated(res)
         except Exception as error:
             print(f"Excepted an error: {error}!! \nModel:", model)
@@ -293,9 +292,9 @@ class ParameterEstimator:
 
         return model
     
-def fit_models (models, X, Y, T=np.array([]), pool_map=map, verbosity=0,
+def fit_models (models, X, Y, T=None, pool_map=map, verbosity=0,
                 equation_type="algebraic", timeout=np.inf, 
-                lower_upper_bounds=(-30,30)):
+                lower_upper_bounds=(-30, 30)):
     """Performs parameter estimation on given models. Main interface to the module.
     
     Supports parallelization by passing it a pooled map callable.
@@ -312,7 +311,9 @@ def fit_models (models, X, Y, T=np.array([]), pool_map=map, verbosity=0,
                 fit_models (models, X, Y, pool_map = pool.map)
         verbosity (int): Level of printout desired. 0: none, 1: info, 2+: debug.
     """
-    estimator = ParameterEstimator(X, Y, T)
+    estimation_strategy = {"verbosit": yverbosity, equation_type, timeout,
+                            lower_upper_bounds]
+    estimator = ParameterEstimator(X, Y, T, *estimation_strategy)
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
 
 
