@@ -18,9 +18,7 @@ import sympy as sp
 # from nltk import PCFG
 
 import examples.mute_so as mt
-# import examples.tee_so as te
-from _io import TextIOWrapper as st
-# from examples.tee_so import Tee
+from _io import TextIOWrapper as stdout_type
 # from model import Model
 from model_box import ModelBox
 # from generate import generate_models
@@ -145,35 +143,24 @@ def model_ode_error (model, params, T, X, Y):
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
     dummy = 10**9
     try:
-        # Variable is_tee is set to True when used with lorenz.py.
-        # a = Tee("nekaj.txt")
-        # print(type(sys.stdout), "type(sys.stdout)")
-        # print(type(sys.stdout), "type(sys.stdout)")
-        change_std2tee = False
-        print('2')
-        # if isinstance(sys.stdout, Tee):
-        if not isinstance(sys.stdout, st):
-            print("inside")
-            # In this case ...
-            # Next few lines strongly suppress any warnning messages 
-            # produced by LSODA solver, called by ode() function.
-            # print(type(sys.stdout), "type(sys.stdout)")
+        # Next few lines strongly suppress any warnning messages 
+        # produced by LSODA solver, called by ode() function.
+        # Suppression further complicates if making log files (Tee):
+        change_std2tee = False  # Normaly no need for this mess.
+        if not isinstance(sys.stdout, stdout_type):
+            # In this case the real standard output (sys.stdout) is not
+            # saved in original location sys.stdout. We have to obtain
+            # it inside of Tee object (look module tee_so).
             tee_object = sys.stdout  # obtain Tee object that has sys.stdout
-            # print(type(sys.stdout), "type(sys.stdout)")
-            std_output = tee_object.stdout  # obtain sys.stdout
-            # print(type(sys.stdout), "type(sys.stdout)")
-            sys.stdout = std_output  # Change stdout to real stdout.
-            # print(type(sys.stdout), "type(sys.stdout) moraala bi biti sprememba")
-            change_std2tee = True
-            # print("2.4")
-        # print('3')
+            std_output = tee_object.stdout  # Obtain sys.stdout.
+            sys.stdout = std_output  # Change fake stdout to real stdout.
+            change_std2tee = True  # Remember to change it back.
+        # Next line works only when sys.stdout is real. Thats why above.
         with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
             odeY = ode(model_list, params_matrix, T, X, y0=Y[0])  # change to Y[:1]
-        # print("4")
         if change_std2tee: 
             sys.stdout = tee_object  # Change it back to fake stdout (tee).
-        #     print("inside change 2")
-        # print(type(sys.stdout), "type(sys.stdout) checkout")
+
         odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
         if not odeY.shape == Y.shape:
             # print("The ODE solver did not found ys at all times -> returning dummy error.")
