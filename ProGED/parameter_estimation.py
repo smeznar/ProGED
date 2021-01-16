@@ -18,6 +18,9 @@ import sympy as sp
 # from nltk import PCFG
 
 import examples.mute_so as mt
+# import examples.tee_so as te
+from _io import TextIOWrapper as st
+# from examples.tee_so import Tee
 # from model import Model
 from model_box import ModelBox
 # from generate import generate_models
@@ -143,17 +146,34 @@ def model_ode_error (model, params, T, X, Y):
     dummy = 10**9
     try:
         # Variable is_tee is set to True when used with lorenz.py.
-        is_tee = False
-        if is_tee:
+        # a = Tee("nekaj.txt")
+        # print(type(sys.stdout), "type(sys.stdout)")
+        # print(type(sys.stdout), "type(sys.stdout)")
+        change_std2tee = False
+        print('2')
+        # if isinstance(sys.stdout, Tee):
+        if not isinstance(sys.stdout, st):
+            print("inside")
+            # In this case ...
             # Next few lines strongly suppress any warnning messages 
             # produced by LSODA solver, called by ode() function.
-            tee = sys.stdout
-            std = tee.stdout
-            sys.stdout = std
+            # print(type(sys.stdout), "type(sys.stdout)")
+            tee_object = sys.stdout  # obtain Tee object that has sys.stdout
+            # print(type(sys.stdout), "type(sys.stdout)")
+            std_output = tee_object.stdout  # obtain sys.stdout
+            # print(type(sys.stdout), "type(sys.stdout)")
+            sys.stdout = std_output  # Change stdout to real stdout.
+            # print(type(sys.stdout), "type(sys.stdout) moraala bi biti sprememba")
+            change_std2tee = True
+            # print("2.4")
+        # print('3')
         with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
             odeY = ode(model_list, params_matrix, T, X, y0=Y[0])  # change to Y[:1]
-        if is_tee:
-            sys.stdout = tee
+        # print("4")
+        if change_std2tee: 
+            sys.stdout = tee_object  # Change it back to fake stdout (tee).
+        #     print("inside change 2")
+        # print(type(sys.stdout), "type(sys.stdout) checkout")
         odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
         if not odeY.shape == Y.shape:
             # print("The ODE solver did not found ys at all times -> returning dummy error.")
