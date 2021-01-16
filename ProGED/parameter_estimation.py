@@ -73,9 +73,10 @@ def model_error_general (model, params, X, Y, T, **estimation_strategy):
         # ode solver's settings and suppresing its warnnings. 
         return model_ode_error(model, params, T, X, Y, **estimation_strategy)
     else:
-        eq_types = "".join(EQUATION_TYPES)
-        raise ValueError("Variable equation_type has unknown value "
-        f"\"{equation_type}\", possible are only {eq_types}.")
+        types_string = "\", \"".join(EQUATION_TYPES)
+        raise ValueError("Variable equation_type has unsupported value "
+                f"\"{equation_type}\", while list of possible values: "
+                f"\"{types_string}\".")
 
 def ode (models_list, params_matrix, T, X_data, y0):
     """Solve system of ODEs defined by equations in models_list.
