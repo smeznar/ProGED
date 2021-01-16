@@ -55,6 +55,7 @@ def model_constant_error (model, params, X, Y):
     testY = model.evaluate(X, *params)
     return np.std(testY)#/np.linalg.norm(params)
 
+EQUATION_TYPES = ("algebraic", "differential")
 def model_error_general (model, params, X, Y, T, **estimation_strategy):
     """Calculate error of model with given parameters in general with
     type of error given.
@@ -64,14 +65,17 @@ def model_error_general (model, params, X, Y, T, **estimation_strategy):
     - X are columns without features that are derived.
     - Y are columns of features that are derived via ode fitting.
     """
-    if estimation_strategy["equation_type"] == "algebraic":
-        # return model_error (args[0], x, args[1], args[2])
+    equation_type = estimation_strategy["equation_type"]
+    if equation_type == "algebraic":
         return model_error(model, params, X, Y)
-    if estimation_strategy["equation_type"] == "differential":
-    # return model_ode_error(args[0], x, args[3], args[1], args[2])
+    if equation_type == "differential":
         # Model_ode_error might use estimation[verbosity] agrument for
         # ode solver's settings and suppresing its warnnings. 
         return model_ode_error(model, params, T, X, Y, **estimation_strategy)
+    else:
+        eq_types = "".join(EQUATION_TYPES)
+        raise ValueError("Variable equation_type has unknown value "
+        f"\"{equation_type}\", possible are only {eq_types}.")
 
 def ode (models_list, params_matrix, T, X_data, y0):
     """Solve system of ODEs defined by equations in models_list.
