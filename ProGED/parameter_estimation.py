@@ -56,7 +56,6 @@ def model_constant_error (model, params, X, Y):
     return np.std(testY)#/np.linalg.norm(params)
 
 def model_error_general (model, params, X, Y, T, **estimation_strategy):
-    print(estimation_strategy)
     """Calculate error of model with given parameters in general with
     type of error given.
 
@@ -65,7 +64,7 @@ def model_error_general (model, params, X, Y, T, **estimation_strategy):
     - X are columns without features that are derived.
     - Y are columns of features that are derived via ode fitting.
     """
-    if estimation_strategy["equation_type"] == "arithmetic":
+    if estimation_strategy["equation_type"] == "algebraic":
         # return model_error (args[0], x, args[1], args[2])
         return model_error(model, params, X, Y)
     if estimation_strategy["equation_type"] == "differential":
@@ -151,7 +150,6 @@ def ode (models_list, params_matrix, T, X_data, y0):
     return Yode
 
 def model_ode_error (model, params, T, X, Y, **estimation_strategy):
-    print(estimation_strategy)
     """Defines mean squared error of solution to differential equation
     as the error metric.
 
@@ -209,14 +207,12 @@ def optimization_wrapper (params, *args):
             and implement a library framework, similarly to grammars and generation strategies."""
     
     model, X, Y, T, estimation_strategy = args
-    print(estimation_strategy)
     return model_error_general(model, params, X, Y, T, **estimation_strategy)
 
 def DE_fit (model, X, Y, T, p0, **estimation_strategy):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
-    print(estimation_strategy)
     # bounds = [[-3*10**1, 3*10**1] for i in range(len(p0))]
     lower_bound, upper_bound = (estimation_strategy["lower_upper_bounds"][i] for i in (0, 1))
     bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
@@ -224,7 +220,7 @@ def DE_fit (model, X, Y, T, p0, **estimation_strategy):
     start = time.perf_counter()
     def diff_evol_timeout(x=0, convergence=0):
         now = time.perf_counter()
-        if (now-start) > estimation_strategy[timeout]:
+        if (now-start) > estimation_strategy["timeout"]:
             print("Time out!!!")
             return True
         else:
@@ -263,7 +259,6 @@ def find_parameters (model, X, Y, T, **estimation_strategy):
     #     res = DE_fit(model, X, Y, p0=model.params, T=T, **estimation_strategy)
 
     res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
-    print(estimation_strategy)
 
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
@@ -284,7 +279,6 @@ class ParameterEstimator:
         self.Y = Y
         self.T = T
         self.estimation_strategy = estimation_strategy
-        print(estimation_strategy)
         
     def fit_one (self, model):
         print("Estimating model " + str(model.expr))
@@ -334,7 +328,6 @@ def fit_models (models, X, Y, T=None, pool_map=map, verbosity=0,
     estimation_strategy = {
         "verbosity": verbosity, "equation_type": equation_type,
         "timeout": timeout, "lower_upper_bounds": lower_upper_bounds}
-    print(estimation_strategy)
     estimator = ParameterEstimator(X, Y, T, **estimation_strategy)
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
 
