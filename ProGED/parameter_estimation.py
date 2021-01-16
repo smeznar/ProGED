@@ -55,6 +55,25 @@ def model_constant_error (model, params, X, Y):
     testY = model.evaluate(X, *params)
     return np.std(testY)#/np.linalg.norm(params)
 
+def model_error_general (model, params, X, Y, T, **estimation_strategy):
+    print(estimation_strategy)
+    """Calculate error of model with given parameters in general with
+    type of error given.
+
+        Input = TODO:
+    - T is column of times at which samples in X and Y happen.
+    - X are columns without features that are derived.
+    - Y are columns of features that are derived via ode fitting.
+    """
+    if estimation_strategy["equation_type"] == "arithmetic":
+        # return model_error (args[0], x, args[1], args[2])
+        return model_error(model, params, X, Y)
+    if estimation_strategy["equation_type"] == "differential":
+    # return model_ode_error(args[0], x, args[3], args[1], args[2])
+        # Model_ode_error might use estimation[verbosity] agrument for
+        # ode solver's settings and suppresing its warnnings. 
+        return model_ode_error(model, params, T, X, Y, **estimation_strategy)
+
 def ode (models_list, params_matrix, T, X_data, y0):
     """Solve system of ODEs defined by equations in models_list.
 
@@ -131,7 +150,8 @@ def ode (models_list, params_matrix, T, X_data, y0):
     Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=atol, tfirst=True, hmin=min_step).T 
     return Yode
 
-def model_ode_error (model, params, T, X, Y):
+def model_ode_error (model, params, T, X, Y, **estimation_strategy):
+    print(estimation_strategy)
     """Defines mean squared error of solution to differential equation
     as the error metric.
 
@@ -189,19 +209,14 @@ def optimization_wrapper (params, *args):
             and implement a library framework, similarly to grammars and generation strategies."""
     
     model, X, Y, T, estimation_strategy = args
-    if estimation_strategy["equation_type"] == "arithmetic"
-        # return model_error (args[0], x, args[1], args[2])
-        return model_error(model, params, X, Y)
-    if estimation_strategy["equation_type"] == "differential"
-    # return model_ode_error(args[0], x, args[3], args[1], args[2])
-        # Model_ode_error might use estimation[verbosity] agrument for
-        # ode solver's settings and suppresing its warnnings. 
-        return model_ode_error(model, params, T, X, Y, **estimation_strategy)
+    print(estimation_strategy)
+    return model_error_general(model, params, X, Y, T, **estimation_strategy)
 
 def DE_fit (model, X, Y, T, p0, **estimation_strategy):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
+    print(estimation_strategy)
     # bounds = [[-3*10**1, 3*10**1] for i in range(len(p0))]
     lower_bound, upper_bound = (estimation_strategy["lower_upper_bounds"][i] for i in (0, 1))
     bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
@@ -238,16 +253,17 @@ def find_parameters (model, X, Y, T, **estimation_strategy):
 #    opt_params = popt; othr = pcov
 
     # here insert an if (alg vs diff. enacbe)
-    if equation_type == "arithmetic":
-        print(equation_type)
-        res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
-                    (model, X, Y, T, p0, **estimation_strategy):
+    # if equation_type == "arithmetic":
+    #     print(equation_type)
+    #     res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
+    #                 (model, X, Y, T, p0, **estimation_strategy):
 
-    if equation_type == "differential":
-        print(equation_type)
-        res = DE_fit(model, X, Y, p0=model.params, T=T, **estimation_strategy)
+    # if equation_type == "differential":
+    #     print(equation_type)
+    #     res = DE_fit(model, X, Y, p0=model.params, T=T, **estimation_strategy)
 
-    res = DE_fit(model, X, Y, T, p0=model.params, )
+    res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
+    print(estimation_strategy)
 
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
@@ -263,11 +279,12 @@ class ParameterEstimator:
             add inputs to make requirements flexible
             add verbosity input
     """
-    def __init__(self, X, Y, T="algebraic", *estimation_strategy):
+    def __init__(self, X, Y, T, **estimation_strategy):
         self.X = X
         self.Y = Y
         self.T = T
         self.estimation_strategy = estimation_strategy
+        print(estimation_strategy)
         
     def fit_one (self, model):
         print("Estimating model " + str(model.expr))
@@ -277,13 +294,14 @@ class ParameterEstimator:
             elif len(model.params) < 1:
                 model.set_estimated({"x":[], "fun":model_error_general(
                     model, [], self.X, self.Y, self.T,
-                    *self.estimation_strategy)})
+                    **self.estimation_strategy)})
             else:
                 res = find_parameters(model, self.X, self.Y, self.T,
-                                     *self.estimation_strategy)
+                                     **self.estimation_strategy)
                 model.set_estimated(res)
         except Exception as error:
-            print(f"Excepted an error: {error}!! \nModel:", model)
+            print((f"Excepted an error: Of type {type(error)} and message:"
+                    f"{error}!! \nModel:"), model)
             model.set_estimated({}, valid=False)
         # todo: optional kwargs: verbosity>1: print next line:
         print(f"model: {str(model.get_full_expr()):<70}; "
@@ -311,9 +329,13 @@ def fit_models (models, X, Y, T=None, pool_map=map, verbosity=0,
                 fit_models (models, X, Y, pool_map = pool.map)
         verbosity (int): Level of printout desired. 0: none, 1: info, 2+: debug.
     """
-    estimation_strategy = {"verbosit": yverbosity, equation_type, timeout,
-                            lower_upper_bounds]
-    estimator = ParameterEstimator(X, Y, T, *estimation_strategy)
+    if not isinstance(T, type(None)):
+        equation_type = "differential"
+    estimation_strategy = {
+        "verbosity": verbosity, "equation_type": equation_type,
+        "timeout": timeout, "lower_upper_bounds": lower_upper_bounds}
+    print(estimation_strategy)
+    estimator = ParameterEstimator(X, Y, T, **estimation_strategy)
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
 
 
