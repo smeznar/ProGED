@@ -78,7 +78,7 @@ def model_error_general (model, params, X, Y, T, **estimation_strategy):
                 f"\"{equation_type}\", while list of possible values: "
                 f"\"{types_string}\".")
 
-def ode (models_list, params_matrix, T, X_data, y0):
+def ode (models_list, params_matrix, T, X_data, y0, **estimation_strategy):
     """Solve system of ODEs defined by equations in models_list.
 
     Raise error if input is incompatible.
@@ -140,9 +140,12 @@ def ode (models_list, params_matrix, T, X_data, y0):
     # Older (default RK45) method:
     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)  
     # Set min_step via prescribing maximum number of steps:
-    # max_steps = 10**6  # On laptop, this would need less than 3 seconds.
-    max_steps = T.shape[0]*10**3  # Set to |timepoints|*1000.
-    # Convert max_steps to min_steps:
+    if "max_steps" in estimation_strategy:
+        max_steps = estimation_strategy["max_steps"]
+    else:
+        # max_steps = 10**6  # On laptop, this would need less than 3 seconds.
+        max_steps = T.shape[0]*10**3  # Set to |timepoints|*1000.
+    # Convert max_steps to min_step:
     min_step_from_max_steps = abs(T[-1] - T[0])/max_steps
     # The minimal min_step to avoid min step error in LSODA:
     min_step_error = 10**(-15)
@@ -180,7 +183,8 @@ def model_ode_error (model, params, T, X, Y, **estimation_strategy):
             change_std2tee = True  # Remember to change it back.
         # Next line works only when sys.stdout is real. Thats why above.
         with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
-            odeY = ode(model_list, params_matrix, T, X, y0=Y[0])  # change to Y[:1]
+            odeY = ode(model_list, params_matrix, T, X, y0=Y[0],
+                        **estimation_strategy)  # change to Y[:1]
         if change_std2tee: 
             sys.stdout = tee_object  # Change it back to fake stdout (tee).
 
