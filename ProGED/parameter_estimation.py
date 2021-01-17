@@ -315,7 +315,7 @@ class ParameterEstimator:
     
 def fit_models (models, X, Y, T=None, pool_map=map, verbosity=0,
                 equation_type="algebraic", timeout=np.inf, 
-                lower_upper_bounds=(-30, 30)):
+                lower_upper_bounds=(-30, 30), **additional):
     """Performs parameter estimation on given models. Main interface to the module.
     
     Supports parallelization by passing it a pooled map callable.
@@ -337,6 +337,7 @@ def fit_models (models, X, Y, T=None, pool_map=map, verbosity=0,
     estimation_strategy = {
         "verbosity": verbosity, "equation_type": equation_type,
         "timeout": timeout, "lower_upper_bounds": lower_upper_bounds}
+    estimation_strategy = {**estimation_strategy, **additional}
     estimator = ParameterEstimator(X, Y, T, **estimation_strategy)
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
 
@@ -364,6 +365,6 @@ if __name__ == "__main__":
     
     models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
     
-    models = fit_models(models, X, y)    
+    models = fit_models(models, X, y, equation_type="algebraic")
     print(models)
 
