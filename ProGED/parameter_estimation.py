@@ -56,21 +56,23 @@ def model_constant_error (model, params, X, Y):
     return np.std(testY)#/np.linalg.norm(params)
 
 EQUATION_TYPES = ("algebraic", "differential")
+
 def model_error_general (model, params, X, Y, T, **estimation_strategy):
     """Calculate error of model with given parameters in general with
     type of error given.
 
         Input = TODO:
-    - T is column of times at which samples in X and Y happen.
     - X are columns without features that are derived.
     - Y are columns of features that are derived via ode fitting.
+    - T is column of times at which samples in X and Y happen.
+    - estimation_strategy: look description of fit_models()
     """
     equation_type = estimation_strategy["equation_type"]
     if equation_type == "algebraic":
         return model_error(model, params, X, Y)
     if equation_type == "differential":
         # Model_ode_error might use estimation[verbosity] agrument for
-        # ode solver's settings and suppresing its warnnings. 
+        # ode solver's settings and suppresing its warnnings:
         return model_ode_error(model, params, T, X, Y, **estimation_strategy)
     else:
         types_string = "\", \"".join(EQUATION_TYPES)
@@ -140,8 +142,8 @@ def ode (models_list, params_matrix, T, X_data, y0, **estimation_strategy):
     # Older (default RK45) method:
     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, atol=0)  
     # Set min_step via prescribing maximum number of steps:
-    if "max_steps" in estimation_strategy:
-        max_steps = estimation_strategy["max_steps"]
+    if "max_ode_steps" in estimation_strategy:
+        max_steps = estimation_strategy["max_ode_steps"]
     else:
         # max_steps = 10**6  # On laptop, this would need less than 3 seconds.
         max_steps = T.shape[0]*10**3  # Set to |timepoints|*1000.
@@ -235,6 +237,8 @@ def DE_fit (model, X, Y, T, p0, **estimation_strategy):
         else:
             return False
     
+    # Alternativa:
+    # differential_evolution(estimation_strategy["wrapper"], ...)
     return differential_evolution(
         optimization_wrapper, bounds,
         args = [model, X, Y, T, estimation_strategy],
@@ -258,16 +262,14 @@ def find_parameters (model, X, Y, T, **estimation_strategy):
 #    opt_params = popt; othr = pcov
 
     # here insert an if (alg vs diff. enacbe)
-    # if equation_type == "arithmetic":
-    #     print(equation_type)
-    #     res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
-    #                 (model, X, Y, T, p0, **estimation_strategy):
-
-    # if equation_type == "differential":
-    #     print(equation_type)
-    #     res = DE_fit(model, X, Y, p0=model.params, T=T, **estimation_strategy)
-
     res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
+    # Lahko bi tle dal
+    # if algebraic: DE_fit(..., wrapper=wraper_algebraic)
+    # elseif diff: DE_fit(..., wrapper=wraper_differential)
+
+    # kjer bi blo v def DE_fit:
+    # differential_evolution(estimation_strategy["wrapper"], ...)
+
 
 #    res = min_fit (model, X, Y)
 #    opt_params = res.x; othr = res
@@ -282,6 +284,9 @@ class ParameterEstimator:
         TODO:
             add inputs to make requirements flexible
             add verbosity input
+        Input:
+            estimation_strategy: Dictionary with multiple parameters
+                that determine estimation process more specifically.
     """
     def __init__(self, X, Y, T, **estimation_strategy):
         self.X = X
@@ -326,11 +331,24 @@ def fit_models (models, X, Y, T=None, pool_map=map, verbosity=0,
             and M is the number of variables.
         Y (numpy.array): Output data of shape N x D, where N is the number of samples
             and D is the number of output variables.
+        T (numpy.array): Times array, used for solving differential equations, where
+            form required is noted inside the definition of ode() function.
         pool_map (function): Map function for parallelization. Example use with 8 workers:
                 from multiprocessing import Pool
                 pool = Pool(8)
                 fit_models (models, X, Y, pool_map = pool.map)
         verbosity (int): Level of printout desired. 0: none, 1: info, 2+: debug.
+        equation_type: Type of equations, e.g. "algebraic" or "differential", that
+            equation discovery algorithm tries to discover.
+        timeout: Maximal time consumed for whole minimization optimization process,
+            e.g. for differential evolution, that is performed for each model.
+        lower_upper_bounds: Pair, i.e. tuple of lower and upper bound used to
+            specify the boundaries of optimization, e.g. of differential evolution.
+        additional: Other parameters used in lower level parts of discovery,
+            e.g. in solving ODEs.
+        max_ode_steps: As an example of above, it can be passed through **additional
+            argument. Maximal number of steps used in one run of LSODA solver.
+        estimation_strategy: Dictionary where majority of optional arguments is stored.
     """
     if not isinstance(T, type(None)):
         equation_type = "differential"
