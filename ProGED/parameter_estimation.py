@@ -69,8 +69,9 @@ def model_error_general (model, params, X, Y, T, **estimation_strategy):
     """
     equation_type = estimation_strategy["equation_type"]
     if equation_type == "algebraic":
+        llestimation_strategy["wrapper"] = wrapper
         return model_error(model, params, X, Y)
-    if equation_type == "differential":
+    elif equation_type == "differential":
         # Model_ode_error might use estimation[verbosity] agrument for
         # ode solver's settings and suppresing its warnnings:
         return model_ode_error(model, params, T, X, Y, **estimation_strategy)
@@ -210,7 +211,7 @@ def model_ode_error (model, params, T, X, Y, **estimation_strategy):
         print("Returning dummy error. All is well.")
         return dummy
 
-def optimization_wrapper (params, *args):
+def optimization_wrapper_algebraic (params, *args):
     """Calls the appropriate error function. The choice of error function is made here.
     
     TODO:
@@ -218,7 +219,17 @@ def optimization_wrapper (params, *args):
             and implement a library framework, similarly to grammars and generation strategies."""
     
     model, X, Y, T, estimation_strategy = args
-    return model_error_general(model, params, X, Y, T, **estimation_strategy)
+    return model_error(model, params, X, Y)
+
+def optimization_wrapper_differential (params, *args):
+    """Calls the appropriate error function. The choice of error function is made here.
+    
+    TODO:
+        We need to pass information on the choice of error function from fit_models all the way to here,
+            and implement a library framework, similarly to grammars and generation strategies."""
+    
+    model, X, Y, T, estimation_strategy = args
+    return model_ode_error(model, params, T, X, Y, **estimation_strategy)
 
 def DE_fit (model, X, Y, T, p0, **estimation_strategy):
     """Calls scipy.optimize.differential_evolution. 
@@ -240,7 +251,7 @@ def DE_fit (model, X, Y, T, p0, **estimation_strategy):
     # Alternativa:
     # differential_evolution(estimation_strategy["wrapper"], ...)
     return differential_evolution(
-        optimization_wrapper, bounds,
+        estimation_strategy["wrapper"], bounds,
         args = [model, X, Y, T, estimation_strategy],
         callback=diff_evol_timeout, maxiter=10**2, popsize=10)
 
@@ -262,8 +273,21 @@ def find_parameters (model, X, Y, T, **estimation_strategy):
 #    opt_params = popt; othr = pcov
 
     # here insert an if (alg vs diff. enacbe)
-    res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
     # Lahko bi tle dal
+    equation_type = estimation_strategy["equation_type"]
+    if equation_type == "algebraic":
+        estimation_strategy["wrapper"] = optimization_wrapper_algebraic
+        res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
+        return model_error(model, params, X, Y)
+    elif equation_type == "differential":
+        # Model_ode_error might use estimation[verbosity] agrument for
+        # ode solver's settings and suppresing its warnnings:
+        return model_ode_error(model, params, T, X, Y, **estimation_strategy)
+    else:
+        types_string = "\", \"".join(EQUATION_TYPES)
+        raise ValueError("Variable equation_type has unsupported value "
+                f"\"{equation_type}\", while list of possible values: "
+                f"\"{types_string}\".")
     # if algebraic: DE_fit(..., wrapper=wraper_algebraic)
     # elseif diff: DE_fit(..., wrapper=wraper_differential)
 
