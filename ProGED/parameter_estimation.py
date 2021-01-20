@@ -69,7 +69,7 @@ def model_error_general (params, model, X, Y, T, **estimation_strategy):
     """
     equation_type = estimation_strategy["equation_type"]
     if equation_type == "algebraic":
-        return model_error(model, params, X, Y)
+        return model_error(params, model, X, Y)
     elif equation_type == "differential":
         # Model_ode_error might use estimation[verbosity] agrument for
         # ode solver's settings and suppresing its warnnings:
@@ -316,7 +316,7 @@ class ParameterEstimator:
                 pass
             elif len(model.params) < 1:
                 model.set_estimated({"x":[], "fun":model_error_general(
-                    model, [], self.X, self.Y, self.T,
+                    [], model, self.X, self.Y, self.T,
                     **self.estimation_strategy)})
             else:
                 res = find_parameters(model, self.X, self.Y, self.T,
