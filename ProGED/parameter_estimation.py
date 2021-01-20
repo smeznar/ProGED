@@ -39,7 +39,7 @@ Methods:
     fit_models: Performs parameter estimation on given models. Main interface to the module.
 """
 
-def model_error (model, params, X, Y):
+def model_error (params, model, X, Y, **residue):
     """Defines mean squared error as the error metric."""
     testY = model.evaluate(X, *params)
     res = np.mean((Y-testY)**2)
@@ -57,7 +57,7 @@ def model_constant_error (model, params, X, Y):
 
 EQUATION_TYPES = ("algebraic", "differential")
 
-def model_error_general (model, params, X, Y, T, **estimation_strategy):
+def model_error_general (params, model, X, Y, T, **estimation_strategy):
     """Calculate error of model with given parameters in general with
     type of error given.
 
@@ -69,12 +69,11 @@ def model_error_general (model, params, X, Y, T, **estimation_strategy):
     """
     equation_type = estimation_strategy["equation_type"]
     if equation_type == "algebraic":
-        llestimation_strategy["wrapper"] = wrapper
         return model_error(model, params, X, Y)
     elif equation_type == "differential":
         # Model_ode_error might use estimation[verbosity] agrument for
         # ode solver's settings and suppresing its warnnings:
-        return model_ode_error(model, params, T, X, Y, **estimation_strategy)
+        return model_ode_error(params, model, X, Y, T, estimation_strategy)
     else:
         types_string = "\", \"".join(EQUATION_TYPES)
         raise ValueError("Variable equation_type has unsupported value "
@@ -160,7 +159,7 @@ def ode (models_list, params_matrix, T, X_data, y0, **estimation_strategy):
     Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=atol, tfirst=True, hmin=min_step).T 
     return Yode
 
-def model_ode_error (model, params, T, X, Y, **estimation_strategy):
+def model_ode_error (params, model, X, Y, T, estimation_strategy):
     """Defines mean squared error of solution to differential equation
     as the error metric.
 
@@ -211,25 +210,25 @@ def model_ode_error (model, params, T, X, Y, **estimation_strategy):
         print("Returning dummy error. All is well.")
         return dummy
 
-def optimization_wrapper_algebraic (params, *args):
-    """Calls the appropriate error function. The choice of error function is made here.
+# def optimization_wrapper_algebraic (params, *args):
+#     """Calls the appropriate error function. The choice of error function is made here.
     
-    TODO:
-        We need to pass information on the choice of error function from fit_models all the way to here,
-            and implement a library framework, similarly to grammars and generation strategies."""
+#     TODO:
+#         We need to pass information on the choice of error function from fit_models all the way to here,
+#             and implement a library framework, similarly to grammars and generation strategies."""
     
-    model, X, Y, T, estimation_strategy = args
-    return model_error(model, params, X, Y)
+#     model, X, Y, T, estimation_strategy = args
+#     return model_error(model, params, X, Y)
 
-def optimization_wrapper_differential (params, *args):
-    """Calls the appropriate error function. The choice of error function is made here.
+# def optimization_wrapper_differential (params, *args):
+#     """Calls the appropriate error function. The choice of error function is made here.
     
-    TODO:
-        We need to pass information on the choice of error function from fit_models all the way to here,
-            and implement a library framework, similarly to grammars and generation strategies."""
+#     TODO:
+#         We need to pass information on the choice of error function from fit_models all the way to here,
+#             and implement a library framework, similarly to grammars and generation strategies."""
     
-    model, X, Y, T, estimation_strategy = args
-    return model_ode_error(model, params, T, X, Y, **estimation_strategy)
+#     model, X, Y, T, estimation_strategy = args
+#     return model_ode_error(model, params, T, X, Y, **estimation_strategy)
 
 def DE_fit (model, X, Y, T, p0, **estimation_strategy):
     """Calls scipy.optimize.differential_evolution. 
@@ -248,11 +247,9 @@ def DE_fit (model, X, Y, T, p0, **estimation_strategy):
         else:
             return False
     
-    # Alternativa:
-    # differential_evolution(estimation_strategy["wrapper"], ...)
     return differential_evolution(
-        estimation_strategy["wrapper"], bounds,
-        args = [model, X, Y, T, estimation_strategy],
+        estimation_strategy["objective_function"], bounds,
+        args=[model, X, Y, T, estimation_strategy],
         callback=diff_evol_timeout, maxiter=10**2, popsize=10)
 
 def min_fit (model, X, Y):
@@ -272,24 +269,18 @@ def find_parameters (model, X, Y, T, **estimation_strategy):
 #        popt, pcov = model.params, 0
 #    opt_params = popt; othr = pcov
 
-    # here insert an if (alg vs diff. enacbe)
-    # Lahko bi tle dal
     equation_type = estimation_strategy["equation_type"]
     if equation_type == "algebraic":
-        estimation_strategy["wrapper"] = optimization_wrapper_algebraic
-        res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
-        return model_error(model, params, X, Y)
+        estimation_strategy["objective_function"] = model_error
     elif equation_type == "differential":
-        # Model_ode_error might use estimation[verbosity] agrument for
-        # ode solver's settings and suppresing its warnnings:
-        return model_ode_error(model, params, T, X, Y, **estimation_strategy)
+        estimation_strategy["objective_function"] = model_ode_error
     else:
         types_string = "\", \"".join(EQUATION_TYPES)
         raise ValueError("Variable equation_type has unsupported value "
                 f"\"{equation_type}\", while list of possible values: "
                 f"\"{types_string}\".")
-    # if algebraic: DE_fit(..., wrapper=wraper_algebraic)
-    # elseif diff: DE_fit(..., wrapper=wraper_differential)
+
+    res = DE_fit(model, X, Y, T, p0=model.params, **estimation_strategy)
 
     # kjer bi blo v def DE_fit:
     # differential_evolution(estimation_strategy["wrapper"], ...)
