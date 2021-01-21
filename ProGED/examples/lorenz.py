@@ -123,6 +123,11 @@ def eq_disco_demo (data, lhs_variables: list = [1],
                             strategy_parameters={"N":samples_cardinality})
     fit_models(models, X, Y, T, timeout=5, max_steps=10**6,
                 lower_upper_bounds=(-30,30))
+    # Test purpose:
+    # fit_models(models, X, Y, T)
+    # fit_models(models, X, Y, T, timeout=5)
+    # fit_models(models, X, Y, T, max_steps=10**6)
+                
     print(models)
     print("\nFinal score:")
     for m in models:

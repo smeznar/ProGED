@@ -376,5 +376,8 @@ if __name__ == "__main__":
     models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
     
     models = fit_models(models, X, y, equation_type="algebraic")
+    # Test purpose:
+    # models = fit_models(models, X, y, timeout=1, undefined=234, equation_type="algebraic")
+
     print(models)
 
