@@ -25,8 +25,7 @@ models = generate_models(grammar, symbols, strategy_parameters = {"N":10})
 
 # 3.) discover the right equation
 fit_models(models, X, Y, T)
-# Test purpose:
-# fit_models(models, X, Y, T, timeout=4)
+# fit_models(models, X, Y)
 
 # 4.) print models' results
 print("\n", models, "\n\nFinal score:")

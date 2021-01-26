@@ -21,35 +21,37 @@ from task import EDTask
 GENERATOR_LIBRARY = {"grammar": grammar_from_template}
 
 class EqDisco:
-    def __init__ (self, task = None,  dataX = None, dataY = None, variable_names = None, output_variable = None,
+    def __init__ (self, task = None,  data = None, target_variable_index = 0, time_index = None, variable_names = None, output_variable = None,
                   variable_probabilities = None, success_threshold = 1e-8, task_type = "algebraic",
-                  generator = "grammar", generator_template_name = "universal", generator_parameters = {},
-                  strategy = "monte-carlo", strategy_parameters = None, sample_size = 10,
+                  generator = "grammar", generator_template_name = "universal", generator_settings = {},
+                  strategy = "monte-carlo", strategy_settings = None, sample_size = 10,
                   verbosity = 1):        
         
         if not task:
-            if isinstance(dataX, type(None)) or isinstance(dataY, type(None)):
+            if isinstance(data, type(None)):
                 raise TypeError ("Missing inputs. Either task object or data required.")
             else:
-                if not variable_names:
-                    variable_names = [chr(97+i) for i in range(dataX.shape[-1])]
-                if not output_variable:
-                    output_variable = "f"
-                if not variable_probabilities:
-                    variable_probabilities = [1/len(variable_names)]*len(variable_names)
-                self.task = EDTask(dataX, dataY, variable_names, output_variable, success_threshold, task_type)
+                self.task = EDTask(data = data, 
+                                   target_variable_index = target_variable_index, 
+                                   time_index = time_index, 
+                                   variable_names = variable_names, 
+                                   success_threshold = success_threshold, 
+                                   task_type = task_type)
+                
         elif isinstance(task, EDTask):
             self.task = task
         else:
             raise TypeError ("Missing task information!")
-            
-        generator_parameters.update({"variables":self.task.symbols["x"], "p_vars": variable_probabilities})
+        
+        if not variable_probabilities:
+            variable_probabilities = [1/len(self.task.var_names)]*np.sum(self.task.variable_mask)
+        generator_settings.update({"variables":self.task.symbols["x"], "p_vars": variable_probabilities})
         if isinstance(generator, BaseExpressionGenerator):
             self.generator = generator
         elif isinstance(generator, str):
             if generator in GENERATOR_LIBRARY:
                 self.generator = GENERATOR_LIBRARY[generator](generator_template_name, 
-                                                              generator_parameters)
+                                                              generator_settings)
             else:
                 raise KeyError("Generator name not found. Supported generators:\n" + str(list(GENERATOR_LIBRARY.keys())))
         else:
@@ -58,10 +60,10 @@ class EqDisco:
                              "Input: " + str(type(generator)))
             
         self.strategy = strategy
-        if not strategy_parameters:
-            self.strategy_parameters = {"N": sample_size}
+        if not strategy_settings:
+            self.strategy_settings = {"N": sample_size}
         else:
-            self.strategy_parameters = strategy_parameters
+            self.strategy_settings = strategy_settings
         
         self.models = None
         self.solution = None
@@ -69,14 +71,15 @@ class EqDisco:
         self.verbosity = verbosity
         
         
-    def generate_models (self, strategy_parameters = None):
-        if not strategy_parameters:
-            strategy_parameters = self.strategy_parameters
-        self.models = generate_models(self.generator, self.task.symbols, self.strategy, strategy_parameters, verbosity=self.verbosity)
+    def generate_models (self, strategy_settings = None):
+        if not strategy_settings:
+            strategy_settings = self.strategy_settings
+        self.models = generate_models(self.generator, self.task.symbols, self.strategy, strategy_settings, verbosity=self.verbosity)
         return self.models
     
     def fit_models (self, pool_map = map):
-        self.models = fit_models(self.models, self.task.dataX, self.task.dataY, pool_map = pool_map, verbosity=self.verbosity)
+        self.models = fit_models(self.models, self.task.data, self.task.target_variable_index, time_index = self.task.time_index,
+                                 task_type = self.task.task_type, pool_map = pool_map, verbosity=self.verbosity)
         return self.models
         
     
@@ -89,9 +92,13 @@ if __name__ == "__main__":
 	
     X = np.linspace(-1, 1, 20)
     Y = f(X)
+    X = X.reshape(-1,1)
+    Y = Y.reshape(-1,1)
+    data = np.hstack((X,Y))
         
-    ED = EqDisco(dataX = X,
-                 dataY = Y,
+    ED = EqDisco(task = None,
+                 data = data,
+                 target_variable_index = -1,
                  sample_size = 5,
                  verbosity = 1)
     
