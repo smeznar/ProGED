@@ -120,7 +120,7 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     print(grammar)
     print(samples_cardinality, "=samples cardinality")
     models = generate_models(grammar, symbols, 
-                            strategy_parameters={"N":samples_cardinality})
+                            strategy_settings={"N":samples_cardinality})
     fit_models(models, X, Y, T, timeout=5, max_steps=10**6,
                 lower_upper_bounds=(-30,30))
     # Test purpose:

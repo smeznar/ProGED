@@ -386,5 +386,5 @@ if __name__ == "__main__":
     models = fit_models(models, X, y, task_type="algebraic")
     print(models)
     # Test purpose:
-    # models = fit_models(models, X, y, timeout=1, undefined=234, equation_type="algebraic")
+    # models = fit_models(models, X, y, timeout=1, undefined=234, task_type="algebraic")
 
