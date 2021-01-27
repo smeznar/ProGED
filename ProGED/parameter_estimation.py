@@ -86,13 +86,15 @@ def ode (models_list, params_matrix, T, X_data, y0, **estimation_settings):
     Raise error if input is incompatible.
         Input:
     models_list -- list (not dictionary) of models that e.g.
-    generate_models() generates.
+        generate_models() generates.
     params_matrix -- list of lists or ndarrays of parameters for
-    corresponding models.
+        corresponding models.
     y0 -- array (1-dim) of initial value of vector function y(t)
-    i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...].
+        i.e. y0 = y(T[0]) = [y1(T[0]), y2(T[0]), y3(T[0]),...].
     X_data -- 2-dim array (matrix) i.e. X = [X[0,:], X[1,:],...].
     T -- (1-dim) array, i.e. of shape (N,)
+    max_ode_steps -- maximal number of steps inside ODE solver to
+        determine the minimal step size inside ODE solver.
         Output:
     Solution of ODE evaluated at times T.
     """
@@ -102,17 +104,19 @@ def ode (models_list, params_matrix, T, X_data, y0, **estimation_settings):
                 and isinstance(params_matrix[0], (list, np.ndarray)))
             and X_data.ndim == 2
             and y0.ndim == 1):
-        print(type(params_matrix[0]))
-        print(isinstance(models_list, list),
+        message = str(type(params_matrix[0])) + "\n"
+        info = (isinstance(models_list, list),
             isinstance(params_matrix, list),
             len(params_matrix)>0,
             isinstance(params_matrix[0], (list, np.ndarray)),
             X_data.ndim == 2,
             y0.ndim == 1 )
+        print(message, info)
         print("Programmer's defined error: Input arguments are not"
                         +" in required form!")
-        raise TypeError("Programmer's defined error: Input arguments are not"
-                        +" in required form!")
+        raise TypeError(f"Programmer's defined error: Input arguments are not"
+                        +f" in required form!"
+                        +f"\n{message, info}")
     elif not T.shape[0] == X_data.shape[0]:
         print("Number of samples in T and X does not match.")
         raise IndexError("Number of samples in T and X does not match.")
@@ -155,6 +159,7 @@ def ode (models_list, params_matrix, T, X_data, y0, **estimation_settings):
     rtol = 10**(-4)
     atol = 10**(-6)
     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, method="LSODA", rtol=rtol, atol=atol, min_step=min_step).y
+    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T).y #, method="LSODA", rtol=rtol, atol=atol, min_step=min_step).y
     # Alternative LSODA using odeint (may be faster?):
     Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=atol, tfirst=True, hmin=min_step).T 
     return Yode
@@ -291,7 +296,7 @@ class ParameterEstimator:
             self.T = None
             
         self.X = data[:, var_mask]
-        self.Y = data[:, target_variable_index]
+        self.Y = data[:, [target_variable_index]]
         self.estimation_settings = estimation_settings
         
     def fit_one (self, model):
@@ -319,7 +324,7 @@ class ParameterEstimator:
         return model
     
 def fit_models (models, data, target_variable_index, time_index = None, pool_map=map, verbosity=0,
-                task_type="algebraic", timeout=np.inf, 
+                task_type=None, timeout=np.inf, 
                 lower_upper_bounds=(-30, 30), **additional):
     """Performs parameter estimation on given models. Main interface to the module.
     
@@ -349,8 +354,8 @@ def fit_models (models, data, target_variable_index, time_index = None, pool_map
             argument. Maximal number of steps used in one run of LSODA solver.
         estimation_settings: Dictionary where majority of optional arguments is stored.
     """
-    if not isinstance(time_index, type(None)):
-        task_type = "differential"
+    # if not isinstance(time_index, type(None)):
+    #     task_type = "differential"
         
     estimation_settings = {
         "verbosity": verbosity, "task_type": task_type,
@@ -373,7 +378,9 @@ if __name__ == "__main__":
         return 3*x[:,0]*x[:,1]**2 + 0.5
     
     X = lhs(2, 10)*5
-    y = testf(X)
+    X = X.reshape(-1, 2)
+    y = testf(X).reshape(-1,1)
+    data = np.hstack((X,y))
     
     grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                               T -> 'C' [0.6] | T "*" V [0.4]
@@ -383,8 +390,6 @@ if __name__ == "__main__":
     
     models = generate_models(grammar, symbols, strategy_settings = {"N":10})
     
-    models = fit_models(models, X, y, task_type="algebraic")
+    models = fit_models(models, data, target_variable_index=-1, task_type="algebraic")
     print(models)
-    # Test purpose:
-    # models = fit_models(models, X, y, timeout=1, undefined=234, task_type="algebraic")
 

@@ -22,11 +22,13 @@ from scipy.integrate import solve_ivp, odeint
 start = time.perf_counter()
 # # # Input: # # # 
 eqation = "123"  # Code for eq_disco([1], [2,3]).
-samples_cardinality = 50 
+samples_size = 5 
 log_nickname = ""
+isTee = False
 if len(sys.argv) >= 2:
-    samples_cardinality = int(sys.argv[1])
+    samples_size = int(sys.argv[1])
 if len(sys.argv) >= 3:
+    isTee = True
     log_nickname = sys.argv[2]
 if len(sys.argv) >= 4:
     eqation = sys.argv[3]
@@ -34,10 +36,11 @@ aux = [int(i) for i in eqation]
 aquation = (aux[:1], aux[1:])
 random = str(np.random.random())
 print("Filename id: " + log_nickname + random)
-try:
-    log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
-except FileNotFoundError:
-    log_object = te.Tee("log_lorenz_" + log_nickname + random + ".txt")
+if isTee:
+    try:
+        log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
+    except FileNotFoundError:
+        log_object = te.Tee("log_lorenz_" + log_nickname + random + ".txt")
 
 # # 1.) Data construction (simulation of Lorenz):
 
@@ -99,10 +102,6 @@ def eq_disco_demo (data, lhs_variables: list = [1],
                     dimensions: list = [0]):
     # header = ["column for x", "column for y", "column for z"]
     header = ["x", "y", "z"]
-    T = data[:, dimensions]
-    T = T.T[0]  # Temporary line since T is for still 1-D array.
-    Y = data[:, lhs_variables]
-    X = data[:, rhs_variables]
     variables = ["'"+header[i-1]+"'" for i in lhs_variables] # [1,3] -> ["x1", "x3"]
     variables += ["'"+header[i-1]+"'" for i in rhs_variables]
     print(variables)
@@ -118,16 +117,12 @@ def eq_disco_demo (data, lhs_variables: list = [1],
         "functions": []
     })
     print(grammar)
-    print(samples_cardinality, "=samples cardinality")
+    print(samples_size, "= samples size")
     models = generate_models(grammar, symbols, 
-                            strategy_settings={"N":samples_cardinality})
-    fit_models(models, X, Y, T, timeout=5, max_steps=10**6,
-                lower_upper_bounds=(-30,30))
-    # Test purpose:
-    # fit_models(models, X, Y, T)
-    # fit_models(models, X, Y, T, timeout=5)
-    # fit_models(models, X, Y, T, max_steps=10**6)
-                
+                            strategy_settings={"N":samples_size})
+    fit_models(models, data, target_variable_index=-1, time_index=0,
+                timeout=5, max_ode_steps=10**6, task_type="differential",
+                lower_upper_bounds=(-30, 30))
     print(models)
     print("\nFinal score:")
     for m in models:

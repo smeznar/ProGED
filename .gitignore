@@ -1,13 +1,5 @@
 .vscode/
-.gitignore
+# .gitignore
 .gitignore.swp
 __pycache__/
 # */__pycache__/
-*/*/*.fdb_latexmk
-*/*/*.aux
-*/*/*.syntex.gz
-*/*/*.fls
-*/*.fdb_latexmk
-*/*.aux
-*/*.syntex.gz
-*/*.fls
