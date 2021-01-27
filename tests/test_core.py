@@ -168,6 +168,19 @@ def test_equation_discoverer():
     assert np.abs(ED.models[0].get_error() - 0.72842105) < 1e-6
     assert np.abs(ED.models[1].get_error() - 0.59163899) < 1e-6
     
+    print(ED.task.task_type)
+    ED = EqDisco(data = X.reshape(-1,4),
+                 task = None,
+                 task_type = "differential",
+                 time_index = 0,
+                 target_variable_index = -1,
+                 sample_size = 2,
+                 verbosity = 1)
+    ED.generate_models()
+    print(ED.fit_models())
+test_equation_discoverer()
+
+
 # if __name__ == "__main__":
 #     test_grammar_general()
 #     test_grammar_templates()
