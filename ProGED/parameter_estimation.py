@@ -190,14 +190,16 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
             change_std2tee = True  # Remember to change it back.
         # Next line works only when sys.stdout is real. Thats why above.
         with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
-            odeY = ode(model_list, params_matrix, T, X, y0=Y[0],
-                        **estimation_settings)  # change to Y[:1]
+            odeY = ode(model_list, params_matrix, T, X, y0=Y[:1],
+                        **estimation_settings)  # Y[:1] if _ or Y[0] if |
         if change_std2tee: 
             sys.stdout = tee_object  # Change it back to fake stdout (tee).
 
-        odeY = odeY.T  # solve_ivp() returns in oposite (DxN) shape.
+        # odeY = odeY.T  # solve_ivp() returns in _ oposite (DxN) shape.
+        odeY = odeY[0]  # If Y is landscape, i.e. _.
         if not odeY.shape == Y.shape:
             # print("The ODE solver did not found ys at all times -> returning dummy error.")
+            # print(odeY.shape, Y.shape)
             return dummy
         try:
             res = np.mean((Y-odeY)**2)
@@ -296,7 +298,7 @@ class ParameterEstimator:
             self.T = None
             
         self.X = data[:, var_mask]
-        self.Y = data[:, [target_variable_index]]
+        self.Y = data[:, target_variable_index]
         self.estimation_settings = estimation_settings
         
     def fit_one (self, model):
