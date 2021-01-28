@@ -124,16 +124,6 @@ def test_parameter_estimation():
     assert np.abs(models[0].get_error() - 0.36) < 1e-6
     assert np.abs(models[1].get_error() - 1.4736842) < 1e-6
 
-B = -2.56; a = 0.4; ts = np.linspace(0.45, 0.87, 1000)
-Xs = (ts+B)*np.exp(a*ts); Ys = np.exp(a*ts)
-data = np.hstack((ts.reshape(-1, 1), Xs.reshape(-1, 1), Ys.reshape(-1, 1)))
-grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
-                            T -> V [0.6] | 'C' "*" V [0.4]
-                            V -> 'x' [0.5] | 'y' [0.5]""")
-symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
-models = generate_models(grammar, symbols, strategy_settings={"N":20})
-fit_models(models, data, target_variable_index=-1, time_index=0, task_type="differential")
-    
 def test_parameter_estimation_2D():
     np.random.seed(0)
     def f(x):
@@ -156,6 +146,41 @@ def test_parameter_estimation_2D():
     assert np.abs(models[0].get_error() - 0.36) < 1e-6
     assert np.abs(models[1].get_error() - 1.5945679) < 1e-6
 
+def test_parameter_estimation_ODE():
+    np.random.seed(2)
+    B = -2.56; a = 0.4; ts = np.linspace(0.45, 0.87, 1000)
+    Xs = (ts+B)*np.exp(a*ts); Ys = np.exp(a*ts)
+    data = np.hstack((ts.reshape(-1, 1), Xs.reshape(-1, 1), Ys.reshape(-1, 1)))
+    grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
+                                T -> V [0.6] | 'C' "*" V [0.4]
+                                V -> 'x' [0.5] | 'y' [0.5]""")
+    symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
+    models = generate_models(grammar, symbols, strategy_settings={"N":5})
+    models = fit_models(models, data, target_variable_index=-1, time_index=0, task_type="differential")
+    print("\n", models, "\n\nFinal score:")
+    for m in models:
+        print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
+
+    def assert_line(models, i, expr, error, tol=1e-9, n=100):
+        assert str(models[i].get_full_expr())[:n] == expr[:n]
+        assert abs(models[i].get_error() - error) < tol
+    assert_line(models, 0, "y", 0.04769135125354257)
+    assert_line(models, 1, "x", 0.5281799887127998)
+    assert_line(models, 2, "x + 2.36202800175916*y", 0.00018651930347713696, n=8)
+
+    np.random.seed(2)
+    models2 = generate_models(grammar, symbols, strategy_settings={"N":5})
+    models2 = fit_models(models2, data, target_variable_index=-1,
+                        time_index=0, timeout=1, task_type="differential",
+                        max_ode_steps=4)
+    print("\n", models2, "\n\nFinal score:")
+    for m2 in models2:
+        print(f"model: {str(m2.get_full_expr()):<30}; error: {m2.get_error():<15}")
+    assert_line(models2, 0, "y", 0.04777596845299029)
+    assert_line(models2, 1, "x", 0.5281504078216168)
+    assert_line(models2, 2, "x + 2.06616008223835*y", 0.016742729274446286, n=8, tol=1e-4)
+test_parameter_estimation_ODE()
+    
 def test_equation_discoverer():
     np.random.seed(0)
     def f(x):
@@ -178,17 +203,17 @@ def test_equation_discoverer():
     assert np.abs(ED.models[0].get_error() - 0.72842105) < 1e-6
     assert np.abs(ED.models[1].get_error() - 0.59163899) < 1e-6
     
-    print(ED.task.task_type)
-    ED = EqDisco(data = X.reshape(-1,4),
-                 task = None,
-                 task_type = "differential",
-                 time_index = 0,
-                 target_variable_index = -1,
-                 sample_size = 2,
-                 verbosity = 1)
-    ED.generate_models()
-    print(ED.fit_models())
-test_equation_discoverer()
+    # print(ED.task.task_type)
+    # ED = EqDisco(data = X.reshape(-1,4),
+    #              task = None,
+  #              task_type = "differential",
+    #              time_index = 0,
+    #              target_variable_index = -1,
+    #              sample_size = 2,
+    #              verbosity = 1)
+    # ED.generate_models()
+    # print(ED.fit_models())
+# test_equation_discoverer()
 
 
 # if __name__ == "__main__":
