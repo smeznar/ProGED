@@ -51,7 +51,10 @@ class EDTask:
         self.data = data
         self.success_thr = success_threshold
         
-        self.symbols = {"start":"E", "const": "C", "x": ["'" + v + "'" for v in self.var_names[self.variable_mask]]}
+        self.symbols_mask = self.variable_mask
+        if task_type == "differential":
+            self.symbols_mask[target_variable_index] = True
+        self.symbols = {"start":"E", "const": "C", "x": ["'" + v + "'" for v in self.var_names[self.symbols_mask]]}
         
 if __name__ == "__main__":
     print("--- task.py test ---")
