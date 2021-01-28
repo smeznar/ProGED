@@ -46,7 +46,7 @@ if isTee:
 
 np.random.seed(0)
 T = np.linspace(0.48, 0.85, 1000)  # Times currently run at.
-# T = np.linspace(0, 40, 1000)  # Chaotic Lorenz times noted on Wiki.
+# T = np.linspace(0, 40, 4000)  # Chaotic Lorenz times noted on Wiki.
 # # Lorenz's sode:
 # dx/dt = \sigma * (y-x)
 # dy/dt = x*(\rho-z) - y
@@ -98,8 +98,7 @@ from parameter_estimation import fit_models
 
 def eq_disco_demo (data, lhs_variables: list = [1],
                   # ["column 1"], # in case of header string reference
-                    rhs_variables: list = [2, 3],
-                    dimensions: list = [0]):
+                    rhs_variables: list = [2, 3]):
     # header = ["column for x", "column for y", "column for z"]
     header = ["x", "y", "z"]
     variables = ["'"+header[i-1]+"'" for i in lhs_variables] # [1,3] -> ["x1", "x3"]

@@ -24,7 +24,6 @@ symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
 models = generate_models(grammar, symbols, strategy_settings={"N":20})
 
 # 3.) discover the right equation
-# fit_models(models, X, Y, T)
 data = np.hstack((T.reshape(-1,1), X, Y))
 models = fit_models(models, data, target_variable_index=-1, time_index=0, task_type="differential")
 

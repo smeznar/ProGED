@@ -123,6 +123,16 @@ def test_parameter_estimation():
     
     assert np.abs(models[0].get_error() - 0.36) < 1e-6
     assert np.abs(models[1].get_error() - 1.4736842) < 1e-6
+
+B = -2.56; a = 0.4; ts = np.linspace(0.45, 0.87, 1000)
+Xs = (ts+B)*np.exp(a*ts); Ys = np.exp(a*ts)
+data = np.hstack((ts.reshape(-1, 1), Xs.reshape(-1, 1), Ys.reshape(-1, 1)))
+grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
+                            T -> V [0.6] | 'C' "*" V [0.4]
+                            V -> 'x' [0.5] | 'y' [0.5]""")
+symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
+models = generate_models(grammar, symbols, strategy_settings={"N":20})
+fit_models(models, data, target_variable_index=-1, time_index=0, task_type="differential")
     
 def test_parameter_estimation_2D():
     np.random.seed(0)
