@@ -167,8 +167,7 @@ def test_parameter_estimation_ODE():
     assert_line(models, 0, "y", 0.6248459649904826)
     assert_line(models, 1, "x", 0.058235586316492984)
     assert_line(models, 2, "x + 0.400257928405516*y", 2.1252303778422445e-09, n=8)
-# test_parameter_estimation_ODE()
-    
+
 def test_equation_discoverer():
     np.random.seed(0)
     def f(x):
@@ -192,20 +191,11 @@ def test_equation_discoverer():
     assert np.abs(ED.models[1].get_error() - 0.59163899) < 1e-6
     
 def test_equation_discoverer_ODE():
-    # np.random.seed(2)
     np.random.seed(20)
     B = -2.56; a = 0.4; ts = np.linspace(0.45, 0.87, 1000)
     ys = (ts+B)*np.exp(a*ts); xs = np.exp(a*ts)
     data = np.hstack((ts.reshape(-1, 1), xs.reshape(-1, 1), ys.reshape(-1, 1)))
-    # grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
-    #                             T -> V [0.6] | 'C' "*" V [0.4]
-    #                             V -> 'x' [0.5] | 'y' [0.5]""")
-    # symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
 
-    def assert_line(models, i, expr, error, tol=1e-9, n=100):
-        assert str(models[i].get_full_expr())[:n] == expr[:n]
-        assert abs(models[i].get_error() - error) < tol
-        
     ED = EqDisco(data = data,
                  task = None,
                  task_type = "differential",
@@ -214,25 +204,19 @@ def test_equation_discoverer_ODE():
                  variable_names=["t", "x", "y"],
                  sample_size = 2,
                  verbosity = 1)
-    
-    # print(ED.task.data.shape)
-    # print(ED.task.symbols)
-    # for i in range(0, 50):
-    #     print(f"\n {i}\n")
-    #     np.random.seed(i)
-    #     ED.generate_models()
-    # np.random.seed(20)
-    # np.random.seed(361) # 343, 320
     ED.generate_models()
     ED.fit_models()
-    
-    print("\n", ED.models, "\n\nFinal score:")
-    for m in ED.models:
-        print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
-    #print(ED.models[0].get_error())
-    # assert np.abs(ED.models[0].get_error() - 0.72842105) < 1e-6
-    # assert np.abs(ED.models[1].get_error() - 0.59163899) < 1e-6
-test_equation_discoverer_ODE()    
+
+    # print("\n", ED.models, "\n\nFinal score:")
+    # for m in ED.models:
+    #     print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
+    def assert_line(models, i, expr, error, tol=1e-9, n=100):
+        assert str(models[i].get_full_expr())[:n] == expr[:n]
+        assert abs(models[i].get_error() - error) < tol
+    # model: y                             ; error: 0.058235586316492984
+    # model: 0.400259511712702*x + y       ; error: 2.1263385622753895e-09
+    assert_line(ED.models, 0, "y", 0.058235586316492984)
+    assert_line(ED.models, 1, "0.4002359511712702*x + y", 2.1263385622753895e-09, n=6)
 
 # if __name__ == "__main__":
 #     test_grammar_general()
@@ -244,3 +228,4 @@ test_equation_discoverer_ODE()
 #     test_parameter_estimation_2D()    
 #     test_equation_discoverer()
 #     test_parameter_estimation_ODE()
+#     test_equation_discoverer_ODE()
