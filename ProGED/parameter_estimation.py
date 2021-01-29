@@ -159,7 +159,6 @@ def ode (models_list, params_matrix, T, X_data, y0, **estimation_settings):
     rtol = 10**(-4)
     atol = 10**(-6)
     # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T, method="LSODA", rtol=rtol, atol=atol, min_step=min_step).y
-    # Yode = solve_ivp(dy_dt, (T[0], T[-1]), y0, t_eval=T).y #, method="LSODA", rtol=rtol, atol=atol, min_step=min_step).y
     # Alternative LSODA using odeint (may be faster?):
     Yode = odeint(dy_dt, y0, T, rtol=rtol, atol=atol, tfirst=True, hmin=min_step).T 
     return Yode
