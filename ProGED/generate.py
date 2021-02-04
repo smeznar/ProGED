@@ -1,17 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 21 17:34:31 2020
 
-@author: Jure
-"""
+from ProGED.model_box import ModelBox
 
-# import numpy as np # moved to bottom
-
-# from model import Model
-from model_box import ModelBox
-
-# from generators.grammar import GeneratorGrammar
-# from generators.grammar_construction import grammar_from_template # moved to bottom
 
 """Functions for generating models using a given generator. 
 
@@ -48,7 +38,7 @@ def generate_models(model_generator, symbols, strategy = "monte-carlo", strategy
                 "x": list of strings, representing variable symbols (list of strings)
         strategy (str): Name of strategy, as defined in STRATEGY_LIBRARY. 
             Currently only the Monte-Carlo method is implemented.
-        strategy_parameters (dict): Dictionary of keywords to be passed to the generator function.
+        strategy_settings (dict): Dictionary of keywords to be passed to the generator function.
         verbosity (int): Level of printout desired. 0: none, 1: info, 2+: debug.
         
     Returns:

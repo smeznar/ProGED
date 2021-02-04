@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 22 12:00:39 2020
-
-@author: Jure
-"""
 
 import numpy as np
 from nltk import PCFG
 from nltk.grammar import Nonterminal, ProbabilisticProduction
 
-from generators.base_generator import BaseExpressionGenerator
+from ProGED.generators.base_generator import BaseExpressionGenerator
 
 class GeneratorGrammar (BaseExpressionGenerator):
     def __init__ (self, grammar):

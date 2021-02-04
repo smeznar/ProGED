@@ -1,19 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 21 14:05:57 2020
 
-@author: Jure
-"""
-
-# from nltk.grammar import Nonterminal
-# from nltk import PCFG  # moved to bottom
 import numpy as np
-# import sympy as sp  # Intentionally commented to avoid warning, look next line.
-# May be a better call to avoid warnning in Sympy version >= 1.6.2.:
 import sympy.core as sp
 from sympy.simplify import simplify as sympy_simplify
+from sympy import symbols as sympy_symbols
 
-from model import Model
+from ProGED.model import Model
 
 """Implements ModelBox, an class that stores and manages a collection of Model instances."""
 
@@ -136,12 +128,31 @@ class ModelBox:
             expr -- Sympy expression object in canonical form.
             symbols_params -- Tuple of enumerated constants.
         """
-        x = [sp.symbols(s.strip("'")) for s in symbols["x"]]
-        c = sp.symbols(symbols["const"].strip("'"))
+        x = [sympy_symbols(s.strip("'")) for s in symbols["x"]]
+        c = sympy_symbols(symbols["const"].strip("'"))
         expr = sp.sympify(expr_str)
         expr = self.simplify_constants(expr, c, x)[2][0][1]
         expr, symbols_params = self.enumerate_constants(expr, symbols)
         return expr, symbols_params
+    
+    def retrieve_best_models (self, N = 3):
+        """Returns the top N models, according to their error.
+        
+        Arguments:
+            N (int): The number of models to return. Default: 3.
+            
+        Returns:
+            ModelBox containing only the top N models.
+        """
+        
+        models_keys = list(self.models_dict.keys())
+        errors = [self.models_dict[m].get_error() for m in self.models_dict]
+        sortind = np.argsort(errors)
+        models2 = [self.__getitem__(int(n)) for n in sortind[:N]]
+        keys2 = [models_keys[n] for n in sortind[:N]]
+        
+        return ModelBox(dict(zip(keys2, models2)))
+        
 
     def __str__(self):
         txt = "ModelBox: " + str(len(self.models_dict)) + " models"

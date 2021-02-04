@@ -5,8 +5,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ProGED", # Replace with your own username
-    version="0.0.1",
-    author="Jure Brence",
+    version="0.8.4",
+    author="Jure Brence, Boštjan Gec",
     author_email="jure.brence@ijs.si",
     description="Probabilistic grammar-based equation discovery",
     long_description=long_description,
@@ -19,5 +19,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    install_requires = [numpy, scipy, sympy, nltk]
+    install_requires = ["numpy", "pandas", "scipy", "sympy", "nltk"]
 )

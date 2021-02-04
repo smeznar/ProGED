@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Class for defining the equation discovery task.
-
-TODO:
-    Consider whether this could be just a dictionary.
+"""
+Class for defining the equation discovery task.
 """
 
 import numpy as np
+
+TASK_TYPES = ("algebraic", "differential")
 
 class EDTask:
     def __init__(self, 

@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 22 09:12:29 2020
-
-@author: Jure
-"""
 
 import os
 import sys
@@ -14,15 +9,12 @@ from scipy.optimize import differential_evolution, minimize
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp, odeint
 import sympy as sp
-# import sympy.core as sp
-# from nltk import PCFG
 
-import examples.mute_so as mt
+import ProGED.mute_so as mt
 from _io import TextIOWrapper as stdout_type
-# from model import Model
-from model_box import ModelBox
-# from generate import generate_models
-# from generators.grammar import GeneratorGrammar
+
+from ProGED.model_box import ModelBox
+from ProGED.task import TASK_TYPES
 
 import warnings
 warnings.filterwarnings("ignore", message="divide by zero encountered in divide")
@@ -55,7 +47,6 @@ def model_constant_error (model, params, X, Y):
     testY = model.evaluate(X, *params)
     return np.std(testY)#/np.linalg.norm(params)
 
-TASK_TYPES = ("algebraic", "differential")
 
 def model_error_general (params, model, X, Y, T, **estimation_settings):
     """Calculate error of model with given parameters in general with
@@ -286,7 +277,7 @@ class ParameterEstimator:
             estimation_settings: Dictionary with multiple parameters
                 that determine estimation process more specifically.
     """
-    def __init__(self, data, target_variable_index, time_index, **estimation_settings):
+    def __init__(self, data, target_variable_index, time_index, estimation_settings):
         #data = np.atleast_2d(data)
         var_mask = np.ones(data.shape[-1], bool)
         var_mask[target_variable_index] = False
@@ -301,7 +292,8 @@ class ParameterEstimator:
         self.estimation_settings = estimation_settings
         
     def fit_one (self, model):
-        print("Estimating model " + str(model.expr))
+        if self.estimation_settings["verbosity"] > 0:
+            print("Estimating model " + str(model.expr))
         try:
             if len(model.params) > 5:
                 pass
@@ -326,15 +318,15 @@ class ParameterEstimator:
         return model
     
 def fit_models (models, data, target_variable_index, time_index = None, pool_map=map, verbosity=0,
-                task_type=None, timeout=np.inf, 
-                lower_upper_bounds=(-30, 30), **additional):
+                task_type="algebraic",
+                estimation_settings = None):
     """Performs parameter estimation on given models. Main interface to the module.
     
     Supports parallelization by passing it a pooled map callable.
     
     Arguments:
         models (ModelBox): Instance of ModelBox, containing the models to be fitted. 
-        X (numpy.array): Input data of shape N x M, where N is the number of samples 
+        data (numpy.array): Input data of shape N x M, where N is the number of samples 
             and M is the number of variables.
         target_variable_index (int): Index of column in data that belongs to the target variable.
         time_index (int): Index of column in data that belongs to measurement of time. 
@@ -356,14 +348,12 @@ def fit_models (models, data, target_variable_index, time_index = None, pool_map
             argument. Maximal number of steps used in one run of LSODA solver.
         estimation_settings: Dictionary where majority of optional arguments is stored.
     """
-    # if not isinstance(time_index, type(None)):
-    #     task_type = "differential"
-        
-    estimation_settings = {
-        "verbosity": verbosity, "task_type": task_type,
-        "timeout": timeout, "lower_upper_bounds": lower_upper_bounds}
-    estimation_settings = {**estimation_settings, **additional}
-    estimator = ParameterEstimator(data, target_variable_index, time_index, **estimation_settings)
+    if not estimation_settings:
+        estimation_settings = {"task_type": task_type, "verbosity": verbosity,
+                                   "timeout": np.inf, "lower_upper_bounds": (-30,30)}
+    
+    estimator = ParameterEstimator(data, target_variable_index, time_index, estimation_settings)
+    
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
 
 
