@@ -9,7 +9,7 @@ import numpy as np
 from nltk import Nonterminal, PCFG
 
 import sys
-sys.path.append("../ProGED/")
+# sys.path.append("../ProGED/")
 
 from equation_discoverer import EqDisco
 from generators.grammar import GeneratorGrammar
