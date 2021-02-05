@@ -1,4 +1,5 @@
 import numpy as np
+import sympy as sp
 # pg = ProGED
 import ProGED as pg
 # from pg.generate import generate_models
@@ -41,10 +42,12 @@ np.random.seed(0)
 ED = EqDisco(data = data,
             task = None,
             target_variable_index = -1,
+            variable_names=["n", "an"],
             sample_size = 10,
             verbosity = 0,
             generator = "grammar", 
             generator_template_name = "polynomial",
+            # generator_settings={"variables":["'n'"]},
             estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": (0,1)}# , "timeout": np.inf}
             )
 # print(data, data.shape)
@@ -61,8 +64,40 @@ phi = (1+5**(1/2))/2
 psi = (1-5**(1/2))/2
 c0 = 1/5**(1/2)
 c1 = np.log(phi)
-print(f"c0:{c0}", f"c1: {c1}")
+print(f"m  c0: {c0}", f"c1:{c1}")
 # fib(n) = (phi**n - psi**n)/5**(1/2)
 #         = round(phi**n/5**(1/2))
 #         = floor(phi**n/5**(1/2) + 1/2)
 
+# model = ED.models[5] 
+model = ED.models[5] 
+# print(model, model.params, model.sym_vars, model.full_expr(model.params))
+# print(model, model.params, model.full_expr(model.params))
+# print(model, model.params, model.full_expr(model.params))
+# print(model, model.params, model.full_expr(model.params))
+# print(model, model.params, model.full_expr(model.params))
+# print(model, model.params, model.full_expr(model.params))
+# print(model, model.params, model.full_expr(model.params))
+# print(list(zip(model.sym_params, model.params)))
+# print(model.expr)
+# t = model.full_expr(*model.params)
+# print(t)
+# s = model.expr.subs(list(zip(model.sym_params, model.params)))
+# print(s)
+# # print(str(model.full_expr(model.params)))
+res = model.evaluate(ts, *model.params)
+res = [int(np.round(flo)) for flo in res]
+
+print(res)
+print(oeis)
+error = 0
+for i, j in zip(res, oeis):
+    print(i,j, i-j, error)
+    error += abs(i-j)
+
+print(error)
+
+# lamb_expr = sp.lambdify(model.sym_vars, model.full_expr(*model.params), "numpy")
+# print(lamb_expr)
+# res = lamb_expr(*ts.T)
+# print(res)
