@@ -41,11 +41,11 @@ np.random.seed(0)
 ED = EqDisco(data = data,
             task = None,
             target_variable_index = -1,
-            sample_size = 20,
+            sample_size = 10,
             verbosity = 0,
             generator = "grammar", 
             generator_template_name = "polynomial",
-            estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": (0,1)}
+            estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": (0,1)}# , "timeout": np.inf}
             )
 # print(data, data.shape)
 ED.generate_models()

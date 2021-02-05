@@ -352,11 +352,9 @@ def fit_models (models, data, target_variable_index, time_index = None, pool_map
     """
     estimation_settings_preset = {"task_type": task_type, "verbosity": verbosity,
                                 "timeout": np.inf, "lower_upper_bounds": (-30,30)}
-    # if not estimation_settings:
-    #     estimation_settings = {"task_type": task_type, "verbosity": verbosity,
-    #                                "timeout": np.inf, "lower_upper_bounds": (-30,30)}
     estimation_settings_preset.update(estimation_settings)
-    
+    estimation_settings = estimation_settings_preset
+    print(estimation_settings)
     estimator = ParameterEstimator(data, target_variable_index, time_index, estimation_settings)
     
     return ModelBox(dict(zip(models.keys(), list(pool_map(estimator.fit_one, models.values())))))
