@@ -50,10 +50,10 @@ ED = EqDisco(data = data,
 # print(data, data.shape)
 ED.generate_models()
 ED.fit_models()
-# print(ED.models)
+print(ED.models)
 # print(ED.get_results())
 # print(ED.get_stats())
-# print("\n", models, "\n\nFinal score:")
+print("\n", ED.models, "\n\nFinal score:")
 for m in ED.models:
     print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     
