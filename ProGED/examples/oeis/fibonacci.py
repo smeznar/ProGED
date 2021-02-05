@@ -44,15 +44,25 @@ ED = EqDisco(data = data,
             sample_size = 20,
             verbosity = 0,
             generator = "grammar", 
-            generator_template_name = "polynomial", 
+            generator_template_name = "polynomial",
+            estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": (0,1)}
             )
 # print(data, data.shape)
 ED.generate_models()
 ED.fit_models()
-print(ED.models)
+# print(ED.models)
 # print(ED.get_results())
 # print(ED.get_stats())
+# print("\n", models, "\n\nFinal score:")
+for m in ED.models:
+    print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     
-
-
+phi = (1+5**(1/2))/2
+psi = (1-5**(1/2))/2
+c0 = 1/5**(1/2)
+c1 = np.log(phi)
+print(f"c0:{c0}", f"c1: {c1}")
+# fib(n) = (phi**n - psi**n)/5**(1/2)
+#         = round(phi**n/5**(1/2))
+#         = floor(phi**n/5**(1/2) + 1/2)
 

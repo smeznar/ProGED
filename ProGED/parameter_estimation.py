@@ -350,9 +350,12 @@ def fit_models (models, data, target_variable_index, time_index = None, pool_map
                     differential evolution.
                 max_ode_steps (int): Maximum number of steps used in one run of LSODA solver.
     """
-    if not estimation_settings:
-        estimation_settings = {"task_type": task_type, "verbosity": verbosity,
-                                   "timeout": np.inf, "lower_upper_bounds": (-30,30)}
+    estimation_settings_preset = {"task_type": task_type, "verbosity": verbosity,
+                                "timeout": np.inf, "lower_upper_bounds": (-30,30)}
+    # if not estimation_settings:
+    #     estimation_settings = {"task_type": task_type, "verbosity": verbosity,
+    #                                "timeout": np.inf, "lower_upper_bounds": (-30,30)}
+    estimation_settings_preset.update(estimation_settings)
     
     estimator = ParameterEstimator(data, target_variable_index, time_index, estimation_settings)
     
