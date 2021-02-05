@@ -245,8 +245,6 @@ def find_parameters (model, X, Y, T, **estimation_settings):
 #    except RuntimeError:
 #        popt, pcov = model.params, 0
 #    opt_params = popt; othr = pcov
-# meni se ne zdi potrebno zbrisat zgornjih 5 vrstic, celo koristne se mi zdijo, samo
-# spomnil bi rad na njih v primeru, da si jih spregledal.
 
     task_type = estimation_settings["task_type"]
     if task_type == "algebraic":
