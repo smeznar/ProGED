@@ -46,13 +46,16 @@ ED = EqDisco(data = data,
             sample_size = 10,
             verbosity = 0,
             generator = "grammar", 
-            generator_template_name = "polynomial",
+            generator_template_name = "polynomial"#,
             # generator_settings={"variables":["'n'"]},
-            estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": (0,1)}# , "timeout": np.inf}
+            # estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": (0,1)}# , "timeout": np.inf}
             )
 # print(data, data.shape)
 ED.generate_models()
-ED.fit_models()
+# ED.fit_models()
+# try:
+#     print(12/0)
+
 print(ED.models)
 # print(ED.get_results())
 # print(ED.get_stats())

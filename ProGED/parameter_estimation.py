@@ -33,12 +33,18 @@ Methods:
 
 def model_error (params, model, X, Y, *residue):
     """Defines mean squared error as the error metric."""
-    testY = model.evaluate(X, *params)
-    res = np.mean((Y-testY)**2)
-    if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-#    #    print(model.expr, model.params, model.sym_params, model.sym_vars)
-        return 10**9
-    return res
+    dummy = 10**9
+    try:
+        testY = model.evaluate(X, *params)
+        res = np.mean((Y-testY)**2)
+        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+            print("isnan(res), ... ")
+            print(model.expr, model.params, model.sym_params, model.sym_vars)
+            return dummy
+        return res
+    except Exception as error:
+        print("Programmer1: Params at error:", params, f"and {type(error)} with message:", error)
+        return dummy
 
 # def model_constant_error (model, params, X, Y):
 #     """Alternative to model_error, intended to allow the discovery of physical constants.
