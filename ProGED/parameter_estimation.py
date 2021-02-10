@@ -38,8 +38,8 @@ def model_error (params, model, X, Y, *residue):
         testY = model.evaluate(X, *params)
         res = np.mean((Y-testY)**2)
         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-            print("isnan(res), ... ")
-            print(model.expr, model.params, model.sym_params, model.sym_vars)
+            # print("isnan(res), ... ")
+            # print(model.expr, model.params, model.sym_params, model.sym_vars)
             return dummy
         return res
     except Exception as error:
