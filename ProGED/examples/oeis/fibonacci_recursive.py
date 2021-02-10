@@ -5,7 +5,7 @@ import numpy as np
 # # from pg.generate import generate_models
 # # gft = pg.generators.grammar_from_template
 # # from ProGED import generators.generate_models
-# from ProGED.equation_discoverer import EqDisco
+from ProGED.equation_discoverer import EqDisco
 # # from ProGED.generators.grammar import GeneratorGrammar
 # from ProGED.generators.grammar_construction import grammar_from_template
 # from ProGED.generate import generate_models
@@ -20,7 +20,7 @@ oeis = [0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,
  39088169,63245986,102334155]
 fibs = np.array(oeis)
 # ts = np.array([i for i in range(40+1)]).reshape(-1, 1)
-ts = np.array([i for i in range(40+1)])
+# ts = np.array([i for i in range(40+1)])
 # print(ts, type(fibs), fibs.shape, type(ts[0]), ts.shape)
 # data = np.hstack((ts, fibs))
 
@@ -28,53 +28,69 @@ ts = np.array([i for i in range(40+1)])
 
 # map([1,2,])
 
+# we want:
+# 0 1 2
+# 1 2 3
+# 2 3 4
+# m = 2
+# (n-m, m)
+# def f(i,j):
+#    return i+j 
+# template = np.fromfunction((lambda i,j:i+j), (40+1-2,2+1), dtype=int)
 
-
-def mdata(m, ts, fibs):
-    """m -> (n-m) x (1+1+m) data matrix
+def mdata(m, fibs):
+    """m -> (n-m) x (0/1+1+m) data matrix
     m ... number of previous elements in formula
     """
-    if ts.shape != fibs.shape:
-        print("ts and fibs differend dimensions !!!!!")
-        return 1/0
+    n = fibs.shape[0] # (40+1)
+    # if ts.shape != fibs.shape:
+    #     print("ts and fibs differend dimensions !!!!!")
+    #     return 1/0
     # np.hstack(ts[:-m].reshape(-1,1), fibs[:-m])
-    return
+    indexes = np.fromfunction((lambda i,j:i+j), (n-m, m+1), dtype=int)
+    # first_column = indexes[:, [0]]
+    # return np.hstack((first_column, fibs[indexes]))
+    return fibs[indexes]
+# print(fibs)
+# print(mdata(2, fibs))
+data = mdata(2, fibs)
 
-# # grammar:
-# # from pg.generators import grammar_constructionk
-# # from pg import model
+
+
 
 # # variables = ["'n'"]
 # # symbols = {"x":variables, "start":"S", "const":"C"}
 # # # p_vars = [1, 0.3, 0.4]
-# # p_T = [0.1, 0.9]
-# # p_R = [0.1, 0.9]
+p_T = [0.4, 0.6]
+p_R = [0.9, 0.1]
 # # grammar = grammar_from_template("polynomial", {"variables": variables, "p_R": p_R, "p_T": p_T})
 # # np.random.seed(0)
 # # # print(grammar.generate_one())
 # # # models = generate_models(grammar, symbols, strategy_settings = {"N":500})
 # # # print(models)
 
-# np.random.seed(0)
-# ED = EqDisco(data = data,
-#             task = None,
-#             target_variable_index = -1,
-#             variable_names=["n", "an"],
-#             sample_size = 10,
-#             verbosity = 0,
-#             generator = "grammar", 
-#             generator_template_name = "polynomial",
-#             generator_settings={"variables":["'n'"]}
-#             ,estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": 
-#             (-5, 5)} # meja, ko se najde priblizno: (-10,8)}# , "timeout": np.inf}
-#             )
+np.random.seed(0)
+# seed 0 , size 20 (16)
+# seed3 size 15 an-1 + an-2 + c3
+ED = EqDisco(data = data,
+            task = None,
+            target_variable_index = -1,
+            variable_names=["an_2", "an_1", "an"],
+            sample_size = 16,
+            verbosity = 0,
+            generator = "grammar", 
+            generator_template_name = "polynomial",
+            generator_settings={"variables": ["'an_2'", "'an_1'"], "p_T": p_T, "p_R": p_R}
+            ,estimation_settings={"verbosity": 1, "task_type": "algebraic", "lower_upper_bounds": 
+            (0, 2)} # meja, ko se najde priblizno: (-10,8)}# , "timeout": np.inf}
+            )
 # # print(data, data.shape)
-# ED.generate_models()
-# ED.fit_models()
+ED.generate_models()
+ED.fit_models()
 # # try:
 # #     print(12/0)
 
-# print(ED.models)
+print(ED.models)
 # # print(ED.get_results())
 # # print(ED.get_stats())
 # print("\nFinal score:")
@@ -91,7 +107,7 @@ def mdata(m, ts, fibs):
 # #         = floor(phi**n/5**(1/2) + 1/2)
 
 # # model = ED.models[5] 
-# model = ED.models[5] 
+model = ED.models[-1] 
 # res = model.evaluate(ts, *model.params)
 # res = [int(np.round(flo)) for flo in res]
 
