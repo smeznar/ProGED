@@ -47,18 +47,18 @@ print(f"m  c0: {c0}", f"c1:{c1}")
 #         = round(phi**n/5**(1/2))
 #         = floor(phi**n/5**(1/2) + 1/2)
 
-model = ED.models[5] 
-# model = ED.models[15] 
-print(model, model.get_full_expr(), model.get_error())
-res = model.evaluate(ts, *model.params)
-res = [int(np.round(flo)) for flo in res]
+# model = ED.models[5] 
+# # model = ED.models[15] 
+# print(model, model.get_full_expr(), model.get_error())
+# res = model.evaluate(ts, *model.params)
+# res = [int(np.round(flo)) for flo in res]
 
-print(res)
-print(oeis)
-error = 0
-for i, j in zip(res, oeis):
-    print(i,j, i-j, error)
-    error += abs(i-j)
+# print(res)
+# print(oeis)
+# error = 0
+# for i, j in zip(res, oeis):
+#     print(i,j, i-j, error)
+#     error += abs(i-j)
 
-print(error)
+# print(error)
 

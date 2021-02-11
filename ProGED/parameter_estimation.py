@@ -217,7 +217,8 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
-    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i] for i in (0, 1))
+    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
+    # Add 1e-30 in previous line to avoid bug in python/scipy/sympy? on windows.
     bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
 
     start = time.perf_counter()
