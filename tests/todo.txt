@@ -1,7 +1,0 @@
-tol(erance) in test_core.py znizaj iz 1e-9 na 1e-5 ali nekaj takega. Da ob spremembah odeint->solve_ivp nebo
-	test negativen.
-
---user-facing
-++user-friendly
-or 
-++inter-facing
