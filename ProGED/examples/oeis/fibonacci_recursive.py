@@ -100,25 +100,22 @@ model = ED.models[-1]
 print(model.params, [int(p) for p in model.params])
 # :
 # an = model.lambdify([3])
-an = model.lambdify([int(p) for p in model.params])
+an = model.lambdify(*[int(p) for p in model.params])
+# b = model.lambdify()
+# model.lambdify(0)
 # print(an.)
-print(an, an(1,2))
+print(an, an(1,2), "an(1,2)")
 cache = list(fibs[:order])
 for i in range(len(fibs)):
     cache += [an(*(cache[-order:]))]
     # cache += [1]
-print(an(*cache[-order:]))
-print(cache)
-
-# res = model.evaluate(ts, *model.params)
-# res = [int(np.round(flo)) for flo in res]
-
-# print(res)
-# print(oeis)
-# error = 0
-# for i, j in zip(res, oeis):
-#     print(i,j, i-j, error)
-#     error += abs(i-j)
-
-# print(error)
+# print(an(*cache[-order:]))
+res = cache
+print(res)
+print(oeis)
+error = 0
+for i, j in zip(res, oeis):
+    print(i,j, i-j, error)
+    error += abs(i-j)
+print(error)
 

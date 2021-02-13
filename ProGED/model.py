@@ -144,7 +144,7 @@ class Model:
     def set_params(self, params):
         self.params=params
         
-    def lambdify (self, params=None, arg="numpy"):
+    def lambdify (self, *params, arg="numpy"):
         """Produce a callable function from the symbolic expression and the parameter values.
         
         This function is required for the evaluate function. It relies on sympy.lambdify, which in turn 
@@ -159,10 +159,10 @@ class Model:
         Returns:
             callable function that takes variable values as inputs and return the model value.
         """
-        if params is None:
+        if not params:
             params = self.params
-        else:
-            print(self.expr, self.sym_vars, self.full_expr(*params), len(self.sym_vars), len(params), "jeja")
+        print(params, type(params))
+        print(self.expr, self.sym_vars, self.full_expr(*params), len(self.sym_vars), len(params), "jeja")
         return sp.lambdify(self.sym_vars, self.full_expr(*params), "numpy")
         # self.lamb_expr = sp.lambdify(self.sym_vars, self.expr.subs(list(zip(self.sym_params, params))), arg)
         # print(self.lamb_expr, "self.lamb_expr")
