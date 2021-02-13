@@ -65,13 +65,18 @@ ED = EqDisco(data = data,
             task = None,
             target_variable_index = -1,
             variable_names=["an_2", "an_1", "an"],
-            sample_size = 2,
+            sample_size = 16,
+            # sample_size = 2,
             verbosity = 0,
             generator = "grammar", 
             generator_template_name = "polynomial",
             generator_settings={"variables": ["'an_2'", "'an_1'"], "p_T": p_T, "p_R": p_R}
-            ,estimation_settings={"verbosity": 1, "task_type": "algebraic", "lower_upper_bounds": 
-            (0, 2)} # meja, ko se najde priblizno: (-10,8)}# , "timeout": np.inf}
+            ,estimation_settings={"verbosity": 1,
+            #  "task_type": "algebraic"
+             "task_type": "oeis"
+            #  "task_type": "oeis_recursive_error"
+            #  , "lower_upper_bounds": (-30, 30) # meja, ko se najde priblizno: (-10,8)}# , "timeout": np.inf}
+            }
             )
 # # print(data, data.shape)
 ED.generate_models()
@@ -82,9 +87,9 @@ ED.fit_models()
 
 # # print(ED.get_results())
 # # print(ED.get_stats())
-# print("\nFinal score:")
-# for m in ED.models:
-#     print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
+print("\nFinal score:")
+for m in ED.models:
+    print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     
 # phi = (1+5**(1/2))/2
 # psi = (1-5**(1/2))/2
@@ -97,22 +102,18 @@ ED.fit_models()
 
 # # model = ED.models[5] 
 model = ED.models[-1] 
-print(model.params, [int(p) for p in model.params])
-# :
-# an = model.lambdify([3])
-an = model.lambdify(*[int(p) for p in model.params])
-# b = model.lambdify()
-# model.lambdify(0)
-# print(an.)
-print(an, an(1,2), "an(1,2)")
+print(type(model.params), "ispisi: type(model.params)")
+model.params = np.round(model.params)
+an = model.lambdify()
+# an = model.lambdify(*np.round(model.params))
+# print(an, an(1, 2), "izpise: an(1,2)")
 cache = list(fibs[:order])
-for i in range(len(fibs)):
+for _ in range(order, len(fibs)):
     cache += [an(*(cache[-order:]))]
-    # cache += [1]
-# print(an(*cache[-order:]))
 res = cache
-print(res)
+# print(len(oeis), len(res), "izpis len oeis in res")
 print(oeis)
+print(res)
 error = 0
 for i, j in zip(res, oeis):
     print(i,j, i-j, error)

@@ -33,7 +33,7 @@ Methods:
 
 def model_error (params, model, X, Y, *residue):
     """Defines mean squared error as the error metric."""
-    dummy = 10**9
+    dummy = 10**30
     try:
         testY = model.evaluate(X, *params)
         res = np.mean((Y-testY)**2)
@@ -213,6 +213,34 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
         print("Returning dummy error. All is well.")
         return dummy
 
+def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
+    """Defines mean squared error as the error metric."""
+    dummy = 10**30
+    try:
+        order = len(model.sym_vars)
+        # print(order, "izpis: order")
+        model.params = np.round(model.params)
+        an = model.lambdify()
+        first_terms = X[:order, 0]
+        # fibs = X[:order, 0]
+        cache = list(first_terms)
+        for _ in range(order, X.shape[0]):
+            cache += [an(*cache[-order:])]
+        cache
+        # print(len(cache), X.shape[0], "ispis: len(res), len(X.shape[0])")
+        
+        # testY = model.evaluate(X, *params)
+        testY = cache
+        res = np.mean((Y-testY)**2)
+        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+            # print("isnan(res), ... ")
+            # print(model.expr, model.params, model.sym_params, model.sym_vars)
+            return dummy
+        return res
+    except Exception as error:
+        print("Programmer1: Params at error:", params, f"and {type(error)} with message:", error)
+        return dummy
+
 def DE_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
@@ -258,6 +286,11 @@ def find_parameters (model, X, Y, T, **estimation_settings):
         estimation_settings["objective_function"] = model_error
     elif task_type == "differential":
         estimation_settings["objective_function"] = model_ode_error
+    elif task_type == "oeis":
+        model.params = np.round(model.params)
+        estimation_settings["objective_function"] = model_error
+    elif task_type == "oeis_recursive_error":
+        estimation_settings["objective_function"] = model_oeis_recursive_error
     else:
         types_string = "\", \"".join(TASK_TYPES)
         raise ValueError("Variable task_type has unsupported value "
