@@ -5,7 +5,7 @@ import sys
 import time
 
 import numpy as np
-from scipy.optimize import differential_evolution, minimize
+from scipy.optimize import differential_evolution, minimize, brute
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp, odeint
 import sympy as sp
@@ -21,8 +21,10 @@ warnings.filterwarnings("ignore", message="divide by zero encountered in divide"
 warnings.filterwarnings("ignore", message="divide by zero encountered in true_divide")
 warnings.filterwarnings("ignore", message="invalid value encountered in power")
 warnings.filterwarnings("ignore", message="invalid value encountered in sqrt")
+warnings.filterwarnings("ignore", message="invalid value encountered in double_scalars")
 warnings.filterwarnings("ignore", message="overflow encountered in exp")
 warnings.filterwarnings("ignore", message="overflow encountered in square")
+warnings.filterwarnings("ignore", message="overflow encountered in double_scalars")
 
 
 """Methods for estimating model parameters. Currently implemented: differential evolution.
@@ -43,7 +45,7 @@ def model_error (params, model, X, Y, *residue):
             return dummy
         return res
     except Exception as error:
-        print("Programmer1: Params at error:", params, f"and {type(error)} with message:", error)
+        print("Programmer1 model_error: Params at error:", params, f"and {type(error)} with message:", error)
         return dummy
 
 # def model_constant_error (model, params, X, Y):
@@ -127,8 +129,8 @@ def ode (models_list, params_matrix, T, X_data, y0, **estimation_settings):
                         + " does not match.")
     X = interp1d(T, X_data, axis=0, kind='cubic', fill_value="extrapolate")  # N-D
     lamb_exprs = [
-        sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
-        # todo: model.lambdify(params=params, args="numpy")
+        # sp.lambdify(model.sym_vars, model.full_expr(*params), "numpy")
+        model.lambdify(*params)
         for model, params in zip(models_list, params_matrix)
     ]
     def dy_dt(t, y):
@@ -204,7 +206,7 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
                 return dummy
             return res
         except Exception as error:
-            print("Programmer1: Params at error:", params, f"and {type(error)} with message:", error)
+            print("Programmer1 ode() mean(Y-odeY): Params at error:", params, f"and {type(error)} with message:", error)
             return dummy
 
     except Exception as error:
@@ -213,14 +215,37 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
         print("Returning dummy error. All is well.")
         return dummy
 
+def model_oeis_error (params, model, X, Y, _T, estimation_settings):
+    """Defines mean squared error as the error metric."""
+    dummy = 10**30
+    # if estimation_settings["verbosity"] >= 2:
+    #     print(params, "print: params before rounding")
+    try:
+        params = np.round(params)
+        if estimation_settings["verbosity"] >= 2:
+            print(params, "print: params after round")
+        testY = model.evaluate(X, *params)
+        res = np.mean((Y-testY)**2)
+        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+            if estimation_settings["verbosity"] >= 2:
+                print("isnan(res), ... ")
+                print(model.expr, model.params, model.sym_params, model.sym_vars)
+            return dummy
+        return res
+    except Exception as error:
+        print("Programmer1 model_oeis_error: Params at error:", params, f"and {type(error)} with message:", error)
+        return dummy
+
 def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
     """Defines mean squared error as the error metric."""
     dummy = 10**30
     try:
         order = len(model.sym_vars)
         # print(order, "izpis: order")
-        model.params = np.round(model.params)
-        an = model.lambdify()
+        # model.params = np.round(model.params) # params so list , ne np.array
+        params = list(np.round(model.params))
+        # print(model.get_full_expr())
+        an = model.lambdify(*params)
         first_terms = X[:order, 0]
         # fibs = X[:order, 0]
         cache = list(first_terms)
@@ -238,7 +263,7 @@ def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
             return dummy
         return res
     except Exception as error:
-        print("Programmer1: Params at error:", params, f"and {type(error)} with message:", error)
+        print("Programmer1 inside model_oeis_recursive_error: Params at error:", params, f"and {type(error)} with message:", error)
         return dummy
 
 def DE_fit (model, X, Y, T, p0, **estimation_settings):
@@ -269,6 +294,21 @@ def min_fit (model, X, Y):
     
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
+def integer_brute_fit (model, X, Y, _T, p0, **estimation_settings):
+    """Find minimum via brute force."""
+    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i] for i in (0, 1))
+
+    ranges = tuple(slice(lower_bound, upper_bound, 1) for i in range(len(p0)))
+    # print(ranges)
+    # bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
+    # return scipy.optimize.brute(func, ranges, args=(), Ns=20, full_output=0, finish=<function fmin at 0x7f893983df70>, disp=False, workers=1)[source]
+    res =  brute(
+        estimation_settings["objective_function"],  # = model_oeis_error
+        ranges,
+        args=(model, X, Y, _T, estimation_settings),
+        full_output=True)
+    return {"x": res[0], "fun": res[1]}
+
 def find_parameters (model, X, Y, T, **estimation_settings):
     """Calls the appropriate fitting function. 
     
@@ -287,8 +327,8 @@ def find_parameters (model, X, Y, T, **estimation_settings):
     elif task_type == "differential":
         estimation_settings["objective_function"] = model_ode_error
     elif task_type == "oeis":
-        model.params = np.round(model.params)
-        estimation_settings["objective_function"] = model_error
+        # model.params = np.round(model.params)
+        estimation_settings["objective_function"] = model_oeis_error
     elif task_type == "oeis_recursive_error":
         estimation_settings["objective_function"] = model_oeis_recursive_error
     else:
@@ -297,7 +337,10 @@ def find_parameters (model, X, Y, T, **estimation_settings):
                 f"\"{task_type}\", while list of possible values: "
                 f"\"{types_string}\".")
 
-    res = DE_fit(model, X, Y, T, p0=model.params, **estimation_settings)
+    # res = integer_brute_fit(model, X, Y, None, p0=model.params, **estimation_settings)
+    res = estimation_settings["optimizer"](  # optimization_algorithm
+        model, X, Y, T, p0=model.params, **estimation_settings)
+    # res = DE_fit(model, X, Y, T, p0=model.params, **estimation_settings)
 
 
 #    res = min_fit (model, X, Y)
@@ -345,6 +388,8 @@ class ParameterEstimator:
                 res = find_parameters(model, self.X, self.Y, self.T,
                                      **self.estimation_settings)
                 model.set_estimated(res)
+                if self.estimation_settings["verbosity"] >= 2:
+                    print(res)
         except Exception as error:
             print((f"Excepted an error: Of type {type(error)} and message:"
                     f"{error}!! \nModel:"), model)
@@ -390,8 +435,10 @@ def fit_models (models, data, target_variable_index, time_index = None, pool_map
                     differential evolution.
                 max_ode_steps (int): Maximum number of steps used in one run of LSODA solver.
     """
-    estimation_settings_preset = {"task_type": task_type, "verbosity": verbosity,
-                                "timeout": np.inf, "lower_upper_bounds": (-30,30)}
+    estimation_settings_preset = {
+        "task_type": task_type, "verbosity": verbosity,
+        "timeout": np.inf, "lower_upper_bounds": (-30,30),
+        "optimizer": DE_fit,}
     estimation_settings_preset.update(estimation_settings)
     estimation_settings = estimation_settings_preset
     estimator = ParameterEstimator(data, target_variable_index, time_index, estimation_settings)

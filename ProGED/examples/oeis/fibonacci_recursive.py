@@ -1,6 +1,8 @@
+from ProGED.parameter_estimation import integer_brute_fit
 import numpy as np
 from ProGED.equation_discoverer import EqDisco
 # from model.py import 
+from scipy.optimize import brute
 
 oeis = [0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,
  1597,2584,4181,6765,10946,17711,28657,46368,75025,
@@ -66,16 +68,21 @@ ED = EqDisco(data = data,
             target_variable_index = -1,
             variable_names=["an_2", "an_1", "an"],
             sample_size = 16,
-            # sample_size = 2,
+            # sample_size = 1,
             verbosity = 0,
             generator = "grammar", 
             generator_template_name = "polynomial",
-            generator_settings={"variables": ["'an_2'", "'an_1'"], "p_T": p_T, "p_R": p_R}
-            ,estimation_settings={"verbosity": 1,
-            #  "task_type": "algebraic"
-             "task_type": "oeis"
-            #  "task_type": "oeis_recursive_error"
-            #  , "lower_upper_bounds": (-30, 30) # meja, ko se najde priblizno: (-10,8)}# , "timeout": np.inf}
+            generator_settings={"variables": ["'an_2'", "'an_1'"], "p_T": p_T, "p_R": p_R},
+            estimation_settings={"verbosity": 2,
+            #  "task_type": "algebraic",
+             "task_type": "oeis",
+            # "task_type": "oeis_recursive_error",
+            #  "lower_upper_bounds": (-1000, 1000), 
+            # "lower_upper_bounds": (-2, 2), 
+            "lower_upper_bounds": (-5, 5), 
+            # "lower_upper_bounds": (-7, 7),  # long enough for brute
+            # meja, ko se najde priblizno: (-10,8)}# 
+            "optimizer": integer_brute_fit,
             }
             )
 # # print(data, data.shape)
@@ -102,21 +109,50 @@ for m in ED.models:
 
 # # model = ED.models[5] 
 model = ED.models[-1] 
-print(type(model.params), "ispisi: type(model.params)")
-model.params = np.round(model.params)
-an = model.lambdify()
-# an = model.lambdify(*np.round(model.params))
-# print(an, an(1, 2), "izpise: an(1,2)")
-cache = list(fibs[:order])
-for _ in range(order, len(fibs)):
-    cache += [an(*(cache[-order:]))]
-res = cache
-# print(len(oeis), len(res), "izpis len oeis in res")
-print(oeis)
-print(res)
-error = 0
-for i, j in zip(res, oeis):
-    print(i,j, i-j, error)
-    error += abs(i-j)
-print(error)
+# print(type(model.params), "ispisi: type(model.params)")
+# # model.params = np.round(model.params)
+# an = model.lambdify()
+# # an = model.lambdify(*np.round(model.params))
+# # print(an, an(1, 2), "izpise: an(1,2)")
+# cache = list(fibs[:order])
+# for _ in range(order, len(fibs)):
+#     cache += [an(*(cache[-order:]))]
+# res = cache
+# # print(len(oeis), len(res), "izpis len oeis in res")
+# print(oeis)
+# print(res)
+# error = 0
+# for i, j in zip(res, oeis):
+#     print(i,j, i-j, error)
+#     error += abs(i-j)
+# print(error)
 
+# brute
+params = (2, 3, 7, 8, 9, 10, 44, -1, 2, 26, 1, -2, 0.5)
+def f1(z, *params):
+    x, y = z
+    a, b, c, d, e, f, g, h, i, j, k, l, scale = params
+    return (a * x**2 + b * x * y + c * y**2 + d*x + e*y + f)
+
+def f2(z, *params):
+    x, y = z
+    a, b, c, d, e, f, g, h, i, j, k, l, scale = params
+    return (-g*np.exp(-((x-h)**2 + (y-i)**2) / scale))
+
+def f3(z, *params):
+    x, y = z
+    a, b, c, d, e, f, g, h, i, j, k, l, scale = params
+    return (-j*np.exp(-((x-k)**2 + (y-l)**2) / scale))
+
+def f(z, *params):
+    return f1(z, *params) + f2(z, *params) + f3(z, *params)
+
+rranges = (slice(-4, 4, 0.25), slice(-4, 4, 0.25))
+
+resbrute = brute(f, rranges, args=params, full_output=True,)
+#                           finish=optimize.fmin)
+# print(resbrute[0], resbrute[1])
+# print(resbrute.x)
+# print(resbrute["x"])
+# print(resbrute)
+# print({"x": resbrute[0], "fun": resbrute[1]})
