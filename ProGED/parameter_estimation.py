@@ -5,7 +5,7 @@ import sys
 import time
 
 import numpy as np
-from scipy.optimize import differential_evolution, minimize, brute
+from scipy.optimize import differential_evolution, minimize, brute, shgo, dual_annealing
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp, odeint
 import sympy as sp
@@ -218,11 +218,11 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
 def model_oeis_error (params, model, X, Y, _T, estimation_settings):
     """Defines mean squared error as the error metric."""
     dummy = 10**30
-    # if estimation_settings["verbosity"] >= 2:
-    #     print(params, "print: params before rounding")
+    if estimation_settings["verbosity"] >= 5:
+        print(params, "print: params before rounding")
     try:
         params = np.round(params)
-        if estimation_settings["verbosity"] >= 2:
+        if estimation_settings["verbosity"] >= 4:
             print(params, "print: params after round")
         testY = model.evaluate(X, *params)
         res = np.mean((Y-testY)**2)
@@ -271,7 +271,6 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
     Exists to make passing arguments to the objective function easier."""
     
     lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
-    # Add 1e-30 in previous line to avoid bug in python/scipy/sympy? on windows.
     bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
 
     start = time.perf_counter()
@@ -287,7 +286,13 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
         estimation_settings["objective_function"],
         bounds,
         args=[model, X, Y, T, estimation_settings],
-        callback=diff_evol_timeout, maxiter=10**2, popsize=10)
+        callback=diff_evol_timeout, 
+        maxiter=10**2,
+        # maxiter=10**3,
+        popsize=10,
+        # popsize=30,
+        # popsize=50,
+        )
 
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
@@ -296,18 +301,46 @@ def min_fit (model, X, Y):
 
 def integer_brute_fit (model, X, Y, _T, p0, **estimation_settings):
     """Find minimum via brute force."""
-    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i] for i in (0, 1))
+    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
 
     ranges = tuple(slice(lower_bound, upper_bound, 1) for i in range(len(p0)))
-    # print(ranges)
-    # bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
-    # return scipy.optimize.brute(func, ranges, args=(), Ns=20, full_output=0, finish=<function fmin at 0x7f893983df70>, disp=False, workers=1)[source]
     res =  brute(
-        estimation_settings["objective_function"],  # = model_oeis_error
-        ranges,
+        func=estimation_settings["objective_function"],  # = model_oeis_error
+        ranges=ranges,
         args=(model, X, Y, _T, estimation_settings),
-        full_output=True)
-    return {"x": res[0], "fun": res[1]}
+        full_output=True,
+        finish=None,
+        )
+    return {"x": res[0], "fun": res[1]} if len(p0) >= 2 else {
+        "x": np.array([res[0]]), "fun": res[1]}
+
+def DAnnealing_fit (model, X, Y, _T, p0, **estimation_settings):
+    """Find minimum via Dual Annealing algorithm."""
+    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
+
+    bounds = [(lower_bound, upper_bound)]*len(p0)
+    res = dual_annealing (
+        estimation_settings["objective_function"],  # = model_oeis_error
+        bounds=bounds,
+        args=(model, X, Y, _T, estimation_settings),
+        no_local_search=True,
+        # maxiter=2*10**3,
+        # maxiter=4*10**3,
+        )
+    return res
+
+def shgo_fit (model, X, Y, _T, p0, **estimation_settings):
+    """Find minimum via shgo algorithm."""
+    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
+
+    bounds = [(lower_bound, upper_bound)]*len(p0)
+    res =  shgo(
+        estimation_settings["objective_function"],  # = model_oeis_error
+        bounds=bounds,
+        args=(model, X, Y, _T, estimation_settings),
+        iters=5,
+        )
+    return res
 
 def find_parameters (model, X, Y, T, **estimation_settings):
     """Calls the appropriate fitting function. 
@@ -388,8 +421,8 @@ class ParameterEstimator:
                 res = find_parameters(model, self.X, self.Y, self.T,
                                      **self.estimation_settings)
                 model.set_estimated(res)
-                if self.estimation_settings["verbosity"] >= 2:
-                    print(res)
+                # if self.estimation_settings["verbosity"] >= 2:
+                #     print(res, type(res["x"]), type(res["x"][0]))
         except Exception as error:
             print((f"Excepted an error: Of type {type(error)} and message:"
                     f"{error}!! \nModel:"), model)
