@@ -161,8 +161,6 @@ class Model:
         """
         if not params:
             params = self.params
-        # print(params, type(params))
-        # print(self.expr, self.sym_vars, self.full_expr(*params), len(self.sym_vars), len(params), "jeja")
         return sp.lambdify(self.sym_vars, self.full_expr(*params), "numpy")
         # self.lamb_expr = sp.lambdify(self.sym_vars, self.expr.subs(list(zip(self.sym_params, params))), arg)
         # print(self.lamb_expr, "self.lamb_expr")

@@ -26,10 +26,10 @@ ED = EqDisco(data = data,
             generator = "grammar", 
             generator_template_name = "polynomial",
             generator_settings={"variables":["'n'"]},
-            estimation_settings={"verbosity": 0, "task_type": "algebraic", "lower_upper_bounds": 
+            estimation_settings={"verbosity": 1, "task_type": "algebraic", "lower_upper_bounds": 
             # (-5, 5)} 
-            # (-10,8)} # Last bound where it still finds.
-            (0,1)}  # Returns wrong error on windows.
+            (-10,8)} # Last bound where it still finds.
+            # (0,1)}  # Returns wrong error on windows.
             )
 ED.generate_models()
 ED.fit_models()
@@ -44,21 +44,24 @@ c0 = 1/5**(1/2)
 c1 = np.log(phi)
 print(f"m  c0: {c0}", f"c1:{c1}")
 # fib(n) = (phi**n - psi**n)/5**(1/2)
-#         = round(phi**n/5**(1/2))
 #         = floor(phi**n/5**(1/2) + 1/2)
+#         = round(phi**n/5**(1/2))
+#         = round( exp(log(phi)*n)/5**(1/2) )
+#         = round( c0*exp(c1*n) )
+#         = round( 0.447213596451458*exp(0.481211825004291*n) )
 
-# model = ED.models[5] 
-# # model = ED.models[15] 
-# print(model, model.get_full_expr(), model.get_error())
-# res = model.evaluate(ts, *model.params)
-# res = [int(np.round(flo)) for flo in res]
+model = ED.models[5] 
+# model = ED.models[15]  # primes
+print(model, model.get_full_expr(), model.get_error())
+res = model.evaluate(ts, *model.params)
+res = [int(np.round(flo)) for flo in res]
 
-# print(res)
-# print(oeis)
-# error = 0
-# for i, j in zip(res, oeis):
-#     print(i,j, i-j, error)
-#     error += abs(i-j)
+print(res)
+print(oeis)
+error = 0
+for i, j in zip(res, oeis):
+    print(i,j, i-j, error)
+    error += abs(i-j)
 
-# print(error)
+print(error)
 

@@ -241,10 +241,8 @@ def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
     dummy = 10**30
     try:
         order = len(model.sym_vars)
-        # print(order, "izpis: order")
-        # model.params = np.round(model.params) # params so list , ne np.array
+        # model.params = np.round(model.params)
         params = list(np.round(model.params))
-        # print(model.get_full_expr())
         an = model.lambdify(*params)
         first_terms = X[:order, 0]
         # fibs = X[:order, 0]
@@ -252,7 +250,6 @@ def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
         for _ in range(order, X.shape[0]):
             cache += [an(*cache[-order:])]
         cache
-        # print(len(cache), X.shape[0], "ispis: len(res), len(X.shape[0])")
         
         # testY = model.evaluate(X, *params)
         testY = cache
@@ -370,8 +367,7 @@ def find_parameters (model, X, Y, T, **estimation_settings):
                 f"\"{task_type}\", while list of possible values: "
                 f"\"{types_string}\".")
 
-    # res = integer_brute_fit(model, X, Y, None, p0=model.params, **estimation_settings)
-    res = estimation_settings["optimizer"](  # optimization_algorithm
+    res = estimation_settings["optimizer"](
         model, X, Y, T, p0=model.params, **estimation_settings)
     # res = DE_fit(model, X, Y, T, p0=model.params, **estimation_settings)
 
