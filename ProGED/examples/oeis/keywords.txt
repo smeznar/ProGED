@@ -1,0 +1,50 @@
+nice 171
+
+base - 4
+bref 0
+changed 38
+cofr 3 (continued fraction)
+cons 5 (decimals of a number) -1 (parity 0,1,0,1,...)
+dead 0
+dumb 0
+dupe 0
+easy 146
+eigen 5
+fini 0
+frac 12
+full 0
+hard 12 (19 not hard not easy)
+hear 7
+less 0
+look 4
+more 7
+mult 22
+new 0
+nice 171
+nonn 169
+obsc 0
+probation 0
+sign 9 (sing + nonn = all = 178)
+tabf 1
+tabl 9
+uned 0
+unkn 0
+walk 2
+word 0
+
+offset:0 ... 109
+-offset:0 ... 69
+offset:1 ... 74
+
+
+Manually( pregledal rocno core + nice (171 zaporedij)):
+- Parity [0,1,0,1] A000035 		Period 2: repeat [0, 1]; a(n) = n mod 2; parity of n. 
+- A004526 		Nonnegative integers repeated, floor(n/2). 
+maybe:
+A070939 		Length of binary representation of n. 
+A000002 		Kolakoski sequence: a(n) is length of n-th run; a(1) = 1; sequence consists just of 1's and 2's. (Formerly M0190 N0070)
+A001462 		Golomb's sequence: a(n) is the number of times n occurs, starting with a(1) = 1.
+(Formerly M0257 N0091)
+
+lahko bi:
+    - seqvence, ki imajo prevelike clene odstranil.

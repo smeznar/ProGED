@@ -1,12 +1,7 @@
 from urllib import request
-# import requests
-# import json
-# import random
-# import shutil
+import matplotlib.pyplot as plt
 import re
-
 from numpy import number
-#import os
 
 txt = """# Greetings from The On-Line Encyclopedia of Integer Sequences! http://oeis.org/
 
@@ -144,43 +139,105 @@ print(lens)
 x = np.arange(max(lens))
 bigs = list(map(lambda i: sum(lens>=i), x))
 # print(bigs)
+## -- check those with more than 100 terms -- ##
+seqs = seqs_flat
+def check_centum():
+    # seqs = seqs_flat
+    print("100lens")
+    cents = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if len(seq[1])>100]
+    print(cents, "cents")
+# check_centum()
+## -- check those with more than 100 terms -- ##
+seqs = seqs_flat
+def pick_bignum():
+    print("big numbers")
+    largs = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if max(seq[1])>1e16]
+    print(largs, "largs")
+pick_bignum()
+# plot largs:
+maxs = np.array([max(seq[1]) for seq in seqs])
+# xs = np.array([10**i for i in range(int(np.log10(max(maxs))))])
+# xs = [10**i for i in range(int(np.log10(max(maxs))))]
+xs = np.array([float(10**i) for i in range(1, 300)])
+# xs = np.array([i for i in range(1, 300)])
+# nums = 10**xs
+max_exp = sum(xs < max(maxs))
+xs = xs[:max_exp]#[::-1]
+# xs = float(xs)
+# xs = xs[:15]
+print(max_exp, max(maxs))
+# print(np.log10(max(maxs)))
+largs = list(map(lambda x: sum(maxs<=x), xs))
+# largs = list(map(lambda x: x, xs))
+# largs = list(map(lambda x: x**2, xs))
+# xs = (-1)*xs
+print(xs)
+def plot_largs(xs, largs):
+    plt.grid(True)
+    plt.xlabel("size [int]")
+    plt.ylabel("number of sequences with largest term smaller than *threshold* (x)")
+    plt.plot(xs, largs)
+    # plt.xscale("symlog", base=10)
+    plt.xscale("log", base=10)
+    # plt.xscale("log", base=1.2)
+    # plt.xlim(xs[-1], xs[0])
+    # plt.xlim(min(xs)-1, max(xs)+1)
+    print(float(xs[-1]))
+    # plt.xlim(0, float(xs[-1]))
+    plt.xlim(float(xs[-1]), xs[0])
+    # plt.xlim(0, 10**100)
+    # plt.xlim(0, 1e99)
+    # plt.xlim(0, 1e99)
+    # plt.xlim(10*100, 0)
+    plt.title("Sequences with small enough terms")
+    plt.xticks(xs[::3])
+    # plt.yticks(np.array(set(largs[::10])))
+    plt.yticks([i for i in range(1, 178, 10)])
+    plt.show()
+    return
+plot_largs(xs, largs)
 
-# import matplotlib.pyplot as plt
-# plt.grid(True)
-# plt.xlabel("threshold")
-# plt.ylabel("number of sequences with more than *threshold* terms")
-# plt.plot(x, bigs)
-# plt.title("Sequences with enough terms")
-# plt.show()
+def plot_alot(x, bigs):
+    plt.grid(True)
+    plt.xlabel("threshold")
+    plt.ylabel("number of sequences with more than *threshold* terms")
+    plt.plot(x, bigs)
+    plt.title("Sequences with enough terms")
+    plt.show()
+    return
+# plot_alot(x, bigs)
 ## EOF lengths analysis ##
 
-## -- Check scrap against gzipped oeis database -- ##
-seqs = seqs_flat
 
-file2 = open("stripped_oeis_database.txt", "r")
-# original = file2.read(10**9)
-original = file2.read()
-file2.close()
-print(original[:1000])
-for n, seq_pair in enumerate(seqs):
-    seq_id = seq_pair[0]
-    seq = seq_pair[1]
-    # seq_id = "A000002"
-    # compare = re.findall(seq_id+r".*\n", original)
-    # compare = re.findall(seq_id+".[\d\-,]+\n", original)
-    compare = re.findall(seq_id+".+\n", original)
-    with_ = seq_id+" "
-    str_seq = seq_id + " ,"
-    for i in seq:
-        str_seq += str(i)+","
-    str_seq += "\n"
-    str_seq = [str_seq]
-    # print(compare, "this is what I found. Compare with:")
-    # print(str_seq)
-    bool = compare[0] == str_seq[0]
-    assert compare[0] == str_seq[0]
-    print(n, "Correct scrapping!!! found it" if bool else "scrapping FAILED!!!")
-    assert len(compare[0]) == len(str_seq[0])
-    print(len(compare[0]), len(str_seq[0]))
-print("Seems scrapping is correct. Checking is done.")
+## -- Check scrap against gzipped oeis database -- ##
+def check_scrap():
+    # seqs = seqs_flat
+    file2 = open("stripped_oeis_database.txt", "r")
+    # original = file2.read(10**9)
+    original = file2.read()
+    file2.close()
+    print(original[:1000])
+    for n, seq_pair in enumerate(seqs):
+        seq_id = seq_pair[0]
+        seq = seq_pair[1]
+        # seq_id = "A000002"
+        # compare = re.findall(seq_id+r".*\n", original)
+        # compare = re.findall(seq_id+".[\d\-,]+\n", original)
+        compare = re.findall(seq_id+".+\n", original)
+        with_ = seq_id+" "
+        str_seq = seq_id + " ,"
+        for i in seq:
+            str_seq += str(i)+","
+        str_seq += "\n"
+        str_seq = [str_seq]
+        # print(compare, "this is what I found. Compare with:")
+        # print(str_seq)
+        bool = compare[0] == str_seq[0]
+        assert compare[0] == str_seq[0]
+        print(n, "Correct scrapping!!! found it" if bool else "scrapping FAILED!!!")
+        assert len(compare[0]) == len(str_seq[0])
+        print(len(compare[0]), len(str_seq[0]))
+    print("Seems scrapping is correct. Checking is done.")
+    return
+# check_scrap()
 print("end")
