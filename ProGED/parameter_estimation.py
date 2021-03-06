@@ -367,6 +367,28 @@ def find_parameters (model, X, Y, T, **estimation_settings):
                 f"\"{task_type}\", while list of possible values: "
                 f"\"{types_string}\".")
 
+    # metamodel_kwargs = {"random_seed": 28537}
+    # model_kwargs = {"dimension": 1,
+    #                 "function": lambda x: 0}
+    # surrogate_kwargs = {"rebuild_interval": 100,
+    #                     "predictor": ensemble.RandomForestRegressor()}
+    # threshold_kwargs = {"type": "alpha-beta",
+    #                     "desired_surr_rate": 0.5,
+    #                     "acceptable_offset": 0.05,
+    #                     "step": 0.0001,
+    #                     "alpha": 42,
+    #                     "beta": 10}
+    # relevator_kwargs = {"rebuild_interval": 100,
+    #                     "threshold_kwargs": threshold_kwargs,
+    #                     "fresh_info": None,
+    #                     "predictor": ensemble.RandomForestRegressor()}
+    # history_kwargs = {"size": 500,
+    #                 "use_size": 200}
+    # if surrogately:
+    #     res = estimation_settings["optimizer"](
+    #         metamodel.evaluate, X, Y, T, p0=model.params, **estimation_settings)
+    # else:
+
     res = estimation_settings["optimizer"](
         model, X, Y, T, p0=model.params, **estimation_settings)
     # res = DE_fit(model, X, Y, T, p0=model.params, **estimation_settings)

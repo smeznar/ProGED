@@ -137,24 +137,54 @@ print(lens)
 # for i in range(10):
 #     print(sum(lens<10*i), 10*i)
 # print(len(lens))
-x = np.arange(max(lens))
-bigs = list(map(lambda i: sum(lens>=i), x))
+thresholds = np.arange(max(lens))
+amount_manys = list(map(lambda i: sum(lens>=i), thresholds))
 # print(bigs)
+
 ## -- check those with more than 100 terms -- ##
 seqs = seqs_flat
 def check_centum():
     # seqs = seqs_flat
     print("100lens")
-    cents = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if len(seq[1])>100]
-    print(cents, "cents")
-# check_centum()
-## -- check those with more than 100 terms -- ##
+    # cents = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if len(seq[1])>100]
+    ids_cents = [seq[0] for seq in seqs if len(seq[1])>=23]
+    # print(cents, "cents")
+    ids_cents.sort()
+    print(ids_cents)
+    print("number of sequences lots", len(ids_cents))
+    return ids_cents
+ids_lots = check_centum()
+
+## -- check those with terms bigger than 1e16 -- ##
 seqs = seqs_flat
 def pick_bignum():
     print("big numbers")
-    largs = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if max(seq[1])>1e16]
-    print(largs, "largs")
-pick_bignum()
+    # largs = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if max(seq[1])>1e16]
+    # ids_largs = [seq[0] for seq in seqs if max(seq[1])<=1e16.5]
+    ids_largs = [seq[0] for seq in seqs if max(seq[1])<=10**(15.6)]
+    ids_largs.sort()
+    # print(largs, "largs")
+    print(ids_largs)
+    print("number of sequences large w/ numbers", len(ids_largs))
+    return ids_largs
+ids_largs = pick_bignum()
+# assert check_centum() == pick_bignum(), "they do not perfectly match"
+inter = set(ids_largs).intersection(set(ids_lots))
+print("intersection:", inter, "len(intersection) : ", len(list(inter)))
+dif_lots = set(ids_lots).difference(inter)
+dif_largs = set(ids_largs).difference(inter)
+
+seqs_dict = dict(seqs)
+print("\n\n")
+for i in [(id, len(dict(seqs)[id]), float(max(dict(seqs)[id])), dict(seqs)[id]) for id in dif_lots]:
+    print(i)
+print("\n\n")
+for i in [(id, len(dict(seqs)[id]), float(max(dict(seqs)[id])), dict(seqs)[id]) for id in dif_largs]:
+    print(i)
+# print(seqs[:3], "seqs")
+# print(dict(seqs[:3]))
+
+
 # plot largs:
 maxs = np.array([max(seq[1]) for seq in seqs])
 # xs = np.array([10**i for i in range(int(np.log10(max(maxs))))])
@@ -166,13 +196,13 @@ max_exp = sum(xs < max(maxs))
 xs = xs[:max_exp]#[::-1]
 # xs = float(xs)
 # xs = xs[:15]
-print(max_exp, max(maxs))
+# # print(max_exp, max(maxs))
 # print(np.log10(max(maxs)))
 largs = list(map(lambda x: sum(maxs<=x), xs))
 # largs = list(map(lambda x: x, xs))
 # largs = list(map(lambda x: x**2, xs))
 # xs = (-1)*xs
-print(xs)
+# print(xs)
 def plot_largs(xs, largs):
     fig, ax = plt.subplots()
     # plt.grid(True)
@@ -224,7 +254,23 @@ def plot_largs(xs, largs):
     # plt.yticks([i for i in range(1, 178, 10)])
     plt.show()
     return
-plot_largs(xs, largs)
+# plot_largs(xs, largs)
+
+def plot_fews(xs, ys):
+    fig, ax = plt.subplots()
+    ax.plot(xs, ys)
+    ax.set_xticks(np.arange(0, xs[-1], 10))
+    ax.set_xticks(np.arange(0, xs[-1], 20/10), minor=True)
+    ax.set_yticks(np.arange(0, max(ys), 25))
+    ax.set_yticks(np.arange(0, max(ys), 5), minor=True)
+    ax.axes.grid(True, which="minor")
+    ax.axes.grid(True, which="major", color="k", linestyle="-", linewidth=1)
+    ax.set_xlabel("threshold")
+    ax.set_ylabel("number of sequences with more than *threshold* terms")
+    ax.set_title("Sequences with enough terms")
+    plt.show()
+    return
+# plot_fews(thresholds, amount_manys)
 
 def plot_alot(x, bigs):
     plt.grid(True)
