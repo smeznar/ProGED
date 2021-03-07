@@ -291,6 +291,49 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
         # popsize=50,
         )
 
+def DE_fit_metamodel (model, X, Y, T, p0, **estimation_settings):
+    """DE with additional metamodel embedded."""
+    
+    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
+    bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
+
+    metamodel_kwargs = {}
+    model_kwargs = {"dimension": len(p0),
+                    "function": estimation_settings["objective_function"]}
+    surrogate_kwargs = {"rebuild_interval": 100,
+                        "predictor": ensemble.RandomForestRegressor()}
+    threshold_kwargs = {"type": "alpha-beta",
+                        "desired_surr_rate": 0.7,
+                        "acceptable_offset": 0.05,
+                        "step": 0.0001,
+                        "alpha": 42,
+                        "beta": 10}
+    relevator_kwargs = {"rebuild_interval": 100,
+                        "threshold_kwargs": threshold_kwargs,
+                        "fresh_info": None,
+                        "predictor": ensemble.RandomForestRegressor()}
+    history_kwargs = {"size": 500,
+                    "use_size": 200}
+    metamodel = Metamodel(metamodel_kwargs, model_kwargs, surrogate_kwargs,
+                          relevator_kwargs, history_kwargs)
+    start = time.perf_counter()
+    def diff_evol_timeout(x=0, convergence=0):
+        now = time.perf_counter()
+        if (now-start) > estimation_settings["timeout"]:
+            print("Time out!!!")
+            return True
+        else:
+            return False
+    
+    return differential_evolution(
+        metamodel.evaluate,
+        bounds,
+        args=[model, X, Y, T, estimation_settings],
+        callback=diff_evol_timeout, 
+        maxiter=10**2,
+        popsize=10,
+        )
+
 def min_fit (model, X, Y):
     """Calls scipy.optimize.minimize. Exists to make passing arguments to the objective function easier."""
     
@@ -356,6 +399,8 @@ def find_parameters (model, X, Y, T, **estimation_settings):
         estimation_settings["objective_function"] = model_error
     elif task_type == "differential":
         estimation_settings["objective_function"] = model_ode_error
+#     elif task_type == "differential_surrogate":
+#         estimation_settings["objective_function"] = meta_model_ode_error
     elif task_type == "oeis":
         # model.params = np.round(model.params)
         estimation_settings["objective_function"] = model_oeis_error

@@ -173,13 +173,15 @@ inter = set(ids_largs).intersection(set(ids_lots))
 print("intersection:", inter, "len(intersection) : ", len(list(inter)))
 dif_lots = set(ids_lots).difference(inter)
 dif_largs = set(ids_largs).difference(inter)
+print(len(dif_lots))
+print(len(dif_largs))
 
 seqs_dict = dict(seqs)
 print("\n\n")
 for i in [(id, len(dict(seqs)[id]), float(max(dict(seqs)[id])), dict(seqs)[id]) for id in dif_lots]:
     print(i)
 print("\n\n")
-for i in [(id, len(dict(seqs)[id]), float(max(dict(seqs)[id])), dict(seqs)[id]) for id in dif_largs]:
+for i in [(id, len(dict(seqs)[id]), "{0:e}".format(float(max(dict(seqs)[id]))), dict(seqs)[id]) for id in dif_largs]:
     print(i)
 # print(seqs[:3], "seqs")
 # print(dict(seqs[:3]))
