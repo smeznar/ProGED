@@ -37,7 +37,7 @@ txt2 = """ A038566 A054424 gives mapping to Stern-Brocot tree.
 txt2 += txt
 
 def fetch(start=0, end=1e10):
-    search=request.urlopen('https://oeis.org/search?q=keyword:core&fmt=text')
+    search=request.urlopen('https://oeis.org/search?q=keyword:core%20keyword:nice&fmt=text')
     header_length = 1000  # number of characters in header
     header = search.read(header_length).decode()
     # print(header)
@@ -55,7 +55,7 @@ def fetch(start=0, end=1e10):
     for i in range((number_of_sequences-1)//10+1):  # 178 -> 10-20, 20-30, ..., 170-180
         # print(i)
         search=request.urlopen(
-            f'https://oeis.org/search?q=keyword:core&fmt=text&start={start+i*10}')
+            f'https://oeis.org/search?q=keyword:core%20keyword:nice&fmt=text&start={start+i*10}')
         print(i, "after wget")
         page = search.read().decode()
         # print(i, "after decode")
@@ -102,22 +102,32 @@ def fetch(start=0, end=1e10):
 
 
 
-
 import saved_core
 # import saved_core110up as saved_core
-seqs_flat = saved_core.core_list
-seqs = saved_core.core_unflatten
+seqs = saved_core.core_list
+seqs_unflatten = saved_core.core_unflatten
 
 # # print(len(list(set(seqs_flatten))))
 # # print(seqs)
-print("number of packets of seqs", len(seqs))
-print("number of seqs in seqs:", sum(len(tseqs) for tseqs in seqs))
+print("number of packets of seqs", len(seqs_unflatten))
+print("number of seqs in seqs:", sum(len(tseqs) for tseqs in seqs_unflatten))
 print("unique ids:")
-ids = [seq[0] for seq in seqs_flat]
+ids = [seq[0] for seq in seqs]
 print(len(ids))
 print(len(list(set(ids))))
-print("end")
-print(seqs_flat[-4:])
+print("last 4 seqs in seqs:", seqs[-4:])
+
+# seqs = seqs_flat
+## -- remove seq A000035 -- ##
+print("Removing seqs by hand ... ")
+seqs_dict = dict(seqs)
+# seqs_dict = dict(seqs_flat)
+seqs_to_remove = ["A000035"]
+print("is the seq inside before removing:", seqs_to_remove[0] in seqs_dict)
+[seqs_dict.pop(seq, None) for seq in seqs_to_remove]
+print("is seq inside after removing:", seqs_to_remove[0] in seqs_dict)
+print("number of seqs (now):", len(list(seqs_dict)))
+# print(seqs_dict)
 
 
 ## --- Length of sequence analisis: --- ##
@@ -131,7 +141,7 @@ print(seqs_flat[-4:])
 #     print("number of terms in sequence:", len(seq_pair[1]))
 import numpy as np
 # print(np.mean(np.array([len(seq_pair[1]) for seq_pair in seqs_flat])))
-lens = np.array([len(seq_pair[1]) for seq_pair in seqs_flat])
+lens = np.array([len(seq_pair[1]) for seq_pair in seqs])
 print(lens)
 # print(sum(lens<10))
 # for i in range(10):
@@ -142,7 +152,7 @@ amount_manys = list(map(lambda i: sum(lens>=i), thresholds))
 # print(bigs)
 
 ## -- check those with more than 100 terms -- ##
-seqs = seqs_flat
+# seqs = seqs_flat
 def check_centum():
     # seqs = seqs_flat
     print("100lens")
@@ -156,7 +166,7 @@ def check_centum():
 ids_lots = check_centum()
 
 ## -- check those with terms bigger than 1e16 -- ##
-seqs = seqs_flat
+# seqs = seqs_flat
 def pick_bignum():
     print("big numbers")
     # largs = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if max(seq[1])>1e16]
@@ -176,7 +186,7 @@ dif_largs = set(ids_largs).difference(inter)
 print(len(dif_lots))
 print(len(dif_largs))
 
-seqs_dict = dict(seqs)
+# seqs_dict = dict(seqs)
 print("\n\n")
 for i in [(id, len(dict(seqs)[id]), float(max(dict(seqs)[id])), dict(seqs)[id]) for id in dif_lots]:
     print(i)
@@ -318,3 +328,47 @@ def check_scrap():
     return
 # check_scrap()
 print("end")
+
+
+## -- new metric (sum of digits) -- ##
+def metric(seq):
+    # print("calculating metric of the seq")
+    # print(seq)
+    # print([str(an) for an in seq])
+    # print([2+len(str(an)) for an in seq])
+    return sum([2+len(str(an)) for an in seq])
+print("some metric:", metric(seqs_dict["A005036"]))
+
+metrics = [metric(seqs_dict[seq]) for seq in seqs_dict]
+metrics_bounds = (min(metrics), max(metrics))
+print(metrics_bounds)
+metrics_dict = {} 
+for i in metrics:
+    if str(i) in metrics_dict:
+        metrics_dict[str(i)] += 1
+    else:
+        metrics_dict[str(i)] = 1
+print(metrics_dict)
+metric_histo = [metrics_dict.get(str(long), 0) 
+    for long in range(metrics_bounds[0], metrics_bounds[1])]
+# metric_histo = [long
+#     for long in range(metrics_bounds[0], metrics_bounds[1]+1)]
+print(metric_histo)
+def plot_metric(xs, ys):
+    plt.title("metric(length)")
+    plt.ylabel("metric")
+    plt.xlabel("length")
+    plt.plot(xs, ys)
+    plt.show()
+    return
+# plot_metric(np.arange(min(metrics), max(metrics)), metric_histo)
+
+## -- new metric's lots -- ##
+sth = [sum(np.array(metrics)<=threshold)<=137 for threshold in range(min(metrics), max(metrics))]
+threshold = min(metrics)+sum(sth)
+print(threshold)
+metric_dict = {}
+[metric_dict.update({i:seqs_dict[i]}) 
+    for i in seqs_dict if metric(seqs_dict[i])<=threshold]
+print(len(metric_dict))
+print(sum(np.array(metrics)<=threshold))
