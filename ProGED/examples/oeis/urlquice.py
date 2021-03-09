@@ -121,13 +121,17 @@ print("last 4 seqs in seqs:", seqs[-4:])
 ## -- remove seq A000035 -- ##
 print("Removing seqs by hand ... ")
 seqs_dict = dict(seqs)
+print("number of seqs (before removing):", len(list(seqs_dict)))
 # seqs_dict = dict(seqs_flat)
 seqs_to_remove = ["A000035"]
+seqr = seqs_to_remove[0]
+print("no error?", seqs_dict[seqr])
 print("is the seq inside before removing:", seqs_to_remove[0] in seqs_dict)
 [seqs_dict.pop(seq, None) for seq in seqs_to_remove]
 print("is seq inside after removing:", seqs_to_remove[0] in seqs_dict)
 print("number of seqs (now):", len(list(seqs_dict)))
 # print(seqs_dict)
+# print("error?", seqs_dict[seqr])
 
 
 ## --- Length of sequence analisis: --- ##
@@ -157,7 +161,7 @@ def check_centum():
     # seqs = seqs_flat
     print("100lens")
     # cents = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if len(seq[1])>100]
-    ids_cents = [seq[0] for seq in seqs if len(seq[1])>=23]
+    ids_cents = [id for id in seqs_dict if len(seqs_dict[id])>=23]
     # print(cents, "cents")
     ids_cents.sort()
     print(ids_cents)
@@ -171,7 +175,7 @@ def pick_bignum():
     print("big numbers")
     # largs = [(seq[0], len(seq[1]), seq[1]) for seq in seqs if max(seq[1])>1e16]
     # ids_largs = [seq[0] for seq in seqs if max(seq[1])<=1e16.5]
-    ids_largs = [seq[0] for seq in seqs if max(seq[1])<=10**(15.6)]
+    ids_largs = [id for id in seqs_dict if max(seqs_dict[id])<=10**(15.6)]
     ids_largs.sort()
     # print(largs, "largs")
     print(ids_largs)
@@ -179,23 +183,118 @@ def pick_bignum():
     return ids_largs
 ids_largs = pick_bignum()
 # assert check_centum() == pick_bignum(), "they do not perfectly match"
+
+## -- new metric (sum of digits) -- ##
+def metric(seq):
+    # print("calculating metric of the seq")
+    # print(seq)
+    # print([str(an) for an in seq])
+    # print([2+len(str(an)) for an in seq])
+    return sum([1+len(str(an)) for an in seq])
+print("some metric:", metric(seqs_dict["A005036"]))
+
+metrics = [metric(seqs_dict[seq]) for seq in seqs_dict]
+metrics_bounds = (min(metrics), max(metrics))
+print(metrics_bounds)
+metrics_dict = {} 
+for i in metrics:
+    if str(i) in metrics_dict:
+        metrics_dict[str(i)] += 1
+    else:
+        metrics_dict[str(i)] = 1
+print(metrics_dict)
+metric_histo = [metrics_dict.get(str(long), 0) 
+    for long in range(metrics_bounds[0], metrics_bounds[1])]
+# metric_histo = [long
+#     for long in range(metrics_bounds[0], metrics_bounds[1]+1)]
+print(metric_histo)
+def plot_metric(xs, ys):
+    plt.title("metric(length)")
+    plt.ylabel("metric")
+    plt.xlabel("length")
+    plt.plot(xs, ys)
+    plt.show()
+    return
+# plot_metric(np.arange(min(metrics), max(metrics)), metric_histo)
+
+## -- new metric's lots -- ##
+find_threshold = [sum(np.array(metrics)<=threshold)<=137 
+    for threshold in range(min(metrics), max(metrics))]
+threshold = min(metrics) + sum(find_threshold)
+print("threshold found:", threshold)
+metric_dict = {}
+[metric_dict.update({i:seqs_dict[i]}) 
+    for i in seqs_dict if metric(seqs_dict[i])<=threshold]
+print(len(metric_dict))
+print(sum(np.array(metrics)<=threshold))
+keyword_more = ("A000109", "A000112", "A000609", "A002106", "A003094", "A005470", "A006966")
+ids_metrics = [i for i in seqs_dict if metric(seqs_dict[i])<=threshold]
+ids_metrics = [i for i in seqs_dict if metric(seqs_dict[i])>=250]
+print("high metric", ids_metrics)
+ids_metrics_spec = [i for i in seqs_dict if metric(seqs_dict[i]) in range(0, 195)]
+ids_metrics_spec = list(set(ids_metrics_spec).difference(set({})))
+print(len(ids_metrics_spec), ids_metrics_spec)
+ids_metrics_spec = list(set(ids_metrics_spec).difference(set(keyword_more)))
+print(len(ids_metrics_spec), ids_metrics_spec)
+nice_ids = [(i, metric(seqs_dict[i]), len(seqs_dict[i])) for i in ids_metrics_spec]
+print(len(nice_ids), nice_ids)
+print(min(metrics), max(metrics))
+
+# print("all metrics: \nthresh: metric: 300 terms: 23 max term: 1e16\n")
+# for i in seqs_dict:
+#     seq = seqs_dict[i]
+#     print(i, "metric:", metric(seq), "terms:", len(seq), "max term:", "{0:e}".format(max(seq)))
+
+# 1/0
+
 inter = set(ids_largs).intersection(set(ids_lots))
 print("intersection:", inter, "len(intersection) : ", len(list(inter)))
 dif_lots = set(ids_lots).difference(inter)
 dif_largs = set(ids_largs).difference(inter)
 print(len(dif_lots))
 print(len(dif_largs))
+# inter_metric = set(inter).intersection(set(ids_metrics))
+# print("inter \cap ids_metrics", len(inter_metric))
+
 
 # seqs_dict = dict(seqs)
 print("\n\n")
-for i in [(id, len(dict(seqs)[id]), float(max(dict(seqs)[id])), dict(seqs)[id]) for id in dif_lots]:
+for i in [(id, 
+            len(dict(seqs)[id]), 
+            float(max(dict(seqs)[id])), 
+            metric(seqs_dict[id]),
+            dict(seqs)[id],
+            ) for id in dif_lots]:
     print(i)
 print("\n\n")
-for i in [(id, len(dict(seqs)[id]), "{0:e}".format(float(max(dict(seqs)[id]))), dict(seqs)[id]) for id in dif_largs]:
+for i in [(id, 
+            len(dict(seqs)[id]), 
+            "{0:e}".format(float(max(dict(seqs)[id]))), 
+            metric(seqs_dict[id]),
+            dict(seqs)[id]) for id in dif_largs]:
     print(i)
 # print(seqs[:3], "seqs")
 # print(dict(seqs[:3]))
 
+## -- checkout ids_largs -- ##
+largs2 = [len(seqs_dict[i]) for i in ids_largs]
+# print(seqs_dict)
+print("number of enough terms", len(ids_largs))
+largs2.sort()
+print(largs2, "largs2")
+# print(ids_largs, "ids_largs")
+largs_max = min([len(seqs_dict[i]) for i in ids_largs])
+print(largs_max, "largs_max")
+print("nic")
+ids_largs
+
+ids_largs_nomore = list(set(ids_largs).difference(set(keyword_more)))
+print("largs nomore:", len(ids_largs_nomore))
+largs_nomore = [len(seqs_dict[i]) for i in ids_largs_nomore]
+largs_nomore.sort()
+print(largs_nomore)
+
+# 1/0
 
 # plot largs:
 maxs = np.array([max(seq[1]) for seq in seqs])
@@ -300,18 +399,12 @@ def plot_alot(x, bigs):
 def check_scrap():
     # seqs = seqs_flat
     file2 = open("stripped_oeis_database.txt", "r")
-    # original = file2.read(10**9)
     original = file2.read()
     file2.close()
-    print(original[:1000])
-    for n, seq_pair in enumerate(seqs):
-        seq_id = seq_pair[0]
-        seq = seq_pair[1]
+    for n, seq_id in enumerate(seqs_dict):
+        seq = seqs_dict[seq_id]
         # seq_id = "A000002"
-        # compare = re.findall(seq_id+r".*\n", original)
-        # compare = re.findall(seq_id+".[\d\-,]+\n", original)
         compare = re.findall(seq_id+".+\n", original)
-        with_ = seq_id+" "
         str_seq = seq_id + " ,"
         for i in seq:
             str_seq += str(i)+","
@@ -328,47 +421,5 @@ def check_scrap():
     return
 # check_scrap()
 print("end")
+print(len(list(seqs_dict)))
 
-
-## -- new metric (sum of digits) -- ##
-def metric(seq):
-    # print("calculating metric of the seq")
-    # print(seq)
-    # print([str(an) for an in seq])
-    # print([2+len(str(an)) for an in seq])
-    return sum([2+len(str(an)) for an in seq])
-print("some metric:", metric(seqs_dict["A005036"]))
-
-metrics = [metric(seqs_dict[seq]) for seq in seqs_dict]
-metrics_bounds = (min(metrics), max(metrics))
-print(metrics_bounds)
-metrics_dict = {} 
-for i in metrics:
-    if str(i) in metrics_dict:
-        metrics_dict[str(i)] += 1
-    else:
-        metrics_dict[str(i)] = 1
-print(metrics_dict)
-metric_histo = [metrics_dict.get(str(long), 0) 
-    for long in range(metrics_bounds[0], metrics_bounds[1])]
-# metric_histo = [long
-#     for long in range(metrics_bounds[0], metrics_bounds[1]+1)]
-print(metric_histo)
-def plot_metric(xs, ys):
-    plt.title("metric(length)")
-    plt.ylabel("metric")
-    plt.xlabel("length")
-    plt.plot(xs, ys)
-    plt.show()
-    return
-# plot_metric(np.arange(min(metrics), max(metrics)), metric_histo)
-
-## -- new metric's lots -- ##
-sth = [sum(np.array(metrics)<=threshold)<=137 for threshold in range(min(metrics), max(metrics))]
-threshold = min(metrics)+sum(sth)
-print(threshold)
-metric_dict = {}
-[metric_dict.update({i:seqs_dict[i]}) 
-    for i in seqs_dict if metric(seqs_dict[i])<=threshold]
-print(len(metric_dict))
-print(sum(np.array(metrics)<=threshold))
