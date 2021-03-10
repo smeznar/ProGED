@@ -10,7 +10,7 @@ import time
 import os
 import sys  # To import from parent directory.
 
-import tee_so as te # Log using manually copied class from a forum.
+import tee_so as te  # Log using manually copied class from a forum.
 
 import numpy as np
 # import matplotlib.pyplot as plt
@@ -22,11 +22,11 @@ from scipy.integrate import solve_ivp, odeint
 start = time.perf_counter()
 # # # Input: # # # 
 eqation = "123"  # Code for eq_disco([1], [2,3]).
-samples_size = 5 
+sample_size = 5
 log_nickname = ""
 isTee = False
 if len(sys.argv) >= 2:
-    samples_size = int(sys.argv[1])
+    sample_size = int(sys.argv[1])
 if len(sys.argv) >= 3:
     isTee = True
     log_nickname = sys.argv[2]
@@ -90,11 +90,13 @@ data = np.concatenate((T[:, np.newaxis], Yode.T), axis=1)  # Embed Time column i
 # # # # 2.) Discover one ode at a time.
 
 sys.path += ['.','..']
-from generate import generate_models
-# from generators.grammar import GeneratorGrammar
-from generators.grammar_construction import grammar_from_template  # Grammar's
+from ProGED.generate import generate_models
+from ProGED.equation_discoverer import EqDisco
+# from ProGED.generators.grammar import GeneratorGrammar
+from ProGED.generators.grammar_construction import grammar_from_template  # Grammar's
 #nonterminals will depend on given dataset.
-from parameter_estimation import fit_models
+from ProGED.parameter_estimation import fit_models
+
 
 def eq_disco_demo (data, lhs_variables: list = [1],
                   # ["column 1"], # in case of header string reference
@@ -116,12 +118,20 @@ def eq_disco_demo (data, lhs_variables: list = [1],
         "functions": []
     })
     print(grammar)
-    print(samples_size, "= samples size")
+    print(sample_size, "= sample size")
     models = generate_models(grammar, symbols, 
-                            strategy_settings={"N":samples_size})
-    fit_models(models, data, target_variable_index=-1, time_index=0,
-                timeout=5, max_ode_steps=10**6, task_type="differential",
-                lower_upper_bounds=(-30, 30))
+                            strategy_settings={"N":sample_size})
+    fit_models(
+        models, 
+        data, 
+        target_variable_index=-1, 
+        time_index=0,
+        task_type="differential",
+        estimation_settings={
+            "timeout": 5, 
+            "max_ode_steps": 10**6, 
+            "lower_upper_bounds": (-30, 30)}
+        )
     print(models)
     print("\nFinal score:")
     for m in models:
@@ -136,28 +146,26 @@ def eq_disco_demo (data, lhs_variables: list = [1],
 # eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
 
 # Run eqation discovery from command line:
+np.random.seed(0)
 eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
 finnish = time.perf_counter()
 print(f"Finnished in {round(finnish-start, 2)} seconds")
 
-# def test_parameter_estimation_ODE():
-#     np.random.seed(2)
-#     B = -2.56; a = 0.4; ts = np.linspace(0.45, 0.87, 1000)
-#     ys = (ts+B)*np.exp(a*ts); xs = np.exp(a*ts)
-#     data = np.hstack((ts.reshape(-1, 1), xs.reshape(-1, 1), ys.reshape(-1, 1)))
-#     grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
-#                                 T -> V [0.6] | 'C' "*" V [0.4]
-#                                 V -> 'x' [0.5] | 'y' [0.5]""")
-#     symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
-#     models = generate_models(grammar, symbols, strategy_settings={"N":5})
-#     models = fit_models(models, data, target_variable_index=-1, time_index=0, task_type="differential")
+np.random.seed(0)
+ED = EqDisco(data = data,
+             task = None,
+             task_type = "differential",
+             time_index = 0,
+             target_variable_index = -1,
+            #  variable_names=["t", "x", "y"],
+             sample_size = sample_size,
+             verbosity = 1)
+ED.generate_models()
+ED.fit_models()
 
-#     # print("\n", models, "\n\nFinal score:")
-#     # for m in models:
-#     #     print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
-#     def assert_line(models, i, expr, error, tol=1e-9, n=100):
-#         assert str(models[i].get_full_expr())[:n] == expr[:n]
-#         assert abs(models[i].get_error() - error) < tol
-#     assert_line(models, 0, "y", 0.6248459649904826)
-#     assert_line(models, 1, "x", 0.058235586316492984)
-#     assert_line(models, 2, "x + 0.400257928405516*y", 2.1252303778422445e-09, n=8)
+    # def assert_line(models, i, expr, error, tol=1e-9, n=100):
+    #     assert str(models[i].get_full_expr())[:n] == expr[:n]
+    #     assert abs(models[i].get_error() - error) < tol
+    # assert_line(ED.models, 0, "y", 0.058235586316492984)
+    # assert_line(ED.models, 1, "0.4002359511712702*x + y", 2.1263385622753895e-09, n=6)
+print(data.shape)

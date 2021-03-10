@@ -498,9 +498,15 @@ class ParameterEstimator:
 
         return model
     
-def fit_models (models, data, target_variable_index, time_index = None, pool_map=map, verbosity=0,
-                task_type="algebraic",
-                estimation_settings = {}):
+def fit_models (
+    models, 
+    data, 
+    target_variable_index, 
+    time_index=None, 
+    pool_map=map, 
+    verbosity=0,
+    task_type="algebraic",
+    estimation_settings={}):
     """Performs parameter estimation on given models. Main interface to the module.
     
     Supports parallelization by passing it a pooled map callable.
@@ -532,8 +538,10 @@ def fit_models (models, data, target_variable_index, time_index = None, pool_map
                 max_ode_steps (int): Maximum number of steps used in one run of LSODA solver.
     """
     estimation_settings_preset = {
-        "task_type": task_type, "verbosity": verbosity,
-        "timeout": np.inf, "lower_upper_bounds": (-30,30),
+        "task_type": task_type,
+        "verbosity": verbosity,
+        "timeout": np.inf,
+        "lower_upper_bounds": (-30,30),
         "optimizer": DE_fit,}
     estimation_settings_preset.update(estimation_settings)
     estimation_settings = estimation_settings_preset
