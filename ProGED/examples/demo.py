@@ -2,13 +2,16 @@
 import sys
 import numpy as np
 sys.path += [".", ".."]
-from ode_examples import example_tB_data  # import datasets T, X and Y
-from parameter_estimation import fit_models
-from generate import generate_models
-from generators.grammar import GeneratorGrammar
-from tee_so import Tee
+
+from ProGED.examples.ode_examples import example_tB_data  # import datasets T, X and Y
+from ProGED.parameter_estimation import fit_models 
+from ProGED.generate import generate_models
+from ProGED.generators.grammar import GeneratorGrammar 
+from ProGED.examples.tee_so import Tee
+
+# 0.1) save output into randomly named logfile:
 random = str(np.random.random())
-print(random)
+print("Random number for log filename:", random)
 # Tee("logfile_demo_" + random + ".txt")
 np.random.seed(2)
 

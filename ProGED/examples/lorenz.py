@@ -10,7 +10,7 @@ import time
 import os
 import sys  # To import from parent directory.
 
-import tee_so as te  # Log using manually copied class from a forum.
+import ProGED.examples.tee_so as te  # Log using manually copied class from a forum.
 
 import numpy as np
 # import matplotlib.pyplot as plt
@@ -124,13 +124,15 @@ def eq_disco_demo (data, lhs_variables: list = [1],
     fit_models(
         models, 
         data, 
-        target_variable_index=-1, 
+        target_variable_index=-1,  # or maybe = aquation[0][0]
         time_index=0,
         task_type="differential",
         estimation_settings={
             "timeout": 5, 
             "max_ode_steps": 10**6, 
-            "lower_upper_bounds": (-30, 30)}
+            "lower_upper_bounds": (-30, 30),
+            "verbosity": 1,
+            }
         )
     print(models)
     print("\nFinal score:")
@@ -147,7 +149,7 @@ def eq_disco_demo (data, lhs_variables: list = [1],
 
 # Run eqation discovery from command line:
 np.random.seed(0)
-eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
+# eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
 finnish = time.perf_counter()
 print(f"Finnished in {round(finnish-start, 2)} seconds")
 
@@ -156,16 +158,32 @@ ED = EqDisco(data = data,
              task = None,
              task_type = "differential",
              time_index = 0,
-             target_variable_index = -1,
-            #  variable_names=["t", "x", "y"],
+             # target_variable_index = -1,
+             target_variable_index = aquation[0][0],  # aquation = [123] -> target = 1 -> ([t,x,y,z]->x)
+             # target_variable_index = 1,
+             # variable_names=["t", "x", "y"],
+             variable_names=["t", "x", "y", "z"],
+             generator = "grammar",
+             generator_template_name = "polynomial",
+             # generator_settings={"variables": ["'an_2'", "'an_1'"], "p_T": p_T, "p_R": p_R},
+             generator_settings={
+                 # "variables": ["'x'", "'y'"],
+                 "p_S": [0.4, 0.6],
+                 "p_T": [0.4, 0.6],
+                 "p_vars": [0.33, 0.33, 0.34],
+                 "p_R": [1, 0],
+                 "p_F": [],
+                 "functions": [],
+             },
              sample_size = sample_size,
              verbosity = 1)
 ED.generate_models()
-ED.fit_models()
+ED.fit_models(
+    estimation_settings={
+        "timeout": 5, 
+        "max_ode_steps": 10**6, 
+        "lower_upper_bounds": (-30, 30),
+        "optimizer": DE_fit,
+        # "optimizer": DE_fit_metamodel,
+        })
 
-    # def assert_line(models, i, expr, error, tol=1e-9, n=100):
-    #     assert str(models[i].get_full_expr())[:n] == expr[:n]
-    #     assert abs(models[i].get_error() - error) < tol
-    # assert_line(ED.models, 0, "y", 0.058235586316492984)
-    # assert_line(ED.models, 1, "0.4002359511712702*x + y", 2.1263385622753895e-09, n=6)
-print(data.shape)

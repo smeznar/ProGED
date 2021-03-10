@@ -146,7 +146,9 @@ print("number of seqs (now):", len(list(seqs_dict)))
 import numpy as np
 # print(np.mean(np.array([len(seq_pair[1]) for seq_pair in seqs_flat])))
 lens = np.array([len(seq_pair[1]) for seq_pair in seqs])
-print(lens)
+lens.sort()
+print("lens sorted:", lens)
+
 # print(sum(lens<10))
 # for i in range(10):
 #     print(sum(lens<10*i), 10*i)
@@ -293,6 +295,16 @@ print("largs nomore:", len(ids_largs_nomore))
 largs_nomore = [len(seqs_dict[i]) for i in ids_largs_nomore]
 largs_nomore.sort()
 print(largs_nomore)
+nomores = list(set(seqs_dict.keys()).difference(set(keyword_more)))
+nomores_lens = [len(seqs_dict[i]) for i in nomores]
+nomores_lens.sort()
+print("nomores lens:", nomores_lens)
+# plot nomores lens:
+thresholds_nomores = np.arange(max(nomores_lens))
+amount_manys_nomores = list(map(lambda i: sum(nomores_lens>=i), thresholds))
+# plot largs_nomores:
+thresholds_largs_nomores = np.arange(max(largs_nomore))
+amount_manys_largs_nomores = list(map(lambda i: sum(largs_nomore>=i), thresholds_largs_nomores))
 
 # 1/0
 
@@ -382,6 +394,8 @@ def plot_fews(xs, ys):
     plt.show()
     return
 # plot_fews(thresholds, amount_manys)
+# plot_fews(thresholds_nomores, amount_manys_nomores)
+plot_fews(thresholds_largs_nomores, amount_manys_largs_nomores)
 
 def plot_alot(x, bigs):
     plt.grid(True)
