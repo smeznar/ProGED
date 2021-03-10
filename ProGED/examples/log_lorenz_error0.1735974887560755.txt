@@ -1,0 +1,27 @@
+Finnished in 0.23 seconds
+C0*z**3 + C1
+C0*y
+C0*z
+C0*x**2*y*z
+C0*x*z + C1
+Estimating model C0*z**3 + C1
+Excepted an error: Of type <class 'NameError'> and message:name 'ensemble' is not defined!! 
+Model: C0*z**3 + C1
+model: 2.99158564216724*z**3 - 0.385206377470682                             ; p: 0.0002048              ; error: 100000000
+Estimating model C0*y
+Excepted an error: Of type <class 'NameError'> and message:name 'ensemble' is not defined!! 
+Model: C0*y
+model: 1.16933996874757*y                                                    ; p: 0.048                  ; error: 100000000
+Estimating model C0*z
+Excepted an error: Of type <class 'NameError'> and message:name 'ensemble' is not defined!! 
+Model: C0*z
+model: -4.3977452837073*z                                                    ; p: 0.048                  ; error: 100000000
+Estimating model C0*x**2*y*z
+Excepted an error: Of type <class 'NameError'> and message:name 'ensemble' is not defined!! 
+Model: C0*x**2*y*z
+model: -3.38690482115004*x**2*y*z                                            ; p: 0.00011377777777777779 ; error: 100000000
+Estimating model C0*x*z + C1
+Excepted an error: Of type <class 'NameError'> and message:name 'ensemble' is not defined!! 
+Model: C0*x*z + C1
+model: -4.60812207745679*x*z - 2.1719303742359                               ; p: 8.847359999999999e-05  ; error: 100000000
+Finnished in 0.31 seconds

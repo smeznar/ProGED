@@ -9,12 +9,18 @@ from scipy.optimize import differential_evolution, minimize, brute, shgo, dual_a
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp, odeint
 import sympy as sp
+from sklearn import ensemble #, tree
 
 import ProGED.mute_so as mt
 from _io import TextIOWrapper as stdout_type
 
 from ProGED.model_box import ModelBox
 from ProGED.task import TASK_TYPES
+
+# glitch-doctor downloaded from github:
+from ProGED.glitch_doctor.metamodel import Metamodel
+# import ProGED.glitch_doctor.metamodel.Metamodel
+# import ProGED.glitch_doctor.model.Model
 
 import warnings
 warnings.filterwarnings("ignore", message="divide by zero encountered in divide")
@@ -196,11 +202,15 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
         # odeY = odeY.T  # solve_ivp() returns in _ oposite (DxN) shape.
         odeY = odeY[0]  # If Y is landscape, i.e. _.
         if not odeY.shape == Y.shape:
-            # print("The ODE solver did not found ys at all times -> returning dummy error.")
-            # print(odeY.shape, Y.shape)
+            if estimation_settings["verbosity"] >= 3:
+                print("The ODE solver did not found ys at all times -> returning dummy error.")
+            if estimation_settings["verbosity"] >= 4:
+                print(odeY.shape, Y.shape)
             return dummy
         try:
             res = np.mean((Y-odeY)**2)
+            if estimation_settings["verbosity"] >= 4:
+                print("succesfully returning now inside model_ode_error")
             if np.isnan(res) or np.isinf(res) or not np.isreal(res):
 # #                print(model.expr, model.params, model.sym_params, model.sym_vars)
                 return dummy
@@ -279,6 +289,8 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
         else:
             return False
     
+    if estimation_settings["verbosity"] >= 4:
+        print("inside DE_fit")
     return differential_evolution(
         estimation_settings["objective_function"],
         bounds,
@@ -286,9 +298,11 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
         callback=diff_evol_timeout, 
         maxiter=10**2,
         # maxiter=10**3,
-        popsize=10,
+        # popsize=10,  # orig
+        # popsize=100,
         # popsize=30,
         # popsize=50,
+        tol=10
         )
 
 def DE_fit_metamodel (model, X, Y, T, p0, **estimation_settings):
@@ -297,10 +311,11 @@ def DE_fit_metamodel (model, X, Y, T, p0, **estimation_settings):
     lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
     bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
 
-    metamodel_kwargs = {}
+    metamodel_kwargs = {"seed": 0}
     model_kwargs = {"dimension": len(p0),
                     "function": estimation_settings["objective_function"]}
     surrogate_kwargs = {"rebuild_interval": 100,
+    # surrogate_kwargs = {"rebuild_interval": 10,
                         "predictor": ensemble.RandomForestRegressor()}
     threshold_kwargs = {"type": "alpha-beta",
                         "desired_surr_rate": 0.7,
@@ -309,11 +324,14 @@ def DE_fit_metamodel (model, X, Y, T, p0, **estimation_settings):
                         "alpha": 42,
                         "beta": 10}
     relevator_kwargs = {"rebuild_interval": 100,
+    # relevator_kwargs = {"rebuild_interval": 10,
                         "threshold_kwargs": threshold_kwargs,
                         "fresh_info": None,
                         "predictor": ensemble.RandomForestRegressor()}
     history_kwargs = {"size": 500,
+    # history_kwargs = {"size": 50,
                     "use_size": 200}
+                    # "use_size": 20}
     metamodel = Metamodel(metamodel_kwargs, model_kwargs, surrogate_kwargs,
                           relevator_kwargs, history_kwargs)
     start = time.perf_counter()
@@ -325,6 +343,8 @@ def DE_fit_metamodel (model, X, Y, T, p0, **estimation_settings):
         else:
             return False
     
+    if estimation_settings["verbosity"] >= 4:
+        print("inside DE_fit_metamodel")
     return differential_evolution(
         metamodel.evaluate,
         bounds,

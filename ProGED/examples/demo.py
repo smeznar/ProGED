@@ -8,6 +8,7 @@ from ProGED.parameter_estimation import fit_models
 from ProGED.generate import generate_models
 from ProGED.generators.grammar import GeneratorGrammar 
 from ProGED.examples.tee_so import Tee
+from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel
 
 # 0.1) save output into randomly named logfile:
 random = str(np.random.random())
@@ -24,11 +25,14 @@ grammar = GeneratorGrammar("""S -> S '+' T [0.4] | T [0.6]
                             T -> V [0.6] | 'C' "*" V [0.4]
                             V -> 'x' [0.5] | 'y' [0.5]""")
 symbols = {"x":['y', 'x'], "start":"S", "const":"C"}
-models = generate_models(grammar, symbols, strategy_settings={"N":20})
+# models = generate_models(grammar, symbols, strategy_settings={"N":20})
+models = generate_models(grammar, symbols, strategy_settings={"N":4})
 
 # 3.) discover the right equation
 data = np.hstack((T.reshape(-1,1), X, Y))
-models = fit_models(models, data, target_variable_index=-1, time_index=0, task_type="differential")
+models = fit_models(models, data, target_variable_index=-1, time_index=0, task_type="differential",
+                    estimation_settings={"optimizer": DE_fit_metamodel, "verbosity": 4}
+                    )
 
 # 4.) print models' results
 print("\n", models, "\n\nFinal score:")

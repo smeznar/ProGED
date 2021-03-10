@@ -25,6 +25,8 @@ eqation = "123"  # Code for eq_disco([1], [2,3]).
 sample_size = 5
 log_nickname = ""
 isTee = False
+# is_chaotic_wiki = "cw"
+is_chaotic_wiki = "c0"  # chaotic but not wiki
 if len(sys.argv) >= 2:
     sample_size = int(sys.argv[1])
 if len(sys.argv) >= 3:
@@ -32,6 +34,8 @@ if len(sys.argv) >= 3:
     log_nickname = sys.argv[2]
 if len(sys.argv) >= 4:
     eqation = sys.argv[3]
+if len(sys.argv) >= 5:
+    is_chaotic_wiki = sys.argv[4]
 aux = [int(i) for i in eqation]
 aquation = (aux[:1], aux[1:])
 random = str(np.random.random())
@@ -41,26 +45,38 @@ if isTee:
         log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
     except FileNotFoundError:
         log_object = te.Tee("log_lorenz_" + log_nickname + random + ".txt")
+if len(is_chaotic_wiki) != 2:
+    # print("Wrong cmd argument for chaotic/calm wiki/my diff. eq. configuration")
+    print("Wrong 5th chaotic+wiki cmd argument: should be of length 2, e.g. cw or 0w.")
+else:
+    c, w = is_chaotic_wiki[0], is_chaotic_wiki[1]
+    is_chaotic = True if c == "c" else False
+    is_wiki = True if w == "w" else False
 
 # # 1.) Data construction (simulation of Lorenz):
 
 np.random.seed(0)
+# is_chaotic = True
+# is_wiki = False
 T = np.linspace(0.48, 0.85, 1000)  # Times currently run at.
-# T = np.linspace(0, 40, 4000)  # Chaotic Lorenz times noted on Wiki.
+if is_wiki:
+    T = np.linspace(0, 40, 4000)  # Chaotic Lorenz times noted on Wiki.
 # # Lorenz's sode:
 # dx/dt = \sigma * (y-x)
 # dy/dt = x*(\rho-z) - y
 # dz/dt = x*y - \beta*z
 # non-chaotic configuration:
-# sigma = 1.3  # 1 # 0 
-# rho = -15  # 1 # 0
-# beta = 3.4  # 1 # 0
+sigma = 1.3  # 1 # 0 
+rho = -15  # 1 # 0
+beta = 3.4  # 1 # 0
 # Chaotic configuration:
-sigma = 10  # 1 # 0 
-rho = 28  # 1 # 0
-beta = 8/3  # 1 # 0
+if is_chaotic:
+    sigma = 10  # 1 # 0 
+    rho = 28  # 1 # 0
+    beta = 8/3  # 1 # 0
 y0 = [0.1, 0.4, 0.5]  # Lorenz initial values run at.
-# y0 = [1, 1, 1]  # Chaotic Lorenz initial values noted on Wiki.
+if is_wiki:
+    y0 = [1, 1, 1]  # Chaotic Lorenz initial values noted on Wiki.
 def dy_dt(t, ys):  # \frac{dy}{dt} ; # y = [y1,y2,y3,...] # ( shape= (n,) )
     # \dot{y} = y^. = [y1^., y2^., y3^., ...]
     x, y, z = ys
@@ -90,12 +106,14 @@ data = np.concatenate((T[:, np.newaxis], Yode.T), axis=1)  # Embed Time column i
 # # # # 2.) Discover one ode at a time.
 
 sys.path += ['.','..']
-from ProGED.generate import generate_models
+# from ProGED.generate import generate_models
 from ProGED.equation_discoverer import EqDisco
 # from ProGED.generators.grammar import GeneratorGrammar
-from ProGED.generators.grammar_construction import grammar_from_template  # Grammar's
+# from ProGED.generators.grammar_construction import grammar_from_template  # Grammar's
 #nonterminals will depend on given dataset.
-from ProGED.parameter_estimation import fit_models
+# from ProGED.parameter_estimation import fit_models
+from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel
+
 
 
 def eq_disco_demo (data, lhs_variables: list = [1],
@@ -176,14 +194,18 @@ ED = EqDisco(data = data,
                  "functions": [],
              },
              sample_size = sample_size,
-             verbosity = 1)
+             # verbosity = 1)
+             verbosity = 4)
 ED.generate_models()
 ED.fit_models(
     estimation_settings={
         "timeout": 5, 
         "max_ode_steps": 10**6, 
         "lower_upper_bounds": (-30, 30),
-        "optimizer": DE_fit,
-        # "optimizer": DE_fit_metamodel,
+        # "optimizer": DE_fit,
+        "optimizer": DE_fit_metamodel,
+        "verbosity": 4,
         })
 
+finnish = time.perf_counter()
+print(f"Finnished in {round(finnish-start, 2)} seconds")
