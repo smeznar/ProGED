@@ -1,6 +1,0 @@
-HISTTIMEFORMAT="%d/%m/%y %T " 
-HISTTIMEFORMAT="%T " 
-
-# open git-bash:
-/mnt/c/Program\ Files/Git/git-bash.exe
-alias git-bash='/mnt/c/Program\ Files/Git/git-bash.exe'
