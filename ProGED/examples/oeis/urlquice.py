@@ -309,12 +309,14 @@ def plot_largs(xs, largs, is_save=False, filename="plot_largs"):
     # plt.xticks(xs[::3])
     # plt.yticks(np.array(set(largs[::10])))
     # plt.yticks([i for i in range(1, 178, 10)])
-    mng = plt.get_current_fig_manager()
-    mng.frame.Maximize(True)
+    plt.get_current_fig_manager().window.state('zoomed')  # works (all on windows)
+    # mng.resize(*mng.window.maxsize())  #works (kinda)
+    # mng.full_screen_toggle()     # works kinda  
+    # mng.window.showMaximized()    dont work
+    # mng.frame.Maximize(True)      dont work
     plt.show()
     if is_save:
-        # fig.savefig(filename, transparent=True)
-        plt.savefig(filename) #, transparent=True)
+        fig.savefig(filename)
     return
 # xs, largs = pre_plot_largs(dict(seqs))
 # plot_largs(xs, largs)
@@ -331,9 +333,10 @@ def plot_fews(xs, ys, is_save=False, filename="plot_fews"):
     ax.set_xlabel("threshold")
     ax.set_ylabel("number of sequences with more than *threshold* terms")
     ax.set_title("Sequences with enough terms")
+    plt.get_current_fig_manager().window.state('zoomed')  # works (all on windows)
     plt.show()
     if is_save:
-        plt.savefig(filename)
+        fig.savefig(filename)
     return
 # plot_fews(thresholds, amount_manys)
 # plot_fews(thresholds_nomores, amount_manys_nomores)

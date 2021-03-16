@@ -2,10 +2,6 @@ from urlquice import plot_fews, pre_plot_largs, plot_largs
 import numpy as np
 from save_new_bfiles import bseqs
 
-# xs = ?
-# largs = ?
-# plot_fews(xs, ys)
-
 def maxsf(seqs):
     return [max([abs(term) for term in seq]) for _id, seq in seqs.items()]
 def lensf(seqs):
@@ -22,9 +18,9 @@ def pre_plot_fews(seqs):
     fewers = list(map(lambda thr: sum(np.array(lens)>=thr), xs))
     return xs, fewers
 
-xs, fewers = pre_plot_fews(bseqs)
+xs_few, fewers = pre_plot_fews(bseqs)
 # plot_fews(xs, fewers)
-# plot_fews(xs, fewers, is_save=True)
+plot_fews(xs_few, fewers, is_save=True)
 
 xs, largs = pre_plot_largs(bseqs)
 # plot_largs(xs, largs)
