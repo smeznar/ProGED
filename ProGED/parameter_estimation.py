@@ -75,6 +75,8 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     task_type = estimation_settings["task_type"]
     if task_type == "algebraic":
         return model_error(params, model, X, Y)
+    elif task_type == "oeis":
+        return model_error(params, model, X, Y)
     elif task_type == "differential":
         # Model_ode_error might use estimation[verbosity] agrument for
         # ode solver's settings and suppresing its warnnings:
@@ -246,32 +248,32 @@ def model_oeis_error (params, model, X, Y, _T, estimation_settings):
         print("Programmer1 model_oeis_error: Params at error:", params, f"and {type(error)} with message:", error)
         return dummy
 
-def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
-    """Defines mean squared error as the error metric."""
-    dummy = 10**30
-    try:
-        order = len(model.sym_vars)
-        # model.params = np.round(model.params)
-        params = list(np.round(model.params))
-        an = model.lambdify(*params)
-        first_terms = X[:order, 0]
-        # fibs = X[:order, 0]
-        cache = list(first_terms)
-        for _ in range(order, X.shape[0]):
-            cache += [an(*cache[-order:])]
-        cache
+# def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
+#     """Defines mean squared error as the error metric."""
+#     dummy = 10**30
+#     try:
+#         order = len(model.sym_vars)
+#         # model.params = np.round(model.params)
+#         params = list(np.round(model.params))
+#         an = model.lambdify(*params)
+#         first_terms = X[:order, 0]
+#         # fibs = X[:order, 0]
+#         cache = list(first_terms)
+#         for _ in range(order, X.shape[0]):
+#             cache += [an(*cache[-order:])]
+#         cache
         
-        # testY = model.evaluate(X, *params)
-        testY = cache
-        res = np.mean((Y-testY)**2)
-        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-            # print("isnan(res), ... ")
-            # print(model.expr, model.params, model.sym_params, model.sym_vars)
-            return dummy
-        return res
-    except Exception as error:
-        print("Programmer1 inside model_oeis_recursive_error: Params at error:", params, f"and {type(error)} with message:", error)
-        return dummy
+#         # testY = model.evaluate(X, *params)
+#         testY = cache
+#         res = np.mean((Y-testY)**2)
+#         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+#             # print("isnan(res), ... ")
+#             # print(model.expr, model.params, model.sym_params, model.sym_vars)
+#             return dummy
+#         return res
+#     except Exception as error:
+#         print("Programmer1 inside model_oeis_recursive_error: Params at error:", params, f"and {type(error)} with message:", error)
+#         return dummy
 
 def DE_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls scipy.optimize.differential_evolution. 
