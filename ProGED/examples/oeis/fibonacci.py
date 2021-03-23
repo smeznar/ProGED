@@ -1,11 +1,24 @@
 import numpy as np
+import pandas as pd
 from ProGED.equation_discoverer import EqDisco
 
-oeis = [0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,
+nrows = 50
+data = pd.read_csv('oeis_selection.csv', nrows=nrows)
+fibonacci_no = 45
+fibonacci_id = f"A{fibonacci_no:0>6}"
+# if nrows=50, dtype=int64:
+oeis = list(data[fibonacci_id])[:50]
+# if nrows=100, dtype=object:
+# oeis = [int(term) for term in data[fibonacci_id]]
+oeis_old = [0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,
  1597,2584,4181,6765,10946,17711,28657,46368,75025,
  121393,196418,317811,514229,832040,1346269,
  2178309,3524578,5702887,9227465,14930352,24157817,
  39088169,63245986,102334155]
+# check oeis old numbers:
+# assert oeis[len(oeis_old)-1] == oeis_old[len(oeis_old)-1] 
+# for i in range(len(oeis_old)):
+#     print(i, oeis_old[i], oeis[i])
 # oeis_primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,
 #  61,67,71,73,79,83,89,97,101,103,107,109,113,127,
 #  131,137,139,149,151,157,163,167,173,179,181,191,
@@ -13,7 +26,7 @@ oeis = [0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,
 #  263,269,271][:40+1]
 # oeis = oeis_primes
 fibs = np.array(oeis).reshape(-1, 1)
-ts = np.array([i for i in range(40+1)]).reshape(-1, 1)
+ts = np.array([i for i in range(len(oeis))]).reshape(-1, 1)
 data = np.hstack((ts, fibs))
 
 np.random.seed(0)
@@ -28,7 +41,8 @@ ED = EqDisco(data = data,
             generator_settings={"variables":["'n'"]},
             estimation_settings={"verbosity": 1, "task_type": "algebraic", "lower_upper_bounds": 
             # (-5, 5)} 
-            (-10,8)} # Last bound where it still finds.
+            (-1, 1)} 
+            # (-10,8)} # Last bound where it still finds.
             # (0,1)}  # Returns wrong error on windows.
             )
 ED.generate_models()
@@ -37,12 +51,12 @@ ED.fit_models()
 print("\n\nFinal score:")
 for m in ED.models:
     print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
-    
+
 phi = (1+5**(1/2))/2
 psi = (1-5**(1/2))/2
 c0 = 1/5**(1/2)
 c1 = np.log(phi)
-print(f"m  c0: {c0}", f"c1:{c1}")
+print(f"source m c0: {c0}", f"c1:{c1}")
 # fib(n) = (phi**n - psi**n)/5**(1/2)
 #         = floor(phi**n/5**(1/2) + 1/2)
 #         = round(phi**n/5**(1/2))
@@ -52,7 +66,7 @@ print(f"m  c0: {c0}", f"c1:{c1}")
 
 model = ED.models[5] 
 # model = ED.models[15]  # primes
-print(model, model.get_full_expr(), model.get_error())
+print(model, model.get_full_expr(), model.get_error(), ' -- = winner model')
 res = model.evaluate(ts, *model.params)
 res = [int(np.round(flo)) for flo in res]
 
@@ -64,4 +78,3 @@ for i, j in zip(res, oeis):
     error += abs(i-j)
 
 print(error)
-

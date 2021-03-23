@@ -12,11 +12,11 @@ from urllib import request
 import re
 import time
 
-def bfile2list(id, max_seq_length):
+def bfile2list(id_, max_seq_length):
     """Fetch b-file and return list."""
 
     max_read_url = (2+3+16+2) * max_seq_length
-    baddress = id + '/b' + id[1:] +'.txt'
+    baddress = id_ + '/b' + id_[1:] +'.txt'
     print(baddress)
     # Make sure to read only *max_read_url* characters from URL.
     bfile = request.urlopen('https://oeis.org/'+baddress).read(max_read_url).decode()
@@ -75,7 +75,7 @@ def new_fetch (start=0, end=1e10, do_write=False, max_seq_length=100):
     if do_write:
         variable2file(seqs, "bseqs", "save_new_bfiles.py")
     return seqs
-new_fetch(do_write=True)
+# new_fetch(do_write=True)
 # seqs = new_fetch()
 # print(len(seqs), type(seqs), [len(seq) for _, seq in seqs.items()], 
     # [seq for _, seq in seqs.items()][0])  # preview
@@ -124,7 +124,6 @@ def fetch(start=0, end=1e10, do_write=False):
         file.write("core_list = " + repr(seqs_flatten) + "\n"
                 + "core_unflatten = " + repr(seqs) + "\n")
         file.close()
-    # import saved_core
     print("fetch ended")
     return
 # fetch(130, 190)
@@ -138,63 +137,6 @@ def fetch(start=0, end=1e10, do_write=False):
 # fetch()
 # print('time of fetch():', time.perf_counter()-starting_time)
 
-## -- old, i.e. stu lines -- ##
-# page = txt2
-# # stu_lines = re.findall( r"%S (A\d{6}) (.+)\n%T A\d{6} (.*)\n%U A\d{6} (.*)\n", page)
-# stu_lines = re.findall( r"%S (A\d{6}) (.+)\n(%T A\d{6} (.*)\n)*(%U A\d{6} (.*)\n)*", page)
-# stu_seqs = [(stu_line[0], stu_line[1]+stu_line[3]+stu_line[5]) for stu_line in stu_lines]
-# print(stu_seqs)
-# t_line = stu_lines[0][2]
-# t_line = stu_lines[0][3]
-# print(t_line)
-# t_seq = re.findall(r"%[STU] A\d{6} (.+)\n", t_line)
-# print(t_seq)
-# stu_seqs = [[(i, re.findall(r"%[STU] A\d{6} (.+)\n", i)
-#   for i in stu_line[1:]]
-#     for stu_line in stu_lines]
-# print(stu_seqs)
-
-## -- new (NOT NEEDED, my bad), i.e. links %H line -- ##
-# <a href="/A000142/b000142.txt">
-# page = txt3
-# h_line = re.findall( r"%H.+<a href=(\"/A\d{6}/b\d{6}.txt\")>", page)
-# print(h_line, " \n... = h_line[0]")
-
-# new not needed function (for archive right now):
-# def fetch_with_bfiles(start=0, end=1e10, do_write=True):
-#     search=request.urlopen('https://oeis.org/search?q=keyword:core%20keyword:nice&fmt=text')
-#     header_length = 1000  # number of characters in header
-#     header = search.read(header_length).decode()
-#     # print(header)
-#     total = int(re.findall("Search: .+\nShowing \d+-\d+ of (\d+)\n", header)[0])
-#     print(total)
-#     seqs = []
-#     # number_of_sequences = 30  # ... test
-#     cropped = min(total, end)
-#     beginning = max(0, cropped-start)
-#     number_of_sequences = beginning
-#     print(f"total number of sequences found: {total}\n"
-#         f"start: {start}, end: {end}, "
-#         f"sequences of intersection:{number_of_sequences}")
-
-#     for i in range((number_of_sequences-1)//10+1):  # 178 -> 10-20, 20-30, ..., 170-180
-#         # print(i)
-#         search = request.urlopen(
-#             f'https://oeis.org/search?q=keyword:core%20keyword:nice&fmt=text&start={start+i*10}')
-#         print(i, "after wget")
-#         page = search.read().decode()
-#         hlines = re.findall( r"%H.+<a href=\"(/A\d{6}/b\d{6}.txt)\">", page)
-#         print(hlines, "\n ... = h_line")
-#         ten_seqs = hlines
-#         if len(ten_seqs)<10: print("\n\n\n less than 10 !!!!\n\n\n")
-#         print(len(ten_seqs))
-#         # seqs += [ten_seqs]
-#         print(i, "after regex ")
-#     return
-# # fetch_with_bfiles(130, 140, do_write=False)
-# # fetch_with_bfiles(do_write=False)
-# # print("end of fetch")
-
 ## -- download b-files via saved sequences -- ##
 # import saved_core
 # seqs = saved_core.core_list
@@ -202,7 +144,7 @@ def fetch(start=0, end=1e10, do_write=False):
 # dict_seqs = dict(seqs)
 # print(seqs[0])
 
-def fetch_bfiles(start=0, end=180, do_write=True, max_seq_length=100):
+def fetch_bfiles_old(start=0, end=180, do_write=True, max_seq_length=100):
     """Download extended sequences from bfiles of all sequences."""
 
     counter = start
@@ -241,37 +183,9 @@ def fetch_bfiles(start=0, end=180, do_write=True, max_seq_length=100):
         print("Sequences \"as are\" are written into the output file.")
     print("fetch of b-files ended")
     return
-# fetch_bfiles(130, 140, do_write=False)
+# fetch_bfiles_old(130, 140, do_write=False)
 # fetch_bfiles(do_write=False)
 # fetch_bfiles(80, 180, do_write=False)
 # fetch_bfiles(do_write=False)
 # fetch_bfiles(80, 90)
 # fetch_bfiles()
-
-
-bfile = """0	1
-1	1
-2	3
-3	6
-4	13
-5	24
-6	48
-7	86
-8	160
-9	282
-10	500
-11	859
-12	1479
-13	2485
-14	4167
-15	6879
-16	11297
-17	18334
-18	29601
-19	47330
-20	75278
-21	118794
-"""
-
-# new_seq_check = re.findall(r"(\d+)([ \t]+)(-?\d+)\n", bfile)  # with a ^ 
-# print(new_seq_check)

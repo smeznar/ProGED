@@ -1,25 +1,32 @@
-from save_new_bfiles import bseqs
 import re
+import pandas as pd
+# from save_new_bfiles import bseqs  # before csv
+# from selection import basic_info
+
+df = pd.read_csv('oeis_selection.csv')
+# danger! in next line we should convert string terms to integers.
+bseqs = {id_: [int(term) for term in seq] for id_, seq in df.items()}
 
 # basic info, preview:
-seqs = bseqs
-print(len(seqs), type(seqs), [len(seq) for _, seq in seqs.items()],
-    [seq for _, seq in seqs.items()][0])  # preview
-print(len(set(seqs)))
+# print(len(seqs), type(seqs), [len(seq) for _, seq in seqs.items()],
+#     [seq for _, seq in seqs.items()][0])  # preview
+# print(len(set(seqs)))
+
+# basic_info(bseqs)
 
 
 ## -- Check scrap against gzipped oeis database -- ##
-def check_scrap(seqs_dict=dict(seqs), is_bfile=False, max_seq_len=100):
+def check_scrap(seqs_dict: dict, is_bfile=False, max_seq_len=100):
     # seqs = seqs_flat
     file2 = open("stripped_oeis_database.txt", "r")
     original = file2.read()
     file2.close()
     counter = 1
-    for id, seq in seqs_dict.items():
+    for id_, seq in seqs_dict.items():
         # seq = seqs_dict[seq_id]
         # seq_id = "A000002"
-        compare = re.findall(id+".+\n", original)
-        str_seq = id + " ,"
+        compare = re.findall(id_+".+\n", original)
+        str_seq = id_ + " ,"
         for term in seq:
             str_seq += str(term)+","
         str_seq += "\n"
@@ -42,7 +49,7 @@ def check_scrap(seqs_dict=dict(seqs), is_bfile=False, max_seq_len=100):
             assert len(orig_cut) == len(scraped_cut)
             assert orig_cut == scraped_cut
             bool = orig_cut == scraped_cut
-            print(counter)
+            print(counter, id_, 'all good', length)
             # print(counter, "Correct scrapping!!! found it" if bool else "scrapping FAILED!!!")
             if not bool:
                 print("scrapping FAILED!!!")
@@ -55,5 +62,7 @@ def check_scrap(seqs_dict=dict(seqs), is_bfile=False, max_seq_len=100):
     return
 # check_scrap()
 # check_scrap(bseqs, is_bfile=True)
-check_scrap(bseqs, is_bfile=True, max_seq_len=200)  # returns error (max len set to 100)
+check_scrap(bseqs, is_bfile=True, max_seq_len=200)  # would return error if
+    # oeis official database file would have our sequences with less than 
+    # 100 terms (max len set to 100).
 print("end")

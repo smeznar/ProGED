@@ -18,7 +18,7 @@ from ProGED.model_box import ModelBox
 from ProGED.task import TASK_TYPES
 
 # glitch-doctor downloaded from github:
-from ProGED.glitch_doctor.metamodel import Metamodel
+# from ProGED.glitch_doctor.metamodel import Metamodel
 # import ProGED.glitch_doctor.metamodel.Metamodel
 # import ProGED.glitch_doctor.model.Model
 
@@ -298,11 +298,11 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
         callback=diff_evol_timeout, 
         maxiter=10**2,
         # maxiter=10**3,
-        # popsize=10,  # orig
+        popsize=10,  # orig
         # popsize=100,
         # popsize=30,
         # popsize=50,
-        tol=10
+        # tol=10
         )
 
 def DE_fit_metamodel (model, X, Y, T, p0, **estimation_settings):
