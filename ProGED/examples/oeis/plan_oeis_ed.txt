@@ -1,0 +1,6 @@
+for starters:
+grammar = poly  (or maybe universal)
+grammar probs = default
+sample_size = 100
+
+

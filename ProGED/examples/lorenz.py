@@ -116,6 +116,8 @@ from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel
 
 
 
+# Old function, when EqDisco() object was not yet implemented.
+# Now probably useless. Try to use EqDisco object instead.
 def eq_disco_demo (data, lhs_variables: list = [1],
                   # ["column 1"], # in case of header string reference
                     rhs_variables: list = [2, 3]):

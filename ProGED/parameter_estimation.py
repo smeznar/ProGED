@@ -39,20 +39,21 @@ Methods:
     fit_models: Performs parameter estimation on given models. Main interface to the module.
 """
 
+DUMMY = 10**30
+
 def model_error (params, model, X, Y, *residue):
     """Defines mean squared error as the error metric."""
-    dummy = 10**30
     try:
         testY = model.evaluate(X, *params)
         res = np.mean((Y-testY)**2)
         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
             # print("isnan(res), ... ")
             # print(model.expr, model.params, model.sym_params, model.sym_vars)
-            return dummy
+            return DUMMY
         return res
     except Exception as error:
         print("Programmer1 model_error: Params at error:", params, f"and {type(error)} with message:", error)
-        return dummy
+        return DUMMY
 
 # def model_constant_error (model, params, X, Y):
 #     """Alternative to model_error, intended to allow the discovery of physical constants.
@@ -180,7 +181,7 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
         - Y are columns of features that are derived via ode fitting.
     """
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
-    dummy = 10**9
+    DUMMY = 10**9
     try:
         # Next few lines strongly suppress any warnning messages 
         # produced by LSODA solver, called by ode() function.
@@ -208,28 +209,27 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
                 print("The ODE solver did not found ys at all times -> returning dummy error.")
             if estimation_settings["verbosity"] >= 4:
                 print(odeY.shape, Y.shape)
-            return dummy
+            return DUMMY
         try:
             res = np.mean((Y-odeY)**2)
             if estimation_settings["verbosity"] >= 4:
                 print("succesfully returning now inside model_ode_error")
             if np.isnan(res) or np.isinf(res) or not np.isreal(res):
 # #                print(model.expr, model.params, model.sym_params, model.sym_vars)
-                return dummy
+                return DUMMY
             return res
         except Exception as error:
             print("Programmer1 ode() mean(Y-odeY): Params at error:", params, f"and {type(error)} with message:", error)
-            return dummy
+            return DUMMY
 
     except Exception as error:
         print("Programmer: Excerpted an error inside ode() of model_ode_error.")
         print("Programmer: Params at error:", params, f"and {type(error)} with message:", error)
         print("Returning dummy error. All is well.")
-        return dummy
+        return DUMMY
 
 def model_oeis_error (params, model, X, Y, _T, estimation_settings):
     """Defines mean squared error as the error metric."""
-    dummy = 10**30
     if estimation_settings["verbosity"] >= 5:
         print(params, "print: params before rounding")
     try:
@@ -242,15 +242,14 @@ def model_oeis_error (params, model, X, Y, _T, estimation_settings):
             if estimation_settings["verbosity"] >= 2:
                 print("isnan(res), ... ")
                 print(model.expr, model.params, model.sym_params, model.sym_vars)
-            return dummy
+            return DUMMY
         return res
     except Exception as error:
         print("Programmer1 model_oeis_error: Params at error:", params, f"and {type(error)} with message:", error)
-        return dummy
+        return DUMMY
 
 # def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
 #     """Defines mean squared error as the error metric."""
-#     dummy = 10**30
 #     try:
 #         order = len(model.sym_vars)
 #         # model.params = np.round(model.params)
@@ -269,11 +268,11 @@ def model_oeis_error (params, model, X, Y, _T, estimation_settings):
 #         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
 #             # print("isnan(res), ... ")
 #             # print(model.expr, model.params, model.sym_params, model.sym_vars)
-#             return dummy
+#             return DUMMY
 #         return res
 #     except Exception as error:
 #         print("Programmer1 inside model_oeis_recursive_error: Params at error:", params, f"and {type(error)} with message:", error)
-#         return dummy
+#         return DUMMY
 
 def DE_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls scipy.optimize.differential_evolution. 
