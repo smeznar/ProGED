@@ -485,11 +485,11 @@ total = re.findall(r'''<a href=\"/A\d{6}\">A\d{6}</a>
                     
                     <td width=5>
                     <td valign=top align=left>
-                    ((.+\n)+)[ \t]+<td width=2>''', page_orig)
+                    ((.+\n)+)[ \t]+<td width=\d+>''', page_orig)
 # <td width=2>
 # ''', page)
 totala = re.findall(r"<a href=\"/A\d{6}\">A\d{6}</a>.*\n((.+\n)+)[ \t]+<td width=2>", page, re.M)
 # totala = re.findall(r"<a href=\"/A\d{6}\">A\d{6}</a>\n", page)
 # total = re.findall('^[ \t]+<td width=\d>', page, re.M)
 # totala = re.findall('<a href=\"/', page)
-print(total)
+print(total, len(total))

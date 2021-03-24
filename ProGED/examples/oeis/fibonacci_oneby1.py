@@ -174,7 +174,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
     seq_start = time.perf_counter()
     ED.fit_models()
     seq_cpu_time = time.perf_counter() - seq_start
-    print(f"Parameter fitting for sequence {seq_id} "
+    print(f"\nParameter fitting for sequence {seq_id} "
           f"took {seq_cpu_time} secconds.")
     print("\nFinal score:")
     for m in ED.models:
@@ -193,8 +193,9 @@ print("Running equation discovery for all oeis sequences, "
 start = time.perf_counter()
 for seq_id in csv:
     oeis_eq_disco(seq_id, is_direct, order)
+    print(f"\nTotal time consumed by now:{time.perf_counter-start}\n")
 cpu_time = time.perf_counter() - start
-print(f"Equation discovery for all (chosen) OEIS sequences"
+print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds.")
 
 def pretty_results(seq_name="fibonacci", is_direct=is_direct, order=order):
