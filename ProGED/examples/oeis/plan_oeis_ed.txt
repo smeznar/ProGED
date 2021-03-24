@@ -2,5 +2,12 @@ for starters:
 grammar = poly  (or maybe universal)
 grammar probs = default
 sample_size = 100
+lower_upper_bounds = (-5,5) if direct (and order =0) else (-10, 10) if recursive.
+(recursion only) order = 4
 
+
+3 models direct: 159s = 3min
+100 models direct: 1h30m?
+3 models recursive: 285s = 3min
+100 models recursive: 3h?
 

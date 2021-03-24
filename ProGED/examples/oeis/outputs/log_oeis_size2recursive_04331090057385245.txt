@@ -1,0 +1,48 @@
+ModelBox: 2 models
+-> C0*an_3, p = 0.021599999999999998, parse trees = 1, valid = False
+-> C0*an_1*an_3*an_4, p = 0.00021600000000000002, parse trees = 1, valid = False
+Estimating model C0*an_3
+model: 4.23606797749451*an_3                                                 ; p: 0.021599999999999998   ; error: 0.05374539293966918
+Estimating model C0*an_1*an_3*an_4
+model: 0                                                                     ; p: 0.00021600000000000002 ; error: 5.243122567381636e+17
+Parameter fitting for sequence A000045 took 1.7781379999999998 secconds.
+
+Final score:
+model: 4.23606797749451*an_3         ; error: 0.05374539293966918
+model: 0                             ; error: 5.243122567381636e+17
+Running equation discovery for all oeis sequences, with these settings:
+=>> is_direct = False
+=>> order of equation recursion = 4
+=>> sample_size = 2
+=>> grammar_template_name = polynomial
+
+ModelBox: 2 models
+-> C0*an_3, p = 0.021599999999999998, parse trees = 1, valid = False
+-> C0*an_1*an_3*an_4, p = 0.00021600000000000002, parse trees = 1, valid = False
+Estimating model C0*an_3
+model: 0.154179041142164*an_3                                                ; p: 0.021599999999999998   ; error: 137.28517246651225
+Estimating model C0*an_1*an_3*an_4
+model: 0.0263807351156495*an_1*an_3*an_4                                     ; p: 0.00021600000000000002 ; error: 136.59657583893167
+Parameter fitting for sequence A000001 took 0.3579366000000004 secconds.
+
+Final score:
+model: 0.154179041142164*an_3        ; error: 137.28517246651225
+model: 0.0263807351156495*an_1*an_3*an_4; error: 136.59657583893167
+ModelBox: 2 models
+-> C0*an_3, p = 0.021599999999999998, parse trees = 1, valid = False
+-> C0*an_1*an_3*an_4, p = 0.00021600000000000002, parse trees = 1, valid = False
+Estimating model C0*an_3
+model: 0.940677965251775*an_3                                                ; p: 0.021599999999999998   ; error: 0.23010316875460574
+Estimating model C0*an_1*an_3*an_4
+model: 0.340425527291553*an_1*an_3*an_4                                      ; p: 0.00021600000000000002 ; error: 0.8422756706753008
+Parameter fitting for sequence A000002 took 0.39360409999999924 secconds.
+
+Final score:
+model: 0.940677965251775*an_3        ; error: 0.23010316875460574
+model: 0.340425527291553*an_1*an_3*an_4; error: 0.8422756706753008
+ModelBox: 2 models
+-> C0*an_3, p = 0.021599999999999998, parse trees = 1, valid = False
+-> C0*an_1*an_3*an_4, p = 0.00021600000000000002, parse trees = 1, valid = False
+Estimating model C0*an_3
+model: 0.831030814580755*an_3                                                ; p: 0.021599999999999998   ; error: 9.111606524049346
+Estimating model C0*an_1*an_3*an_4

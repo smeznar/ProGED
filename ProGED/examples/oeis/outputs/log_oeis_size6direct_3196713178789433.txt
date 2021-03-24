@@ -1,0 +1,2623 @@
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 1.9581066091090424e+18
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 1.9576712093731873e+18
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 1.9580976397196442e+18
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 1.9581068020958743e+18
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 1.9581066124938022e+18
+Parameter fitting for sequence A000045 took 0.7291575999999997 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 1.9581066091090424e+18
+model: 5.0*n**3                      ; error: 1.9576712093731873e+18
+model: 5.0*n**2 + 1.29627872703535   ; error: 1.9580976397196442e+18
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 1.9581068020958743e+18
+model: 4.90729256114836*n + 0.2375428392975; error: 1.9581066124938022e+18
+Running equation discovery for all oeis sequences, with these settings:
+=>> is_direct = True
+=>> order of equation recursion = 0
+=>> sample_size = 6
+=>> grammar_template_name = polynomial
+
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.199109456358365*n                                                   ; p: 0.08639999999999999    ; error: 96.06735881261598
+Estimating model C0*n**3
+model: 0.000114456613046313*n**3                                             ; p: 0.013824000000000001   ; error: 100.8842127861746
+Estimating model C0*n**2 + C1
+model: 0.00351881386976492*n**2 + 2.19504068314789                           ; p: 0.00497664             ; error: 96.09814833897956
+Estimating model C0*exp(C1*n**5)
+model: 0.882718677072613*exp(-0.0259697655393917*n**5)                       ; p: 0.0014745600000000004  ; error: 128.1034877619932
+Estimating model C0*n + C1
+model: 0.180071471370432*n + 0.628253484883111                               ; p: 0.008294399999999999   ; error: 95.96569891965308
+Parameter fitting for sequence A000001 took 2.7338860000000005 secconds.
+
+Final score:
+model: 0.199109456358365*n           ; error: 96.06735881261598
+model: 0.000114456613046313*n**3     ; error: 100.8842127861746
+model: 0.00351881386976492*n**2 + 2.19504068314789; error: 96.09814833897956
+model: 0.882718677072613*exp(-0.0259697655393917*n**5); error: 128.1034877619932
+model: 0.180071471370432*n + 0.628253484883111; error: 95.96569891965308
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0455163833966716*n                                                  ; p: 0.08639999999999999    ; error: 0.8249969078540709
+Estimating model C0*n**3
+model: 2.17770202552956e-5*n**3                                              ; p: 0.013824000000000001   ; error: 1.5135969083121485
+Estimating model C0*n**2 + C1
+model: 8.68562994288143e-6*n**2 + 1.49297736256126                           ; p: 0.00497664             ; error: 0.24995955856079483
+Estimating model C0*exp(C1*n**5)
+model: 0.988187864793904*exp(-0.0420063840332791*n**5)                       ; p: 0.0014745600000000004  ; error: 2.4028693584767726
+Estimating model C0*n + C1
+model: 0.000240077149281041*n + 1.49411810720921                             ; p: 0.008294399999999999   ; error: 0.24998799519815357
+Parameter fitting for sequence A000002 took 4.0511012 secconds.
+
+Final score:
+model: 0.0455163833966716*n          ; error: 0.8249969078540709
+model: 2.17770202552956e-5*n**3      ; error: 1.5135969083121485
+model: 8.68562994288143e-6*n**2 + 1.49297736256126; error: 0.24995955856079483
+model: 0.988187864793904*exp(-0.0420063840332791*n**5); error: 2.4028693584767726
+model: 0.000240077149281041*n + 1.49411810720921; error: 0.24998799519815357
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.140333946645643*n                                                   ; p: 0.08639999999999999    ; error: 5.81770983302414
+Estimating model C0*n**3
+model: 7.07784466084495e-5*n**3                                              ; p: 0.013824000000000001   ; error: 11.32350663324197
+Estimating model C0*n**2 + C1
+model: 0.00100711288952862*n**2 + 3.32574924742927                           ; p: 0.00497664             ; error: 4.058093914930929
+Estimating model C0*exp(C1*n**5)
+model: 2.30988045279294*exp(-0.0522986084521249*n**5)                        ; p: 0.0014745600000000004  ; error: 21.644145493371703
+Estimating model C0*n + C1
+model: 0.057767082182815*n + 2.72470652517457                                ; p: 0.008294399999999999   ; error: 3.905461704682001
+Parameter fitting for sequence A000005 took 3.5330841 secconds.
+
+Final score:
+model: 0.140333946645643*n           ; error: 5.81770983302414
+model: 7.07784466084495e-5*n**3      ; error: 11.32350663324197
+model: 0.00100711288952862*n**2 + 3.32574924742927; error: 4.058093914930929
+model: 2.30988045279294*exp(-0.0522986084521249*n**5); error: 21.644145493371703
+model: 0.057767082182815*n + 2.72470652517457; error: 3.905461704682001
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 790013.96
+Estimating model C0*n**3
+model: 0.0214130881625344*n**3                                               ; p: 0.013824000000000001   ; error: 51321.42145158928
+Estimating model C0*n**2 + C1
+model: 0.856004182429136*n**2 - 5.0                                          ; p: 0.00497664             ; error: 139460.5535279703
+Estimating model C0*exp(C1*n**5)
+model: 1.49689573778203*exp(-0.475033338421277*n**5)                         ; p: 0.0014745600000000004  ; error: 1004593.6250336826
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 785678.96
+Parameter fitting for sequence A000009 took 1.9544004999999984 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 790013.96      
+model: 0.0214130881625344*n**3       ; error: 51321.42145158928
+model: 0.856004182429136*n**2 - 5.0  ; error: 139460.5535279703
+model: 1.49689573778203*exp(-0.475033338421277*n**5); error: 1004593.6250336826
+model: 5.0*n + 5.0                   ; error: 785678.96      
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.624539265630112*n                                                   ; p: 0.08639999999999999    ; error: 52.205140878169466
+Estimating model C0*n**3
+model: 0.000354157791352386*n**3                                             ; p: 0.013824000000000001   ; error: 106.7861755695808
+Estimating model C0*n**2 + C1
+model: 0.0122982617707897*n**2 + 5.0                                         ; p: 0.00497664             ; error: 58.027717387399704
+Estimating model C0*exp(C1*n**5)
+model: 1.22955609140307*exp(-0.720632008729863*n**5)                         ; p: 0.0014745600000000004  ; error: 367.52428421420683
+Estimating model C0*n + C1
+model: 0.603505359288843*n + 0.694118892501046                               ; p: 0.008294399999999999   ; error: 52.08104105642298
+Parameter fitting for sequence A000010 took 3.451854899999999 secconds.
+
+Final score:
+model: 0.624539265630112*n           ; error: 52.205140878169466
+model: 0.000354157791352386*n**3     ; error: 106.7861755695808
+model: 0.0122982617707897*n**2 + 5.0 ; error: 58.027717387399704
+model: 1.22955609140307*exp(-0.720632008729863*n**5); error: 367.52428421420683
+model: 0.603505359288843*n + 0.694118892501046; error: 52.08104105642298
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 1.1019365118395689e+23
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 1.1019356279656198e+23
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 1.1019364938303487e+23
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 1.1019365122004223e+23
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 1.1019365118252896e+23
+Parameter fitting for sequence A000014 took 1.0217482999999987 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 1.1019365118395689e+23
+model: 5.0*n**3                      ; error: 1.1019356279656198e+23
+model: 5.0*n**2 + 1.29627872703535   ; error: 1.1019364938303487e+23
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 1.1019365122004223e+23
+model: 4.90729256114836*n + 0.2375428392975; error: 1.1019365118252896e+23
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.274854663567764*n                                                   ; p: 0.08639999999999999    ; error: 54.06179542362402
+Estimating model C0*n**3
+model: 0.000139060548161509*n**3                                             ; p: 0.013824000000000001   ; error: 74.93341048724974
+Estimating model C0*n**2 + C1
+model: 0.00296848877169922*n**2 + 5.0                                        ; p: 0.00497664             ; error: 48.26846011000054
+Estimating model C0*exp(C1*n**5)
+model: 1.04048375679595*exp(-0.078855402390666*n**5)                         ; p: 0.0014745600000000004  ; error: 115.09352671483805
+Estimating model C0*n + C1
+model: 0.123339513114929*n + 5.0                                             ; p: 0.008294399999999999   ; error: 46.440583302411895
+Parameter fitting for sequence A000019 took 4.074073500000001 secconds.
+
+Final score:
+model: 0.274854663567764*n           ; error: 54.06179542362402
+model: 0.000139060548161509*n**3     ; error: 74.93341048724974
+model: 0.00296848877169922*n**2 + 5.0; error: 48.26846011000054
+model: 1.04048375679595*exp(-0.078855402390666*n**5); error: 115.09352671483805
+model: 0.123339513114929*n + 5.0     ; error: 46.440583302411895
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 8.925748199303019e+23
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 8.925745604030327e+23
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 8.925748146395557e+23
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 8.925748200367055e+23
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 8.925748199260911e+23
+Parameter fitting for sequence A000029 took 0.762850499999999 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 8.925748199303019e+23
+model: 5.0*n**3                      ; error: 8.925745604030327e+23
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 8.925748146395557e+23
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 8.925748200367055e+23
+model: 4.90729256114836*n + 0.2375428392975; error: 8.925748199260911e+23
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 3.570274759847799e+24
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 3.570274240795606e+24
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 3.570274749266357e+24
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 3.570274760060605e+24
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 3.570274759839377e+24
+Parameter fitting for sequence A000031 took 0.4222196999999994 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 3.570274759847799e+24
+model: 5.0*n**3                      ; error: 3.570274240795606e+24
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 3.570274749266357e+24
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 3.570274760060605e+24
+model: 4.90729256114836*n + 0.2375428392975; error: 3.570274759839377e+24
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 9.790533602659967e+18
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 9.789559931295769e+18
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 9.79051352274655e+18
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 9.790534010479372e+18
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 9.790533586516226e+18
+Parameter fitting for sequence A000032 took 0.5268514000000017 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 9.790533602659967e+18
+model: 5.0*n**3                      ; error: 9.789559931295769e+18
+model: 5.0*n**2 + 1.29627872703535   ; error: 9.79051352274655e+18
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 9.790534010479372e+18
+model: 4.90729256114836*n + 0.2375428392975; error: 9.790533586516226e+18
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0154607247596485*n                                                  ; p: 0.08639999999999999    ; error: 0.3067408781694697
+Estimating model C0*n**3
+model: 7.28110872261212e-6*n**3                                              ; p: 0.013824000000000001   ; error: 0.3828655421918012
+Estimating model C0*n**2 + C1
+model: 2.29005996828119e-5*n**2 + 0.481484863136603                          ; p: 0.00497664             ; error: 0.2497193315939124
+Estimating model C0*exp(C1*n**5)
+model: 0.490876247227121*exp(-0.0536421245165868*n**5)                       ; p: 0.0014745600000000004  ; error: 0.4906941430018218
+Estimating model C0*n + C1
+model: 0.00120046096749659*n + 0.47058870393653                              ; p: 0.008294399999999999   ; error: 0.24969987995205778
+Parameter fitting for sequence A000035 took 4.5106787 secconds.
+
+Final score:
+model: 0.0154607247596485*n          ; error: 0.3067408781694697
+model: 7.28110872261212e-6*n**3      ; error: 0.3828655421918012
+model: 2.29005996828119e-5*n**2 + 0.481484863136603; error: 0.2497193315939124
+model: 0.490876247227121*exp(-0.0536421245165868*n**5); error: 0.4906941430018218
+model: 0.00120046096749659*n + 0.47058870393653; error: 0.24969987995205778
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.33194804607947*n                                                    ; p: 0.08639999999999999    ; error: 93.57178181818185
+Estimating model C0*n**3
+model: 0.00255424269245651*n**3                                              ; p: 0.013824000000000001   ; error: 1701.813345417512
+Estimating model C0*n**2 + C1
+model: 0.108132789058659*n**2 + 5.0                                          ; p: 0.00497664             ; error: 372.47385581977323
+Estimating model C0*exp(C1*n**5)
+model: 3.5079901412107*exp(-0.433052461036509*n**5)                          ; p: 0.0014745600000000004  ; error: 15265.495991803422
+Estimating model C0*n + C1
+model: 4.48346320152752*n - 5.0                                              ; p: 0.008294399999999999   ; error: 62.083903030303034
+Parameter fitting for sequence A000040 took 2.9995455 secconds.
+
+Final score:
+model: 4.33194804607947*n            ; error: 93.57178181818185
+model: 0.00255424269245651*n**3      ; error: 1701.813345417512
+model: 0.108132789058659*n**2 + 5.0  ; error: 372.47385581977323
+model: 3.5079901412107*exp(-0.433052461036509*n**5); error: 15265.495991803422
+model: 4.48346320152752*n - 5.0      ; error: 62.083903030303034
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 2099178120.96
+Estimating model C0*n**3
+model: 0.929373764601264*n**3                                                ; p: 0.013824000000000001   ; error: 313044549.2622776
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 1709695049.96
+Estimating model C0*exp(C1*n**5)
+model: 1.0631375935914*exp(-0.183557340194646*n**5)                          ; p: 0.0014745600000000004  ; error: 2108765928.220106
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 2098961021.96
+Parameter fitting for sequence A000041 took 1.2626022000000034 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 2099178120.96  
+model: 0.929373764601264*n**3        ; error: 313044549.2622776
+model: 5.0*n**2 + 5.0                ; error: 1709695049.96  
+model: 1.0631375935914*exp(-0.183557340194646*n**5); error: 2108765928.220106
+model: 5.0*n + 5.0                   ; error: 2098961021.96  
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 1.9581066091090424e+18
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 1.9576712093731873e+18
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 1.9580976397196442e+18
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 1.9581068020958743e+18
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 1.9581066124938022e+18
+Parameter fitting for sequence A000045 took 0.7202334999999991 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 1.9581066091090424e+18
+model: 5.0*n**3                      ; error: 1.9576712093731873e+18
+model: 5.0*n**2 + 1.29627872703535   ; error: 1.9580976397196442e+18
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 1.9581068020958743e+18
+model: 4.90729256114836*n + 0.2375428392975; error: 1.9581066124938022e+18
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 8.92568665907783e+23
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 8.925684063817195e+23
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 8.925686606170618e+23
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 8.925686660141861e+23
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 8.925686659035721e+23
+Parameter fitting for sequence A000048 took 0.46011769999999785 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 8.92568665907783e+23
+model: 5.0*n**3                      ; error: 8.925684063817195e+23
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 8.925686606170618e+23
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 8.925686660141861e+23
+model: 4.90729256114836*n + 0.2375428392975; error: 8.925686659035721e+23
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.01513914156493*n                                                    ; p: 0.08639999999999999    ; error: 0.31469684601115194
+Estimating model C0*n**3
+model: 0.00115034719688376*n**3                                              ; p: 0.013824000000000001   ; error: 532.2750632264301
+Estimating model C0*n**2 + C1
+model: 0.0474494605655635*n**2 + 5.0                                         ; p: 0.00497664             ; error: 137.9848734438691
+Estimating model C0*exp(C1*n**5)
+model: 3.46745505870211*exp(-0.00408346382423486*n**5)                       ; p: 0.0014745600000000004  ; error: 3282.8785519800113
+Estimating model C0*n + C1
+model: 1.99995195913222*n + 0.501176988633106                                ; p: 0.008294399999999999   ; error: 0.24999951980802124
+Parameter fitting for sequence A000069 took 3.451558200000001 secconds.
+
+Final score:
+model: 2.01513914156493*n            ; error: 0.31469684601115194
+model: 0.00115034719688376*n**3      ; error: 532.2750632264301
+model: 0.0474494605655635*n**2 + 5.0 ; error: 137.9848734438691
+model: 3.46745505870211*exp(-0.00408346382423486*n**5); error: 3282.8785519800113
+model: 1.99995195913222*n + 0.501176988633106; error: 0.24999951980802124
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 8.451004001511314e+27
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 8.451003977037331e+27
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 8.451004001002956e+27
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 8.451004001521529e+27
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 8.45100400151091e+27
+Parameter fitting for sequence A000079 took 0.7353860000000054 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 8.451004001511314e+27
+model: 4.90338947396704*n**3         ; error: 8.451003977037331e+27
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 8.451004001002956e+27
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 8.451004001521529e+27
+model: 4.90729256114836*n + 0.2375428392975; error: 8.45100400151091e+27
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0912059319330549*n                                                  ; p: 0.08639999999999999    ; error: 1.534474211502803
+Estimating model C0*n**3
+model: 4.59323058347434e-5*n**3                                              ; p: 0.013824000000000001   ; error: 3.8727824643740587
+Estimating model C0*n**2 + C1
+model: 0.000698020000553331*n**2 + 2.09565076384301                          ; p: 0.00497664             ; error: 0.9238878417545782
+Estimating model C0*exp(C1*n**5)
+model: 0.566178785454379*exp(-0.0110260202942122*n**5)                       ; p: 0.0014745600000000004  ; error: 8.234457633722663
+Estimating model C0*n + C1
+model: 0.0411524462963933*n + 1.65176502577056                               ; p: 0.008294399999999999   ; error: 0.8317234093637922
+Parameter fitting for sequence A000120 took 4.0037155000000055 secconds.
+
+Final score:
+model: 0.0912059319330549*n          ; error: 1.534474211502803
+model: 4.59323058347434e-5*n**3      ; error: 3.8727824643740587
+model: 0.000698020000553331*n**2 + 2.09565076384301; error: 0.9238878417545782
+model: 0.566178785454379*exp(-0.0110260202942122*n**5); error: 8.234457633722663
+model: 0.0411524462963933*n + 1.65176502577056; error: 0.8317234093637922
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 9266465.0
+Estimating model C0*n**3
+model: 0.0692035254251488*n**3                                               ; p: 0.013824000000000001   ; error: 91742.55022054983
+Estimating model C0*n**2 + C1
+model: 2.8143306619921*n**2 - 5.0                                            ; p: 0.00497664             ; error: 648373.9100262449
+Estimating model C0*exp(C1*n**5)
+model: 4.15698855721538*exp(-0.0058964577837739*n**5)                        ; p: 0.0014745600000000004  ; error: 10040908.55414853
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 9248132.0
+Parameter fitting for sequence A000123 took 2.164029500000005 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 9266465.0      
+model: 0.0692035254251488*n**3       ; error: 91742.55022054983
+model: 2.8143306619921*n**2 - 5.0    ; error: 648373.9100262449
+model: 4.15698855721538*exp(-0.0058964577837739*n**5); error: 10040908.55414853
+model: 5.0*n + 5.0                   ; error: 9248132.0      
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 178988.2
+Estimating model C0*n**3
+model: 0.0120871400669734*n**3                                               ; p: 0.013824000000000001   ; error: 9383.173227471412
+Estimating model C0*n**2 + C1
+model: 0.509906517017405*n**2 + 5.0                                          ; p: 0.00497664             ; error: 3.5029461852455688
+Estimating model C0*exp(C1*n**5)
+model: 1.94886862413574*exp(-0.0105872400970719*n**5)                        ; p: 0.0014745600000000004  ; error: 313125.3932487305
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 176063.2
+Parameter fitting for sequence A000124 took 3.036988899999997 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 178988.2       
+model: 0.0120871400669734*n**3       ; error: 9383.173227471412
+model: 0.509906517017405*n**2 + 5.0  ; error: 3.5029461852455688
+model: 1.94886862413574*exp(-0.0105872400970719*n**5); error: 313125.3932487305
+model: 5.0*n + 5.0                   ; error: 176063.2       
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0134075398460405*n                                                  ; p: 0.08639999999999999    ; error: 0.3946622139765199
+Estimating model C0*n**3
+model: 5.88016471515203e-6*n**3                                              ; p: 0.013824000000000001   ; error: 0.4679929435139878
+Estimating model C0*n**2 + C1
+model: 0.595714354500411 - 0.000118385081928761*n**2                         ; p: 0.00497664             ; error: 0.28250810571429924
+Estimating model C0*exp(C1*n**5)
+model: 0.814275082732463*exp(-0.00168520570893949*n**5)                      ; p: 0.0014745600000000004  ; error: 0.48273338856701054
+Estimating model C0*n + C1
+model: 0.665883010345344 - 0.00677073317884776*n                             ; p: 0.008294399999999999   ; error: 0.2804533013206595
+Parameter fitting for sequence A000161 took 4.460081299999999 secconds.
+
+Final score:
+model: 0.0134075398460405*n          ; error: 0.3946622139765199
+model: 5.88016471515203e-6*n**3      ; error: 0.4679929435139878
+model: 0.595714354500411 - 0.000118385081928761*n**2; error: 0.28250810571429924
+model: 0.814275082732463*exp(-0.00168520570893949*n**5); error: 0.48273338856701054
+model: 0.665883010345344 - 0.00677073317884776*n; error: 0.2804533013206595
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 1.68910327408827*n                                                    ; p: 0.08639999999999999    ; error: 217.69299987631422
+Estimating model C0*n**3
+model: 0.000965650872285248*n**3                                             ; p: 0.013824000000000001   ; error: 585.7343997538716
+Estimating model C0*n**2 + C1
+model: 0.0392385991840516*n**2 + 5.0                                         ; p: 0.00497664             ; error: 303.76117515888456
+Estimating model C0*exp(C1*n**5)
+model: 2.04305946877371*exp(-0.106377707250365*n**5)                         ; p: 0.0014745600000000004  ; error: 2524.23804357539
+Estimating model C0*n + C1
+model: 1.66357750380894*n + 0.842350222017701                                ; p: 0.008294399999999999   ; error: 217.51023481392755
+Parameter fitting for sequence A000203 took 3.2458861 secconds.
+
+Final score:
+model: 1.68910327408827*n            ; error: 217.69299987631422
+model: 0.000965650872285248*n**3     ; error: 585.7343997538716
+model: 0.0392385991840516*n**2 + 5.0 ; error: 303.76117515888456
+model: 2.04305946877371*exp(-0.106377707250365*n**5); error: 2524.23804357539
+model: 1.66357750380894*n + 0.842350222017701; error: 217.51023481392755
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 2.563195014758115e+19
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 2.5630374682097426e+19
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 2.5631917657580392e+19
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 2.5631950807446815e+19
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 2.5631950121460027e+19
+Parameter fitting for sequence A000204 took 0.7875773999999964 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 2.563195014758115e+19
+model: 5.0*n**3                      ; error: 2.5630374682097426e+19
+model: 5.0*n**2 + 1.29627872703535   ; error: 2.5631917657580392e+19
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 2.5631950807446815e+19
+model: 4.90729256114836*n + 0.2375428392975; error: 2.5631950121460027e+19
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 178399.2
+Estimating model C0*n**3
+model: 0.0120753171514243*n**3                                               ; p: 0.013824000000000001   ; error: 9274.284993111232
+Estimating model C0*n**2 + C1
+model: 0.509542714248623*n**2 + 4.53471725188837                             ; p: 0.00497664             ; error: 3.374308639194963
+Estimating model C0*exp(C1*n**5)
+model: 0.106392964536585*exp(-3.25716018097104*n**5)                         ; p: 0.0014745600000000004  ; error: 312291.70006288996
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 175484.2
+Parameter fitting for sequence A000217 took 2.9200118000000046 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 178399.2       
+model: 0.0120753171514243*n**3       ; error: 9274.284993111232
+model: 0.509542714248623*n**2 + 4.53471725188837; error: 3.374308639194963
+model: 0.106392964536585*exp(-3.25716018097104*n**5); error: 312291.70006288996
+model: 5.0*n + 5.0                   ; error: 175484.2       
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 2.1471032294774515e+18
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 2.1465985360289124e+18
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 2.1470927165279276e+18
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 2.1471034585964099e+18
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 2.1471032334926979e+18
+Parameter fitting for sequence A000219 took 0.7410325999999969 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 2.1471032294774515e+18
+model: 5.0*n**3                      ; error: 2.1465985360289124e+18
+model: 5.0*n**2 + 1.29627872703535   ; error: 2.1470927165279276e+18
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 2.1471034585964099e+18
+model: 4.90729256114836*n + 0.2375428392975; error: 2.1471032334926979e+18
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 8.451004001511269e+27
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 8.451003977037286e+27
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 8.451004001002911e+27
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 8.451004001521485e+27
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 8.451004001510866e+27
+Parameter fitting for sequence A000225 took 0.4560869999999966 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 8.451004001511269e+27
+model: 4.90338947396704*n**3         ; error: 8.451003977037286e+27
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 8.451004001002911e+27
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 8.451004001521485e+27
+model: 4.90729256114836*n + 0.2375428392975; error: 8.451004001510866e+27
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 908420.8
+Estimating model C0*n**3
+model: 0.0234858989688824*n**3                                               ; p: 0.013824000000000001   ; error: 32986.03649727643
+Estimating model C0*n**2 + C1
+model: 1.0*n**2 + 1.11022302462516e-15                                       ; p: 0.00497664             ; error: 1.2818989709841458e-31
+Estimating model C0*exp(C1*n**5)
+model: 0.236774794319621*exp(-1.72978102397064*n**5)                         ; p: 0.0014745600000000004  ; error: 1188333.299477075
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 901585.8
+Parameter fitting for sequence A000290 took 8.2276016 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 908420.8       
+model: 0.0234858989688824*n**3       ; error: 32986.03649727643
+model: 1.0*n**2 + 1.11022302462516e-15; error: 1.2818989709841458e-31
+model: 0.236774794319621*exp(-1.72978102397064*n**5); error: 1188333.299477075
+model: 5.0*n + 5.0                   ; error: 901585.8       
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 64245000.4
+Estimating model C0*n**3
+model: 0.178644106812003*n**3                                                ; p: 0.013824000000000001   ; error: 8923.162391255399
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 8327009.4
+Estimating model C0*exp(C1*n**5)
+model: 1.33323915314117*exp(-0.0350185600827729*n**5)                        ; p: 0.0014745600000000004  ; error: 66358100.851314604
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 64192105.4
+Parameter fitting for sequence A000292 took 2.0762576999999993 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 64245000.4     
+model: 0.178644106812003*n**3        ; error: 8923.162391255399
+model: 5.0*n**2 + 5.0                ; error: 8327009.4      
+model: 1.33323915314117*exp(-0.0350185600827729*n**5); error: 66358100.851314604
+model: 5.0*n + 5.0                   ; error: 64192105.4     
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 2203000.8
+Estimating model C0*n**3
+model: 0.0350749542960963*n**3                                               ; p: 0.013824000000000001   ; error: 71216.33582983512
+Estimating model C0*n**2 + C1
+model: 1.49045726651225*n**2 - 4.53470168680973                              ; p: 0.00497664             ; error: 3.3743086391087616
+Estimating model C0*exp(C1*n**5)
+model: 0.876552299764145*exp(-0.0298188264720128*n**5)                       ; p: 0.0014745600000000004  ; error: 2628933.230275836
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 2192245.8
+Parameter fitting for sequence A000326 took 3.572871400000011 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 2203000.8      
+model: 0.0350749542960963*n**3       ; error: 71216.33582983512
+model: 1.49045726651225*n**2 - 4.53470168680973; error: 3.3743086391087616
+model: 0.876552299764145*exp(-0.0298188264720128*n**5); error: 2628933.230275836
+model: 5.0*n + 5.0                   ; error: 2192245.8      
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 243680578.4
+Estimating model C0*n**3
+model: 0.345215509462564*n**3                                                ; p: 0.013824000000000001   ; error: 8579.235462655726
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 108057815.4
+Estimating model C0*exp(C1*n**5)
+model: 0.489210995900728*exp(-0.274683369172271*n**5)                        ; p: 0.0014745600000000004  ; error: 247772886.89266664
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 243577703.4
+Parameter fitting for sequence A000330 took 1.8038257999999985 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 243680578.4    
+model: 0.345215509462564*n**3        ; error: 8579.235462655726
+model: 5.0*n**2 + 5.0                ; error: 108057815.4    
+model: 0.489210995900728*exp(-0.274683369172271*n**5); error: 247772886.89266664
+model: 5.0*n + 5.0                   ; error: 243577703.4    
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 2067154320.0
+Estimating model C0*n**3
+model: 1.0*n**3                                                              ; p: 0.013824000000000001   ; error: 0.0
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 1618361973.0
+Estimating model C0*exp(C1*n**5)
+model: 0.462323492515008*exp(-0.00534634318454574*n**5)                      ; p: 0.0014745600000000004  ; error: 2079017440.2276316
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 2066855445.0
+Parameter fitting for sequence A000578 took 2.208331599999994 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 2067154320.0   
+model: 1.0*n**3                      ; error: 0.0            
+model: 5.0*n**2 + 5.0                ; error: 1618361973.0   
+model: 0.462323492515008*exp(-0.00534634318454574*n**5); error: 2079017440.2276316
+model: 5.0*n + 5.0                   ; error: 2066855445.0   
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 3959576444420.8
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 3111781912220.8
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 3939294219377.8
+Estimating model C0*exp(C1*n**5)
+model: 4.40622188176613*exp(-0.00915875879019146*n**5)                       ; p: 0.0014745600000000004  ; error: 3960066528330.4663
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 3959564562337.8
+Parameter fitting for sequence A000583 took 1.053086499999992 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 3959576444420.8
+model: 5.0*n**3                      ; error: 3111781912220.8
+model: 5.0*n**2 + 5.0                ; error: 3939294219377.8
+model: 4.40622188176613*exp(-0.00915875879019146*n**5); error: 3960066528330.4663
+model: 5.0*n + 5.0                   ; error: 3959564562337.8
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.832009891051988*n                                                   ; p: 0.08639999999999999    ; error: 190.80358392084108
+Estimating model C0*n**3
+model: 0.000467620610570508*n**3                                             ; p: 0.013824000000000001   ; error: 295.85353972948445
+Estimating model C0*n**2 + C1
+model: 0.0174170445761935*n**2 + 5.0                                         ; p: 0.00497664             ; error: 207.79479647371264
+Estimating model C0*exp(C1*n**5)
+model: 1.44376922771342*exp(-0.0312671897831795*n**5)                        ; p: 0.0014745600000000004  ; error: 750.3678001741026
+Estimating model C0*n + C1
+model: 0.792509159650086*n + 1.30352411884801                                ; p: 0.008294399999999999   ; error: 190.36591404562546
+Parameter fitting for sequence A000593 took 3.0238461 secconds.
+
+Final score:
+model: 0.832009891051988*n           ; error: 190.80358392084108
+model: 0.000467620610570508*n**3     ; error: 295.85353972948445
+model: 0.0174170445761935*n**2 + 5.0 ; error: 207.79479647371264
+model: 1.44376922771342*exp(-0.0312671897831795*n**5); error: 750.3678001741026
+model: 0.792509159650086*n + 1.30352411884801; error: 190.36591404562546
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 2.4395120252944813e+17
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 2.439411846782774e+17
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 2.4395099235094883e+17
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 2.439512070981015e+17
+Estimating model C0*n + C1
+model: 5.0*n + 0.2375428392975                                               ; p: 0.008294399999999999   ; error: 2.439512025248399e+17
+Parameter fitting for sequence A000594 took 0.7505639999999971 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 2.4395120252944813e+17
+model: 5.0*n**3                      ; error: 2.439411846782774e+17
+model: 5.0*n**2 + 1.29627872703535   ; error: 2.4395099235094883e+17
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 2.439512070981015e+17
+model: 5.0*n + 0.2375428392975       ; error: 2.439512025248399e+17
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.055584410591252*n                                                   ; p: 0.08639999999999999    ; error: 2.0220363636363836
+Estimating model C0*n**3
+model: 2.74670798394716e-5*n**3                                              ; p: 0.013824000000000001   ; error: 2.951008381596545
+Estimating model C0*n**2 + C1
+model: 0.000234155940909957*n**2 + 1.53068491820647                          ; p: 0.00497664             ; error: 1.5322822855999498
+Estimating model C0*exp(C1*n**5)
+model: 0.957970261467688*exp(-0.00583773959825321*n**5)                      ; p: 0.0014745600000000004  ; error: 4.4433508752636826
+Estimating model C0*n + C1
+model: 0.0134453447446358*n + 1.39058918133255                               ; p: 0.008294399999999999   ; error: 1.5239529411767192
+Parameter fitting for sequence A000688 took 3.6613909000000007 secconds.
+
+Final score:
+model: 0.055584410591252*n           ; error: 2.0220363636363836
+model: 2.74670798394716e-5*n**3      ; error: 2.951008381596545
+model: 0.000234155940909957*n**2 + 1.53068491820647; error: 1.5322822855999498
+model: 0.957970261467688*exp(-0.00583773959825321*n**5); error: 4.4433508752636826
+model: 0.0134453447446358*n + 1.39058918133255; error: 1.5239529411767192
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.336895480482295*n                                                   ; p: 0.08639999999999999    ; error: 1.2164076685219742
+Estimating model C0*n**3
+model: 0.000186121744483181*n**3                                             ; p: 0.013824000000000001   ; error: 21.599718842792946
+Estimating model C0*n**2 + C1
+model: 0.00522619707496702*n**2 + 4.51461958221534                           ; p: 0.00497664             ; error: 1.9890675476656037
+Estimating model C0*exp(C1*n**5)
+model: 0.666109800823729*exp(-0.0908955779358939*n**5)                       ; p: 0.0014745600000000004  ; error: 92.96906322734193
+Estimating model C0*n + C1
+model: 0.279711875967618*n + 1.88705894408576                                ; p: 0.008294399999999999   ; error: 0.29918271308525923
+Parameter fitting for sequence A000720 took 4.040794500000004 secconds.
+
+Final score:
+model: 0.336895480482295*n           ; error: 1.2164076685219742
+model: 0.000186121744483181*n**3     ; error: 21.599718842792946
+model: 0.00522619707496702*n**2 + 4.51461958221534; error: 1.9890675476656037
+model: 0.666109800823729*exp(-0.0908955779358939*n**5); error: 92.96906322734193
+model: 0.279711875967618*n + 1.88705894408576; error: 0.29918271308525923
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 1586475955.36
+Estimating model C0*n**3
+model: 0.762622012487303*n**3                                                ; p: 0.013824000000000001   ; error: 385020451.11446184
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 1275822843.16
+Estimating model C0*exp(C1*n**5)
+model: 1.0631375935914*exp(-0.183557340194646*n**5)                          ; p: 0.0014745600000000004  ; error: 1594161071.0201058
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 1586304497.56
+Parameter fitting for sequence A000793 took 1.5338510999999926 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 1586475955.36  
+model: 0.762622012487303*n**3        ; error: 385020451.11446184
+model: 5.0*n**2 + 5.0                ; error: 1275822843.16  
+model: 1.0631375935914*exp(-0.183557340194646*n**5); error: 1594161071.0201058
+model: 5.0*n + 5.0                   ; error: 1586304497.56  
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.155324670520473*n                                                   ; p: 0.08639999999999999    ; error: 12.554327272727289
+Estimating model C0*n**3
+model: 7.55699798338227e-5*n**3                                              ; p: 0.013824000000000001   ; error: 20.36869432348206
+Estimating model C0*n**2 + C1
+model: 0.000341650382331857*n**2 + 4.66377913087822                          ; p: 0.00497664             ; error: 7.5939897517025585
+Estimating model C0*exp(C1*n**5)
+model: 3.00002103104392*exp(-1.09858528531331*n**5)                          ; p: 0.0014745600000000004  ; error: 31.860000000031988
+Estimating model C0*n + C1
+model: 0.0218487178318411*n + 4.40470640915819                               ; p: 0.008294399999999999   ; error: 7.556988235294215
+Parameter fitting for sequence A000796 took 4.167865599999999 secconds.
+
+Final score:
+model: 0.155324670520473*n           ; error: 12.554327272727289
+model: 7.55699798338227e-5*n**3      ; error: 20.36869432348206
+model: 0.000341650382331857*n**2 + 4.66377913087822; error: 7.5939897517025585
+model: 3.00002103104392*exp(-1.09858528531331*n**5); error: 31.860000000031988
+model: 0.0218487178318411*n + 4.40470640915819; error: 7.556988235294215
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 89.14
+Estimating model C0*n**3
+model: 0.00293680454333113*n**3                                              ; p: 0.013824000000000001   ; error: 2460.0258176105713
+Estimating model C0*n**2 + C1
+model: 0.125165081257605*n**2 + 5.0                                          ; p: 0.00497664             ; error: 609.0554262902801
+Estimating model C0*exp(C1*n**5)
+model: 1.29801119128782*exp(-0.0908000202449633*n**5)                        ; p: 0.0014745600000000004  ; error: 20391.08785048297
+Estimating model C0*n + C1
+model: 5.0*n - 3.45999980130667                                              ; p: 0.008294399999999999   ; error: 77.1684000000001
+Parameter fitting for sequence A000959 took 3.036961099999999 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 89.14          
+model: 0.00293680454333113*n**3      ; error: 2460.0258176105713
+model: 0.125165081257605*n**2 + 5.0  ; error: 609.0554262902801
+model: 1.29801119128782*exp(-0.0908000202449633*n**5); error: 20391.08785048297
+model: 5.0*n - 3.45999980130667      ; error: 77.1684000000001
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.70698824218714*n                                                    ; p: 0.08639999999999999    ; error: 107.30551638837356
+Estimating model C0*n**3
+model: 0.00163241520671893*n**3                                              ; p: 0.013824000000000001   ; error: 491.6631992784678
+Estimating model C0*n**2 + C1
+model: 0.0672850067063778*n**2 + 5.0                                         ; p: 0.00497664             ; error: 53.51097339915938
+Estimating model C0*exp(C1*n**5)
+model: 1.83894667751753*exp(-0.285774839697241*n**5)                         ; p: 0.0014745600000000004  ; error: 6031.741695430807
+Estimating model C0*n + C1
+model: 2.85850339663013*n - 5.0                                              ; p: 0.008294399999999999   ; error: 73.93278911564629
+Parameter fitting for sequence A000961 took 3.3899291000000034 secconds.
+
+Final score:
+model: 2.70698824218714*n            ; error: 107.30551638837356
+model: 0.00163241520671893*n**3      ; error: 491.6631992784678
+model: 0.0672850067063778*n**2 + 5.0 ; error: 53.51097339915938
+model: 1.83894667751753*exp(-0.285774839697241*n**5); error: 6031.741695430807
+model: 2.85850339663013*n - 5.0      ; error: 73.93278911564629
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 49567441597.94
+Estimating model C0*n**3
+model: 4.85353659320298*n**3                                                 ; p: 0.013824000000000001   ; error: 647915447.2691201
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 47311737144.74
+Estimating model C0*exp(C1*n**5)
+model: 4.33605549319285*exp(-0.0594300306106249*n**5)                        ; p: 0.0014745600000000004  ; error: 49622949843.77215
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 49566078549.54
+Parameter fitting for sequence A001034 took 1.2653077000000081 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 49567441597.94 
+model: 4.85353659320298*n**3         ; error: 647915447.2691201
+model: 5.0*n**2 + 5.0                ; error: 47311737144.74 
+model: 4.33605549319285*exp(-0.0594300306106249*n**5); error: 49622949843.77215
+model: 5.0*n + 5.0                   ; error: 49566078549.54 
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 3.570274568933837e+24
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 3.570274049881673e+24
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 3.5702745583523955e+24
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 3.570274569146644e+24
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 3.570274568925416e+24
+Parameter fitting for sequence A001037 took 0.8434871000000044 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 3.570274568933837e+24
+model: 5.0*n**3                      ; error: 3.570274049881673e+24
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 3.5702745583523955e+24
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 3.570274569146644e+24
+model: 4.90729256114836*n + 0.2375428392975; error: 3.570274568925416e+24
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 9.390004446101002e+26
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 9.390004364521056e+26
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 9.390004444406469e+26
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 9.39000444613505e+26
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 9.390004446099654e+26
+Parameter fitting for sequence A001045 took 0.42574369999999817 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 9.390004446101002e+26
+model: 4.90338947396704*n**3         ; error: 9.390004364521056e+26
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 9.390004444406469e+26
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 9.39000444613505e+26
+model: 4.90729256114836*n + 0.2375428392975; error: 9.390004446099654e+26
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0995670944062991*n                                                  ; p: 0.08639999999999999    ; error: 5.2048484848485055
+Estimating model C0*n**3
+model: 5.22272794819318e-5*n**3                                              ; p: 0.013824000000000001   ; error: 7.548001760284145
+Estimating model C0*n**2 + C1
+model: 0.00101313775405311*n**2 + 2.00088011291885                           ; p: 0.00497664             ; error: 4.718788643579413
+Estimating model C0*exp(C1*n**5)
+model: 1.19444817213207*exp(-0.864086638267727*n**5)                         ; p: 0.0014745600000000004  ; error: 13.185688754457065
+Estimating model C0*n + C1
+model: 0.0547899844466529*n + 1.47764461511922                               ; p: 0.008294399999999999   ; error: 4.642447058825092
+Parameter fitting for sequence A001055 took 3.8031402000000014 secconds.
+
+Final score:
+model: 0.0995670944062991*n          ; error: 5.2048484848485055
+model: 5.22272794819318e-5*n**3      ; error: 7.548001760284145
+model: 0.00101313775405311*n**2 + 2.00088011291885; error: 4.718788643579413
+model: 1.19444817213207*exp(-0.864086638267727*n**5); error: 13.185688754457065
+model: 0.0547899844466529*n + 1.47764461511922; error: 4.642447058825092
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0228818731191942*n                                                  ; p: 0.08639999999999999    ; error: 208.07668521954238
+Estimating model C0*n**3
+model: 1.81797922124767e-5*n**3                                              ; p: 0.013824000000000001   ; error: 207.81249670813162
+Estimating model C0*n**2 + C1
+model: 0.000767289236039338*n**2 - 0.120358837287846                         ; p: 0.00497664             ; error: 207.9352116637688
+Estimating model C0*exp(C1*n**5)
+model: 0.487011115055895*exp(-0.130050492917778*n**5)                        ; p: 0.0014745600000000004  ; error: 208.4916006621931
+Estimating model C0*n + C1
+model: 0.0300119966973644*n - 0.235294047524311                              ; p: 0.008294399999999999   ; error: 208.06242496998806
+Parameter fitting for sequence A001057 took 2.696670499999996 secconds.
+
+Final score:
+model: 0.0228818731191942*n          ; error: 208.07668521954238
+model: 1.81797922124767e-5*n**3      ; error: 207.81249670813162
+model: 0.000767289236039338*n**2 - 0.120358837287846; error: 207.9352116637688
+model: 0.487011115055895*exp(-0.130050492917778*n**5); error: 208.4916006621931
+model: 0.0300119966973644*n - 0.235294047524311; error: 208.06242496998806
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.658800244365694*n                                                   ; p: 0.08639999999999999    ; error: 217.51663623995057
+Estimating model C0*n**3
+model: 0.000384170927066885*n**3                                             ; p: 0.013824000000000001   ; error: 268.8277053228383
+Estimating model C0*n**2 + C1
+model: 0.0133048568439602*n**2 + 4.96507053706689                            ; p: 0.00497664             ; error: 222.16889847508332
+Estimating model C0*exp(C1*n**5)
+model: 1.10957229578019*exp(-0.0133090992644536*n**5)                        ; p: 0.0014745600000000004  ; error: 568.4011110413219
+Estimating model C0*n + C1
+model: 0.663577273454988*n - 0.157641967225197                               ; p: 0.008294399999999999   ; error: 217.51023481393221
+Parameter fitting for sequence A001065 took 3.4336342999999943 secconds.
+
+Final score:
+model: 0.658800244365694*n           ; error: 217.51663623995057
+model: 0.000384170927066885*n**3     ; error: 268.8277053228383
+model: 0.0133048568439602*n**2 + 4.96507053706689; error: 222.16889847508332
+model: 1.10957229578019*exp(-0.0133090992644536*n**5); error: 568.4011110413219
+model: 0.663577273454988*n - 0.157641967225197; error: 217.51023481393221
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 14757.46
+Estimating model C0*n**3
+model: 0.00550487065820844*n**3                                              ; p: 0.013824000000000001   ; error: 4012.130652696736
+Estimating model C0*n**2 + C1
+model: 0.232800876705496*n**2 + 5.0                                          ; p: 0.00497664             ; error: 591.7507685482141
+Estimating model C0*exp(C1*n**5)
+model: 4.19639783854611*exp(-0.193663477928406*n**5)                         ; p: 0.0014745600000000004  ; error: 67013.35382008737
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 13963.46
+Parameter fitting for sequence A001097 took 3.225584799999993 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 14757.46       
+model: 0.00550487065820844*n**3      ; error: 4012.130652696736
+model: 0.232800876705496*n**2 + 5.0  ; error: 591.7507685482141
+model: 4.19639783854611*exp(-0.193663477928406*n**5); error: 67013.35382008737
+model: 5.0*n + 5.0                   ; error: 13963.46       
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.158787873749204*n                                                   ; p: 0.08639999999999999    ; error: 10.994812121212142
+Estimating model C0*n**3
+model: 8.41146887481678e-5*n**3                                              ; p: 0.013824000000000001   ; error: 16.66861892939368
+Estimating model C0*n**2 + C1
+model: 0.00105664058258506*n**2 + 4.00570545166016                           ; p: 0.00497664             ; error: 7.16344515829192
+Estimating model C0*exp(C1*n**5)
+model: 3.32895417623099*exp(-0.00752751558703746*n**5)                       ; p: 0.0014745600000000004  ; error: 30.49535449841666
+Estimating model C0*n + C1
+model: 0.0447058575941142*n + 3.76470653164919                               ; p: 0.008294399999999999   ; error: 7.344188235294248
+Parameter fitting for sequence A001113 took 3.612948799999998 secconds.
+
+Final score:
+model: 0.158787873749204*n           ; error: 10.994812121212142
+model: 8.41146887481678e-5*n**3      ; error: 16.66861892939368
+model: 0.00105664058258506*n**2 + 4.00570545166016; error: 7.16344515829192
+model: 3.32895417623099*exp(-0.00752751558703746*n**5); error: 30.49535449841666
+model: 0.0447058575941142*n + 3.76470653164919; error: 7.344188235294248
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 1588328.98
+Estimating model C0*n**3
+model: 0.0298639887885451*n**3                                               ; p: 0.013824000000000001   ; error: 95571.48661743013
+Estimating model C0*n**2 + C1
+model: 1.2649753178415*n**2 + 5.0                                            ; p: 0.00497664             ; error: 37916.21526885936
+Estimating model C0*exp(C1*n**5)
+model: 4.10809952294638*exp(-0.00229317500169468*n**5)                       ; p: 0.0014745600000000004  ; error: 1949756.25664699
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 1579236.58
+Parameter fitting for sequence A001157 took 2.929149499999994 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 1588328.98     
+model: 0.0298639887885451*n**3       ; error: 95571.48661743013
+model: 1.2649753178415*n**2 + 5.0    ; error: 37916.21526885936
+model: 4.10809952294638*exp(-0.00229317500169468*n**5); error: 1949756.25664699
+model: 5.0*n + 5.0                   ; error: 1579236.58     
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0505875027447168*n                                                  ; p: 0.08639999999999999    ; error: 0.6709709338280969
+Estimating model C0*n**3
+model: 2.4659487657033e-5*n**3                                               ; p: 0.013824000000000001   ; error: 1.4752569203460895
+Estimating model C0*n**2 + C1
+model: 0.000240458841993168*n**2 + 1.34558910376181                          ; p: 0.00497664             ; error: 0.33748275838735664
+Estimating model C0*exp(C1*n**5)
+model: 0.370904286347344*exp(-0.000224993161831999*n**5)                     ; p: 0.0014745600000000004  ; error: 2.6801659065729124
+Estimating model C0*n + C1
+model: 0.0152220737727461*n + 1.16705915763647                               ; p: 0.008294399999999999   ; error: 0.3201459783914051
+Parameter fitting for sequence A001221 took 4.8343552000000045 secconds.
+
+Final score:
+model: 0.0505875027447168*n          ; error: 0.6709709338280969
+model: 2.4659487657033e-5*n**3       ; error: 1.4752569203460895
+model: 0.000240458841993168*n**2 + 1.34558910376181; error: 0.33748275838735664
+model: 0.370904286347344*exp(-0.000224993161831999*n**5); error: 2.6801659065729124
+model: 0.0152220737727461*n + 1.16705915763647; error: 0.3201459783914051
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0719356783852307*n                                                  ; p: 0.08639999999999999    ; error: 1.7362206555349613
+Estimating model C0*n**3
+model: 3.58605457861927e-5*n**3                                              ; p: 0.013824000000000001   ; error: 3.272879944204144
+Estimating model C0*n**2 + C1
+model: 0.000417075554454842*n**2 + 1.82279440845122                          ; p: 0.00497664             ; error: 1.1613896713728378
+Estimating model C0*exp(C1*n**5)
+model: 0.575370534903336*exp(-0.0191613952076597*n**5)                       ; p: 0.0014745600000000004  ; error: 5.899455082022979
+Estimating model C0*n + C1
+model: 0.0251620409095527*n + 1.54353003352335                               ; p: 0.008294399999999999   ; error: 1.1225507803122452
+Parameter fitting for sequence A001222 took 3.9712470000000053 secconds.
+
+Final score:
+model: 0.0719356783852307*n          ; error: 1.7362206555349613
+model: 3.58605457861927e-5*n**3      ; error: 3.272879944204144
+model: 0.000417075554454842*n**2 + 1.82279440845122; error: 1.1613896713728378
+model: 0.575370534903336*exp(-0.0191613952076597*n**5); error: 5.899455082022979
+model: 0.0251620409095527*n + 1.54353003352335; error: 1.1225507803122452
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0796042003985216*n                                                  ; p: 0.08639999999999999    ; error: 1.6766733457019367
+Estimating model C0*n**3
+model: 3.86899340332203e-5*n**3                                              ; p: 0.013824000000000001   ; error: 3.5732040832071106
+Estimating model C0*n**2 + C1
+model: 0.000449769180711282*n**2 + 2.03636161248902                          ; p: 0.00497664             ; error: 0.9318368368805898
+Estimating model C0*exp(C1*n**5)
+model: 1.09392963932814*exp(-0.0928866744417386*n**5)                        ; p: 0.0014745600000000004  ; error: 6.755760211407188
+Estimating model C0*n + C1
+model: 0.0266986684896559*n + 1.74588255155907                               ; p: 0.008294399999999999   ; error: 0.8915553421368849
+Parameter fitting for sequence A001227 took 4.109424899999993 secconds.
+
+Final score:
+model: 0.0796042003985216*n          ; error: 1.6766733457019367
+model: 3.86899340332203e-5*n**3      ; error: 3.5732040832071106
+model: 0.000449769180711282*n**2 + 2.03636161248902; error: 0.9318368368805898
+model: 1.09392963932814*exp(-0.0928866744417386*n**5); error: 6.755760211407188
+model: 0.0266986684896559*n + 1.74588255155907; error: 0.8915553421368849
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0454669090557388*n                                                  ; p: 0.08639999999999999    ; error: 0.8286362399505458
+Estimating model C0*n**3
+model: 2.18432699028437e-5*n**3                                              ; p: 0.013824000000000001   ; error: 1.5221619752279663
+Estimating model C0*n**2 + C1
+model: 1.80322235479802e-6*n**2 + 1.49854211775544                           ; p: 0.00497664             ; error: 0.24999824025830925
+Estimating model C0*exp(C1*n**5)
+model: 0.988187864793904*exp(-0.0420063840332791*n**5)                       ; p: 0.0014745600000000004  ; error: 2.4028693584767726
+Estimating model C0*n + C1
+model: 4.7999420049091e-5*n + 1.49882401690511                               ; p: 0.008294399999999999   ; error: 0.24999951980800475
+Parameter fitting for sequence A001285 took 4.576478299999991 secconds.
+
+Final score:
+model: 0.0454669090557388*n          ; error: 0.8286362399505458
+model: 2.18432699028437e-5*n**3      ; error: 1.5221619752279663
+model: 1.80322235479802e-6*n**2 + 1.49854211775544; error: 0.24999824025830925
+model: 0.988187864793904*exp(-0.0420063840332791*n**5); error: 2.4028693584767726
+model: 4.7999420049091e-5*n + 1.49882401690511; error: 0.24999951980800475
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 3.0593691966126*n                                                     ; p: 0.08639999999999999    ; error: 5.710278293135465
+Estimating model C0*n**3
+model: 0.00174959726361707*n**3                                              ; p: 0.013824000000000001   ; error: 1208.9629126946631
+Estimating model C0*n**2 + C1
+model: 0.0739061962345207*n**2 + 5.0                                         ; p: 0.00497664             ; error: 356.23309559534783
+Estimating model C0*exp(C1*n**5)
+model: 4.20635257624593*exp(-0.203888845705174*n**5)                         ; p: 0.0014745600000000004  ; error: 7572.150676965682
+Estimating model C0*n + C1
+model: 3.04225714443416*n + 0.564697681693339                                ; p: 0.008294399999999999   ; error: 5.62813925571964
+Parameter fitting for sequence A001358 took 3.3465180999999973 secconds.
+
+Final score:
+model: 3.0593691966126*n             ; error: 5.710278293135465
+model: 0.00174959726361707*n**3      ; error: 1208.9629126946631
+model: 0.0739061962345207*n**2 + 5.0 ; error: 356.23309559534783
+model: 4.20635257624593*exp(-0.203888845705174*n**5); error: 7572.150676965682
+model: 3.04225714443416*n + 0.564697681693339; error: 5.62813925571964
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 1.0770907254816543e+26
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 1.077090697660118e+26
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 1.077090724903515e+26
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 1.0770907254932764e+26
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 1.0770907254811942e+26
+Parameter fitting for sequence A001405 took 0.7427482000000225 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 1.0770907254816543e+26
+model: 4.90338947396704*n**3         ; error: 1.077090697660118e+26
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 1.077090724903515e+26
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 1.0770907254932764e+26
+model: 4.90729256114836*n + 0.2375428392975; error: 1.0770907254811942e+26
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.315275196040114*n                                                   ; p: 0.08639999999999999    ; error: 2.3163512677798592
+Estimating model C0*n**3
+model: 0.000169201266935103*n**3                                             ; p: 0.013824000000000001   ; error: 23.15614907611904
+Estimating model C0*n**2 + C1
+model: 0.00425035136048296*n**2 + 5.0                                        ; p: 0.00497664             ; error: 1.812130080369963
+Estimating model C0*exp(C1*n**5)
+model: 1.56857512760899*exp(-0.095093063119035*n**5)                         ; p: 0.0014745600000000004  ; error: 82.58717565413012
+Estimating model C0*n + C1
+model: 0.231068402218768*n + 2.7788241960616                                 ; p: 0.008294399999999999   ; error: 0.32738727491009834
+Parameter fitting for sequence A001462 took 3.7817785000000015 secconds.
+
+Final score:
+model: 0.315275196040114*n           ; error: 2.3163512677798592
+model: 0.000169201266935103*n**3     ; error: 23.15614907611904
+model: 0.00425035136048296*n**2 + 5.0; error: 1.812130080369963
+model: 1.56857512760899*exp(-0.095093063119035*n**5); error: 82.58717565413012
+model: 0.231068402218768*n + 2.7788241960616; error: 0.32738727491009834
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.23549783067953*n                                                    ; p: 0.08639999999999999    ; error: 14.721212121212139
+Estimating model C0*n**3
+model: 0.00130669328308125*n**3                                              ; p: 0.013824000000000001   ; error: 505.32004322926093
+Estimating model C0*n**2 + C1
+model: 0.0538652700028508*n**2 + 5.0                                         ; p: 0.00497664             ; error: 100.64913357055241
+Estimating model C0*exp(C1*n**5)
+model: 0.379256571748494*exp(-0.152675994220745*n**5)                        ; p: 0.0014745600000000004  ; error: 4055.1517451447407
+Estimating model C0*n + C1
+model: 2.38701298188744*n - 5.0                                              ; p: 0.008294399999999999   ; error: 5.063636363636384
+Parameter fitting for sequence A001481 took 3.5662689000000114 secconds.
+
+Final score:
+model: 2.23549783067953*n            ; error: 14.721212121212139
+model: 0.00130669328308125*n**3      ; error: 505.32004322926093
+model: 0.0538652700028508*n**2 + 5.0 ; error: 100.64913357055241
+model: 0.379256571748494*exp(-0.152675994220745*n**5); error: 4055.1517451447407
+model: 2.38701298188744*n - 5.0      ; error: 5.063636363636384
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0602597352970668*n                                                  ; p: 0.08639999999999999    ; error: 2.3641454545454748
+Estimating model C0*n**3
+model: 2.98924768726838e-5*n**3                                              ; p: 0.013824000000000001   ; error: 3.551560951448532
+Estimating model C0*n**2 + C1
+model: 9.21472195624379e-5*n**2 + 1.8655027624712                            ; p: 0.00497664             ; error: 1.5318596788260206
+Estimating model C0*exp(C1*n**5)
+model: 1.27940355117437*exp(-0.0668755876282617*n**5)                        ; p: 0.0014745600000000004  ; error: 5.208901178311217
+Estimating model C0*n + C1
+model: 0.00571425247962423*n + 1.80000092873775                              ; p: 0.008294399999999999   ; error: 1.5296000000002434
+Parameter fitting for sequence A001511 took 3.4960892 secconds.
+
+Final score:
+model: 0.0602597352970668*n          ; error: 2.3641454545454748
+model: 2.98924768726838e-5*n**3      ; error: 3.551560951448532
+model: 9.21472195624379e-5*n**2 + 1.8655027624712; error: 1.5318596788260206
+model: 1.27940355117437*exp(-0.0668755876282617*n**5); error: 5.208901178311217
+model: 0.00571425247962423*n + 1.80000092873775; error: 1.5296000000002434
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 1.5632158268529*n                                                     ; p: 0.08639999999999999    ; error: 125.31403883735315
+Estimating model C0*n**3
+model: 0.000892164148906251*n**3                                             ; p: 0.013824000000000001   ; error: 446.173240866615
+Estimating model C0*n**2 + C1
+model: 0.0360239623511797*n**2 + 5.0                                         ; p: 0.00497664             ; error: 198.2687141811437
+Estimating model C0*exp(C1*n**5)
+model: 1.24997735747224*exp(-0.045049559034418*n**5)                         ; p: 0.0014745600000000004  ; error: 2100.8208500434102
+Estimating model C0*n + C1
+model: 1.53248498189995*n + 1.01411783118621                                 ; p: 0.008294399999999999   ; error: 125.0491390156063
+Parameter fitting for sequence A001615 took 2.9040171999999984 secconds.
+
+Final score:
+model: 1.5632158268529*n             ; error: 125.31403883735315
+model: 0.000892164148906251*n**3     ; error: 446.173240866615
+model: 0.0360239623511797*n**2 + 5.0 ; error: 198.2687141811437
+model: 1.24997735747224*exp(-0.045049559034418*n**5); error: 2100.8208500434102
+model: 1.53248498189995*n + 1.01411783118621; error: 125.0491390156063
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.01516387875553*n                                                    ; p: 0.08639999999999999    ; error: 0.3140907854050912
+Estimating model C0*n**3
+model: 0.00115041508470343*n**3                                              ; p: 0.013824000000000001   ; error: 532.03033222661
+Estimating model C0*n**2 + C1
+model: 0.0474510931065137*n**2 + 5.0                                         ; p: 0.00497664             ; error: 137.8807663503457
+Estimating model C0*exp(C1*n**5)
+model: 1.99137371181471*exp(-0.0194802474178518*n**5)                        ; p: 0.0014745600000000004  ; error: 3283.2663087239675
+Estimating model C0*n + C1
+model: 2.0000480028119*n + 0.498823927959693                                 ; p: 0.008294399999999999   ; error: 0.2499995198079796
+Parameter fitting for sequence A001969 took 3.572888199999994 secconds.
+
+Final score:
+model: 2.01516387875553*n            ; error: 0.3140907854050912
+model: 0.00115041508470343*n**3      ; error: 532.03033222661
+model: 0.0474510931065137*n**2 + 5.0 ; error: 137.8807663503457
+model: 1.99137371181471*exp(-0.0194802474178518*n**5); error: 3283.2663087239675
+model: 2.0000480028119*n + 0.498823927959693; error: 0.2499995198079796
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.227606674478308*n                                                   ; p: 0.08639999999999999    ; error: 59.45581892393323
+Estimating model C0*n**3
+model: 0.000129593710790172*n**3                                             ; p: 0.013824000000000001   ; error: 66.42118520594846
+Estimating model C0*n**2 + C1
+model: 0.00388362656135709*n**2 + 2.68008818608051                           ; p: 0.00497664             ; error: 59.403497434716435
+Estimating model C0*exp(C1*n**5)
+model: 1.32276793256004*exp(-0.0755218655706463*n**5)                        ; p: 0.0014745600000000004  ; error: 101.29866814571402
+Estimating model C0*n + C1
+model: 0.198943553627472*n + 0.945882983988999                               ; p: 0.008294399999999999   ; error: 59.225367587034945
+Parameter fitting for sequence A002033 took 3.3885138999999924 secconds.
+
+Final score:
+model: 0.227606674478308*n           ; error: 59.45581892393323
+model: 0.000129593710790172*n**3     ; error: 66.42118520594846
+model: 0.00388362656135709*n**2 + 2.68008818608051; error: 59.403497434716435
+model: 1.32276793256004*exp(-0.0755218655706463*n**5); error: 101.29866814571402
+model: 0.198943553627472*n + 0.945882983988999; error: 59.225367587034945
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 2.118854151662956e+26
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 2.118854112910338e+26
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 2.1188541508580093e+26
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 2.1188541516791297e+26
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 2.1188541516623158e+26
+Parameter fitting for sequence A002083 took 0.7572200999999836 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 2.118854151662956e+26
+model: 4.90338947396704*n**3         ; error: 2.118854112910338e+26
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 2.1188541508580093e+26
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 2.1188541516791297e+26
+model: 4.90729256114836*n + 0.2375428392975; error: 2.1188541516623158e+26
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 5636.82
+Estimating model C0*n**3
+model: 0.0044559757725647*n**3                                               ; p: 0.013824000000000001   ; error: 3860.039013855149
+Estimating model C0*n**2 + C1
+model: 0.189827781531421*n**2 + 5.0                                          ; p: 0.00497664             ; error: 673.6184870302258
+Estimating model C0*exp(C1*n**5)
+model: 0.460325159907317*exp(-0.00988344169240264*n**5)                      ; p: 0.0014745600000000004  ; error: 45140.48060041035
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 5216.02
+Parameter fitting for sequence A002113 took 2.9875556000000074 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 5636.82        
+model: 0.0044559757725647*n**3       ; error: 3860.039013855149
+model: 0.189827781531421*n**2 + 5.0  ; error: 673.6184870302258
+model: 0.460325159907317*exp(-0.00988344169240264*n**5); error: 45140.48060041035
+model: 5.0*n + 5.0                   ; error: 5216.02        
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.509709332571204*n                                                   ; p: 0.08639999999999999    ; error: 91.98878169449603
+Estimating model C0*n**3
+model: 0.000291303157498879*n**3                                             ; p: 0.013824000000000001   ; error: 125.6136598252891
+Estimating model C0*n**2 + C1
+model: 0.00944004014526705*n**2 + 5.0                                        ; p: 0.00497664             ; error: 93.94232876048774
+Estimating model C0*exp(C1*n**5)
+model: 1.12103846427771*exp(-0.0483678515162045*n**5)                        ; p: 0.0014745600000000004  ; error: 301.98244489792546
+Estimating model C0*n + C1
+model: 0.482400903034702*n + 0.901178210818984                               ; p: 0.008294399999999999   ; error: 91.77959951980873
+Parameter fitting for sequence A002322 took 3.077118799999994 secconds.
+
+Final score:
+model: 0.509709332571204*n           ; error: 91.98878169449603
+model: 0.000291303157498879*n**3     ; error: 125.6136598252891
+model: 0.00944004014526705*n**2 + 5.0; error: 93.94232876048774
+model: 1.12103846427771*exp(-0.0483678515162045*n**5); error: 301.98244489792546
+model: 0.482400903034702*n + 0.901178210818984; error: 91.77959951980873
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 961169.3
+Estimating model C0*n**3
+model: 0.0241454133221877*n**3                                               ; p: 0.013824000000000001   ; error: 37097.08340980406
+Estimating model C0*n**2 + C1
+model: 1.02185413305572*n**2 + 5.0                                           ; p: 0.00497664             ; error: 20.94803457080219
+Estimating model C0*exp(C1*n**5)
+model: 0.636831660574384*exp(-0.0352085771872895*n**5)                       ; p: 0.0014745600000000004  ; error: 1249166.717743162
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 954089.3
+Parameter fitting for sequence A002378 took 3.2331390999999883 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 961169.3       
+model: 0.0241454133221877*n**3       ; error: 37097.08340980406
+model: 1.02185413305572*n**2 + 5.0   ; error: 20.94803457080219
+model: 0.636831660574384*exp(-0.0352085771872895*n**5); error: 1249166.717743162
+model: 5.0*n + 5.0                   ; error: 954089.3       
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.191638832441831*n                                                   ; p: 0.08639999999999999    ; error: 6.087478540507131
+Estimating model C0*n**3
+model: 0.000103288702548721*n**3                                             ; p: 0.013824000000000001   ; error: 13.309916046455319
+Estimating model C0*n**2 + C1
+model: 0.002757193623411*n**2 + 2.83080891077655                             ; p: 0.00497664             ; error: 6.111811437088131
+Estimating model C0*exp(C1*n**5)
+model: 0.575370534903336*exp(-0.0191613952076597*n**5)                       ; p: 0.0014745600000000004  ; error: 35.75945508202298
+Estimating model C0*n + C1
+model: 0.148715466475624*n + 1.41647104113043                                ; p: 0.008294399999999999   ; error: 5.570681392557105
+Parameter fitting for sequence A002487 took 3.5902446999999995 secconds.
+
+Final score:
+model: 0.191638832441831*n           ; error: 6.087478540507131
+model: 0.000103288702548721*n**3     ; error: 13.309916046455319
+model: 0.002757193623411*n**2 + 2.83080891077655; error: 6.111811437088131
+model: 0.575370534903336*exp(-0.0191613952076597*n**5); error: 35.75945508202298
+model: 0.148715466475624*n + 1.41647104113043; error: 5.570681392557105
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 4.3178626589481555e+25
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 4.3178624883916154e+25
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 4.317862655406021e+25
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 4.317862659019324e+25
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 4.31786265894534e+25
+Parameter fitting for sequence A002530 took 0.7141571999999883 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 4.3178626589481555e+25
+model: 4.90338947396704*n**3         ; error: 4.3178624883916154e+25
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 4.317862655406021e+25
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 4.317862659019324e+25
+model: 4.90729256114836*n + 0.2375428392975; error: 4.31786265894534e+25
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 1.2953587976934707e+26
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 1.2953587681522105e+26
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 1.2953587970799549e+26
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 1.2953587977057971e+26
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 1.2953587976929832e+26
+Parameter fitting for sequence A002531 took 0.4133171999999945 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 1.2953587976934707e+26
+model: 4.90338947396704*n**3         ; error: 1.2953587681522105e+26
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 1.2953587970799549e+26
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 1.2953587977057971e+26
+model: 4.90729256114836*n + 0.2375428392975; error: 1.2953587976929832e+26
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 1.4193222918073154e+22
+Estimating model C0*n**3
+model: 5.0*n**3                                                              ; p: 0.013824000000000001   ; error: 1.4193188419457427e+22
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 1.29627872703535                                           ; p: 0.00497664             ; error: 1.419322221105835e+22
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 1.4193222932331674e+22
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 1.4193222917508838e+22
+Parameter fitting for sequence A002572 took 0.41928889999999797 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 1.4193222918073154e+22
+model: 5.0*n**3                      ; error: 1.4193188419457427e+22
+model: 5.0*n**2 + 1.29627872703535   ; error: 1.419322221105835e+22
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 1.4193222932331674e+22
+model: 4.90729256114836*n + 0.2375428392975; error: 1.4193222917508838e+22
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 19431.3
+Estimating model C0*n**3
+model: 0.00589157616782013*n**3                                              ; p: 0.013824000000000001   ; error: 2054.589749887891
+Estimating model C0*n**2 + C1
+model: 0.249994260964656*n**2 - 0.120359893423228                            ; p: 0.00497664             ; error: 0.015607458286464836
+Estimating model C0*exp(C1*n**5)
+model: -0.0296841924698383*exp(-2.94358019545824*n**5)                       ; p: 0.0014745600000000004  ; error: 74218.80001767194
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 18661.3
+Parameter fitting for sequence A002620 took 3.7526815999999883 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 19431.3        
+model: 0.00589157616782013*n**3      ; error: 2054.589749887891
+model: 0.249994260964656*n**2 - 0.120359893423228; error: 0.015607458286464836
+model: -0.0296841924698383*exp(-2.94358019545824*n**5); error: 74218.80001767194
+model: 5.0*n + 5.0                   ; error: 18661.3        
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0245887395960892*n                                                  ; p: 0.08639999999999999    ; error: 1.0311757575757778
+Estimating model C0*n**3
+model: 1.2385362143652e-5*n**3                                               ; p: 0.013824000000000001   ; error: 1.2091713027233395
+Estimating model C0*n**2 + C1
+model: 4.24845798732319e-5*n**2 + 0.765651872895967                          ; p: 0.00497664             ; error: 0.8790345315536853
+Estimating model C0*exp(C1*n**5)
+model: 1.04741222708198*exp(-0.102020399434029*n**5)                         ; p: 0.0014745600000000004  ; error: 1.480135692154149
+Estimating model C0*n + C1
+model: 0.00134452825999653*n + 0.767058974099215                             ; p: 0.008294399999999999   ; error: 0.8796235294117908
+Parameter fitting for sequence A002654 took 4.1764855000000125 secconds.
+
+Final score:
+model: 0.0245887395960892*n          ; error: 1.0311757575757778
+model: 1.2385362143652e-5*n**3       ; error: 1.2091713027233395
+model: 4.24845798732319e-5*n**2 + 0.765651872895967; error: 0.8790345315536853
+model: 1.04741222708198*exp(-0.102020399434029*n**5); error: 1.480135692154149
+model: 0.00134452825999653*n + 0.767058974099215; error: 0.8796235294117908
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 1.50350030408384*n                                                    ; p: 0.08639999999999999    ; error: 8.935094124922719
+Estimating model C0*n**3
+model: 0.000840100901002398*n**3                                             ; p: 0.013824000000000001   ; error: 369.23538515255876
+Estimating model C0*n**2 + C1
+model: 0.0340142568224995*n**2 + 5.0                                         ; p: 0.00497664             ; error: 103.4940130934943
+Estimating model C0*exp(C1*n**5)
+model: 4.38577045399289*exp(-0.0320152998794247*n**5)                        ; p: 0.0014745600000000004  ; error: 1835.1295017180364
+Estimating model C0*n + C1
+model: 1.35198516894982*n + 4.9999994726857                                  ; p: 0.008294399999999999   ; error: 0.5320640289831889
+Parameter fitting for sequence A002808 took 4.963115199999976 secconds.
+
+Final score:
+model: 1.50350030408384*n            ; error: 8.935094124922719
+model: 0.000840100901002398*n**3     ; error: 369.23538515255876
+model: 0.0340142568224995*n**2 + 5.0 ; error: 103.4940130934943
+model: 4.38577045399289*exp(-0.0320152998794247*n**5); error: 1835.1295017180364
+model: 1.35198516894982*n + 4.9999994726857; error: 0.5320640289831889
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.73662337131749*n                                                    ; p: 0.08639999999999999    ; error: 20.29658181818184
+Estimating model C0*n**3
+model: 0.00159488618231562*n**3                                              ; p: 0.013824000000000001   ; error: 766.1872600863051
+Estimating model C0*n**2 + C1
+model: 0.0666554526933874*n**2 + 5.0                                         ; p: 0.00497664             ; error: 168.93451736312971
+Estimating model C0*exp(C1*n**5)
+model: 0.795544620267588*exp(-0.102554804845731*n**5)                        ; p: 0.0014745600000000004  ; error: 6075.230680242814
+Estimating model C0*n + C1
+model: 2.8881385225958*n - 5.0                                               ; p: 0.008294399999999999   ; error: 7.863248484848506
+Parameter fitting for sequence A003136 took 3.425282299999992 secconds.
+
+Final score:
+model: 2.73662337131749*n            ; error: 20.29658181818184
+model: 0.00159488618231562*n**3      ; error: 766.1872600863051
+model: 0.0666554526933874*n**2 + 5.0 ; error: 168.93451736312971
+model: 0.795544620267588*exp(-0.102554804845731*n**5); error: 6075.230680242814
+model: 2.8881385225958*n - 5.0       ; error: 7.863248484848506
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0797031489550453*n                                                  ; p: 0.08639999999999999    ; error: 7.403928756957348
+Estimating model C0*n**3
+model: 3.84891648112384e-5*n**3                                              ; p: 0.013824000000000001   ; error: 9.459310502367204
+Estimating model C0*n**2 + C1
+model: 0.000167515967427402*n**2 + 2.40456308793355                          ; p: 0.00497664             ; error: 6.0733946337646
+Estimating model C0*exp(C1*n**5)
+model: 2.06605640534797*exp(-0.017267947805289*n**5)                         ; p: 0.0014745600000000004  ; error: 12.438505329294085
+Estimating model C0*n + C1
+model: 0.0106121233269082*n + 2.28000384928941                               ; p: 0.008294399999999999   ; error: 6.064946938779347
+Parameter fitting for sequence A003484 took 3.6129107000000147 secconds.
+
+Final score:
+model: 0.0797031489550453*n          ; error: 7.403928756957348
+model: 3.84891648112384e-5*n**3      ; error: 9.459310502367204
+model: 0.000167515967427402*n**2 + 2.40456308793355; error: 6.0733946337646
+model: 2.06605640534797*exp(-0.017267947805289*n**5); error: 12.438505329294085
+model: 0.0106121233269082*n + 2.28000384928941; error: 6.064946938779347
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 282442.28
+Estimating model C0*n**3
+model: 0.0112086725739396*n**3                                               ; p: 0.013824000000000001   ; error: 160009.56120177702
+Estimating model C0*n**2 + C1
+model: 0.492536609903392*n**2 + 5.0                                          ; p: 0.00497664             ; error: 128126.05230505485
+Estimating model C0*exp(C1*n**5)
+model: 4.75569594631529*exp(-0.0228094212097718*n**5)                        ; p: 0.0014745600000000004  ; error: 421199.8449612227
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 278868.08
+Parameter fitting for sequence A004011 took 2.2608346000000097 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 282442.28      
+model: 0.0112086725739396*n**3       ; error: 160009.56120177702
+model: 0.492536609903392*n**2 + 5.0  ; error: 128126.05230505485
+model: 4.75569594631529*exp(-0.0228094212097718*n**5); error: 421199.8449612227
+model: 5.0*n + 5.0                   ; error: 278868.08      
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0874706196909454*n                                                  ; p: 0.08639999999999999    ; error: 15.274077427334591
+Estimating model C0*n**3
+model: 3.84591698709879e-5*n**3                                              ; p: 0.013824000000000001   ; error: 18.384109624118143
+Estimating model C0*n**2 + C1
+model: 3.2355812085865 - 0.000316117817451823*n**2                           ; p: 0.00497664             ; error: 12.526174787773721
+Estimating model C0*exp(C1*n**5)
+model: 4.80812837150575*exp(-0.0164767640108537*n**5)                        ; p: 0.0014745600000000004  ; error: 21.1278469531331
+Estimating model C0*n + C1
+model: 3.24941862513372 - 0.0109966076847411*n                               ; p: 0.008294399999999999   ; error: 12.554418247311043
+Parameter fitting for sequence A004018 took 3.2489215999999885 secconds.
+
+Final score:
+model: 0.0874706196909454*n          ; error: 15.274077427334591
+model: 3.84591698709879e-5*n**3      ; error: 18.384109624118143
+model: 3.2355812085865 - 0.000316117817451823*n**2; error: 12.526174787773721
+model: 4.80812837150575*exp(-0.0164767640108537*n**5); error: 21.1278469531331
+model: 3.24941862513372 - 0.0109966076847411*n; error: 12.554418247311043
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.49226963013604*n                                                    ; p: 0.08639999999999999    ; error: 0.07668521954238254
+Estimating model C0*n**3
+model: 0.000282451409180373*n**3                                             ; p: 0.013824000000000001   ; error: 30.624871028249
+Estimating model C0*n**2 + C1
+model: 0.00953126112851009*n**2 + 4.29397544384236                           ; p: 0.00497664             ; error: 3.428636890671231
+Estimating model C0*exp(C1*n**5)
+model: 2.90398788969993e-5*exp(-4.39015637922132*n**5)                       ; p: 0.0014745600000000004  ; error: 196.00000000001688
+Estimating model C0*n + C1
+model: 0.499399741536168*n - 0.235293674763932                               ; p: 0.008294399999999999   ; error: 0.06242496998806537
+Parameter fitting for sequence A004526 took 3.749185699999998 secconds.
+
+Final score:
+model: 0.49226963013604*n            ; error: 0.07668521954238254
+model: 0.000282451409180373*n**3     ; error: 30.624871028249
+model: 0.00953126112851009*n**2 + 4.29397544384236; error: 3.428636890671231
+model: 2.90398788969993e-5*exp(-4.39015637922132*n**5); error: 196.00000000001688
+model: 0.499399741536168*n - 0.235293674763932; error: 0.06242496998806537
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 1.31257884473115*n                                                    ; p: 0.08639999999999999    ; error: 0.2650730983302616
+Estimating model C0*n**3
+model: 0.000751073288176555*n**3                                             ; p: 0.013824000000000001   ; error: 220.38760304908178
+Estimating model C0*n**2 + C1
+model: 0.0297775350490515*n**2 + 5.0                                         ; p: 0.00497664             ; error: 43.30276016872734
+Estimating model C0*exp(C1*n**5)
+model: 1.5930057194344*exp(-0.00531727297840234*n**5)                        ; p: 0.0014745600000000004  ; error: 1392.9177882473625
+Estimating model C0*n + C1
+model: 1.31707081636704*n - 0.148235065359022                                ; p: 0.008294399999999999   ; error: 0.2594132052821469
+Parameter fitting for sequence A005100 took 4.002108600000014 secconds.
+
+Final score:
+model: 1.31257884473115*n            ; error: 0.2650730983302616
+model: 0.000751073288176555*n**3     ; error: 220.38760304908178
+model: 0.0297775350490515*n**2 + 5.0 ; error: 43.30276016872734
+model: 1.5930057194344*exp(-0.00531727297840234*n**5); error: 1392.9177882473625
+model: 1.31707081636704*n - 0.148235065359022; error: 0.2594132052821469
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.54827457813478*n                                                    ; p: 0.08639999999999999    ; error: 50.24084304267163
+Estimating model C0*n**3
+model: 0.0025670684146471*n**3                                               ; p: 0.013824000000000001   ; error: 3075.0738302295904
+Estimating model C0*n**2 + C1
+model: 0.11047430384391*n**2 + 5.0                                           ; p: 0.00497664             ; error: 1149.419591983188
+Estimating model C0*exp(C1*n**5)
+model: 3.33697609841979*exp(-0.0298283605010585*n**5)                        ; p: 0.0014745600000000004  ; error: 16771.02169478439
+Estimating model C0*n + C1
+model: 4.39675942574159*n + 5.0                                              ; p: 0.008294399999999999   ; error: 23.007509709338304
+Parameter fitting for sequence A005101 took 2.9186200999999983 secconds.
+
+Final score:
+model: 4.54827457813478*n            ; error: 50.24084304267163
+model: 0.0025670684146471*n**3       ; error: 3075.0738302295904
+model: 0.11047430384391*n**2 + 5.0   ; error: 1149.419591983188
+model: 3.33697609841979*exp(-0.0298283605010585*n**5); error: 16771.02169478439
+model: 4.39675942574159*n + 5.0      ; error: 23.007509709338304
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 1.62478663696097*n                                                    ; p: 0.08639999999999999    ; error: 0.9152756957328597
+Estimating model C0*n**3
+model: 0.000930540844692221*n**3                                             ; p: 0.013824000000000001   ; error: 335.0464305049296
+Estimating model C0*n**2 + C1
+model: 0.0376924036817558*n**2 + 5.0                                         ; p: 0.00497664             ; error: 75.01421140887189
+Estimating model C0*exp(C1*n**5)
+model: 1.28246225658109*exp(-0.000962265492948089*n**5)                      ; p: 0.0014745600000000004  ; error: 2134.782947259014
+Estimating model C0*n + C1
+model: 1.63740692736619*n - 0.416469595601013                                ; p: 0.008294399999999999   ; error: 0.8705997599042387
+Parameter fitting for sequence A005117 took 4.193235200000004 secconds.
+
+Final score:
+model: 1.62478663696097*n            ; error: 0.9152756957328597
+model: 0.000930540844692221*n**3     ; error: 335.0464305049296
+model: 0.0376924036817558*n**2 + 5.0 ; error: 75.01421140887189
+model: 1.28246225658109*exp(-0.000962265492948089*n**5); error: 2134.782947259014
+model: 1.63740692736619*n - 0.416469595601013; error: 0.8705997599042387
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 4.72525427981964*n                                                    ; p: 0.08639999999999999    ; error: 4.75211103280446e+26
+Estimating model C0*n**3
+model: 4.90338947396704*n**3                                                 ; p: 0.013824000000000001   ; error: 4.75211097475334e+26
+Estimating model C0*n**2 + C1
+model: 4.99277993922171*n**2 + 1.29627872703535                              ; p: 0.00497664             ; error: 4.7521110315986346e+26
+Estimating model C0*exp(C1*n**5)
+model: -0.285971887297158*exp(-3.6901958788271*n**5)                         ; p: 0.0014745600000000004  ; error: 4.752111032828689e+26
+Estimating model C0*n + C1
+model: 4.90729256114836*n + 0.2375428392975                                  ; p: 0.008294399999999999   ; error: 4.7521110328035014e+26
+Parameter fitting for sequence A005230 took 0.7070813999999928 secconds.
+
+Final score:
+model: 4.72525427981964*n            ; error: 4.75211103280446e+26
+model: 4.90338947396704*n**3         ; error: 4.75211097475334e+26
+model: 4.99277993922171*n**2 + 1.29627872703535; error: 4.7521110315986346e+26
+model: -0.285971887297158*exp(-3.6901958788271*n**5); error: 4.752111032828689e+26
+model: 4.90729256114836*n + 0.2375428392975; error: 4.7521110328035014e+26
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.03030302531726*n                                                    ; p: 0.08639999999999999    ; error: 0.2575757575757776
+Estimating model C0*n**3
+model: 0.00115484837347246*n**3                                              ; p: 0.013824000000000001   ; error: 547.0342096596434
+Estimating model C0*n**2 + C1
+model: 0.0477904591743166*n**2 + 5.0                                         ; p: 0.00497664             ; error: 143.93174911452476
+Estimating model C0*exp(C1*n**5)
+model: 1.89823628501545*exp(-0.0937131707720456*n**5)                        ; p: 0.0014745600000000004  ; error: 3332.829729744996
+Estimating model C0*n + C1
+model: 2.0*n + 0.999999999999999                                             ; p: 0.008294399999999999   ; error: 3.1973518564739136e-31
+Parameter fitting for sequence A005408 took 7.812594700000005 secconds.
+
+Final score:
+model: 2.03030302531726*n            ; error: 0.2575757575757776
+model: 0.00115484837347246*n**3      ; error: 547.0342096596434
+model: 0.0477904591743166*n**2 + 5.0 ; error: 143.93174911452476
+model: 1.89823628501545*exp(-0.0937131707720456*n**5); error: 3332.829729744996
+model: 2.0*n + 0.999999999999999     ; error: 3.1973518564739136e-31
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.10317872104326*n                                                    ; p: 0.08639999999999999    ; error: 1.892830674087837
+Estimating model C0*n**3
+model: 5.26246979846277e-5*n**3                                              ; p: 0.013824000000000001   ; error: 4.7413606000215145
+Estimating model C0*n**2 + C1
+model: 0.000881611903810525*n**2 + 2.26721598112673                          ; p: 0.00497664             ; error: 1.2040289071403076
+Estimating model C0*exp(C1*n**5)
+model: 0.728619953455295*exp(-0.0937311230344712*n**5)                       ; p: 0.0014745600000000004  ; error: 10.490005876561659
+Estimating model C0*n + C1
+model: 0.049987987433017*n + 1.75529420304569                                ; p: 0.008294399999999999   ; error: 1.0992249699880188
+Parameter fitting for sequence A005811 took 3.2838127999999926 secconds.
+
+Final score:
+model: 0.10317872104326*n            ; error: 1.892830674087837
+model: 5.26246979846277e-5*n**3      ; error: 4.7413606000215145
+model: 0.000881611903810525*n**2 + 2.26721598112673; error: 1.2040289071403076
+model: 0.728619953455295*exp(-0.0937311230344712*n**5); error: 10.490005876561659
+model: 0.049987987433017*n + 1.75529420304569; error: 1.0992249699880188
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.0*n                                                                 ; p: 0.08639999999999999    ; error: 0.0
+Estimating model C0*n**3
+model: 0.00114316318786347*n**3                                              ; p: 0.013824000000000001   ; error: 517.0703497662639
+Estimating model C0*n**2 + C1
+model: 0.0471100991863176*n**2 + 5.0                                         ; p: 0.00497664             ; error: 131.65885484316576
+Estimating model C0*exp(C1*n**5)
+model: 1.17543239152155*exp(-0.076612518848955*n**5)                         ; p: 0.0014745600000000004  ; error: 3233.9482425246456
+Estimating model C0*n + C1
+model: 2.0*n - 2.83106871279415e-14                                          ; p: 0.008294399999999999   ; error: 8.076675957205136e-28
+Parameter fitting for sequence A005843 took 8.494531000000023 secconds.
+
+Final score:
+model: 2.0*n                         ; error: 0.0            
+model: 0.00114316318786347*n**3      ; error: 517.0703497662639
+model: 0.0471100991863176*n**2 + 5.0 ; error: 131.65885484316576
+model: 1.17543239152155*exp(-0.076612518848955*n**5); error: 3233.9482425246456
+model: 2.0*n - 2.83106871279415e-14  ; error: 8.076675957205136e-28
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.429338276789621*n                                                   ; p: 0.08639999999999999    ; error: 109.54809598021028
+Estimating model C0*n**3
+model: 0.000229710167702673*n**3                                             ; p: 0.013824000000000001   ; error: 148.872207584909
+Estimating model C0*n**2 + C1
+model: 0.00705946176269814*n**2 + 4.97813763979377                           ; p: 0.00497664             ; error: 112.21913403800362
+Estimating model C0*exp(C1*n**5)
+model: 1.78150069651155*exp(-1.23146855025056*n**5)                          ; p: 0.0014745600000000004  ; error: 258.53602551368635
+Estimating model C0*n + C1
+model: 0.346842894648607*n + 2.72234752196984                                ; p: 0.008294399999999999   ; error: 107.63914909964745
+Parameter fitting for sequence A006530 took 2.9129443999999864 secconds.
+
+Final score:
+model: 0.429338276789621*n           ; error: 109.54809598021028
+model: 0.000229710167702673*n**3     ; error: 148.872207584909
+model: 0.00705946176269814*n**2 + 4.97813763979377; error: 112.21913403800362
+model: 1.78150069651155*exp(-1.23146855025056*n**5); error: 258.53602551368635
+model: 0.346842894648607*n + 2.72234752196984; error: 107.63914909964745
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.717278909204543*n                                                   ; p: 0.08639999999999999    ; error: 421.7756136054422
+Estimating model C0*n**3
+model: 0.000484675012956455*n**3                                             ; p: 0.013824000000000001   ; error: 349.34821061944234
+Estimating model C0*n**2 + C1
+model: 0.0210797725295646*n**2 - 1.70298515049088                            ; p: 0.00497664             ; error: 364.84426117966694
+Estimating model C0*exp(C1*n**5)
+model: 0.743176808191751*exp(-0.0148823329486786*n**5)                       ; p: 0.0014745600000000004  ; error: 837.6877599310506
+Estimating model C0*n + C1
+model: 0.868794059849713*n - 5.0                                             ; p: 0.008294399999999999   ; error: 405.88167421150274
+Parameter fitting for sequence A007318 took 2.4805398000000025 secconds.
+
+Final score:
+model: 0.717278909204543*n           ; error: 421.7756136054422
+model: 0.000484675012956455*n**3     ; error: 349.34821061944234
+model: 0.0210797725295646*n**2 - 1.70298515049088; error: 364.84426117966694
+model: 0.743176808191751*exp(-0.0148823329486786*n**5); error: 837.6877599310506
+model: 0.868794059849713*n - 5.0     ; error: 405.88167421150274
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: -5.0*n                                                                ; p: 0.08639999999999999    ; error: 63801065470.82
+Estimating model C0*n**3
+model: -0.0631687258872293*n**3                                              ; p: 0.013824000000000001   ; error: 63793287096.672386
+Estimating model C0*n**2 + C1
+model: 0.126684154468241 - 2.2330618471472*n**2                              ; p: 0.00497664             ; error: 63795656284.98531
+Estimating model C0*exp(C1*n**5)
+model: 1.00831445577575*exp(-4.65255986969888*n**5)                          ; p: 0.0014745600000000004  ; error: 63801583000.10039
+Estimating model C0*n + C1
+model: -5.0*n - 5.0                                                          ; p: 0.008294399999999999   ; error: 63801055791.22
+Parameter fitting for sequence A008275 took 0.7137181999999882 secconds.
+
+Final score:
+model: -5.0*n                        ; error: 63801065470.82 
+model: -0.0631687258872293*n**3      ; error: 63793287096.672386
+model: 0.126684154468241 - 2.2330618471472*n**2; error: 63795656284.98531
+model: 1.00831445577575*exp(-4.65255986969888*n**5); error: 63801583000.10039
+model: -5.0*n - 5.0                  ; error: 63801055791.22 
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 62770402.46
+Estimating model C0*n**3
+model: 0.108084004094148*n**3                                                ; p: 0.013824000000000001   ; error: 39497121.88622945
+Estimating model C0*n**2 + C1
+model: 4.04161469141955*n**2 - 5.0                                           ; p: 0.00497664             ; error: 44396135.7685898
+Estimating model C0*exp(C1*n**5)
+model: 1.00467928775735*exp(-0.320062988260663*n**5)                         ; p: 0.0014745600000000004  ; error: 63784521.7214624
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 62749069.66
+Parameter fitting for sequence A008277 took 1.0589231000000154 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 62770402.46    
+model: 0.108084004094148*n**3        ; error: 39497121.88622945
+model: 4.04161469141955*n**2 - 5.0   ; error: 44396135.7685898
+model: 1.00467928775735*exp(-0.320062988260663*n**5); error: 63784521.7214624
+model: 5.0*n + 5.0                   ; error: 62749069.66    
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 74426670.68
+Estimating model C0*n**3
+model: 0.0938541341809362*n**3                                               ; p: 0.013824000000000001   ; error: 57293612.45989932
+Estimating model C0*n**2 + C1
+model: 3.85194825420006*n**2 - 5.0                                           ; p: 0.00497664             ; error: 57882677.54512459
+Estimating model C0*exp(C1*n**5)
+model: 1.00467928775735*exp(-0.320062988260663*n**5)                         ; p: 0.0014745600000000004  ; error: 75489044.74146241
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 74402064.08
+Parameter fitting for sequence A008279 took 1.0247555999999918 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 74426670.68    
+model: 0.0938541341809362*n**3       ; error: 57293612.45989932
+model: 3.85194825420006*n**2 - 5.0   ; error: 57882677.54512459
+model: 1.00467928775735*exp(-0.320062988260663*n**5); error: 75489044.74146241
+model: 5.0*n + 5.0                   ; error: 74402064.08    
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 39328044270.96
+Estimating model C0*n**3
+model: 2.25265773764212*n**3                                                 ; p: 0.013824000000000001   ; error: 28798973472.76166
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 38392814433.16
+Estimating model C0*exp(C1*n**5)
+model: 0.899771481267022*exp(-0.192806104698169*n**5)                        ; p: 0.0014745600000000004  ; error: 39348878492.82146
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 39327600818.36
+Parameter fitting for sequence A008292 took 1.168555500000025 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 39328044270.96 
+model: 2.25265773764212*n**3         ; error: 28798973472.76166
+model: 5.0*n**2 + 5.0                ; error: 38392814433.16 
+model: 0.899771481267022*exp(-0.192806104698169*n**5); error: 39348878492.82146
+model: 5.0*n + 5.0                   ; error: 39327600818.36 
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: -0.00141002353506877*n                                                ; p: 0.08639999999999999    ; error: 0.6183925788497417
+Estimating model C0*n**3
+model: -1.01119646533174e-6*n**3                                             ; p: 0.013824000000000001   ; error: 0.6178951895896025
+Estimating model C0*n**2 + C1
+model: 4.57269526213654e-6*n**2 - 0.0636958836446597                         ; p: 0.00497664             ; error: 0.6163887733121758
+Estimating model C0*exp(C1*n**5)
+model: 0.993216928608529*exp(-5.0*n**5)                                      ; p: 0.0014745600000000004  ; error: 0.6002695056444262
+Estimating model C0*n + C1
+model: 0.0015846091065908*n - 0.0988228784426905                             ; p: 0.008294399999999999   ; error: 0.615877070828461
+Parameter fitting for sequence A008683 took 4.079992899999979 secconds.
+
+Final score:
+model: -0.00141002353506877*n        ; error: 0.6183925788497417
+model: -1.01119646533174e-6*n**3     ; error: 0.6178951895896025
+model: 4.57269526213654e-6*n**2 - 0.0636958836446597; error: 0.6163887733121758
+model: 0.993216928608529*exp(-5.0*n**5); error: 0.6002695056444262
+model: 0.0015846091065908*n - 0.0988228784426905; error: 0.615877070828461
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0151638787521513*n                                                  ; p: 0.08639999999999999    ; error: 0.31409078540509117
+Estimating model C0*n**3
+model: 7.24689685567829e-6*n**3                                              ; p: 0.013824000000000001   ; error: 0.3906645087110385
+Estimating model C0*n**2 + C1
+model: 1.80313377280094e-6*n**2 + 0.498542157657265                          ; p: 0.00497664             ; error: 0.249998240259356
+Estimating model C0*exp(C1*n**5)
+model: 0.491525953783923*exp(-0.0613942190677517*n**5)                       ; p: 0.0014745600000000004  ; error: 0.48795362994841546
+Estimating model C0*n + C1
+model: 4.80028940721804e-5*n + 0.49882390246144                              ; p: 0.008294399999999999   ; error: 0.24999951980797927
+Parameter fitting for sequence A010060 took 4.066393300000016 secconds.
+
+Final score:
+model: 0.0151638787521513*n          ; error: 0.31409078540509117
+model: 7.24689685567829e-6*n**3      ; error: 0.3906645087110385
+model: 1.80313377280094e-6*n**2 + 0.498542157657265; error: 0.249998240259356
+model: 0.491525953783923*exp(-0.0613942190677517*n**5); error: 0.48795362994841546
+model: 4.80028940721804e-5*n + 0.49882390246144; error: 0.24999951980797927
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 1.46431663082879*n                                                    ; p: 0.08639999999999999    ; error: 4.975534941249246
+Estimating model C0*n**3
+model: 0.000822964489602951*n**3                                             ; p: 0.013824000000000001   ; error: 334.2907486264212
+Estimating model C0*n**2 + C1
+model: 0.0331470590438448*n**2 + 5.0                                         ; p: 0.00497664             ; error: 88.52510262603536
+Estimating model C0*exp(C1*n**5)
+model: 2.85622354811464*exp(-0.157080444181885*n**5)                         ; p: 0.0014745600000000004  ; error: 1738.3530284276826
+Estimating model C0*n + C1
+model: 1.33911155230339*n + 4.1317676034795                                  ; p: 0.008294399999999999   ; error: 0.5783356542638837
+Parameter fitting for sequence A018252 took 3.782101099999977 secconds.
+
+Final score:
+model: 1.46431663082879*n            ; error: 4.975534941249246
+model: 0.000822964489602951*n**3     ; error: 334.2907486264212
+model: 0.0331470590438448*n**2 + 5.0 ; error: 88.52510262603536
+model: 2.85622354811464*exp(-0.157080444181885*n**5); error: 1738.3530284276826
+model: 1.33911155230339*n + 4.1317676034795; error: 0.5783356542638837
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.310649345175388*n                                                   ; p: 0.08639999999999999    ; error: 136.4773090909091
+Estimating model C0*n**3
+model: 0.000165949567421867*n**3                                             ; p: 0.013824000000000001   ; error: 157.24195027105364
+Estimating model C0*n**2 + C1
+model: 0.0042111908920416*n**2 + 4.89525538895255                            ; p: 0.00497664             ; error: 136.12816573361897
+Estimating model C0*exp(C1*n**5)
+model: 1.53572994996649*exp(-0.00942284488550632*n**5)                       ; p: 0.0014745600000000004  ; error: 214.28783549414
+Estimating model C0*n + C1
+model: 0.229579715979139*n + 2.67529780386629                                ; p: 0.008294399999999999   ; error: 134.6337882352976
+Parameter fitting for sequence A020639 took 3.076895499999978 secconds.
+
+Final score:
+model: 0.310649345175388*n           ; error: 136.4773090909091
+model: 0.000165949567421867*n**3     ; error: 157.24195027105364
+model: 0.0042111908920416*n**2 + 4.89525538895255; error: 136.12816573361897
+model: 1.53572994996649*exp(-0.00942284488550632*n**5); error: 214.28783549414
+model: 0.229579715979139*n + 2.67529780386629; error: 134.6337882352976
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.143129246797354*n                                                   ; p: 0.08639999999999999    ; error: 7.077082993197299
+Estimating model C0*n**3
+model: 7.18231035507887e-5*n**3                                              ; p: 0.013824000000000001   ; error: 12.9137743119108
+Estimating model C0*n**2 + C1
+model: 0.00133852026943407*n**2 + 2.95780539453156                           ; p: 0.00497664             ; error: 6.36046742651086
+Estimating model C0*exp(C1*n**5)
+model: 1.24463340901323*exp(-0.0353350311168608*n**5)                        ; p: 0.0014745600000000004  ; error: 23.573085935282815
+Estimating model C0*n + C1
+model: 0.0803841465314138*n + 2.07058829786801                               ; p: 0.008294399999999999   ; error: 5.972769267707106
+Parameter fitting for sequence A020652 took 3.250381100000027 secconds.
+
+Final score:
+model: 0.143129246797354*n           ; error: 7.077082993197299
+model: 7.18231035507887e-5*n**3      ; error: 12.9137743119108
+model: 0.00133852026943407*n**2 + 2.95780539453156; error: 6.36046742651086
+model: 1.24463340901323*exp(-0.0353350311168608*n**5); error: 23.573085935282815
+model: 0.0803841465314138*n + 2.07058829786801; error: 5.972769267707106
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.174718609669151*n                                                   ; p: 0.08639999999999999    ; error: 8.059248484848505
+Estimating model C0*n**3
+model: 9.61092633511296e-5*n**3                                              ; p: 0.013824000000000001   ; error: 13.56713178979802
+Estimating model C0*n**2 + C1
+model: 0.0023436968145841*n**2 + 2.84512194002221                            ; p: 0.00497664             ; error: 7.335521489668862
+Estimating model C0*exp(C1*n**5)
+model: 1.59435980077616*exp(-0.0338742747451432*n**5)                        ; p: 0.0014745600000000004  ; error: 32.63546836689135
+Estimating model C0*n + C1
+model: 0.120672367555122*n + 1.78352601003274                                ; p: 0.008294399999999999   ; error: 7.239905882355938
+Parameter fitting for sequence A020653 took 3.5519921000000068 secconds.
+
+Final score:
+model: 0.174718609669151*n           ; error: 8.059248484848505
+model: 9.61092633511296e-5*n**3      ; error: 13.56713178979802
+model: 0.0023436968145841*n**2 + 2.84512194002221; error: 7.335521489668862
+model: 1.59435980077616*exp(-0.0338742747451432*n**5); error: 32.63546836689135
+model: 0.120672367555122*n + 1.78352601003274; error: 7.239905882355938
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 417580.76
+Estimating model C0*n**3
+model: 0.0170168041066365*n**3                                               ; p: 0.013824000000000001   ; error: 1916.8641743576507
+Estimating model C0*n**2 + C1
+model: 0.710545613714283*n**2 - 5.0                                          ; p: 0.00497664             ; error: 8981.194363313421
+Estimating model C0*exp(C1*n**5)
+model: 2.09696617676901*exp(-0.023904117611675*n**5)                         ; p: 0.0014745600000000004  ; error: 603592.4455109312
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 413507.36
+Parameter fitting for sequence A025487 took 3.0207518999999934 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 417580.76      
+model: 0.0170168041066365*n**3       ; error: 1916.8641743576507
+model: 0.710545613714283*n**2 - 5.0  ; error: 8981.194363313421
+model: 2.09696617676901*exp(-0.023904117611675*n**5); error: 603592.4455109312
+model: 5.0*n + 5.0                   ; error: 413507.36      
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.08639999999999999    ; error: 73702565715.72
+Estimating model C0*n**3
+model: 0.925799172459555*n**3                                                ; p: 0.013824000000000001   ; error: 71935127793.84883
+Estimating model C0*n**2 + C1
+model: 5.0*n**2 + 5.0                                                        ; p: 0.00497664             ; error: 73218876717.92
+Estimating model C0*exp(C1*n**5)
+model: 0.908966711138238*exp(-0.0543945329010004*n**5)                       ; p: 0.0014745600000000004  ; error: 73717061956.30836
+Estimating model C0*n + C1
+model: 5.0*n + 5.0                                                           ; p: 0.008294399999999999   ; error: 73702165951.52
+Parameter fitting for sequence A027642 took 0.8961070999999947 secconds.
+
+Final score:
+model: 5.0*n                         ; error: 73702565715.72 
+model: 0.925799172459555*n**3        ; error: 71935127793.84883
+model: 5.0*n**2 + 5.0                ; error: 73218876717.92 
+model: 0.908966711138238*exp(-0.0543945329010004*n**5); error: 73717061956.30836
+model: 5.0*n + 5.0                   ; error: 73702165951.52 
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.141941862643908*n                                                   ; p: 0.08639999999999999    ; error: 6.870751267779861
+Estimating model C0*n**3
+model: 7.17255574715057e-5*n**3                                              ; p: 0.013824000000000001   ; error: 12.4628880083661
+Estimating model C0*n**2 + C1
+model: 0.00143233676399345*n**2 + 2.80195472850878                           ; p: 0.00497664             ; error: 6.3814802367759045
+Estimating model C0*exp(C1*n**5)
+model: 1.2447345406211*exp(-0.0351964811089822*n**5)                         ; p: 0.0014745600000000004  ; error: 23.109106415737962
+Estimating model C0*n + C1
+model: 0.0851859873396282*n + 1.87294389783975                               ; p: 0.008294399999999999   ; error: 5.967199039617773
+Parameter fitting for sequence A038566 took 3.0478259999999864 secconds.
+
+Final score:
+model: 0.141941862643908*n           ; error: 6.870751267779861
+model: 7.17255574715057e-5*n**3      ; error: 12.4628880083661
+model: 0.00143233676399345*n**2 + 2.80195472850878; error: 6.3814802367759045
+model: 1.2447345406211*exp(-0.0351964811089822*n**5); error: 23.109106415737962
+model: 0.0851859873396282*n + 1.87294389783975; error: 5.967199039617773
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.3126283191261*n                                                     ; p: 0.08639999999999999    ; error: 3.4800648113791164
+Estimating model C0*n**3
+model: 0.000166702683123132*n**3                                             ; p: 0.013824000000000001   ; error: 25.428860595179472
+Estimating model C0*n**2 + C1
+model: 0.00412141943812002*n**2 + 5.0                                        ; p: 0.00497664             ; error: 1.9148535731515741
+Estimating model C0*exp(C1*n**5)
+model: 1.43375668606713*exp(-0.0401555897042316*n**5)                        ; p: 0.0014745600000000004  ; error: 82.36705524542081
+Estimating model C0*n + C1
+model: 0.209027588431208*n + 3.41882411150182                                ; p: 0.008294399999999999   ; error: 0.46942809123660184
+Parameter fitting for sequence A038567 took 3.8418968999999947 secconds.
+
+Final score:
+model: 0.3126283191261*n             ; error: 3.4800648113791164
+model: 0.000166702683123132*n**3     ; error: 25.428860595179472
+model: 0.00412141943812002*n**2 + 5.0; error: 1.9148535731515741
+model: 1.43375668606713*exp(-0.0401555897042316*n**5); error: 82.36705524542081
+model: 0.209027588431208*n + 3.41882411150182; error: 0.46942809123660184
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.160915270169698*n                                                   ; p: 0.08639999999999999    ; error: 5.324922696351288
+Estimating model C0*n**3
+model: 8.37647542165826e-5*n**3                                              ; p: 0.013824000000000001   ; error: 11.6707618569395
+Estimating model C0*n**2 + C1
+model: 0.00178046274087171*n**2 + 3.02049584473913                           ; p: 0.00497664             ; error: 4.6734779508532815
+Estimating model C0*exp(C1*n**5)
+model: 1.12583078740131*exp(-0.0332060924521111*n**5)                        ; p: 0.0014745600000000004  ; error: 26.192365063703672
+Estimating model C0*n + C1
+model: 0.100024082154964*n + 2.00940919191634                                ; p: 0.008294399999999999   ; error: 4.284899879953709
+Parameter fitting for sequence A038568 took 3.2707211999999686 secconds.
+
+Final score:
+model: 0.160915270169698*n           ; error: 5.324922696351288
+model: 8.37647542165826e-5*n**3      ; error: 11.6707618569395
+model: 0.00178046274087171*n**2 + 3.02049584473913; error: 4.6734779508532815
+model: 1.12583078740131*exp(-0.0332060924521111*n**5); error: 26.192365063703672
+model: 0.100024082154964*n + 2.00940919191634; error: 4.284899879953709
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.163760044611828*n                                                   ; p: 0.08639999999999999    ; error: 5.698169449598039
+Estimating model C0*n**3
+model: 8.61108698890778e-5*n**3                                              ; p: 0.013824000000000001   ; error: 12.039121223776956
+Estimating model C0*n**2 + C1
+model: 0.00184192167802279*n**2 + 3.0508066707925                            ; p: 0.00497664             ; error: 4.9544456525471094
+Estimating model C0*exp(C1*n**5)
+model: 1.81066349938828*exp(-0.0971041150511348*n**5)                        ; p: 0.0014745600000000004  ; error: 27.292583160987416
+Estimating model C0*n + C1
+model: 0.101656707360698*n + 2.04941009301005                                ; p: 0.008294399999999999   ; error: 4.616328451381301
+Parameter fitting for sequence A038569 took 3.624716199999966 secconds.
+
+Final score:
+model: 0.163760044611828*n           ; error: 5.698169449598039
+model: 8.61108698890778e-5*n**3      ; error: 12.039121223776956
+model: 0.00184192167802279*n**2 + 3.0508066707925; error: 4.9544456525471094
+model: 1.81066349938828*exp(-0.0971041150511348*n**5); error: 27.292583160987416
+model: 0.101656707360698*n + 2.04941009301005; error: 4.616328451381301
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: -0.0170933878862733*n                                                 ; p: 0.08639999999999999    ; error: 21.02376944959804
+Estimating model C0*n**3
+model: -1.30472946591187e-5*n**3                                             ; p: 0.013824000000000001   ; error: 20.741269744672422
+Estimating model C0*n**2 + C1
+model: 0.451713244819229 - 0.000880288467313275*n**2                         ; p: 0.00497664             ; error: 20.7780974760654
+Estimating model C0*exp(C1*n**5)
+model: 0.999844007671606*exp(-4.34797783007925*n**5)                         ; p: 0.0014745600000000004  ; error: 21.240003344661194
+Estimating model C0*n + C1
+model: 0.616470774686591 - 0.0357743230662607*n                              ; p: 0.008294399999999999   ; error: 20.92588139255708
+Parameter fitting for sequence A049310 took 3.365419999999972 secconds.
+
+Final score:
+model: -0.0170933878862733*n         ; error: 21.02376944959804
+model: -1.30472946591187e-5*n**3     ; error: 20.741269744672422
+model: 0.451713244819229 - 0.000880288467313275*n**2; error: 20.7780974760654
+model: 0.999844007671606*exp(-4.34797783007925*n**5); error: 21.240003344661194
+model: 0.616470774686591 - 0.0357743230662607*n; error: 20.92588139255708
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.165714280714946*n                                                   ; p: 0.08639999999999999    ; error: 2.2376000000000205
+Estimating model C0*n**3
+model: 8.42919575183565e-5*n**3                                              ; p: 0.013824000000000001   ; error: 9.734756339736803
+Estimating model C0*n**2 + C1
+model: 0.00143327081221592*n**2 + 3.60120052442721                           ; p: 0.00497664             ; error: 0.6840474224839787
+Estimating model C0*exp(C1*n**5)
+model: 0.870645415534289*exp(-0.0543604122469908*n**5)                       ; p: 0.0014745600000000004  ; error: 24.389186467066747
+Estimating model C0*n + C1
+model: 0.0833613333649037*n + 2.71764725866065                               ; p: 0.008294399999999999   ; error: 0.3352470588235609
+Parameter fitting for sequence A070939 took 3.9418588999999997 secconds.
+
+Final score:
+model: 0.165714280714946*n           ; error: 2.2376000000000205
+model: 8.42919575183565e-5*n**3      ; error: 9.734756339736803
+model: 0.00143327081221592*n**2 + 3.60120052442721; error: 0.6840474224839787
+model: 0.870645415534289*exp(-0.0543604122469908*n**5); error: 24.389186467066747
+model: 0.0833613333649037*n + 2.71764725866065; error: 0.3352470588235609
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.224910322274927*n                                                   ; p: 0.08639999999999999    ; error: 59.16230599876316
+Estimating model C0*n**3
+model: 0.00013002832955894*n**3                                              ; p: 0.013824000000000001   ; error: 64.90658688692912
+Estimating model C0*n**2 + C1
+model: 0.00407669274980864*n**2 + 2.36399745267815                           ; p: 0.00497664             ; error: 59.13863186242588
+Estimating model C0*exp(C1*n**5)
+model: 0.882718677072613*exp(-0.0259697655393917*n**5)                       ; p: 0.0014745600000000004  ; error: 100.0434877619932
+Estimating model C0*n + C1
+model: 0.207298350531751*n + 0.581195086647387                               ; p: 0.008294399999999999   ; error: 59.07530564234619
+Parameter fitting for sequence A074206 took 2.9420975000000453 secconds.
+
+Final score:
+model: 0.224910322274927*n           ; error: 59.16230599876316
+model: 0.00013002832955894*n**3      ; error: 64.90658688692912
+model: 0.00407669274980864*n**2 + 2.36399745267815; error: 59.13863186242588
+model: 0.882718677072613*exp(-0.0259697655393917*n**5); error: 100.0434877619932
+model: 0.207298350531751*n + 0.581195086647387; error: 59.07530564234619
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.532244892567073*n                                                   ; p: 0.08639999999999999    ; error: 820.364375510204
+Estimating model C0*n**3
+model: 0.000350437312701435*n**3                                             ; p: 0.013824000000000001   ; error: 794.0762537731562
+Estimating model C0*n**2 + C1
+model: 0.014194306788413*n**2 + 0.443919072158404                            ; p: 0.00497664             ; error: 799.5904929863672
+Estimating model C0*exp(C1*n**5)
+model: 0.789190651575019*exp(-0.00756933914691632*n**5)                      ; p: 0.0014745600000000004  ; error: 1049.3715635903523
+Estimating model C0*n + C1
+model: 0.664011055134931*n - 4.34828350789539                                ; p: 0.008294399999999999   ; error: 815.4943519813912
+Parameter fitting for sequence A104725 took 2.8627137999999945 secconds.
+
+Final score:
+model: 0.532244892567073*n           ; error: 820.364375510204
+model: 0.000350437312701435*n**3     ; error: 794.0762537731562
+model: 0.014194306788413*n**2 + 0.443919072158404; error: 799.5904929863672
+model: 0.789190651575019*exp(-0.00756933914691632*n**5); error: 1049.3715635903523
+model: 0.664011055134931*n - 4.34828350789539; error: 815.4943519813912
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 0.0572665380117577*n                                                  ; p: 0.08639999999999999    ; error: 1.3085590599876513
+Estimating model C0*n**3
+model: 2.83116083787949e-5*n**3                                              ; p: 0.013824000000000001   ; error: 2.3292889435363704
+Estimating model C0*n**2 + C1
+model: 0.000184032233707573*n**2 + 1.65121105537368                          ; p: 0.00497664             ; error: 0.7018902836236356
+Estimating model C0*exp(C1*n**5)
+model: 1.27940355117437*exp(-0.0668755876282617*n**5)                        ; p: 0.0014745600000000004  ; error: 3.8689011827929796
+Estimating model C0*n + C1
+model: 0.0105641988654547*n + 1.54117719224275                               ; p: 0.008294399999999999   ; error: 0.6967587034815464
+Parameter fitting for sequence A226898 took 3.5143686999999773 secconds.
+
+Final score:
+model: 0.0572665380117577*n          ; error: 1.3085590599876513
+model: 2.83116083787949e-5*n**3      ; error: 2.3292889435363704
+model: 0.000184032233707573*n**2 + 1.65121105537368; error: 0.7018902836236356
+model: 1.27940355117437*exp(-0.0668755876282617*n**5); error: 3.8689011827929796
+model: 0.0105641988654547*n + 1.54117719224275; error: 0.6967587034815464
+ModelBox: 5 models
+-> C0*n, p = 0.08639999999999999, parse trees = 1, valid = False
+-> C0*n**3, p = 0.013824000000000001, parse trees = 1, valid = False
+-> C0*n**2 + C1, p = 0.00497664, parse trees = 1, valid = False
+-> C0*exp(C1*n**5), p = 0.0014745600000000004, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.008294399999999999, parse trees = 1, valid = False
+Estimating model C0*n
+model: 2.82021025830848*n                                                    ; p: 0.08639999999999999    ; error: 94.30576425479289
+Estimating model C0*n**3
+model: 0.00169202162349711*n**3                                              ; p: 0.013824000000000001   ; error: 572.6485061179395
+Estimating model C0*n**2 + C1
+model: 0.0699982690544029*n**2 + 5.0                                         ; p: 0.00497664             ; error: 72.6339664601129
+Estimating model C0*exp(C1*n**5)
+model: 3.13195258823952*exp(-0.0810266677531279*n**5)                        ; p: 0.0014745600000000004  ; error: 6524.509487836834
+Estimating model C0*n + C1
+model: 2.97172541290288*n - 5.0                                              ; p: 0.008294399999999999   ; error: 64.39364304267164
+Parameter fitting for sequence A246655 took 3.3115746000000286 secconds.
+
+Final score:
+model: 2.82021025830848*n            ; error: 94.30576425479289
+model: 0.00169202162349711*n**3      ; error: 572.6485061179395
+model: 0.0699982690544029*n**2 + 5.0 ; error: 72.6339664601129
+model: 3.13195258823952*exp(-0.0810266677531279*n**5); error: 6524.509487836834
+model: 2.97172541290288*n - 5.0      ; error: 64.39364304267164
+Equation discovery for all (chosen) OEIS sequences took 316.8370851 secconds.
