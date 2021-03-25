@@ -53,15 +53,15 @@ def print_big(seqs):
 # remove Mersene seq:
 bseqs.pop('A000043')
 
-def select_small(seqs, head_length=50):
+def select_small(seqs, head_length=-1):
     small = {id: seq for id, seq in seqs.items() if abs_max(seq[:head_length])<1e16}
     return small
 # small = select_small(bseqs)
 if __name__ == "__main__":
     # execute only if run as a script
 
-    # filter accordingly only first 50 terms:
-    small = select_small(bseqs, head_length=50)
+    # filter accordingly only first 100 terms:
+    small = select_small(bseqs, head_length=100)
     print("selected:")
     basic_info(small)
     print(len(small), small.popitem())

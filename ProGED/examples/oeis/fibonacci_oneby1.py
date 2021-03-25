@@ -38,11 +38,11 @@ random = str(np.random.random())[2:]
 log_filename = log_name + message + random + ".txt"
 if is_tee and is_tee_flag:
     try:
-        print(f"Output will be logged in: {log_directory}{log_filename}")
         log_object = te.Tee(f"{log_directory}{log_filename}")
+        print(f"Output will be logged in: {log_directory}{log_filename}")
     except FileNotFoundError:
-        print(f"Output will be logged in: {log_filename}")
         log_object = te.Tee(log_filename)
+        print(f"Output will be logged in: {log_filename}")
 ######## End Of Logging ##  ##  ##                  ########
 
 
@@ -89,17 +89,17 @@ def grid (order, seq, direct=False):
 
 #######main#settings#####################################
 # order, is_direct = 2, False  # recursive
-order, is_direct = 4, False  # recursive
-# order, is_direct = 0, True  # direct
+# order, is_direct = 4, False  # recursive
+order, is_direct = 0, True  # direct
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
 # sample_size = 1
 # sample_size = 5
 # sample_size = 2
-sample_size = 3
+# sample_size = 3
 # sample_size = 6
-# sample_size = 100
+sample_size = 100
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
@@ -181,7 +181,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
 
-oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
+# oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # Run eq. disco. on all oeis sequences:
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
@@ -191,9 +191,12 @@ print("Running equation discovery for all oeis sequences, "
         # "=>> grammar = {grammar}\n"
         f"=>> grammar_template_name = {grammar_template_name}\n")
 start = time.perf_counter()
+last_run = "A002378"
+# LAST_ID = "A246655"
+csv = csv.loc[:, csv.columns >= last_run]
 for seq_id in csv:
     oeis_eq_disco(seq_id, is_direct, order)
-    print(f"\nTotal time consumed by now:{time.perf_counter-start}\n")
+    print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds.")
