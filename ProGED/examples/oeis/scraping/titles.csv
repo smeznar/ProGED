@@ -1,0 +1,272 @@
+,A000001,A000002,A000005,A000009,A000010,A000019,A000035,A000040,A000041,A000069,A000120,A000123,A000124,A000161,A000203,A000217,A000290,A000292,A000326,A000330,A000578,A000583,A000593,A000594,A000688,A000720,A000793,A000796,A000959,A000961,A001034,A001055,A001057,A001065,A001097,A001113,A001157,A001221,A001222,A001227,A001285,A001358,A001462,A001481,A001511,A001615,A001969,A002033,A002113,A002322,A002378,A002487,A002620,A002654,A002808,A003136,A003484,A004011,A004018,A004526,A005100,A005101,A005117,A005408,A005811,A005843,A006530,A007318,A008275,A008277,A008279,A008292,A008683,A010060,A018252,A020639,A020652,A020653,A025487,A027642,A038566,A038567,A038568,A038569,A049310,A070939,A074206,A104725,A226898,A246655
+0,"Number of groups of order n.
+                    <br><font size=-1>(Formerly M0098 N0035)</font>
+                    
+","Kolakoski sequence: a(n) is length of n-th run; a(1) = 1; sequence consists just of 1's and 2's.
+                    <br><font size=-1>(Formerly M0190 N0070)</font>
+                    
+","d(n) (also called tau(n) or sigma_0(n)), the number of divisors of n.
+                    <br><font size=-1>(Formerly M0246 N0086)</font>
+                    
+","Expansion of Product_{m &gt;= 1} (1 + x^m); number of partitions of n into distinct parts; number of partitions of n into odd parts.
+                    <br><font size=-1>(Formerly M0281 N0100)</font>
+                    
+","Euler totient function phi(n): count numbers &lt;= n and prime to n.
+                    <br><font size=-1>(Formerly M0299 N0111)</font>
+                    
+","Number of primitive permutation groups of degree n.
+                    <br><font size=-1>(Formerly M0346 N0130)</font>
+                    
+","Period 2: repeat [0, 1]; a(n) = n mod 2; parity of n.
+                    <br><font size=-1>(Formerly M0001)</font>
+                    
+","The prime numbers.
+                    <br><font size=-1>(Formerly M0652 N0241)</font>
+                    
+","a(n) is the number of partitions of n (the partition numbers).
+                    <br><font size=-1>(Formerly M0663 N0244)</font>
+                    
+","Odious numbers: numbers with an odd number of 1's in their binary expansion.
+                    <br><font size=-1>(Formerly M1031 N0388)</font>
+                    
+","1's-counting sequence: number of 1's in binary expansion of n (or the binary weight of n).
+                    <br><font size=-1>(Formerly M0105 N0041)</font>
+                    
+","Number of binary partitions: number of partitions of 2n into powers of 2.
+                    <br><font size=-1>(Formerly M1011 N0378)</font>
+                    
+","Central polygonal numbers (the Lazy Caterer's sequence): n(n+1)/2 + 1; or, maximal number of pieces formed when slicing a pancake with n cuts.
+                    <br><font size=-1>(Formerly M1041 N0391)</font>
+                    
+","Number of partitions of n into 2 squares.
+                    
+                    
+","a(n) = sigma(n), the sum of the divisors of n. Also called sigma_1(n).
+                    <br><font size=-1>(Formerly M2329 N0921)</font>
+                    
+","Triangular numbers: a(n) = binomial(n+1,2) = n*(n+1)/2 = 0 + 1 + 2 + ... + n.
+                    <br><font size=-1>(Formerly M2535 N1002)</font>
+                    
+","The squares: a(n) = n^2.
+                    <br><font size=-1>(Formerly M3356 N1350)</font>
+                    
+","Tetrahedral (or triangular pyramidal) numbers: a(n) = C(n+2,3) = n*(n+1)*(n+2)/6.
+                    <br><font size=-1>(Formerly M3382 N1363)</font>
+                    
+","Pentagonal numbers: a(n) = n*(3*n-1)/2.
+                    <br><font size=-1>(Formerly M3818 N1562)</font>
+                    
+","Square pyramidal numbers: a(n) = 0^2 + 1^2 + 2^2 + ... + n^2 = n*(n+1)*(2*n+1)/6.
+                    <br><font size=-1>(Formerly M3844 N1574)</font>
+                    
+","The cubes: a(n) = n^3.
+                    <br><font size=-1>(Formerly M4499 N1905)</font>
+                    
+","Fourth powers: a(n) = n^4.
+                    <br><font size=-1>(Formerly M5004 N2154)</font>
+                    
+","Sum of odd divisors of n.
+                    <br><font size=-1>(Formerly M3197 N1292)</font>
+                    
+","Ramanujan's tau function (or Ramanujan numbers, or tau numbers).
+                    <br><font size=-1>(Formerly M5153 N2237)</font>
+                    
+","Number of Abelian groups of order n; number of factorizations of n into prime powers.
+                    <br><font size=-1>(Formerly M0064 N0020)</font>
+                    
+","pi(n), the number of primes &lt;= n. Sometimes called PrimePi(n) to distinguish it from the number 3.14159...
+                    <br><font size=-1>(Formerly M0256 N0090)</font>
+                    
+","Landau's function g(n): largest order of permutation of n elements. Equivalently, largest LCM of partitions of n.
+                    <br><font size=-1>(Formerly M0537 N0190)</font>
+                    
+","Decimal expansion of Pi (or digits of Pi).
+                    <br><font size=-1>(Formerly M2218 N0880)</font>
+                    
+","Lucky numbers.
+                    <br><font size=-1>(Formerly M2616 N1035)</font>
+                    
+","Powers of primes. Alternatively, 1 and the prime powers (p^k, p prime, k &gt;= 1).
+                    <br><font size=-1>(Formerly M0517 N0185)</font>
+                    
+","Orders of non-cyclic simple groups (without repetition).
+                    <br><font size=-1>(Formerly M5318 N2311)</font>
+                    
+","The multiplicative partition function: number of ways of factoring n with all factors greater than 1 (a(1) = 1 by convention).
+                    <br><font size=-1>(Formerly M0095 N0032)</font>
+                    
+","Canonical enumeration of integers: interleaved positive and negative integers with zero prepended.
+                    
+                    
+","Sum of proper divisors (or aliquot parts) of n: sum of divisors of n that are less than n.
+                    <br><font size=-1>(Formerly M2226 N0884)</font>
+                    
+","Twin primes.
+                    
+                    
+","Decimal expansion of e.
+                    <br><font size=-1>(Formerly M1727 N0684)</font>
+                    
+","sigma_2(n): sum of squares of divisors of n.
+                    <br><font size=-1>(Formerly M3799 N1551)</font>
+                    
+","Number of distinct primes dividing n (also called omega(n)).
+                    <br><font size=-1>(Formerly M0056 N0019)</font>
+                    
+","Number of prime divisors of n counted with multiplicity (also called bigomega(n) or Omega(n)).
+                    <br><font size=-1>(Formerly M0094 N0031)</font>
+                    
+","Number of odd divisors of n.
+                    
+                    
+","Thue-Morse sequence: let A_k denote the first 2^k terms; then A_0 = 1 and for k &gt;= 0, A_{k+1} = A_k B_k, where B_k is obtained from A_k by interchanging 1's and 2's.
+                    <br><font size=-1>(Formerly M0193 N0071)</font>
+                    
+","Semiprimes (or biprimes): products of two primes.
+                    <br><font size=-1>(Formerly M3274 N1323)</font>
+                    
+","Golomb's sequence: a(n) is the number of times n occurs, starting with a(1) = 1.
+                    <br><font size=-1>(Formerly M0257 N0091)</font>
+                    
+","Numbers that are the sum of 2 squares.
+                    <br><font size=-1>(Formerly M0968 N0361)</font>
+                    
+","The ruler function: 2^a(n) divides 2n. Or, a(n) = 2-adic valuation of 2n.
+                    <br><font size=-1>(Formerly M0127 N0051)</font>
+                    
+","Dedekind psi function: n * Product_{p|n, p prime} (1 + 1/p).
+                    <br><font size=-1>(Formerly M2315 N0915)</font>
+                    
+","Evil numbers: nonnegative integers with an even number of 1's in their binary expansion.
+                    <br><font size=-1>(Formerly M2395 N0952)</font>
+                    
+","Number of perfect partitions of n.
+                    <br><font size=-1>(Formerly M0131 N0053)</font>
+                    
+","Palindromes in base 10.
+                    <br><font size=-1>(Formerly M0484 N0178)</font>
+                    
+","Reduced totient function psi(n): least k such that x^k == 1 (mod n) for all x prime to n; also known as the Carmichael lambda function (exponent of unit group mod n); also called the universal exponent of n.
+                    <br><font size=-1>(Formerly M0298 N0110)</font>
+                    
+","Oblong (or promic, pronic, or heteromecic) numbers: a(n) = n*(n+1).
+                    <br><font size=-1>(Formerly M1581 N0616)</font>
+                    
+","Stern's diatomic series (or Stern-Brocot sequence): a(0) = 0, a(1) = 1; for n &gt; 0: a(2*n) = a(n), a(2*n+1) = a(n) + a(n+1).
+                    <br><font size=-1>(Formerly M0141 N0056)</font>
+                    
+","Quarter-squares: floor(n/2)*ceiling(n/2). Equivalently, floor(n^2/4).
+                    <br><font size=-1>(Formerly M0998 N0374)</font>
+                    
+","Number of ways of writing n as a sum of at most two nonzero squares, where order matters; also (number of divisors of n of form 4m+1) - (number of divisors of form 4m+3).
+                    <br><font size=-1>(Formerly M0012 N0001)</font>
+                    
+","The composite numbers: numbers n of the form x*y for x &gt; 1 and y &gt; 1.
+                    <br><font size=-1>(Formerly M3272 N1322)</font>
+                    
+","Loeschian numbers: numbers of the form x^2 + xy + y^2; norms of vectors in A2 lattice.
+                    <br><font size=-1>(Formerly M2336)</font>
+                    
+","Radon function, also called Hurwitz-Radon numbers.
+                    <br><font size=-1>(Formerly M0161)</font>
+                    
+","Theta series of D_4 lattice; Fourier coefficients of Eisenstein series E_{gamma,2}.
+                    <br><font size=-1>(Formerly M5140)</font>
+                    
+","Theta series of square lattice (or number of ways of writing n as a sum of 2 squares). Often denoted by r(n) or r_2(n).
+                    <br><font size=-1>(Formerly M3218)</font>
+                    
+","Nonnegative integers repeated, floor(n/2).
+                    
+                    
+","Deficient numbers: numbers n such that sigma(n) &lt; 2n.
+                    <br><font size=-1>(Formerly M0514)</font>
+                    
+","Abundant numbers (sum of divisors of n exceeds 2n).
+                    <br><font size=-1>(Formerly M4825)</font>
+                    
+","Squarefree numbers: numbers that are not divisible by a square greater than 1.
+                    <br><font size=-1>(Formerly M0617)</font>
+                    
+","The odd numbers: a(n) = 2*n + 1.
+                    <br><font size=-1>(Formerly M2400)</font>
+                    
+","Number of runs in binary expansion of n (n&gt;0); number of 1's in Gray code for n.
+                    <br><font size=-1>(Formerly M0110)</font>
+                    
+","The nonnegative even numbers: a(n) = 2n.
+                    <br><font size=-1>(Formerly M0985)</font>
+                    
+","Gpf(n): greatest prime dividing n, for n &gt;= 2; a(1)=1.
+                    <br><font size=-1>(Formerly M0428)</font>
+                    
+","Pascal's triangle read by rows: C(n,k) = binomial(n,k) = n!/(k!*(n-k)!), 0 &lt;= k &lt;= n.
+                    <br><font size=-1>(Formerly M0082)</font>
+                    
+","Triangle read by rows of Stirling numbers of first kind, s(n,k), n &gt;= 1, 1 &lt;= k &lt;= n.
+                    
+                    
+","Triangle of Stirling numbers of the second kind, S2(n,k), n &gt;= 1, 1 &lt;= k &lt;= n.
+                    
+                    
+","Triangle T(n,k) = n!/(n-k)! (0 &lt;= k &lt;= n) read by rows, giving number of permutations of n things k at a time.
+                    
+                    
+","Triangle of Eulerian numbers T(n,k) (n &gt;= 1, 1 &lt;= k &lt;= n) read by rows.
+                    
+                    
+","Möbius (or Moebius) function mu(n). mu(1) = 1; mu(n) = (-1)^k if n is the product of k different primes; otherwise mu(n) = 0.
+                    
+                    
+","Thue-Morse sequence: let A_k denote the first 2^k terms; then A_0 = 0 and for k &gt;= 0, A_{k+1} = A_k B_k, where B_k is obtained from A_k by interchanging 0's and 1's.
+                    
+                    
+","The nonprime numbers: 1 together with the composite numbers, <a href=""/A002808"" title=""The composite numbers: numbers n of the form x*y for x &gt; 1 and y &gt; 1."">A002808</a>.
+                    
+                    
+","Lpf(n): least prime dividing n (when n &gt; 1); a(1) = 1. Or, smallest prime factor of n, or smallest prime divisor of n.
+                    
+                    
+","Numerators in canonical bijection from positive integers to positive rationals.
+                    
+                    
+","Denominators in canonical bijection from positive integers to positive rationals.
+                    
+                    
+","Least integer of each prime signature <a href=""/A124832"" title=""Table of exponents of prime factorizations in A025487."">A124832</a>; also products of primorial numbers <a href=""/A002110"" title=""Primorial numbers (first definition): product of first n primes. Sometimes written prime(n)#."">A002110</a>.
+                    
+                    
+","Denominator of Bernoulli number B_n.
+                    
+                    
+","Numerators in canonical bijection from positive integers to positive rationals &lt;= 1: arrange fractions by increasing denominator then by increasing numerator.
+                    
+                    
+","Denominators in canonical bijection from positive integers to positive rationals &lt;= 1.
+                    
+                    
+","Numerators in canonical bijection from positive integers to positive rationals.
+                    
+                    
+","Denominators in canonical bijection from positive integers to positive rationals.
+                    
+                    
+","Triangle of coefficients of Chebyshev's S(n,x) := U(n,x/2) polynomials (exponents in increasing order).
+                    
+                    
+","Length of binary representation of n.
+                    
+                    
+","Kalmár's [Kalmar's] problem: number of ordered factorizations of n.
+                    
+                    
+","Number of complementing systems of subsets of {0, 1, ..., n-1}.
+                    
+                    
+","Hooley's Delta function: maximum number of divisors of n in [u, eu] for all u. (Here e is Euler's number 2.718... = <a href=""/A001113"" title=""Decimal expansion of e."">A001113</a>.)
+                    
+                    
+","Prime powers: numbers of the form p^k where p is a prime and k &gt;= 1.
+                    
+                    
+"
