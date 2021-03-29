@@ -12,7 +12,9 @@ from urllib import request
 import re
 import time
 
-def bfile2list(id_, max_seq_length):
+import header as header_module
+
+def bfile2list(id_: str, max_seq_length: int) -> list:
     """Fetch b-file and return list."""
 
     max_read_url = (2+3+16+2) * max_seq_length
@@ -25,7 +27,7 @@ def bfile2list(id_, max_seq_length):
     new_seq = [int(term) for term in new_seq_str[:max_seq_length]]
     return new_seq
 
-def variable2file(variable, variable_name, filename):
+def variable2file(variable, variable_name, filename) -> None:
     """Write variable to file using repr function."""
 
     file = open(filename, "w")
@@ -68,7 +70,9 @@ def new_fetch (start=0, end=1e10, do_write=False, max_seq_length=100):
         # ten_ids = re.findall(r">(A\d{6})<", page)
         ten_ids = re.findall(r"<a href=\"/(A\d{6})\">A\d{6}</a>", page)
         # ten_ids = re.findall(r"<a href=\"/(\d{6})\">\d{6}</a>", page)
-        ten_seqs = {id: bfile2list(id, max_seq_length) for id in ten_ids}
+        # ten_seqs = {id_: bfile2list(id_, max_seq_length) for id_ in ten_ids}
+        ten_seqs = {id_: header_module.header(id_) 
+                        + bfile2list(id_, max_seq_length) for id_ in ten_ids}
         seqs.update(ten_seqs)
     
     # 3.) Write sequences into file if need be:
@@ -76,11 +80,9 @@ def new_fetch (start=0, end=1e10, do_write=False, max_seq_length=100):
         variable2file(seqs, "bseqs", "save_new_bfiles.py")
     return seqs
 # new_fetch(do_write=True)
-# seqs = new_fetch()
-# print(len(seqs), type(seqs), [len(seq) for _, seq in seqs.items()], 
-    # [seq for _, seq in seqs.items()][0])  # preview
+# new_fetch(10, 24, False, 50)
 
-def fetch(start=0, end=1e10, do_write=False):
+def fetch_old(start=0, end=1e10, do_write=False):
     search=request.urlopen('https://oeis.org/search?q=keyword:core%20keyword:nice&fmt=text')
     header_length = 1500  # number of characters in header
     header = search.read(header_length).decode()
@@ -126,16 +128,10 @@ def fetch(start=0, end=1e10, do_write=False):
         file.close()
     print("fetch ended")
     return
-# fetch(130, 190)
-# fetch()
+# fetch_old(130, 190)
+# fetch_old()
 # print("end of fetch")
 
-# starting_time = time.perf_counter()
-# new_fetch()
-# print('time of new_fetch():', time.perf_counter()-starting_time)
-# starting_time = time.perf_counter()
-# fetch()
-# print('time of fetch():', time.perf_counter()-starting_time)
 
 ## -- download b-files via saved sequences -- ##
 # import saved_core
