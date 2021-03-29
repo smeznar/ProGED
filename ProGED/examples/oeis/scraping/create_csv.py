@@ -22,7 +22,7 @@ df = pd.DataFrame(seqs)
 df_sorted = df.sort_index(axis=1)
 print(df_sorted.head())
 csv_filename = "oeis_selection.csv"
-df_sorted.to_csv(csv_filename, index=False)
+# df_sorted.to_csv(csv_filename, index=False)
 
 # after download:
 check = pd.read_csv(csv_filename)

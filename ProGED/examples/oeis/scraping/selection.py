@@ -53,7 +53,7 @@ def print_big(seqs):
 # remove Mersene seq:
 bseqs.pop('A000043')
 
-def select_small(seqs: dict, head_length=-1, has_titles=0):
+def select_small(seqs: dict, head_length=10**16, has_titles=0):
     small = {id_: seq for id_, seq in seqs.items() 
             if abs_max(seq[has_titles:head_length])<1e16}
     return small

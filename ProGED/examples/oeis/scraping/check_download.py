@@ -1,9 +1,10 @@
 import re
 import pandas as pd
 # from save_new_bfiles import bseqs  # before csv
-# from selection import basic_info
+from selection import basic_info
 
-df = pd.read_csv('oeis_selection.csv')
+has_titles = 1  # csv has first (few) line(s) with title/name of sequence.
+df = pd.read_csv('oeis_selection.csv')[has_titles:]
 # danger! in next line we should convert string terms to integers.
 bseqs = {id_: [int(term) for term in seq] for id_, seq in df.items()}
 
@@ -12,11 +13,12 @@ bseqs = {id_: [int(term) for term in seq] for id_, seq in df.items()}
 #     [seq for _, seq in seqs.items()][0])  # preview
 # print(len(set(seqs)))
 
-# basic_info(bseqs)
+basic_info(bseqs)
+# 1/0
 
 
 ## -- Check scrap against gzipped oeis database -- ##
-def check_scrap(seqs_dict: dict, is_bfile=False, max_seq_len=100):
+def check_scrap(seqs_dict: dict, is_bfile=False):
     # seqs = seqs_flat
     file2 = open("stripped_oeis_database.txt", "r")
     original = file2.read()
@@ -27,6 +29,7 @@ def check_scrap(seqs_dict: dict, is_bfile=False, max_seq_len=100):
         # seq_id = "A000002"
         compare = re.findall(id_+".+\n", original)
         str_seq = id_ + " ,"
+        # str_seq += "".join([str(term) + "," for term in seq])
         for term in seq:
             str_seq += str(term)+","
         str_seq += "\n"
@@ -36,22 +39,22 @@ def check_scrap(seqs_dict: dict, is_bfile=False, max_seq_len=100):
         # print(scraped)
         if not is_bfile:
             print("I can see, you are not using b-files. Those are more longer.")
-            bool = orig == scraped
+            bool_ = orig == scraped
             assert orig == scraped
-            print(counter, "Correct scrapping!!! found it" if bool else "scrapping FAILED!!!")
+            print(counter, "Correct scrapping!!! found it" if bool_ else "scrapping FAILED!!!")
             assert len(orig) == len(scraped)
             print(len(orig), len(scraped))
         else:
             # print("Checking b-files! Let's see.")
-            length = min(len(orig) - 2, max_seq_len)  # Avoid \n.
+            length = min(len(orig)-2, len(scraped)-2)  # Avoid \n.
             orig_cut = orig[:length]
             scraped_cut = scraped[:length]
+            print(counter, id_, 'all good', length)
             assert len(orig_cut) == len(scraped_cut)
             assert orig_cut == scraped_cut
-            bool = orig_cut == scraped_cut
-            print(counter, id_, 'all good', length)
-            # print(counter, "Correct scrapping!!! found it" if bool else "scrapping FAILED!!!")
-            if not bool:
+            bool_ = orig_cut == scraped_cut
+            # print(counter, "Correct scrapping!!! found it" if bool_ else "scrapping FAILED!!!")
+            if not bool_:
                 print("scrapping FAILED!!!")
                 print("orig:", orig_cut)
                 print("scra:", scraped_cut)
@@ -62,7 +65,5 @@ def check_scrap(seqs_dict: dict, is_bfile=False, max_seq_len=100):
     return
 # check_scrap()
 # check_scrap(bseqs, is_bfile=True)
-check_scrap(bseqs, is_bfile=True, max_seq_len=200)  # would return error if
-    # oeis official database file would have our sequences with less than 
-    # 100 terms (max len set to 100).
+check_scrap(bseqs, is_bfile=True)
 print("end")
