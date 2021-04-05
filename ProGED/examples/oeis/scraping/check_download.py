@@ -5,6 +5,7 @@ from selection import basic_info
 
 has_titles = 1  # csv has first (few) line(s) with title/name of sequence.
 df = pd.read_csv('oeis_selection.csv')[has_titles:]
+# 1/0
 # danger! in next line we should convert string terms to integers.
 bseqs = {id_: [int(term) for term in seq] for id_, seq in df.items()}
 
@@ -49,7 +50,7 @@ def check_scrap(seqs_dict: dict, is_bfile=False):
             length = min(len(orig)-2, len(scraped)-2)  # Avoid \n.
             orig_cut = orig[:length]
             scraped_cut = scraped[:length]
-            print(counter, id_, 'all good', length)
+            print(counter, id_, 'all good. string length:', length)
             assert len(orig_cut) == len(scraped_cut)
             assert orig_cut == scraped_cut
             bool_ = orig_cut == scraped_cut

@@ -45,11 +45,14 @@ if is_tee and is_tee_flag:
         print(f"Output will be logged in: {log_filename}")
 ######## End Of Logging ##  ##  ##                  ########
 
-
-csv = pd.read_csv("oeis_selection.csv", nrows=50)
+has_titles = 1
+csv = pd.read_csv('oeis_selection.csv')[has_titles:]
+# print(csv.shape)
+# Old for fibonacci only:
 seq_id = "A000045"
-fibs = list(csv[seq_id])  # fibonacci = A000045
-oeis = fibs
+# fibs = list(csv[seq_id])  # fibonacci = A000045
+# oeis = fibs
+
 # oeis = fibs[2:]
 # fibs_old = [0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,
 #  1597,2584,4181,6765,10946,17711,28657,46368,75025,
@@ -65,9 +68,8 @@ oeis = fibs
 #  263,269,271][:40+1]
 # oeis = primes
 # seq = numpy_seq
-seq = np.array(oeis)
-# seq = np.array(oeis[:40])
-# print(seq.shape, seq.dtype, seq)
+
+# seq = np.array(oeis)
 
 # we want:
 # 0 1 2
@@ -94,12 +96,12 @@ order, is_direct = 0, True  # direct
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
-sample_size = 1
+# sample_size = 1
 # sample_size = 5
 # sample_size = 2
 # sample_size = 3
 # sample_size = 6
-# sample_size = 100
+sample_size = 100
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
@@ -182,7 +184,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
 
-# oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
+oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # Run eq. disco. on all oeis sequences:
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
@@ -195,9 +197,9 @@ start = time.perf_counter()
 last_run = "A002378"
 # LAST_ID = "A246655"
 csv = csv.loc[:, csv.columns >= last_run]
-for seq_id in csv:
-    oeis_eq_disco(seq_id, is_direct, order)
-    print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
+# for seq_id in csv:
+#     oeis_eq_disco(seq_id, is_direct, order)
+#     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds.")
