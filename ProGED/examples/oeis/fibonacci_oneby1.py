@@ -94,12 +94,12 @@ order, is_direct = 0, True  # direct
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
-# sample_size = 1
+sample_size = 1
 # sample_size = 5
 # sample_size = 2
 # sample_size = 3
 # sample_size = 6
-sample_size = 100
+# sample_size = 100
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
@@ -146,7 +146,8 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
                              "p_T": p_T, "p_R": p_R
                              },
         estimation_settings={
-            "verbosity": 1,
+            # "verbosity": 1,
+            "verbosity": 0,
              "task_type": "algebraic",
              # "task_type": "oeis",
             # "task_type": "oeis_recursive_error",  # bad idea
@@ -241,29 +242,3 @@ def pretty_results(seq_name="fibonacci", is_direct=is_direct, order=order):
     return
 # pretty_results(seq_name=seq_name, is_direct=is_direct, order=order)
 
-# why allways the same models are generated: (seed and grammars same)
-# seq_id = "A000040"  # primes
-# data = grid(order, np.array(list(csv[seq_id])[:30]), is_direct)
-# np.random.seed(0)
-# ed2 = EqDisco(
-#     data = data[:10, ],
-#     task = None,
-#     target_variable_index = -1,
-#     variable_names=variable_names,
-#     sample_size = sample_size,
-#     verbosity = 0,
-#     generator = "grammar", 
-#     generator_template_name = grammar_template_name,
-#     generator_settings={"variables": variables,
-#                          "p_T": p_T, "p_R": p_R
-#                          },
-#     estimation_settings={
-#         "verbosity": 1,
-#          "task_type": "algebraic",
-#          "lower_upper_bounds": lower_upper_bounds,
-#     }
-# )
-
-# ed2.generate_models()
-# print("generating the second time")
-# print(ed2.models)
