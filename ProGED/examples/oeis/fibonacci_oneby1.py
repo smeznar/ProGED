@@ -184,7 +184,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
 
-# oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
+oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # Run eq. disco. on all oeis sequences:
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
@@ -197,9 +197,9 @@ start = time.perf_counter()
 last_run = "A002378"
 # LAST_ID = "A246655"
 csv = csv.loc[:, csv.columns >= last_run]
-for seq_id in csv:
-    oeis_eq_disco(seq_id, is_direct, order)
-    print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
+# for seq_id in csv:
+#     oeis_eq_disco(seq_id, is_direct, order)
+#     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds.")

@@ -248,37 +248,39 @@ def model_oeis_error (params, model, X, Y, _T, estimation_settings):
         print("Programmer1 model_oeis_error: Params at error:", params, f"and {type(error)} with message:", error)
         return DUMMY
 
-# def model_oeis_recursive_error (params, model, X, Y, *compatible_code):
-#     """Defines mean squared error as the error metric."""
-#     try:
-#         order = len(model.sym_vars)
-#         # model.params = np.round(model.params)
-#         params = list(np.round(model.params))
-#         an = model.lambdify(*params)
-#         first_terms = X[:order, 0]
-#         # fibs = X[:order, 0]
-#         cache = list(first_terms)
-#         for _ in range(order, X.shape[0]):
-#             cache += [an(*cache[-order:])]
-#         cache
-        
-#         # testY = model.evaluate(X, *params)
-#         testY = cache
-#         res = np.mean((Y-testY)**2)
-#         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-#             # print("isnan(res), ... ")
-#             # print(model.expr, model.params, model.sym_params, model.sym_vars)
-#             return DUMMY
-#         return res
-#     except Exception as error:
-#         print("Programmer1 inside model_oeis_recursive_error: Params at error:", params, f"and {type(error)} with message:", error)
-#         return DUMMY
+def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
+    """Calls Hyperopt.
+    Exists to make passing arguments to the objective function easier."""
+
+    from hyperopt import hp, fmin, rand
+    lu_bounds = estimation_settings["lower_upper_bounds"]
+    lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
+    p0 = (13.45, 19.1, 16.834)
+    print("This is *hp.randint* version of Hyperopt running.")
+    space = [hp.randint('C'+str(i), lower_bound, upper_bound)
+                    for i in range(len(p0))]
+
+    # Use user's hyperopt specifications or use the default ones:
+    algo = estimation_settings.get("hyperopt_algo", rand.suggest)
+    max_evals = estimation_settings.get("hyperopt_max_evals", 100)
+    best = fmin(objective, space, algo=algo, max_evals=max_evals)
+    best = fmin(
+        fn=objectiv, 
+        algo=rand.suggest, 
+        timeout=estimation_settings["timeout"]:
+        space=space, 
+        )
+
+    # result = hyperopt(model, bounds, itd.)
+    return result
 
 def DE_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls scipy.optimize.differential_evolution. 
     Exists to make passing arguments to the objective function easier."""
     
-    lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
+    lu_bounds = estimation_settings["lower_upper_bounds"]
+    lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
+    # lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
     bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
 
     start = time.perf_counter()
@@ -298,11 +300,7 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
         args=[model, X, Y, T, estimation_settings],
         callback=diff_evol_timeout, 
         maxiter=10**2,
-        # maxiter=10**3,
         popsize=10,  # orig
-        # popsize=100,
-        # popsize=30,
-        # popsize=50,
         # tol=10
         )
 
