@@ -255,6 +255,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     from hyperopt import hp, fmin, rand
     lu_bounds = estimation_settings["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
+    # lower_bound, upper_bound = lu_bounds[0], lu_bounds[1]
     print("This is *hp.randint* version of Hyperopt running.")
     # Currently implemented Hyperopt optimisation via hp.randint only.
     space = [hp.randint('C'+str(i), lower_bound, upper_bound)
@@ -264,12 +265,19 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
             params, model, X, Y, T, estimation_settings)
     # Use user's hyperopt specifications or use the default ones:
     algo = estimation_settings.get("hyperopt_algo", rand.suggest)
-    # max_evals = estimation_settings.get("hyperopt_max_evals", 100)
+    max_evals = estimation_settings.get("hyperopt_max_evals", 500)
+
+    if str(model.expr) == "C0*exp(C1*n)":
+        estimation_settings["timeout"] = estimation_settings["timeout_privilege"]
+        max_evals = max_evals*10
+        print("This model is privileged.")
+
     best = fmin(
         fn=objective, 
         space=space, 
         algo=algo,
         timeout=estimation_settings["timeout"], 
+        max_evals=max_evals,
         )
     params = list(best.values())
     ###################################################

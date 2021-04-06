@@ -24,23 +24,26 @@ import hyperopt.pyll.stochastic
 # for i in range(10):
 #     print(hyperopt.pyll.stochastic.sample(space))
 
-lower_bound = -100
-upper_bound = 50
+lower_bound = 10
+upper_bound = 150
 p0 = (13.45, 15.1, 16.834)
+p0 = [13.45, 15.1, 16.834]
 # proged_space = {'C'+str(i): hp.randint('C_in'+str(i), lower_bound, upper_bound)
 proged_space = [hp.randint('C'+str(i), lower_bound, upper_bound)
                     for i in range(len(p0))]
 prspace = proged_space
 # prspace = {'nek': hp.randint('lab', 4)}
-# prspace = hp.randint('lab', 4)
+# prspace = hp.randint('lab', -4, 4)
 # print(prspace)
 # for i in range(10):
 #     print(hyperopt.pyll.stochastic.sample(prspace))
 def objectiv(args):
+    # return (args[0]**2 + args[1]**2)**(1/2)
     return (args[0]**2 + args[1]**2)**(1/2)
     # return args**2
     # return args['nek']**2
-best = fmin(fn=objectiv, algo=rand.suggest, timeout=3, space=prspace)#, max_evals=2000)
+# best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500, timeout=3)
+best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, timeout=1, max_evals=500)
 # best = fmin(fn=objectiv, algo=tpe.suggest, space=prspace, max_evals=100)
 print(best)
 

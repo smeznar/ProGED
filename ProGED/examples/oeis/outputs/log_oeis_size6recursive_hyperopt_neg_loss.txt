@@ -1,0 +1,25 @@
+Output will be logged in: outputs/log_oeis_028437022361385567.txt
+ModelBox: 6 models
+-> C0*exp(C1*an_1**3*an_2**3), p = 9.216000000000003e-06, parse trees = 1, valid = False
+-> C0*exp(C1*an_1*an_2**2) + C2, p = 1.5925248000000003e-05, parse trees = 1, valid = False
+-> C0*exp(C1*an_2) + C2, p = 0.004147199999999999, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_2, p = 0.0012441599999999998, parse trees = 1, valid = False
+-> C0*an_1, p = 0.043199999999999995, parse trees = 1, valid = False
+-> C0*an_2 + C1*exp(C2*an_1*an_2) + C3, p = 1.5925248e-05, parse trees = 1, valid = False
+Estimating model C0*exp(C1*an_1**3*an_2**3)
+This is *hp.randint* version of Hyperopt running.
+model: 9                                                                     ; p: 9.216000000000003e-06  ; error: 5.024659050705277e+17
+Estimating model C0*exp(C1*an_1*an_2**2) + C2
+This is *hp.randint* version of Hyperopt running.
+model: 18                                                                    ; p: 1.5925248000000003e-05 ; error: 5.0246589743364883e+17
+Estimating model C0*exp(C1*an_2) + C2
+This is *hp.randint* version of Hyperopt running.
+model: 17                                                                    ; p: 0.004147199999999999   ; error: 5.024658982821909e+17
+Estimating model C0*an_1 + C1*an_2
+This is *hp.randint* version of Hyperopt running.
+model: 8*an_1 + 2*an_2                                                       ; p: 0.0012441599999999998  ; error: -5.1826728440012064e+17
+Estimating model C0*an_1
+This is *hp.randint* version of Hyperopt running.
+model: -6*an_1                                                               ; p: 0.043199999999999995   ; error: -5.1826728440012064e+17
+Estimating model C0*an_2 + C1*exp(C2*an_1*an_2) + C3
+This is *hp.randint* version of Hyperopt running.

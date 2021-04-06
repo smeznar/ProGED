@@ -9,7 +9,7 @@ import sys
 # from scipy.optimize import brute, shgo, rosen, dual_annealing
 
 from ProGED.equation_discoverer import EqDisco
-# from ProGED.parameter_estimation import integer_brute_fit, DE_fit, shgo_fit, DAnnealing_fit
+from ProGED.parameter_estimation import DE_fit, hyperopt_fit  # integer_brute_fit, shgo_fit, DAnnealing_fit
 import ProGED.examples.tee_so as te  # Log using manually copied class from a forum.
 
 
@@ -32,8 +32,8 @@ if len(sys.argv) >= 2:
 if not is_tee_flag:
     print("\nNo-log flag deteted!\n")
 
-is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
-# is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
+# is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
+is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
 random = str(np.random.random())[2:]
 log_filename = log_name + message + random + ".txt"
 if is_tee and is_tee_flag:
@@ -90,9 +90,9 @@ def grid (order, seq, direct=False):
     return seq[indexes]
 
 #######main#settings#####################################
-# order, is_direct = 2, False  # recursive
+order, is_direct = 2, False  # recursive
 # order, is_direct = 4, False  # recursive
-order, is_direct = 0, True  # direct
+# order, is_direct = 0, True  # direct
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
@@ -101,10 +101,15 @@ grammar_template_name = "polynomial"
 # sample_size = 2
 # sample_size = 3
 sample_size = 6
+# sample_size = 16
+# sample_size = 15
+# sample_size = 20
+# sample_size = 20
 # sample_size = 100
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
+# lower_upper_bounds = (-1, 1)  # direct
 #########################################################
 
 def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
@@ -124,9 +129,11 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         p_T = [0.4, 0.6]  # for rec fib
         p_R = [0.9, 0.1]
 
-    np.random.seed(0)
+    # np.random.seed(0)
+    np.random.seed(1)  # rec
     # seed 0 , size 20 (16)
-    # seed3 size 15 an-1 + an-2 + c3 rec 
+    # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
+    # seed 1 size 20 ali 6 an-1 + an-2 rec 
     ED = EqDisco(
         data = data,
         task = None,
@@ -148,8 +155,8 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
                              "p_T": p_T, "p_R": p_R
                              },
         estimation_settings={
-            # "verbosity": 1,
-            "verbosity": 0,
+            "verbosity": 1,
+            # "verbosity": 0,
              "task_type": "algebraic",
              # "task_type": "oeis",
             # "task_type": "oeis_recursive_error",  # bad idea
@@ -169,9 +176,24 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "optimizer": shgo_fit,
             # "optimizer": DAnnealing_fit,
             "optimizer": hyperopt_fit,
+            # "timeout": 1,
+            "timeout": 13,
+            "timeout_privilege": 30,
+            "hyperopt_max_evals": 3250,
+            # "hyperopt_max_evals": 550,
         }
     )
 
+
+    # for i in range(0, 100):
+    #     np.random.seed(i)
+    #     print("seed", i)
+    #     print(ED)
+    #     ED.generate_models()
+    #     print(ED.models)
+    #     ED.models = None
+
+    # 1/0
     ED.generate_models()
     print(ED.models)
     # 1/0
