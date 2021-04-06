@@ -32,8 +32,8 @@ if len(sys.argv) >= 2:
 if not is_tee_flag:
     print("\nNo-log flag deteted!\n")
 
-# is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
-is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
+is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
+# is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
 random = str(np.random.random())[2:]
 log_filename = log_name + message + random + ".txt"
 if is_tee and is_tee_flag:
@@ -47,7 +47,7 @@ if is_tee and is_tee_flag:
 
 has_titles = 1
 csv = pd.read_csv('oeis_selection.csv')[has_titles:]
-# print(csv.shape)
+csv = csv.astype('int64')
 # Old for fibonacci only:
 seq_id = "A000045"
 # fibs = list(csv[seq_id])  # fibonacci = A000045
@@ -100,8 +100,8 @@ grammar_template_name = "polynomial"
 # sample_size = 5
 # sample_size = 2
 # sample_size = 3
-# sample_size = 6
-sample_size = 100
+sample_size = 6
+# sample_size = 100
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
@@ -184,7 +184,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
 
-oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
+# oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # Run eq. disco. on all oeis sequences:
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
@@ -197,9 +197,9 @@ start = time.perf_counter()
 last_run = "A002378"
 # LAST_ID = "A246655"
 csv = csv.loc[:, csv.columns >= last_run]
-# for seq_id in csv:
-#     oeis_eq_disco(seq_id, is_direct, order)
-#     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
+for seq_id in csv:
+    oeis_eq_disco(seq_id, is_direct, order)
+    print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds.")
