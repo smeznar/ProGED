@@ -255,23 +255,28 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     from hyperopt import hp, fmin, rand
     lu_bounds = estimation_settings["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
-    p0 = (13.45, 19.1, 16.834)
     print("This is *hp.randint* version of Hyperopt running.")
+    # Currently implemented Hyperopt optimisation via hp.randint only.
     space = [hp.randint('C'+str(i), lower_bound, upper_bound)
-                    for i in range(len(p0))]
-
+                 for i in range(len(p0))]
+    def objective(params):
+        return estimation_settings["objective_function"](
+            params, model, X, Y, T, estimation_settings)
     # Use user's hyperopt specifications or use the default ones:
     algo = estimation_settings.get("hyperopt_algo", rand.suggest)
-    max_evals = estimation_settings.get("hyperopt_max_evals", 100)
-    best = fmin(objective, space, algo=algo, max_evals=max_evals)
+    # max_evals = estimation_settings.get("hyperopt_max_evals", 100)
     best = fmin(
-        fn=objectiv, 
-        algo=rand.suggest, 
-        timeout=estimation_settings["timeout"]:
+        fn=objective, 
         space=space, 
+        algo=algo,
+        timeout=estimation_settings["timeout"], 
         )
-
-    # result = hyperopt(model, bounds, itd.)
+    params = list(best.values())
+    ###################################################
+    #### TODO: REPAIR LINE BELOW!!! DO NOT EVALUATE OBJ. FUNCTION AGAIN!!!
+    result = {"x":params, "fun":objective(params)}
+    #### TODO: REPAIR LINE above!!! DO NOT EVALUATE OBJ. FUNCTION AGAIN!!!
+    ###################################################
     return result
 
 def DE_fit (model, X, Y, T, p0, **estimation_settings):

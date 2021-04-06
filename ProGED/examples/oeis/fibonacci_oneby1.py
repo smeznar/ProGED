@@ -168,6 +168,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "optimizer": integer_brute_fit,
             # "optimizer": shgo_fit,
             # "optimizer": DAnnealing_fit,
+            "optimizer": hyperopt_fit,
         }
     )
 
