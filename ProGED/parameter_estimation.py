@@ -44,15 +44,21 @@ DUMMY = 10**30
 def model_error (params, model, X, Y, *residue):
     """Defines mean squared error as the error metric."""
     try:
+        verbosity = residue[1]["verbosity"]
         testY = model.evaluate(X, *params)
         res = np.mean((Y-testY)**2)
         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-            # print("isnan(res), ... ")
-            # print(model.expr, model.params, model.sym_params, model.sym_vars)
+            if verbosity >= 3:
+                print("isnan(res), ... ")
+                print("isnan(res), ... =", np.isnan(res), np.isinf(res), not np.isreal(res))
+                print(model.expr, model.params, model.sym_params, model.sym_vars)
             return DUMMY
+        if verbosity >= 3:
+            print("Function model_error did not encounter any errors, the output *square error/loss* is legit.")
         return res
     except Exception as error:
         print("Programmer1 model_error: Params at error:", params, f"and {type(error)} with message:", error)
+        print(f"Programmer1 is returning DUMMY:{DUMMY}")
         return DUMMY
 
 # def model_constant_error (model, params, X, Y):
@@ -261,8 +267,10 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     space = [hp.randint('C'+str(i), lower_bound, upper_bound)
                  for i in range(len(p0))]
     def objective(params):
-        return estimation_settings["objective_function"](
-            params, model, X, Y, T, estimation_settings)
+        # First way for solution:
+        params = [int(i) for i in params]  # Use int instead of np.int32.
+        return min(10**6, estimation_settings["objective_function"](
+            params, model, X, Y, T, estimation_settings))
     # Use user's hyperopt specifications or use the default ones:
     algo = estimation_settings.get("hyperopt_algo", rand.suggest)
     max_evals = estimation_settings.get("hyperopt_max_evals", 500)
@@ -283,6 +291,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     ###################################################
     #### TODO: REPAIR LINE BELOW!!! DO NOT EVALUATE OBJ. FUNCTION AGAIN!!!
     result = {"x":params, "fun":objective(params)}
+    print(result)
     #### TODO: REPAIR LINE above!!! DO NOT EVALUATE OBJ. FUNCTION AGAIN!!!
     ###################################################
     return result

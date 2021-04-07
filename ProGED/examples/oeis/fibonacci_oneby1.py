@@ -155,6 +155,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
                              "p_T": p_T, "p_R": p_R
                              },
         estimation_settings={
+            # "verbosity": 3,
             "verbosity": 1,
             # "verbosity": 0,
              "task_type": "algebraic",
@@ -179,8 +180,8 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "timeout": 1,
             "timeout": 13,
             "timeout_privilege": 30,
-            "hyperopt_max_evals": 3250,
-            # "hyperopt_max_evals": 550,
+            # "hyperopt_max_evals": 3250,
+            "hyperopt_max_evals": 550,
         }
     )
 
