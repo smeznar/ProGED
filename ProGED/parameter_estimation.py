@@ -269,8 +269,8 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     def objective(params):
         # First way for solution:
         params = [int(i) for i in params]  # Use int instead of np.int32.
-        return min(10**6, estimation_settings["objective_function"](
-            params, model, X, Y, T, estimation_settings))
+        return estimation_settings["objective_function"](
+            params, model, X, Y, T, estimation_settings)
     # Use user's hyperopt specifications or use the default ones:
     algo = estimation_settings.get("hyperopt_algo", rand.suggest)
     max_evals = estimation_settings.get("hyperopt_max_evals", 500)
@@ -286,6 +286,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         algo=algo,
         timeout=estimation_settings["timeout"], 
         max_evals=max_evals,
+        rstate=np.random,
         )
     params = list(best.values())
     ###################################################

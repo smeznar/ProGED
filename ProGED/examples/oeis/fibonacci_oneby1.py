@@ -47,7 +47,8 @@ if is_tee and is_tee_flag:
 
 has_titles = 1
 csv = pd.read_csv('oeis_selection.csv')[has_titles:]
-csv = csv.astype('int64')
+# csv = csv.astype('int64')
+csv = csv.astype('float')
 # Old for fibonacci only:
 seq_id = "A000045"
 # fibs = list(csv[seq_id])  # fibonacci = A000045
@@ -97,10 +98,10 @@ order, is_direct = 2, False  # recursive
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
 # sample_size = 1
-# sample_size = 5
+sample_size = 4
 # sample_size = 2
 # sample_size = 3
-sample_size = 6
+# sample_size = 6
 # sample_size = 16
 # sample_size = 15
 # sample_size = 20
@@ -133,7 +134,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
     np.random.seed(1)  # rec
     # seed 0 , size 20 (16)
     # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
-    # seed 1 size 20 ali 6 an-1 + an-2 rec 
+    # seed 1 size 20 ali 4 an-1 + an-2 rec 
     ED = EqDisco(
         data = data,
         task = None,
@@ -181,7 +182,9 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             "timeout": 13,
             "timeout_privilege": 30,
             # "hyperopt_max_evals": 3250,
-            "hyperopt_max_evals": 550,
+            # "hyperopt_max_evals": 550,  # finds if result=min(10**6, hyperopt...)
+            "hyperopt_max_evals": 1000,
+            "hyperopt_max_evals": 700,
         }
     )
 

@@ -40,7 +40,7 @@ prspace = proged_space
 #     print(hyperopt.pyll.stochastic.sample(prspace))
 def objectiv(args):
     # print(type(args), type(args[0]))  # = tuple, np.int32
-    # args = [int(i) for i in args]
+    args = [float(i) for i in args]
     # print(args[1], args[1]**10)
     return (args[0]**1 + args[1]**10)**(1/2)
     # return (args[1]**10)
@@ -49,7 +49,10 @@ def objectiv(args):
     # return args['nek']**2
 # best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500, timeout=3)
 # best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, timeout=1, max_evals=1500)
-best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500)
+import numpy as np
+np.random.seed(0)
+# best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500)
+best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500, rstate=np.random)  #, show_progressbar=False)# verbose=False)
 # best = fmin(fn=objectiv, algo=tpe.suggest, space=prspace, max_evals=100)
 print(best)
 print(list(best.values()))
