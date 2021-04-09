@@ -257,35 +257,95 @@ def model_oeis_error (params, model, X, Y, _T, estimation_settings):
 
 def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls Hyperopt.
-    Exists to make passing arguments to the objective function easier."""
+    Exists to make passing arguments to the objective function easier.
+
+    In context to ProGED, I currently see possible personal
+    configuration in one dimension only. This is because user cannot
+    predict how many and which parameters will the random generator
+    generate. I.e. possible input, passed in estimation_settings
+    dictionary is one dimesional search space as defined in HyperOpt
+    python package. This function will make copies of one dimesion
+    to fill the dimension/number of parameters. E.g. if passing
+    estimation_settings["hyperopt_search_space"]=
+        hp.randint('label', upper_bound)
+    in case of p0=(2.45, 6.543, 6.5),
+    the search space will be 
+    [hp.randint('label', upper_bound),
+     hp.randint('label', upper_bound),
+     hp.randint('label', upper_bound)], since p0 is 3-dimesional.
+
+    There is also syntactic sugar currently implemented for this for 
+    simple search space definitions (e.g. that can be derived from
+    upper and lower bound only). It is to specify the function
+    that defines 1-D search space, such as hp.randint in our 
+    example. The function would therefore behave the same as before
+    if we pass estimation_settings["hyperopt_space_fn"]=hp.randint
+    to fit_models. 
+    Full list of currently supported sugars:
+        - hp.randint
+        - hp.uniform
+        - hp.loguniform
+    = 13-4normal-2quni-2choice = 5?
+    13 = 4+4+2+3?
+
+    If search space or its function is unspecified, then the space:
+            hp.randint('Ci', lower_bound, upper_bound)
+    is used.
+    """
 
     from hyperopt import hp, fmin, rand
     lu_bounds = estimation_settings["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
-    # lower_bound, upper_bound = lu_bounds[0], lu_bounds[1]
     print("This is *hp.randint* version of Hyperopt running.")
     # Currently implemented Hyperopt optimisation via hp.randint only.
-    space = [hp.randint('C'+str(i), lower_bound, upper_bound)
+
+    if "hyperopt_search_space" in estimation_settings
+        and "hyperopt_space_fn" in estimation_settings:
+            raise ValueError(
+                f"ProGED programmer's raised error: "
+                f"The user should use only one way to specify the search"
+                f" space to avoid contradictory definitions.")
+    space_fn = estimation_settings.get("hyperopt_space_fn", hp.randint)
+    if space_fn not in {hp.randint, hp.uniform, hp.loguniform}:
+        # raise ValueError(
+            # f"ProGED programmer's raised error: "
+            # f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
+            # f"is wrong or unimplemented search space function. Currently
+        print(
+            f"ProGED programmer's raised printed notice: "
+            f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
+            f"should be used carefully, since it is not currently officially"
+            f" recognized and is therfore potentially producing errors."
+            f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
+            f"  - hp.loguniform")
+    space = [space_fn('C'+str(i), lower_bound, upper_bound)
                  for i in range(len(p0))]
+    space = estimation_settings.get("hyperopt_search_space", space)
     def objective(params):
         # First way for solution:
-        params = [int(i) for i in params]  # Use int instead of np.int32.
+        params = [float(i) for i in params]  # Use float instead of np.int32.
         return estimation_settings["objective_function"](
             params, model, X, Y, T, estimation_settings)
     # Use user's hyperopt specifications or use the default ones:
     algo = estimation_settings.get("hyperopt_algo", rand.suggest)
     max_evals = estimation_settings.get("hyperopt_max_evals", 500)
+    timeout=estimation_settings["timeout"], 
 
+    # My testing code. Delete this block:
     if str(model.expr) == "C0*exp(C1*n)":
         estimation_settings["timeout"] = estimation_settings["timeout_privilege"]
         max_evals = max_evals*10
         print("This model is privileged.")
 
+    if estimation_settings["verbosity"] >= 3:
+        print(f"Hyperopt will run with specs:"
+                f"  - search space: {space}\n  - algorithm: {algo}\n"
+                f"  - timeout: {timeut}\n  - max_evals: {max_evals}")
     best = fmin(
         fn=objective, 
         space=space, 
         algo=algo,
-        timeout=estimation_settings["timeout"], 
+        timeout=timeout,
         max_evals=max_evals,
         rstate=np.random,
         )
