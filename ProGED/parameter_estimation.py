@@ -51,7 +51,7 @@ def model_error (params, model, X, Y, *residue):
         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
             if verbosity >= 3:
                 print("isnan(res), ... ")
-                print("isnan(res), ... =", np.isnan(res), np.isinf(res), not np.isreal(res))
+                print("isnan, isinf, isreal =", np.isnan(res), np.isinf(res), not np.isreal(res))
                 print(model.expr, model.params, model.sym_params, model.sym_vars)
             return DUMMY
         if verbosity >= 3:
@@ -230,7 +230,7 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
             return DUMMY
 
     except Exception as error:
-        print("Programmer: Excerpted an error inside ode() of model_ode_error.")
+        print("Programmer of model_ode_error: Excepted an error inside ode() of model_ode_error.")
         print("Programmer: Params at error:", params, f"and {type(error)} with message:", error)
         print("Returning dummy error. All is well.")
         return DUMMY
@@ -293,16 +293,18 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     is used.
     """
 
-    from hyperopt import hp, fmin, rand
+    from hyperopt import hp, fmin, rand, pyll
+    import hyperopt.pyll.stochastic
+
     lu_bounds = estimation_settings["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
     print("This is *hp.randint* version of Hyperopt running.")
     # Currently implemented Hyperopt optimisation via hp.randint only.
 
-    if "hyperopt_search_space" in estimation_settings
-        and "hyperopt_space_fn" in estimation_settings:
+    if ("hyperopt_search_space" in estimation_settings
+        and "hyperopt_space_fn" in estimation_settings):
             raise ValueError(
-                f"ProGED programmer's raised error: "
+                f"hyperopt_fit's programmer raised error: "
                 f"The user should use only one way to specify the search"
                 f" space to avoid contradictory definitions.")
     space_fn = estimation_settings.get("hyperopt_space_fn", hp.randint)
@@ -329,18 +331,23 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     # Use user's hyperopt specifications or use the default ones:
     algo = estimation_settings.get("hyperopt_algo", rand.suggest)
     max_evals = estimation_settings.get("hyperopt_max_evals", 500)
-    timeout=estimation_settings["timeout"], 
+    timeout=estimation_settings["timeout"]
 
     # My testing code. Delete this block:
-    if str(model.expr) == "C0*exp(C1*n)":
-        estimation_settings["timeout"] = estimation_settings["timeout_privilege"]
-        max_evals = max_evals*10
-        print("This model is privileged.")
+    # if str(model.expr) == "C0*exp(C1*n)":
+    #     estimation_settings["timeout"] = estimation_settings["timeout_privilege"]
+    #     max_evals = max_evals*10
+    #     print("This model is privileged.")
 
     if estimation_settings["verbosity"] >= 3:
-        print(f"Hyperopt will run with specs:"
-                f"  - search space: {space}\n  - algorithm: {algo}\n"
-                f"  - timeout: {timeut}\n  - max_evals: {max_evals}")
+        print(f"Hyperopt will run with specs:\n"
+              f"  - search space:\n" + "".join([str(i)+"\n" for i in space])
+              + f"  - algorithm: {algo}\n"
+              f"  - timeout: {timeout}\n  - max_evals: {max_evals}")
+        print("A few points generated from the space specified:")
+        for i in range(10):
+            print(hyperopt.pyll.stochastic.sample(space))
+
     best = fmin(
         fn=objective, 
         space=space, 
@@ -348,6 +355,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         timeout=timeout,
         max_evals=max_evals,
         rstate=np.random,
+        verbose=False,
         )
     params = list(best.values())
     ###################################################
@@ -547,7 +555,7 @@ class ParameterEstimator:
                 # if self.estimation_settings["verbosity"] >= 2:
                 #     print(res, type(res["x"]), type(res["x"][0]))
         except Exception as error:
-            print((f"Excepted an error: Of type {type(error)} and message:"
+            print((f"Excepted an error inside fit_one: Of type {type(error)} and message:"
                     f"{error}!! \nModel:"), model)
             model.set_estimated({}, valid=False)
 

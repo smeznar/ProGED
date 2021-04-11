@@ -36,8 +36,10 @@ prspace = proged_space
 # prspace = {'nek': hp.randint('lab', 4)}
 # prspace = hp.randint('lab', -4, 4)
 # print(prspace)
-# for i in range(10):
-#     print(hyperopt.pyll.stochastic.sample(prspace))
+for i in range(10):
+    print(hyperopt.pyll.stochastic.sample(prspace))
+# 1/0
+
 def objectiv(args):
     # print(type(args), type(args[0]))  # = tuple, np.int32
     args = [float(i) for i in args]

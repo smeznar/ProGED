@@ -11,6 +11,7 @@ import sys
 from ProGED.equation_discoverer import EqDisco
 from ProGED.parameter_estimation import DE_fit, hyperopt_fit  # integer_brute_fit, shgo_fit, DAnnealing_fit
 import ProGED.examples.tee_so as te  # Log using manually copied class from a forum.
+from hyperopt import hp
 
 
 #####  To log output to file, for later inspection.  ########
@@ -148,7 +149,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         # sample_size = 38,  # for recursive
         # sample_size = 100,  # for recursive
         verbosity = 0,
-        # verbosity = 2,
+        # verbosity = 3,
         generator = "grammar", 
         generator_template_name = grammar_template_name,
         # generator_settings={"variables": ["'an_2'", "'an_1'"],
@@ -156,8 +157,8 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
                              "p_T": p_T, "p_R": p_R
                              },
         estimation_settings={
-            # "verbosity": 3,
-            "verbosity": 1,
+            "verbosity": 3,
+            # "verbosity": 1,
             # "verbosity": 0,
              "task_type": "algebraic",
              # "task_type": "oeis",
@@ -179,12 +180,13 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "optimizer": DAnnealing_fit,
             "optimizer": hyperopt_fit,
             # "timeout": 1,
-            "timeout": 13,
+            # "timeout": 13,
             "timeout_privilege": 30,
             # "hyperopt_max_evals": 3250,
             # "hyperopt_max_evals": 550,  # finds if result=min(10**6, hyperopt...)
-            "hyperopt_max_evals": 1000,
+            # "hyperopt_max_evals": 1000,
             "hyperopt_max_evals": 700,
+            "hyperopt_space_fn": hp.randint,
         }
     )
 
