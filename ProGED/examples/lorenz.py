@@ -23,10 +23,12 @@ start = time.perf_counter()
 # # # Input: # # # 
 eqation = "123"  # Code for eq_disco([1], [2,3]).
 sample_size = 5
+# sample_size = 30  # It finds the equation at 30.
 log_nickname = ""
 isTee = False
 # is_chaotic_wiki = "cw"
-is_chaotic_wiki = "c0"  # chaotic but not wiki
+# is_chaotic_wiki = "c0"  # chaotic but not wiki
+is_chaotic_wiki = "__"  # For hyperopt: not chaotic, not wiki.
 if len(sys.argv) >= 2:
     sample_size = int(sys.argv[1])
 if len(sys.argv) >= 3:
@@ -204,10 +206,18 @@ ED.fit_models(
         "timeout": 5, 
         "max_ode_steps": 10**6, 
         "lower_upper_bounds": (-30, 30),
-        # "optimizer": DE_fit,
-        "optimizer": DE_fit_metamodel,
-        "verbosity": 4,
+        "optimizer": DE_fit,
+        # "optimizer": DE_fit_metamodel,
+        # "verbosity": 4,
+        "verbosity": 1,
         })
 
+print(ED.models)
+print("\nFinal score:")
+for m in ED.models:
+    if m.get_error() < 10**(-3) or True:
+        print(f"model: {str(m.get_full_expr()):<70}; "
+                + f"p: {m.p:<23}; "
+            + f"error: {m.get_error()}")
 finnish = time.perf_counter()
 print(f"Finnished in {round(finnish-start, 2)} seconds")

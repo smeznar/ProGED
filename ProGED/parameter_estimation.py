@@ -190,6 +190,10 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
     DUMMY = 10**9
     try:
+        # optimizer = estimation_settings["optimizer"]
+        # if optimizer in {DE_fit} or optimizer not in {hyperopt_fit}: 
+        #     print( "nutre", optimizer)
+
         # Next few lines strongly suppress any warnning messages 
         # produced by LSODA solver, called by ode() function.
         # Suppression further complicates if making log files (Tee):
@@ -204,8 +208,12 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
             change_std2tee = True  # Remember to change it back.
         # Next line works only when sys.stdout is real. Thats why above.
         with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
-            odeY = ode(model_list, params_matrix, T, X, y0=Y[:1],
-                        **estimation_settings)  # Y[:1] if _ or Y[0] if |
+            try: 
+                odeY = ode(model_list, params_matrix, T, X, y0=Y[:1],
+                            **estimation_settings)  # Y[:1] if _ or Y[0] if |
+            except Exception as error:
+                print("Inside ode(), previnting tee/IO error. Params at error:",
+                        params, f"and {type(error)} with message:", error)
         if change_std2tee: 
             sys.stdout = tee_object  # Change it back to fake stdout (tee).
 
