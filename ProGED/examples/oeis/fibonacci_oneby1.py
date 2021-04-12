@@ -111,7 +111,7 @@ sample_size = 4
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
-lower_upper_bounds = (-2, 2)  # direct
+# lower_upper_bounds = (-2, 2)  # direct
 #########################################################
 
 def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
@@ -179,18 +179,19 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "optimizer": integer_brute_fit,
             # "optimizer": shgo_fit,
             # "optimizer": DAnnealing_fit,
+
             "optimizer": hyperopt_fit,
             # "timeout": 1,
             # "timeout": 13,
             "timeout_privilege": 30,
             # "hyperopt_max_evals": 3250,
             # "hyperopt_max_evals": 550,  # finds if result=min(10**6, hyperopt...)
-            "hyperopt_max_evals": 50,
+            # "hyperopt_max_evals": 50,
             # "hyperopt_max_evals": 750,
             # "hyperopt_max_evals": 2000,
             # "hyperopt_max_evals": 700,
             # "hyperopt_max_evals": 500,
-            # "hyperopt_max_evals": 300,
+            "hyperopt_max_evals": 300,
             # "hyperopt_space_fn": hp.randint,
             # "hyperopt_space_fn": hp.choice,
             # "hyperopt_space_fn": hp.loguniform,  # Seems working, but loss 785963174750.8921 in 2000 evals.

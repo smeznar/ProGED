@@ -13,15 +13,15 @@ def dru(d, b, *ars, **dic):
     return
 a = (1, 2, 3, 4) #, "dsa", at="sat", sac=2345)
 a = ([1, 2, 3, 4],34) #, "dsa", at="sat", sac=2345)
-functi(*a)
+# functi(*a)
 # functi(1, 2, 3, 4, "dsa", at="sat", sac=2345)
 # dru(1, 2, 3, 4, "dsa", at="sat", sac=2345)
 # dru(1, 2, 3, 4, 5, at=20, sac=200)
-1/0
+# 1/0
 
 
 from hyperopt import hp
-from hyperopt import fmin, tpe, space_eval, rand
+from hyperopt import fmin, tpe, space_eval, rand, Trials
 space = hp.choice('classifier_type', [
     {
         'type': 'naive_bayes',
@@ -61,7 +61,7 @@ prspace = proged_space
 # prspace = {'nek': hp.randint('lab', 4)}
 # prspace = hp.randint('lab', -4, 4)
 # print(prspace)
-for i in range(10):
+for i in range(130):
     print(hyperopt.pyll.stochastic.sample(prspace))
 # 1/0
 print(type(prspace[0]))
@@ -80,12 +80,21 @@ def objectiv(args):
 # best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, timeout=1, max_evals=1500)
 import numpy as np
 np.random.seed(0)
+trials = Trials()
 # best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500)
-best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500, rstate=np.random)  #, show_progressbar=False)# verbose=False)
+best = fmin(fn=objectiv, algo=rand.suggest, space=prspace, max_evals=500, 
+        rstate=np.random,
+        trials=trials,
+        # show_progressbar=False,
+        # verbose=False,
+        )
+# 1/0
 # best = fmin(fn=objectiv, algo=tpe.suggest, space=prspace, max_evals=100)
 print(best)
 print(list(best.values()))
-print(objectiv(list(best.values())))
+# print(objectiv(list(best.values())))
+print("space_eval:", space_eval(prspace, best))
+print("best loss without reevaluating:", min(trials.losses()))
 
 # define an objective function
 def objective(args):

@@ -310,20 +310,12 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         is used.
     """
 
-    from hyperopt import hp, fmin, rand, pyll
+    from hyperopt import hp, fmin, rand, pyll, Trials
     import hyperopt.pyll.stochastic
-
+    verbosity = estimation_settings["verbosity"]
     lu_bounds = estimation_settings["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
-    print("This is *hp.randint* version of Hyperopt running.")
-    # Currently implemented Hyperopt optimisation via hp.randint only.
 
-    if ("hyperopt_search_space" in estimation_settings
-        and "hyperopt_space_fn" in estimation_settings):
-            raise ValueError(
-                f"hyperopt_fit's programmer raised error: "
-                f"The user should use only one way to specify the search"
-                f" space to avoid contradictory definitions!  ")
     space_fn = estimation_settings.get("hyperopt_space_fn", hp.randint)
     if space_fn not in {hp.randint, hp.uniform, hp.loguniform}:
         # raise ValueError(
@@ -337,25 +329,19 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         #     f" recognized and is therfore potentially producing errors."
         #     f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
         #     f"  - hp.loguniform")
-        print(
-            f"hyperopt_fit programmer's raised printed notice: "
-            f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
-            f"should be used carefully, since it is not recognized as the"
-            f" member of the default configuration of the form"
-            f" space_fn('label', low, high).\n"
-            f"Therefore make sure the function is compatible with search"
-            f" space arguments ( hyperopt_space_(kw)args ).\n"
-            f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
-            f"  - hp.loguniform")
+        if verbosity >= 1:
+            print(
+                f"hyperopt_fit programmer's raised printed notice: "
+                f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
+                f"should be used carefully, since it is not recognized as the"
+                f" member of the default configuration of the form"
+                f" space_fn('label', low, high).\n"
+                f"Therefore make sure the function is compatible with search"
+                f" space arguments ( hyperopt_space_(kw)args ).\n"
+                f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
+                f"  - hp.loguniform")
 
-    # space1d = space_fn('Ci', lower_bound, upper_bound)
-    # space1d = estimation_settings.get("hyperopt_search_space", space1d)
-    # space = [space1d for i in range(len(p0))]
-
-    # default space = [spacefn(i) for i in [1,2,3]]
-    # custom space = spacefn_args -> [spacefn('label i', **spacefn_args) for i in [1,2,3]]
-
-
+    # User can specify one dimensional search space, which is then replicated.
     args = estimation_settings.get("hyperopt_space_args", ())
     kwargs = estimation_settings.get("hyperopt_space_kwargs", {})
     if args != () or kwargs != {}:
@@ -379,8 +365,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     #     max_evals = max_evals*10
     #     print("This model is privileged.")
 
-    verbose = False
-    if estimation_settings["verbosity"] >= 3:
+    if verbosity >= 3:
         print(f"Hyperopt will run with specs:\n"
               f"  - search space:\n" + "".join([str(i)+"\n" for i in space])
               # + f"  - algorithm: {algo}\n"
@@ -388,25 +373,22 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         print("A few points generated from the space specified:")
         for i in range(10):
             print(hyperopt.pyll.stochastic.sample(space))
-    if estimation_settings["verbosity"] >= 1:
-        verbose = True
 
+    trials = Trials()
     best = fmin(
         fn=objective, 
         space=space, 
         algo=algo,
+        trials=trials,
         timeout=timeout,
         max_evals=max_evals,
         rstate=np.random,
-        verbose=verbose,
+        verbose=(verbosity >= 1),
         )
     params = list(best.values())
-    ###################################################
-    #### TODO: REPAIR LINE BELOW!!! DO NOT EVALUATE OBJ. FUNCTION AGAIN!!!
-    result = {"x":params, "fun":objective(params)}
-    print(result)
-    #### TODO: REPAIR LINE above!!! DO NOT EVALUATE OBJ. FUNCTION AGAIN!!!
-    ###################################################
+    result = {"x": params, "fun": min(trials.losses())}
+    if verbosity >= 3:
+        print(result)
     return result
 
 def DE_fit (model, X, Y, T, p0, **estimation_settings):
