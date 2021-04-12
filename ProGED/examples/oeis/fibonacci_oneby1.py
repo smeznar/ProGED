@@ -31,7 +31,7 @@ if len(sys.argv) >= 2:
     if "--msg" in double_flags:
         message = sys.argv[2] + "_"
 if not is_tee_flag:
-    print("\nNo-log flag deteted!\n")
+    print("\nNo-log flag detected!\n")
 
 # is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
 is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
@@ -111,7 +111,7 @@ sample_size = 4
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
-# lower_upper_bounds = (-1, 1)  # direct
+lower_upper_bounds = (-2, 2)  # direct
 #########################################################
 
 def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
@@ -156,6 +156,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         generator_settings={"variables": variables,
                              "p_T": p_T, "p_R": p_R
                              },
+
         estimation_settings={
             # "verbosity": 3,
             "verbosity": 1,
@@ -184,12 +185,25 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             "timeout_privilege": 30,
             # "hyperopt_max_evals": 3250,
             # "hyperopt_max_evals": 550,  # finds if result=min(10**6, hyperopt...)
-            # "hyperopt_max_evals": 1000,
-            "hyperopt_max_evals": 700,
-            "hyperopt_space_fn": hp.randint,
-            # "hyperopt_search_space": hp.randint('myl', lower_upper_bounds[0], lower_upper_bounds[1]),
-            # "hyperopt_algo": tpe.suggest,
-            "hyperopt_algo": rand.suggest,
+            "hyperopt_max_evals": 50,
+            # "hyperopt_max_evals": 750,
+            # "hyperopt_max_evals": 2000,
+            # "hyperopt_max_evals": 700,
+            # "hyperopt_max_evals": 500,
+            # "hyperopt_max_evals": 300,
+            # "hyperopt_space_fn": hp.randint,
+            # "hyperopt_space_fn": hp.choice,
+            # "hyperopt_space_fn": hp.loguniform,  # Seems working, but loss 785963174750.8921 in 2000 evals.
+            # "hyperopt_space_fn": hp.qnormal,
+            # "hyperopt_space_fn": hp.normal,
+            # "hyperopt_space_args": (lower_upper_bounds[0], lower_upper_bounds[1]),
+            # "hyperopt_space_args": ([-2, -1, 0, 1],),
+            # "hyperopt_space_args": (0, 5, 1),
+            # "hyperopt_space_args": (0, 2),  # Seems working for hp.normal, but loss 1492702199922.7131 in 2000 evals.
+            # "hyperopt_space_args": [lower_upper_bounds[0]],
+            # "hyperopt_space_kwargs": {"high": lower_upper_bounds[1]},
+            # "hyperopt_algo": tpe.suggest,  # Works, with 1000 evals and (-2, 2) finds recursive. 
+            # "hyperopt_algo": rand.suggest,
         }
     )
 

@@ -11,9 +11,12 @@ def dru(d, b, *ars, **dic):
     print(d+b+sum(ars) + sum(list(dic.values())))
 
     return
-functi(1, 2, 3, 4, "dsa", at="sat", sac=2345)
+a = (1, 2, 3, 4) #, "dsa", at="sat", sac=2345)
+a = ([1, 2, 3, 4],34) #, "dsa", at="sat", sac=2345)
+functi(*a)
+# functi(1, 2, 3, 4, "dsa", at="sat", sac=2345)
 # dru(1, 2, 3, 4, "dsa", at="sat", sac=2345)
-dru(1, 2, 3, 4, 5, at=20, sac=200)
+# dru(1, 2, 3, 4, 5, at=20, sac=200)
 1/0
 
 

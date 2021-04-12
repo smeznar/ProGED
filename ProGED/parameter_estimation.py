@@ -327,16 +327,27 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     space_fn = estimation_settings.get("hyperopt_space_fn", hp.randint)
     if space_fn not in {hp.randint, hp.uniform, hp.loguniform}:
         # raise ValueError(
-            # f"ProGED programmer's raised error: "
+            # f"hyperopt_fit programmer's raised error: "
             # f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
             # f"is wrong or unimplemented search space function. Currently
+        # print(
+        #     f"hyperopt_fit programmer's raised printed notice: "
+        #     f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
+        #     f"should be used carefully, since it is not currently officially"
+        #     f" recognized and is therfore potentially producing errors."
+        #     f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
+        #     f"  - hp.loguniform")
         print(
-            f"ProGED programmer's raised printed notice: "
+            f"hyperopt_fit programmer's raised printed notice: "
             f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
-            f"should be used carefully, since it is not currently officially"
-            f" recognized and is therfore potentially producing errors."
+            f"should be used carefully, since it is not recognized as the"
+            f" member of the default configuration of the form"
+            f" space_fn('label', low, high).\n"
+            f"Therefore make sure the function is compatible with search"
+            f" space arguments ( hyperopt_space_(kw)args ).\n"
             f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
             f"  - hp.loguniform")
+
     # space1d = space_fn('Ci', lower_bound, upper_bound)
     # space1d = estimation_settings.get("hyperopt_search_space", space1d)
     # space = [space1d for i in range(len(p0))]
@@ -372,8 +383,8 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     if estimation_settings["verbosity"] >= 3:
         print(f"Hyperopt will run with specs:\n"
               f"  - search space:\n" + "".join([str(i)+"\n" for i in space])
-              + f"  - algorithm: {algo}\n"
-              f"  - timeout: {timeout}\n  - max_evals: {max_evals}")
+              # + f"  - algorithm: {algo}\n"
+              + f"  - timeout: {timeout}\n  - max_evals: {max_evals}")
         print("A few points generated from the space specified:")
         for i in range(10):
             print(hyperopt.pyll.stochastic.sample(space))
