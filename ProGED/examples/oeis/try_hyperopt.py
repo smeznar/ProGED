@@ -1,3 +1,22 @@
+def functi(d, b, *ars, **dic):
+    print(d,b, ars, dic)
+    print(type(dic))
+    return
+def dru(d, b, *ars, **dic):
+    print(" this is dru")
+    functi(d,b, *ars, **dic)
+    print(" after functi")
+    print(d,b, *ars, *dic)
+    print(type(dic))
+    print(d+b+sum(ars) + sum(list(dic.values())))
+
+    return
+functi(1, 2, 3, 4, "dsa", at="sat", sac=2345)
+# dru(1, 2, 3, 4, "dsa", at="sat", sac=2345)
+dru(1, 2, 3, 4, 5, at=20, sac=200)
+1/0
+
+
 from hyperopt import hp
 from hyperopt import fmin, tpe, space_eval, rand
 space = hp.choice('classifier_type', [
@@ -23,6 +42,8 @@ space = hp.choice('classifier_type', [
 import hyperopt.pyll.stochastic
 # for i in range(10):
 #     print(hyperopt.pyll.stochastic.sample(space))
+print(type(space))
+print(type(rand.suggest))
 
 lower_bound = 10 + 0.2
 upper_bound = 38 + 0.0003
@@ -30,7 +51,8 @@ upper_bound = 38 + 0.0003
 p0 = (13.45, 15.1, 16.834)
 p0 = [13.45, 15.1, 16.834]
 # proged_space = {'C'+str(i): hp.randint('C_in'+str(i), lower_bound, upper_bound)
-proged_space = [hp.randint('C'+str(i), lower_bound, upper_bound)
+# proged_space = [hp.randint('C'+str(i), lower_bound, upper_bound)
+proged_space = [hp.randint('C'+str(i), low=lower_bound, high=upper_bound)
                     for i in range(len(p0))]
 prspace = proged_space
 # prspace = {'nek': hp.randint('lab', 4)}
@@ -38,6 +60,8 @@ prspace = proged_space
 # print(prspace)
 for i in range(10):
     print(hyperopt.pyll.stochastic.sample(prspace))
+# 1/0
+print(type(prspace[0]))
 # 1/0
 
 def objectiv(args):

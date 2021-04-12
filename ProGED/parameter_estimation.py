@@ -259,6 +259,24 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls Hyperopt.
     Exists to make passing arguments to the objective function easier.
 
+    Arguments:
+        model, X, Y, T, p0, estimation_settings: Just like other
+            optimizers, see DE_fit.
+        estimation_settings (dict): Optional. Arguments to be passed to the system for parameter estimation.
+            See documentation for ProGED.fit_models for details about more general available options (keys).
+            Options specific for hyperopt_fit only (See Hyperopt's 
+                    documentation for more details.):
+                hyperopt_algo (function): The search algorithom used by Hyperopt.
+                    See 'algo' argument in hyperopt.fmin.
+                hyperopt_max_evals (int): The maximum number of
+                    evaluations of objective function.
+                    See 'max_evals' argument in hyperopt.fmin.
+                hyperopt_search_space (hyperopt.pyll.base.Apply): Search space
+                    required by Hyperopt. Read below for more info.
+                    See also 'space' argument in hyperopt.fmin.
+                hyperopt_space_fn (function): Syntactic sugar for the 
+                    hyperopt_search_space. Read below for more info.
+
     In context to ProGED, I currently see possible personal
     configuration in one dimension only. This is because user cannot
     predict how many and which parameters will the random generator
@@ -285,12 +303,11 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         - hp.randint
         - hp.uniform
         - hp.loguniform
-    = 13-4normal-2quni-2choice = 5?
-    13 = 4+4+2+3?
 
-    If search space or its function is unspecified, then the space:
+    Defaults:
+        If search space or its function is unspecified, then the space:
             hp.randint('Ci', lower_bound, upper_bound)
-    is used.
+        is used.
     """
 
     from hyperopt import hp, fmin, rand, pyll
@@ -306,7 +323,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
             raise ValueError(
                 f"hyperopt_fit's programmer raised error: "
                 f"The user should use only one way to specify the search"
-                f" space to avoid contradictory definitions.")
+                f" space to avoid contradictory definitions!  ")
     space_fn = estimation_settings.get("hyperopt_space_fn", hp.randint)
     if space_fn not in {hp.randint, hp.uniform, hp.loguniform}:
         # raise ValueError(
@@ -320,9 +337,21 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
             f" recognized and is therfore potentially producing errors."
             f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
             f"  - hp.loguniform")
-    space = [space_fn('C'+str(i), lower_bound, upper_bound)
-                 for i in range(len(p0))]
-    space = estimation_settings.get("hyperopt_search_space", space)
+    # space1d = space_fn('Ci', lower_bound, upper_bound)
+    # space1d = estimation_settings.get("hyperopt_search_space", space1d)
+    # space = [space1d for i in range(len(p0))]
+
+    # default space = [spacefn(i) for i in [1,2,3]]
+    # custom space = spacefn_args -> [spacefn('label i', **spacefn_args) for i in [1,2,3]]
+
+
+    args = estimation_settings.get("hyperopt_space_args", ())
+    kwargs = estimation_settings.get("hyperopt_space_kwargs", {})
+    if args != () or kwargs != {}:
+        space = [space_fn('C'+str(i), *args, **kwargs) for i in range(len(p0))]
+    else:
+        space = [space_fn('C'+str(i), lower_bound, upper_bound) for i in range(len(p0))]
+
     def objective(params):
         # First way for solution:
         params = [float(i) for i in params]  # Use float instead of np.int32.
@@ -331,7 +360,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     # Use user's hyperopt specifications or use the default ones:
     algo = estimation_settings.get("hyperopt_algo", rand.suggest)
     max_evals = estimation_settings.get("hyperopt_max_evals", 500)
-    timeout=estimation_settings["timeout"]
+    timeout = estimation_settings["timeout"]
 
     # My testing code. Delete this block:
     # if str(model.expr) == "C0*exp(C1*n)":
@@ -339,6 +368,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     #     max_evals = max_evals*10
     #     print("This model is privileged.")
 
+    verbose = False
     if estimation_settings["verbosity"] >= 3:
         print(f"Hyperopt will run with specs:\n"
               f"  - search space:\n" + "".join([str(i)+"\n" for i in space])
@@ -347,6 +377,8 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         print("A few points generated from the space specified:")
         for i in range(10):
             print(hyperopt.pyll.stochastic.sample(space))
+    if estimation_settings["verbosity"] >= 1:
+        verbose = True
 
     best = fmin(
         fn=objective, 
@@ -355,7 +387,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         timeout=timeout,
         max_evals=max_evals,
         rstate=np.random,
-        verbose=False,
+        verbose=verbose,
         )
     params = list(best.values())
     ###################################################

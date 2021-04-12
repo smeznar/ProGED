@@ -11,7 +11,7 @@ import sys
 from ProGED.equation_discoverer import EqDisco
 from ProGED.parameter_estimation import DE_fit, hyperopt_fit  # integer_brute_fit, shgo_fit, DAnnealing_fit
 import ProGED.examples.tee_so as te  # Log using manually copied class from a forum.
-from hyperopt import hp
+from hyperopt import hp, tpe, rand
 
 
 #####  To log output to file, for later inspection.  ########
@@ -157,8 +157,8 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
                              "p_T": p_T, "p_R": p_R
                              },
         estimation_settings={
-            "verbosity": 3,
-            # "verbosity": 1,
+            # "verbosity": 3,
+            "verbosity": 1,
             # "verbosity": 0,
              "task_type": "algebraic",
              # "task_type": "oeis",
@@ -187,6 +187,9 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "hyperopt_max_evals": 1000,
             "hyperopt_max_evals": 700,
             "hyperopt_space_fn": hp.randint,
+            # "hyperopt_search_space": hp.randint('myl', lower_upper_bounds[0], lower_upper_bounds[1]),
+            # "hyperopt_algo": tpe.suggest,
+            "hyperopt_algo": rand.suggest,
         }
     )
 
