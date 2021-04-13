@@ -1,4 +1,5 @@
-def functi(d, b, *ars, **dic):
+# def functi(d, b, *ars, **dic):
+def functi(d, b, ars=None, **dic):
     print(d,b, ars, dic)
     print(type(dic))
     return
@@ -9,15 +10,16 @@ def dru(d, b, *ars, **dic):
     print(d,b, *ars, *dic)
     print(type(dic))
     print(d+b+sum(ars) + sum(list(dic.values())))
-
     return
+
 a = (1, 2, 3, 4) #, "dsa", at="sat", sac=2345)
-a = ([1, 2, 3, 4],34) #, "dsa", at="sat", sac=2345)
-# functi(*a)
+# a = (1, 2, 3) #, "dsa", at="sat", sac=2345)
+# a = ([1, 2, 3, 4],34) #, "dsa", at="sat", sac=2345)
+functi(*a)
 # functi(1, 2, 3, 4, "dsa", at="sat", sac=2345)
 # dru(1, 2, 3, 4, "dsa", at="sat", sac=2345)
 # dru(1, 2, 3, 4, 5, at=20, sac=200)
-# 1/0
+1/0
 
 
 from hyperopt import hp

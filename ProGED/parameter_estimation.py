@@ -42,10 +42,11 @@ Methods:
 
 DUMMY = 10**30
 
-def model_error (params, model, X, Y, *residue):
+def model_error (params, model, X, Y, _T=None, estimation_settings=None):
     """Defines mean squared error as the error metric."""
     try:
-        verbosity = residue[1]["verbosity"]
+        verbosity = estimation_settings['verbosity']
+
         testY = model.evaluate(X, *params)
         res = np.mean((Y-testY)**2)
         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
@@ -55,6 +56,7 @@ def model_error (params, model, X, Y, *residue):
                 print(model.expr, model.params, model.sym_params, model.sym_vars)
             return DUMMY
         if verbosity >= 3:
+            print(2022)
             print("Function model_error did not encounter any errors, the output *square error/loss* is legit.")
         return res
     except Exception as error:
@@ -82,9 +84,11 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     """
     task_type = estimation_settings["task_type"]
     if task_type == "algebraic":
-        return model_error(params, model, X, Y)
+        return model_error(params, model, X, Y, _T=None, 
+                            estimation_settings=estimation_settings)
     elif task_type == "oeis":
-        return model_error(params, model, X, Y)
+        return model_error(params, model, X, Y, _T=None,
+                            estimation_settings=estimation_settings)
     elif task_type == "differential":
         # Model_ode_error might use estimation[verbosity] agrument for
         # ode solver's settings and suppresing its warnnings:
