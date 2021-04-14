@@ -13,6 +13,7 @@ from sklearn import ensemble #, tree
 
 import ProGED.mute_so as mt
 from _io import TextIOWrapper as stdout_type
+from ProGED.examples.tee_so import Tee
 
 from ProGED.model_box import ModelBox
 from ProGED.task import TASK_TYPES
@@ -194,15 +195,11 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
     DUMMY = 10**9
     try:
-        # optimizer = estimation_settings["optimizer"]
-        # if optimizer in {DE_fit} or optimizer not in {hyperopt_fit}: 
-        #     print( "nutre", optimizer)
-
         # Next few lines strongly suppress any warnning messages 
         # produced by LSODA solver, called by ode() function.
         # Suppression further complicates if making log files (Tee):
         change_std2tee = False  # Normaly no need for this mess.
-        if not isinstance(sys.stdout, stdout_type):
+        if isinstance(sys.stdout, Tee):
             # In this case the real standard output (sys.stdout) is not
             # saved in original location sys.stdout. We have to obtain
             # it inside of Tee object (look module tee_so).
