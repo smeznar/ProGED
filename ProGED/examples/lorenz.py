@@ -22,8 +22,8 @@ from scipy.integrate import solve_ivp, odeint
 start = time.perf_counter()
 # # # Input: # # # 
 eqation = "123"  # Code for eq_disco([1], [2,3]).
-sample_size = 5
-# sample_size = 30  # It finds the equation at 30.
+# sample_size = 5
+sample_size = 30  # It finds the equation at 30.
 log_nickname = ""
 isTee = False
 # is_chaotic_wiki = "cw"
@@ -41,8 +41,8 @@ if len(sys.argv) >= 5:
 aux = [int(i) for i in eqation]
 aquation = (aux[:1], aux[1:])
 random = str(np.random.random())
-print("Filename id: " + log_nickname + random)
 if isTee:
+    print("Filename id: " + log_nickname + random)
     try:
         log_object = te.Tee("examples/log_lorenz_" + log_nickname + random + ".txt")
     except FileNotFoundError:
@@ -54,6 +54,15 @@ else:
     c, w = is_chaotic_wiki[0], is_chaotic_wiki[1]
     is_chaotic = True if c == "c" else False
     is_wiki = True if w == "w" else False
+
+# Log signature.
+print(f"Settings of this execution:\n"
+      f"equation: {eqation} aka. target index\n"
+      f"sample_size: {sample_size}\n"
+      f"is_chaotic: {is_chaotic}\n"
+      f"is_wiki: {is_wiki}\n"
+     )
+
 
 # # 1.) Data construction (simulation of Lorenz):
 
@@ -114,68 +123,15 @@ from ProGED.equation_discoverer import EqDisco
 # from ProGED.generators.grammar_construction import grammar_from_template  # Grammar's
 #nonterminals will depend on given dataset.
 # from ProGED.parameter_estimation import fit_models
-from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel
+from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel, hyperopt_fit
+from hyperopt import hp
 
-
-
-# Old function, when EqDisco() object was not yet implemented.
-# Now probably useless. Try to use EqDisco object instead.
-def eq_disco_demo (data, lhs_variables: list = [1],
-                  # ["column 1"], # in case of header string reference
-                    rhs_variables: list = [2, 3]):
-    # header = ["column for x", "column for y", "column for z"]
-    header = ["x", "y", "z"]
-    variables = ["'"+header[i-1]+"'" for i in lhs_variables] # [1,3] -> ["x1", "x3"]
-    variables += ["'"+header[i-1]+"'" for i in rhs_variables]
-    print(variables)
-    symbols = {"x": variables, "start":"S", "const":"C"}
-    # start eq. disco.:
-    grammar = grammar_from_template("polynomial", {
-        "variables": variables,
-        "p_S": [0.4, 0.6],
-        "p_T": [0.4, 0.6],
-        "p_vars": [0.33, 0.33, 0.34],
-        "p_R": [1, 0],
-        "p_F": [],
-        "functions": []
-    })
-    print(grammar)
-    print(sample_size, "= sample size")
-    models = generate_models(grammar, symbols, 
-                            strategy_settings={"N":sample_size})
-    fit_models(
-        models, 
-        data, 
-        target_variable_index=-1,  # or maybe = aquation[0][0]
-        time_index=0,
-        task_type="differential",
-        estimation_settings={
-            "timeout": 5, 
-            "max_ode_steps": 10**6, 
-            "lower_upper_bounds": (-30, 30),
-            "verbosity": 1,
-            }
-        )
-    print(models)
-    print("\nFinal score:")
-    for m in models:
-        if m.get_error() < 10**(-3) or True:
-            print(f"model: {str(m.get_full_expr()):<70}; "
-                    + f"p: {m.p:<23}; "
-                + f"error: {m.get_error()}")
-    return 1
-
-# eq_disco_demo(data, lhs_variables=[2], rhs_variables=[1,3])
-# eq_disco_demo(data, lhs_variables=[3], rhs_variables=[1,2])
-# eq_disco_demo(data, lhs_variables=[1], rhs_variables=[2,3])
 
 # Run eqation discovery from command line:
 np.random.seed(0)
-# eq_disco_demo(data, lhs_variables=aquation[0], rhs_variables=aquation[1])
 finnish = time.perf_counter()
 print(f"Finnished in {round(finnish-start, 2)} seconds")
 
-np.random.seed(0)
 ED = EqDisco(data = data,
              task = None,
              task_type = "differential",
@@ -200,14 +156,21 @@ ED = EqDisco(data = data,
              sample_size = sample_size,
              # verbosity = 1)
              verbosity = 4)
+
 ED.generate_models()
 ED.fit_models(
     estimation_settings={
         "timeout": 5, 
         "max_ode_steps": 10**6, 
-        "lower_upper_bounds": (-30, 30),
-        "optimizer": DE_fit,
+        # "lower_upper_bounds": (-30, 30),
+        "lower_upper_bounds": (-2, 2),
+        # "optimizer": DE_fit,
+        "optimizer": hyperopt_fit,
         # "optimizer": DE_fit_metamodel,
+        # "hyperopt_space_fn": hp.uniform,
+        "hyperopt_max_evals": 500,
+        "hyperopt_space_fn": hp.qnormal,
+        "hyperopt_space_kwargs": {"mu": 0, "sigma": 1, "q": 1/30},
         # "verbosity": 4,
         "verbosity": 1,
         })

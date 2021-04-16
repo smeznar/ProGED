@@ -207,14 +207,19 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
             std_output = tee_object.stdout  # Obtain sys.stdout.
             sys.stdout = std_output  # Change fake stdout to real stdout.
             change_std2tee = True  # Remember to change it back.
+        def run_ode():
+            return ode(model_list, params_matrix, T, X, y0=Y[:1],
+                       **estimation_settings)  # Y[:1] if _ or Y[0] if |
         # Next line works only when sys.stdout is real. Thats why above.
-        with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
-            try: 
-                odeY = ode(model_list, params_matrix, T, X, y0=Y[:1],
-                            **estimation_settings)  # Y[:1] if _ or Y[0] if |
-            except Exception as error:
-                print("Inside ode(), previnting tee/IO error. Params at error:",
-                        params, f"and {type(error)} with message:", error)
+        if isinstance(sys.stdout, stdout_type):
+            with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
+                try: 
+                    odeY = run_ode()
+                except Exception as error:
+                    print("Inside ode(), previnting tee/IO error. Params at error:",
+                            params, f"and {type(error)} with message:", error)
+        else:
+            odeY = run_ode()
         if change_std2tee: 
             sys.stdout = tee_object  # Change it back to fake stdout (tee).
 
