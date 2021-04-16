@@ -160,17 +160,17 @@ ED = EqDisco(data = data,
 ED.generate_models()
 ED.fit_models(
     estimation_settings={
-        "timeout": 5, 
+        "timeout": 115, 
         "max_ode_steps": 10**6, 
         # "lower_upper_bounds": (-30, 30),
-        "lower_upper_bounds": (-2, 2),
+        "lower_upper_bounds": (-11, 11),
         # "optimizer": DE_fit,
         "optimizer": hyperopt_fit,
         # "optimizer": DE_fit_metamodel,
-        # "hyperopt_space_fn": hp.uniform,
-        "hyperopt_max_evals": 500,
-        "hyperopt_space_fn": hp.qnormal,
-        "hyperopt_space_kwargs": {"mu": 0, "sigma": 1, "q": 1/30},
+        ## "hyperopt_space_fn": hp.uniform,  # Works at nocw (non chaotic and non-wiki).
+        "hyperopt_max_evals": 150,
+        # "hyperopt_space_fn": hp.qnormal,
+        # "hyperopt_space_kwargs": {"mu": 0, "sigma": 1, "q": 1/30},
         # "verbosity": 4,
         "verbosity": 1,
         })
