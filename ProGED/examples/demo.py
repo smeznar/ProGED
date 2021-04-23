@@ -35,11 +35,13 @@ models = fit_models(models, data, target_variable_index=-1, time_index=0, task_t
                     # estimation_settings={"optimizer": DE_fit_metamodel, "verbosity": 4}
                     # estimation_settings={"optimizer": DE_fit, "verbosity": 1}
                     # hyperopt:
-                    # estimation_settings={
-                    #     "optimizer": hyperopt_fit,
-                    #     "hyperopt_space_fn": hp.quniform,
-                    #     "hyperopt_space_args": (-13, 13, 1/100),  # 1/100 ... ne razlikuje 0.123 in 0.124
-                    #     }
+                    estimation_settings={
+                        "optimizer": hyperopt_fit,
+                        # "hyperopt_space_fn": hp.quniform,
+                        "hyperopt_space_fn": hp.qnormal,
+                        # "hyperopt_space_args": (-13, 13, 1/100),  # 1/100 ... ne razlikuje 0.123 in 0.124
+                        "hyperopt_space_args": (0.4, 2, 1/1000),  # 1/100 ... ne razlikuje 0.123 in 0.124
+                        }
                     )
 
 # 4.) print models' results
