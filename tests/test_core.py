@@ -209,7 +209,6 @@ def test_equation_discoverer_ODE():
     return
 
 def test_equation_discoverer_hyperopt():
-# def ntest_equation_discoverer_hyperopt():
     np.random.seed(20)
     ED = EqDisco(data = dataODE,
                  task = None,
@@ -218,33 +217,23 @@ def test_equation_discoverer_hyperopt():
                  target_variable_index = -1,
                  variable_names=["t", "x", "y"],
                  sample_size = 2,
-                 verbosity = 1)
+                 verbosity = 1,
+                 estimation_settings={
+                     "optimizer": hyperopt_fit,
+                     "hyperopt_space_fn": hp.qnormal,
+                     "hyperopt_space_args": (0.4, 0.5, 1/1000),
+                     "hyperopt_max_evals": 100,
+                 }
+                 )
     ED.generate_models()
-    ED.fit_models(
-        estimation_settings={
-            "optimizer": hyperopt_fit,
-            "hyperopt_space_fn": hp.qnormal,
-            "hyperopt_space_args": (0.4, 0.5, 1/1000),
-        }
-    )
+    ED.fit_models()
 
-    print("\n", ED.models, "\n\nFinal score:")
-    for m in ED.models:
-        print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     def assert_line(models, i, expr, error, tol=1e-9, n=100):
         assert str(ED.models[i].get_full_expr())[:n] == expr[:n]
         assert abs(ED.models[i].get_error() - error) < tol
     assert_line(ED.models, 0, "y", 0.058235586316492984)
     assert_line(ED.models, 1, "0.401*x + y", 2.2989386082698416e-07, n=6)
-    # Final score:
-# model: y                             ; error: 0.058235586316492984
-# model: 0.401*x + y                   ; error: 2.2989386082698416e-07
-
-
     return
-
-# test_equation_discoverer_hyperopt()
-
 
 
 # if __name__ == "__main__":
