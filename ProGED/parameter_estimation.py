@@ -41,7 +41,7 @@ Methods:
     fit_models: Performs parameter estimation on given models. Main interface to the module.
 """
 
-DUMMY = 10**30
+DUMMY = 10**9
 
 def model_error (params, model, X, Y, _T=None, estimation_settings=None):
     """Defines mean squared error as the error metric."""
@@ -68,7 +68,6 @@ def model_error (params, model, X, Y, _T=None, estimation_settings=None):
 # def model_constant_error (model, params, X, Y):
 #     """Alternative to model_error, intended to allow the discovery of physical constants.
 #     Work in progress."""
-    
 #     testY = model.evaluate(X, *params)
 #     return np.std(testY)#/np.linalg.norm(params)
 
@@ -85,7 +84,7 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     """
     task_type = estimation_settings["task_type"]
     if task_type == "algebraic":
-        return model_error(params, model, X, Y, _T=None, 
+        return model_error(params, model, X, Y, _T=None,
                             estimation_settings=estimation_settings)
     elif task_type == "oeis":
         return model_error(params, model, X, Y, _T=None,
@@ -193,7 +192,6 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
         - Y are columns of features that are derived via ode fitting.
     """
     model_list = [model]; params_matrix = [params] # 12multi conversion (temporary)
-    DUMMY = 10**9
     try:
         # Next few lines strongly suppress any warnning messages 
         # produced by LSODA solver, called by ode() function.
@@ -213,7 +211,7 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
         # Next line works only when sys.stdout is real. Thats why above.
         if isinstance(sys.stdout, stdout_type):
             with open(os.devnull, 'w') as f, mt.stdout_redirected(f):
-                try: 
+                try:
                     odeY = run_ode()
                 except Exception as error:
                     print("Inside ode(), previnting tee/IO error. Params at error:",
@@ -277,7 +275,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         model, X, Y, T, p0, estimation_settings: Just like other
             optimizers, see DE_fit.
         estimation_settings (dict): Optional. Arguments to be passed to the system for parameter estimation.
-            See documentation for ProGED.fit_models for details about more general available options (keys).
+            See documentation for ProGED.fit_models for details about more generally available options (keys).
             Options specific for hyperopt_fit only (See Hyperopt's 
                     documentation for more details.):
                 hyperopt_algo (function): The search algorithom used by Hyperopt.
@@ -285,34 +283,50 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
                 hyperopt_max_evals (int): The maximum number of
                     evaluations of objective function.
                     See 'max_evals' argument in hyperopt.fmin.
-                hyperopt_search_space (hyperopt.pyll.base.Apply): Search space
-                    required by Hyperopt. Read below for more info.
-                    See also 'space' argument in hyperopt.fmin.
+                hyperopt_space_args 
+                hyperopt_space_kwargs (hyperopt.pyll.base.Apply): Same as
+                    hyperopt_space_args except it is dictionary.
                 hyperopt_space_fn (function): Syntactic sugar for the 
                     hyperopt_search_space. Read below for more info.
 
     In context to ProGED, I currently see possible personal
     configuration in one dimension only. This is because user cannot
     predict how many and which parameters will the random generator
-    generate. I.e. possible input, passed in estimation_settings
-    dictionary is one dimesional search space as defined in HyperOpt
-    python package. This function will make copies of one dimesion
-    to fill the dimension/number of parameters. E.g. if passing
-    estimation_settings["hyperopt_search_space"]=
-        hp.randint('label', upper_bound)
+    generate. 
+    
+    One-dimensional configuration of search space is here specified 
+    by function called in the stochastic space parameter expression 
+    and by this expression's (also optional) arguments as described at:
+    https://github.com/hyperopt/hyperopt/wiki/FMin#21-parameter-expressions.
+    The function is specified via the `hyperopt_space_fn` setting and
+    (optional) arguments are similarly specified via 
+    the `hyperopt_space_(kw)args` settings. As a result, this is 
+    called:
+        hyperopt_space_fn('label_i-th_dim', hyperopt_space_args, 
+                        hyperopt_space_kwargs)
+    to produce the 1-D search space which is then copied a few times
+    into a n-dim list with distinct labels to avoid hyperopt error.
+        E.g. if passing settings:
+      estimation_settings["hyperopt_space_fn"]=hp.randint and
+      estimation_settings["hyperopt_space_args"]=(lower_bound, upper_bound)
     in case of p0=(2.45, 6.543, 6.5),
     the search space will be 
-    [hp.randint('label', upper_bound),
-     hp.randint('label', upper_bound),
-     hp.randint('label', upper_bound)], since p0 is 3-dimesional.
+    [hp.randint('C0', upper_bound),
+     hp.randint('C1', upper_bound),
+     hp.randint('C2', upper_bound)], since p0 is 3-D.
+    
+    When omitting arguments in stochastic expression, it defaults
+    to arguments=(lower_bound, upper_bound), which are allways
+    present inside of estimation_settings input. This default
+    behaviour is prone to errors in combination of unknown space
+    functions.
 
     There is also syntactic sugar currently implemented for this for 
     simple search space definitions (e.g. that can be derived from
-    upper and lower bound only). It is to specify the function
+    upper and lower bound already). It is to specify the function
     that defines 1-D search space, such as hp.randint in our 
     example. The function would therefore behave the same as before
-    if we pass estimation_settings["hyperopt_space_fn"]=hp.randint
-    to fit_models. 
+    if we pass estimation_settings["hyperopt_space_fn"]=hp.randint.
     Full list of currently supported sugars:
         - hp.randint
         - hp.uniform
@@ -330,7 +344,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     lu_bounds = estimation_settings["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
 
-    space_fn = estimation_settings.get("hyperopt_space_fn", hp.randint)
+    space_fn = estimation_settings.get("hyperopt_space_fn", hp.uniform)
     if space_fn not in {hp.randint, hp.uniform, hp.loguniform}:
         # raise ValueError(
             # f"hyperopt_fit programmer's raised error: "
