@@ -274,20 +274,27 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     Arguments:
         model, X, Y, T, p0, estimation_settings: Just like other
             optimizers, see DE_fit.
-        estimation_settings (dict): Optional. Arguments to be passed to the system for parameter estimation.
-            See documentation for ProGED.fit_models for details about more generally available options (keys).
-            Options specific for hyperopt_fit only (See Hyperopt's 
+        estimation_settings (dict): Optional. Arguments to be passed
+                to the parameter estimation. See the documentation of 
+                ProGED.fit_models for details about more generally
+                available options (keys).
+            Options specific for hyperopt_fit only (See Hyperopt's
                     documentation for more details.):
                 hyperopt_algo (function): The search algorithom used by Hyperopt.
                     See 'algo' argument in hyperopt.fmin.
                 hyperopt_max_evals (int): The maximum number of
-                    evaluations of objective function.
+                    evaluations of the objective function.
                     See 'max_evals' argument in hyperopt.fmin.
-                hyperopt_space_args 
-                hyperopt_space_kwargs (hyperopt.pyll.base.Apply): Same as
-                    hyperopt_space_args except it is dictionary.
-                hyperopt_space_fn (function): Syntactic sugar for the 
-                    hyperopt_search_space. Read below for more info.
+                hyperopt_space_fn (function): Function used in
+                    search space expression.
+                    Read below for more info.
+                hyperopt_space_args (hyperopt.pyll.base.Apply):
+                    Arguments used in conjunction with 
+                    hyperopt_space_fn function call when specifying
+                    the search space.
+                hyperopt_space_kwargs (hyperopt.pyll.base.Apply): Same
+                    as hyperopt_space_args except that it is dictionary
+                    for optional arguments.
 
     In context to ProGED, I currently see possible personal
     configuration in one dimension only. This is because user cannot
@@ -297,13 +304,14 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     One-dimensional configuration of search space is here specified 
     by function called in the stochastic space parameter expression 
     and by this expression's (also optional) arguments as described at:
-    https://github.com/hyperopt/hyperopt/wiki/FMin#21-parameter-expressions.
+    https://github.com/hyperopt/hyperopt/wiki/FMin#21-parameter-expressions
+    at 0b49cde7c0.
     The function is specified via the `hyperopt_space_fn` setting and
     (optional) arguments are similarly specified via 
     the `hyperopt_space_(kw)args` settings. As a result, this is 
     called:
-        hyperopt_space_fn('label_i-th_dim', hyperopt_space_args, 
-                        hyperopt_space_kwargs)
+        hyperopt_space_fn('label_i-th_dim', *hyperopt_space_args, 
+                        **hyperopt_space_kwargs)
     to produce the 1-D search space which is then copied a few times
     into a n-dim list with distinct labels to avoid hyperopt error.
         E.g. if passing settings:
@@ -321,20 +329,15 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     behaviour is prone to errors in combination of unknown space
     functions.
 
-    There is also syntactic sugar currently implemented for this for 
-    simple search space definitions (e.g. that can be derived from
-    upper and lower bound already). It is to specify the function
-    that defines 1-D search space, such as hp.randint in our 
-    example. The function would therefore behave the same as before
-    if we pass estimation_settings["hyperopt_space_fn"]=hp.randint.
-    Full list of currently supported sugars:
+    List of space functions behaving well without specifying arguments:
         - hp.randint
-        - hp.uniform
+        - hp.uniform (default)
         - hp.loguniform
 
     Defaults:
-        If search space or its function is unspecified, then the space:
-            hp.randint('Ci', lower_bound, upper_bound)
+        If search space function or arguments are unspecified, then 
+        the 1-D space:
+            hp.uniform('Ci', lower_bound, upper_bound)
         is used.
     """
 
@@ -346,17 +349,6 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
 
     space_fn = estimation_settings.get("hyperopt_space_fn", hp.uniform)
     if space_fn not in {hp.randint, hp.uniform, hp.loguniform}:
-        # raise ValueError(
-            # f"hyperopt_fit programmer's raised error: "
-            # f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
-            # f"is wrong or unimplemented search space function. Currently
-        # print(
-        #     f"hyperopt_fit programmer's raised printed notice: "
-        #     f"Input estimation_settings[\"hyperopt_space_fn\"]={space_fn} "
-        #     f"should be used carefully, since it is not currently officially"
-        #     f" recognized and is therfore potentially producing errors."
-        #     f"In doubt use one of:\n  - hp.randint\n  - hp.uniform\n"
-        #     f"  - hp.loguniform")
         if verbosity >= 1:
             print(
                 f"hyperopt_fit programmer's raised printed notice: "
