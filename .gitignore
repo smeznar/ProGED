@@ -1,7 +1,8 @@
 .vscode/
-.gitignore
+# .gitignore
 __pycache__/
 # */__pycache__/
 ProGED.egg-info/
+.idea/workspace.xml
 *~
 .*

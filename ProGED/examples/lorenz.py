@@ -67,8 +67,6 @@ print(f"Settings of this execution:\n"
 # # 1.) Data construction (simulation of Lorenz):
 
 np.random.seed(0)
-# is_chaotic = True
-# is_wiki = False
 T = np.linspace(0.48, 0.85, 1000)  # Times currently run at.
 if is_wiki:
     T = np.linspace(0, 40, 4000)  # Chaotic Lorenz times noted on Wiki.
@@ -77,12 +75,12 @@ if is_wiki:
 # dy/dt = x*(\rho-z) - y
 # dz/dt = x*y - \beta*z
 # non-chaotic configuration:
-sigma = 1.3  # 1 # 0 
+sigma = 1.3  # 1 # 0
 rho = -15  # 1 # 0
 beta = 3.4  # 1 # 0
 # Chaotic configuration:
 if is_chaotic:
-    sigma = 10  # 1 # 0 
+    sigma = 10  # 1 # 0
     rho = 28  # 1 # 0
     beta = 8/3  # 1 # 0
 y0 = [0.1, 0.4, 0.5]  # Lorenz initial values run at.
@@ -117,33 +115,21 @@ data = np.concatenate((T[:, np.newaxis], Yode.T), axis=1)  # Embed Time column i
 # # # # 2.) Discover one ode at a time.
 
 sys.path += ['.','..']
-# from ProGED.generate import generate_models
-from ProGED.equation_discoverer import EqDisco
-# from ProGED.generators.grammar import GeneratorGrammar
-# from ProGED.generators.grammar_construction import grammar_from_template  # Grammar's
-#nonterminals will depend on given dataset.
-# from ProGED.parameter_estimation import fit_models
-from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel, hyperopt_fit
 from hyperopt import hp
+from ProGED.equation_discoverer import EqDisco
+from ProGED.parameter_estimation import DE_fit, hyperopt_fit #, DE_fit_metamodel
 
 
-# Run eqation discovery from command line:
 np.random.seed(0)
-finnish = time.perf_counter()
-print(f"Finnished in {round(finnish-start, 2)} seconds")
 
 ED = EqDisco(data = data,
              task = None,
              task_type = "differential",
              time_index = 0,
-             # target_variable_index = -1,
              target_variable_index = aquation[0][0],  # aquation = [123] -> target = 1 -> ([t,x,y,z]->x)
-             # target_variable_index = 1,
-             # variable_names=["t", "x", "y"],
              variable_names=["t", "x", "y", "z"],
              generator = "grammar",
              generator_template_name = "polynomial",
-             # generator_settings={"variables": ["'an_2'", "'an_1'"], "p_T": p_T, "p_R": p_R},
              generator_settings={
                  # "variables": ["'x'", "'y'"],
                  "p_S": [0.4, 0.6],
@@ -154,14 +140,13 @@ ED = EqDisco(data = data,
                  "functions": [],
              },
              sample_size = sample_size,
-             # verbosity = 1)
              verbosity = 4)
 
 ED.generate_models()
 ED.fit_models(
     estimation_settings={
-        "timeout": 115, 
-        "max_ode_steps": 10**6, 
+        "timeout": 115,
+        "max_ode_steps": 10**6,
         # "lower_upper_bounds": (-30, 30),
         "lower_upper_bounds": (-11, 11),
         # "optimizer": DE_fit,
@@ -171,7 +156,6 @@ ED.fit_models(
         "hyperopt_max_evals": 150,
         # "hyperopt_space_fn": hp.qnormal,
         # "hyperopt_space_kwargs": {"mu": 0, "sigma": 1, "q": 1/30},
-        # "verbosity": 4,
         "verbosity": 1,
         })
 

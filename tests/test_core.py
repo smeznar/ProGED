@@ -2,8 +2,9 @@
 
 import numpy as np
 from nltk import Nonterminal, PCFG
+from hyperopt import hp
 
-import sys
+# import sys
 
 from ProGED.equation_discoverer import EqDisco
 from ProGED.generators.grammar import GeneratorGrammar
@@ -12,7 +13,6 @@ from ProGED.generate import generate_models
 from ProGED.model import Model
 from ProGED.model_box import ModelBox
 from ProGED.parameter_estimation import fit_models, hyperopt_fit
-from hyperopt import hp
 
 def test_grammar_general():
     np.random.seed(0)

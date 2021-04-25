@@ -1,15 +1,15 @@
 # %% # 0.) import modules and set a random seed
 import sys
 import numpy as np
+from hyperopt import hp
 sys.path += [".", ".."]
 
 from ProGED.examples.ode_examples import example_tB_data  # import datasets T, X and Y
-from ProGED.parameter_estimation import fit_models 
+from ProGED.parameter_estimation import fit_models
 from ProGED.generate import generate_models
-from ProGED.generators.grammar import GeneratorGrammar 
+from ProGED.generators.grammar import GeneratorGrammar
 from ProGED.examples.tee_so import Tee
 from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel, hyperopt_fit
-from hyperopt import hp
 
 # 0.1) save output into randomly named logfile:
 random = str(np.random.random())
