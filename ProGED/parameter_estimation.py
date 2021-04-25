@@ -5,11 +5,11 @@ import sys
 import time
 
 import numpy as np
-from scipy.optimize import differential_evolution, minimize, brute, shgo, dual_annealing
+from scipy.optimize import differential_evolution, minimize
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp, odeint
 import sympy as sp
-from sklearn import ensemble #, tree
+# from sklearn import ensemble #, tree  # Left for gitch_doctor metamodel
 
 import ProGED.mute_so as mt
 from _io import TextIOWrapper as stdout_type
@@ -275,7 +275,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         model, X, Y, T, p0, estimation_settings: Just like other
             optimizers, see DE_fit.
         estimation_settings (dict): Optional. Arguments to be passed
-                to the parameter estimation. See the documentation of 
+                to the parameter estimation. See the documentation of
                 ProGED.fit_models for details about more generally
                 available options (keys).
             Options specific for hyperopt_fit only (See Hyperopt's
@@ -289,7 +289,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
                     search space expression.
                     Read below for more info.
                 hyperopt_space_args (hyperopt.pyll.base.Apply):
-                    Arguments used in conjunction with 
+                    Arguments used in conjunction with
                     hyperopt_space_fn function call when specifying
                     the search space.
                 hyperopt_space_kwargs (hyperopt.pyll.base.Apply): Same
@@ -299,18 +299,18 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     In context to ProGED, I currently see possible personal
     configuration in one dimension only. This is because user cannot
     predict how many and which parameters will the random generator
-    generate. 
+    generate.
     
-    One-dimensional configuration of search space is here specified 
-    by function called in the stochastic space parameter expression 
+    One-dimensional configuration of search space is here specified
+    by function called in the stochastic space parameter expression
     and by this expression's (also optional) arguments as described at:
     https://github.com/hyperopt/hyperopt/wiki/FMin#21-parameter-expressions
     at 0b49cde7c0.
     The function is specified via the `hyperopt_space_fn` setting and
-    (optional) arguments are similarly specified via 
-    the `hyperopt_space_(kw)args` settings. As a result, this is 
+    (optional) arguments are similarly specified via
+    the `hyperopt_space_(kw)args` settings. As a result, this is
     called:
-        hyperopt_space_fn('label_i-th_dim', *hyperopt_space_args, 
+        hyperopt_space_fn('label_i-th_dim', *hyperopt_space_args,
                         **hyperopt_space_kwargs)
     to produce the 1-D search space which is then copied a few times
     into a n-dim list with distinct labels to avoid hyperopt error.
@@ -318,7 +318,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
       estimation_settings["hyperopt_space_fn"]=hp.randint and
       estimation_settings["hyperopt_space_args"]=(lower_bound, upper_bound)
     in case of p0=(2.45, 6.543, 6.5),
-    the search space will be 
+    the search space will be:
     [hp.randint('C0', upper_bound),
      hp.randint('C1', upper_bound),
      hp.randint('C2', upper_bound)], since p0 is 3-D.
@@ -335,7 +335,7 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         - hp.loguniform
 
     Defaults:
-        If search space function or arguments are unspecified, then 
+        If search space function or arguments are unspecified, then
         the 1-D space:
             hp.uniform('Ci', lower_bound, upper_bound)
         is used.
@@ -396,8 +396,8 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
 
     trials = Trials()
     best = fmin(
-        fn=objective, 
-        space=space, 
+        fn=objective,
+        space=space,
         algo=algo,
         trials=trials,
         timeout=timeout,
@@ -417,7 +417,6 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
     
     lu_bounds = estimation_settings["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30
-    # lower_bound, upper_bound = (estimation_settings["lower_upper_bounds"][i]+1e-30 for i in (0, 1))
     bounds = [[lower_bound, upper_bound] for i in range(len(p0))]
 
     start = time.perf_counter()
@@ -435,11 +434,7 @@ def DE_fit (model, X, Y, T, p0, **estimation_settings):
         estimation_settings["objective_function"],
         bounds,
         args=[model, X, Y, T, estimation_settings],
-        callback=diff_evol_timeout, 
-        maxiter=10**2,
-        popsize=10,  # orig
-        # tol=10
-        )
+        callback=diff_evol_timeout, maxiter=10**2, popsize=10)
 
 def DE_fit_metamodel (model, X, Y, T, p0, **estimation_settings):
     """DE with additional metamodel embedded."""
@@ -597,8 +592,8 @@ class ParameterEstimator:
                 res = find_parameters(model, self.X, self.Y, self.T,
                                      **self.estimation_settings)
                 model.set_estimated(res)
-                # if self.estimation_settings["verbosity"] >= 2:
-                #     print(res, type(res["x"]), type(res["x"][0]))
+                if self.estimation_settings["verbosity"] >= 3:
+                    print(res, type(res["x"]), type(res["x"][0]))
         except Exception as error:
             print((f"Excepted an error inside fit_one: Of type {type(error)} and message:"
                     f"{error}!! \nModel:"), model)
@@ -612,14 +607,15 @@ class ParameterEstimator:
         return model
     
 def fit_models (
-    models, 
-    data, 
-    target_variable_index, 
-    time_index=None, 
-    pool_map=map, 
+    models,
+    data,
+    target_variable_index,
+    time_index=None,
+    pool_map=map,
     verbosity=0,
     task_type="algebraic",
-    estimation_settings={}):
+    estimation_settings={}
+    ):
     """Performs parameter estimation on given models. Main interface to the module.
     
     Supports parallelization by passing it a pooled map callable.
@@ -655,7 +651,8 @@ def fit_models (
         "verbosity": verbosity,
         "timeout": np.inf,
         "lower_upper_bounds": (-30,30),
-        "optimizer": DE_fit,}
+        "optimizer": DE_fit,
+        }
     estimation_settings_preset.update(estimation_settings)
     estimation_settings = estimation_settings_preset
     estimator = ParameterEstimator(data, target_variable_index, time_index, estimation_settings)
