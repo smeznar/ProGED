@@ -46,12 +46,13 @@ if is_tee and is_tee_flag:
         print(f"Output will be logged in: {log_filename}")
 ######## End Of Logging ##  ##  ##                  ########
 
+np.random.seed(0)
 has_titles = 1
 csv = pd.read_csv('oeis_selection.csv')[has_titles:]
 # csv = csv.astype('int64')
 csv = csv.astype('float')
 # Old for fibonacci only:
-seq_id = "A000045"
+# seq_id = "A000045"
 # fibs = list(csv[seq_id])  # fibonacci = A000045
 # oeis = fibs
 
@@ -114,6 +115,21 @@ lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-2, 2)  # direct
 #########################################################
 
+p_T = [0.4, 0.6]  # default settings, does nothing
+p_R = [0.6, 0.4]
+# if (seq_name, order, is_direct) == ("fibonacci", 2, False):
+#     p_T = [0.4, 0.6]  # for rec fib
+#     p_R = [0.9, 0.1]
+
+# random_seed = 0
+random_seed = 1  # rec
+# seed 0 , size 20 (16)
+# ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
+# seed 1 size 20 ali 4 an-1 + an-2 rec 
+
+optimizer = DE_fit
+timeout = np.inf
+
 def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
     """Run eq. discovery of given OEIS sequence."""
 
@@ -125,17 +141,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
     # print(variables)
     # print(data.shape, type(data), data)
 
-    p_T = [0.4, 0.6]  # default settings, does nothing
-    p_R = [0.6, 0.4]
-    if (seq_name, order, is_direct) == ("fibonacci", 2, False):
-        p_T = [0.4, 0.6]  # for rec fib
-        p_R = [0.9, 0.1]
-
-    # np.random.seed(0)
-    np.random.seed(1)  # rec
-    # seed 0 , size 20 (16)
-    # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
-    # seed 1 size 20 ali 4 an-1 + an-2 rec 
+    np.random.seed(random_seed)
     ED = EqDisco(
         data = data,
         task = None,
@@ -175,15 +181,14 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "lower_upper_bounds": (-5, 5), 
             # "lower_upper_bounds": (-8, 8),  # long enough for brute
             # "optimizer": DE_fit_metamodel,
-            # "optimizer": DE_fit,
-            # "optimizer": integer_brute_fit,
-            # "optimizer": shgo_fit,
-            # "optimizer": DAnnealing_fit,
-
-            "optimizer": hyperopt_fit,
+            "optimizer": optimizer,
+            # "optimizer": hyperopt_fit,
+            "timeout": timeout,
             # "timeout": 1,
             # "timeout": 13,
-            "timeout_privilege": 30,
+            # "timeout_privilege": 30,
+
+                ## hyperopt:
             # "hyperopt_max_evals": 3250,
             # "hyperopt_max_evals": 550,  # finds if result=min(10**6, hyperopt...)
             # "hyperopt_max_evals": 50,
@@ -191,8 +196,8 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "hyperopt_max_evals": 2000,
             # "hyperopt_max_evals": 700,
             # "hyperopt_max_evals": 500,
-            "hyperopt_max_evals": 300,
-            "hyperopt_space_fn": hp.randint,
+            # "hyperopt_max_evals": 300,
+            # "hyperopt_space_fn": hp.randint,
             # "hyperopt_space_fn": hp.choice,
             # "hyperopt_space_fn": hp.loguniform,  # Seems working, but loss 785963174750.8921 in 2000 evals.
             # "hyperopt_space_fn": hp.qnormal,
@@ -231,22 +236,28 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
 
-oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
+# oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
+# oeis_eq_disco("A000045", is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # Run eq. disco. on all oeis sequences:
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
         f"=>> is_direct = {is_direct}\n"
         f"=>> order of equation recursion = {order}\n"
         f"=>> sample_size = {sample_size}\n"
-        # "=>> grammar = {grammar}\n"
-        f"=>> grammar_template_name = {grammar_template_name}\n")
+        f"=>> grammar_template_name = {grammar_template_name}\n"
+        f"=>> generator_settings = {'{'}p_T: {p_T}, p_R: {p_R}{'}'}\n"
+        f"=>> optimizer = {optimizer}\n"
+        f"=>> timeout = {timeout}\n"
+    )
 start = time.perf_counter()
-last_run = "A002378"
+FIRST_ID = "A000000"
 # LAST_ID = "A246655"
-csv = csv.loc[:, csv.columns >= last_run]
-# for seq_id in csv:
-#     oeis_eq_disco(seq_id, is_direct, order)
-#     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
+last_run = "A002378"
+# csv = csv.loc[:, csv.columns >= last_run]
+csv = csv.loc[:, csv.columns >= FIRST_ID]  # Cluster
+for seq_id in csv:
+    oeis_eq_disco(seq_id, is_direct, order)
+    print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds.")

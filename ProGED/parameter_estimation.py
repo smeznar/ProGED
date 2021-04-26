@@ -510,8 +510,9 @@ def find_parameters (model, X, Y, T, **estimation_settings):
 #     elif task_type == "differential_surrogate":
 #         estimation_settings["objective_function"] = meta_model_ode_error
     elif task_type == "oeis":
-        # model.params = np.round(model.params)
-        estimation_settings["objective_function"] = model_oeis_error
+        model.params = np.round(model.params)
+        estimation_settings["objective_function"] = model_error
+        # estimation_settings["objective_function"] = model_oeis_error
     elif task_type == "oeis_recursive_error":
         estimation_settings["objective_function"] = model_oeis_recursive_error
     else:
