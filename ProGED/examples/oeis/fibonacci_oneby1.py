@@ -192,7 +192,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "hyperopt_max_evals": 700,
             # "hyperopt_max_evals": 500,
             "hyperopt_max_evals": 300,
-            # "hyperopt_space_fn": hp.randint,
+            "hyperopt_space_fn": hp.randint,
             # "hyperopt_space_fn": hp.choice,
             # "hyperopt_space_fn": hp.loguniform,  # Seems working, but loss 785963174750.8921 in 2000 evals.
             # "hyperopt_space_fn": hp.qnormal,

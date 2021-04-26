@@ -2,7 +2,7 @@
 import sys
 import numpy as np
 from hyperopt import hp
-sys.path += [".", ".."]
+# sys.path += [".", ".."]
 
 from ProGED.examples.ode_examples import example_tB_data  # import datasets T, X and Y
 from ProGED.parameter_estimation import fit_models

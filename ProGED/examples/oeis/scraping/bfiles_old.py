@@ -1,5 +1,5 @@
 # from saved_bfiled import core_bfiled_dict as bseqs 
-from save_new_bfiles import bseqs
+from save_new_bfiles import bseqs  #newer: from ProGED.example.oeis.scraping.save_new_bfiles import bseqs
 ## -- obsolete more deletion -- ##
 # more = ("A000109", "A000112", "A000609", "A002106", "A003094", "A005470", "A006966")
 # print("more:", ", ".join(more))

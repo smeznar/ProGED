@@ -114,7 +114,7 @@ data = np.concatenate((T[:, np.newaxis], Yode.T), axis=1)  # Embed Time column i
 
 # # # # 2.) Discover one ode at a time.
 
-sys.path += ['.','..']
+# sys.path += ['.','..']
 from hyperopt import hp
 from ProGED.equation_discoverer import EqDisco
 from ProGED.parameter_estimation import DE_fit, hyperopt_fit #, DE_fit_metamodel
