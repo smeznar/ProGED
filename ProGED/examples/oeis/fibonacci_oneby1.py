@@ -33,8 +33,8 @@ if len(sys.argv) >= 2:
 if not is_tee_flag:
     print("\nNo-log flag detected!\n")
 
-# is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
-is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
+is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
+# is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
 random = str(np.random.random())[2:]
 log_filename = log_name + message + random + ".txt"
 if is_tee and is_tee_flag:
@@ -100,7 +100,7 @@ order, is_direct = 2, False  # recursive
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
 # sample_size = 1
-sample_size = 4
+# sample_size = 4
 # sample_size = 2
 # sample_size = 3
 # sample_size = 6
@@ -108,7 +108,7 @@ sample_size = 4
 # sample_size = 15
 # sample_size = 20
 # sample_size = 20
-# sample_size = 100
+sample_size = 100
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
