@@ -24,7 +24,7 @@ setuptools.setup(
                         "scipy", 
                         "sympy", 
                         "nltk",
-                        "scikit-learn",
+                        # "scikit-learn",
                         "hyperopt",
                         "pytest",
                        ]
