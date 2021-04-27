@@ -1,7 +1,7 @@
 #!/bin/bash
 # This is script for login node.
 
-git clone --branch ode https://github.com/brencej/ProGED
+# git clone --branch ode https://github.com/brencej/ProGED
 cp ProGED/ProGED/examples/oeis/fibonacci_oneby1.py .
 cp ProGED/ProGED/examples/oeis/oeis_selection.csv .
 cp ProGED/ProGED/examples/oeis/cluster/play.sh .
