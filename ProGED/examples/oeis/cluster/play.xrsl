@@ -1,0 +1,16 @@
+&
+(executable = "play.sh")
+(jobname = "test fibonaci100 sing container")
+(inputfiles =
+ ("play.sh" "")
+ ("pyProGED.simg" "")
+ ("fibonacci_oneby1.py" "")
+ ("oeis_selection.csv" "")
+)
+(outputfiles = ("result-nekaj.txt" "") )
+(stdout="std.log")
+(join=yes)
+(gmlog=gmlog)
+(memory=10000)
+(walltime="10 hours")
+
