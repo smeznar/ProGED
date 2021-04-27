@@ -1,0 +1,11 @@
+BootStrap: docker
+From: python # ta docker image sem izbral
+
+%test
+
+%environment
+
+%post
+
+# Python requirements
+pip install git+https://github.com/brencej/ProGED@ode   

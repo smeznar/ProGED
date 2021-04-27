@@ -1,0 +1,25 @@
+BootStrap: docker
+From: alpine # ta docker image sem izbral
+
+%test
+
+%environment
+
+%post
+
+# Python requirements
+
+apk add python3
+apk add py3-pip
+apk add git
+apk add py3-numpy
+apk add py3-scipy
+apk add py3-pandas
+apk add py3-regex
+apk add py3-pytest
+apk add py3-scikit-learn
+
+# pip install sympy nltk hyperopt
+pip install git+https://github.com/brencej/ProGED@ode
+
+
