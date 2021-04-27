@@ -1,17 +1,13 @@
 #!/bin/bash
-# tar -xf ProGED.tar
-# Self replicating machine:
-echo "first show current dir aka. pwd"
+# This is script for login node.
+
 pwd
-thisfile="cluster/play.sh"
-echo " "
-echo "I am the script called:"$thisfile
-echo " "
-echo " --- first line of "$thisfile" below : --- "
-cat $thisfile
-echo " --- this was the last line of "$thisfile" above.  --- "
-echo " "
-git clone --branch ode https://github.com/brencej/ProGED clusterProGED/
+ls
+cd ProGED
+pwd
+ls
+cd ..
+git clone --branch ode https://github.com/brencej/ProGED
 echo "I (cluster) started to run .sh, first checking the imports: python3 import proged,numpy, itd."
 # singularity exec python-proged.simg python3 -c "import ProGED, numpy, pandas, scipy, sympy, nltk, hyperopt, sklearn, pytest;print('Importing seems to work.')"
 # singularity exec pyProGED.simg python3 -c "import ProGED, numpy, pandas, scipy, sympy, nltk, hyperopt, sklearn, pytest;print('Importing seems to work.')"
