@@ -8,9 +8,6 @@ echo " --- first line of "$thisfile" below : --- "
 cat $thisfile
 echo " --- this was the last line of "$thisfile" above.  --- "
 echo " "
-
-echo "Git does not work, connection timed out"
-# git clone --branch ode https://github.com/brencej/ProGED clusterProGED/
 echo "now for real:"
 
 echo "I (cluster) started to run .sh, first checking the imports: python3 import proged,numpy, itd."
