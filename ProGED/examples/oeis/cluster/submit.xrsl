@@ -1,6 +1,6 @@
 &
 (executable = "play.sh")
-(jobname = "test fibonaci100 sing container")
+(jobname = "oeis100 + nodir + ord2")
 (inputfiles =
  ("play.sh" "")
  ("pyProGED.simg" "")
@@ -9,9 +9,10 @@
  ("test_core.py" "")
 )
 (outputfiles = ("result-whatever.txt" "") )
-(stdout="std.log")
+(stdout="stdout.log")
+(stderr="stderr.log")
 (join=yes)
 (gmlog=gmlog)
-(memory=10000)
-(walltime="10 hours")
+(memory=90305)
+(walltime="13 hours")
 

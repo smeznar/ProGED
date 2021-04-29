@@ -19,7 +19,8 @@ from hyperopt import hp, tpe, rand
 is_tee_flag = True  # Do not change manually!! Change is_tee.
 message = ""
 double_flags = set(sys.argv[1:])
-# print(double_flags)
+flags_dict = { i.split("=")[0]:  i.split("=")[1] for i in args if len(i.split("="))>1}
+# Usage of flags_dict: $ fibonacci.py --order=3 --is_direct=True.
 if len(sys.argv) >= 2:
     if sys.argv[1][0] == "-" and not sys.argv[1][1] == "-":
         single_flags = set(sys.argv[1][1:])
@@ -30,6 +31,13 @@ if len(sys.argv) >= 2:
         is_tee_flag = False
     if "--msg" in double_flags:
         message = sys.argv[2] + "_"
+    if "--is_direct" in flags_dict:
+        if flags_dict["--is_direct"] == "True":
+            flags_dict["--is_direct"] = True
+        elif flags_dict["--is_direct"] == "False":
+            flags_dict["--is_direct"] = False
+        else:
+            flags_dict["--is_direct"] = int(flags_dict["--is_direct"])
 if not is_tee_flag:
     print("\nNo-log flag detected!\n")
 
@@ -93,9 +101,14 @@ def grid (order, seq, direct=False):
     return seq[indexes]
 
 #######main#settings#####################################
+# Note: order and is_direct is overwritten by commandline arguments.
 order, is_direct = 2, False  # recursive
 # order, is_direct = 4, False  # recursive
 # order, is_direct = 0, True  # direct
+# Override manual settings with input cmd line flags:
+order = int(flags_dict.get("--order", order))
+is_direct = flags_dict.get("--is_direct", is_direct)
+
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
@@ -109,6 +122,7 @@ grammar_template_name = "polynomial"
 # sample_size = 20
 # sample_size = 20
 sample_size = 100
+sample_size = int(flags_dict.get("--sample_size", sample_size))
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 # lower_upper_bounds = (-5, 5)  # direct
