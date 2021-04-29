@@ -11,7 +11,7 @@
 (outputfiles = ("result-whatever.txt" "") )
 (stdout="stdout.log")
 (stderr="stderr.log")
-(join=yes)
+(* (join=yes) *)
 (gmlog=gmlog)
 (memory=90305)
 (walltime="13 hours")

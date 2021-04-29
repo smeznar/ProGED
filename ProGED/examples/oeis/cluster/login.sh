@@ -12,7 +12,7 @@ general=oeis-
 direct=direct
 order=-ord
 
-cp ProGED/ProGED/examples/oeis/cluster/submit.xrsl" . &&
+cp ProGED/ProGED/examples/oeis/cluster/submit.xrsl . &&
 echo cp submit.xrsl $general$order"2-no"$direct".xrsl" &&
 echo cp submit.xrsl $general$order"4-no"$direct".xrsl" &&
 echo cp submit.xrsl $general$order"0-"$direct".xrsl" &&

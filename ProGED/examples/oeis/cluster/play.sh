@@ -17,7 +17,6 @@ echo "I (cluster) am testing proged with pytest ..."
 singularity exec ~/pyProGED.simg python3 -m pytest ~/test_core.py
 
 echo "Let's finally execute the big program: "
-# First copy oeis data to current dir to avoid (no file) error.
 singularity exec ~/pyProGED.simg python3 ~/fibonacci_oneby1.py --order=2 --is_direct=False --sample_size 100  # online
 echo "... This is the end of your personal cluster script. Everything was executed successfully!"
 
