@@ -19,7 +19,7 @@ from hyperopt import hp, tpe, rand
 is_tee_flag = True  # Do not change manually!! Change is_tee.
 message = ""
 double_flags = set(sys.argv[1:])
-flags_dict = { i.split("=")[0]:  i.split("=")[1] for i in args if len(i.split("="))>1}
+flags_dict = { i.split("=")[0]:  i.split("=")[1] for i in sys.argv[1:] if len(i.split("="))>1}
 # Usage of flags_dict: $ fibonacci.py --order=3 --is_direct=True.
 if len(sys.argv) >= 2:
     if sys.argv[1][0] == "-" and not sys.argv[1][1] == "-":
