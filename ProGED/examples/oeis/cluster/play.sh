@@ -8,8 +8,8 @@ echo "I am the script called: "$0
 echo " "
 # echo " --- first line of "$jobfile" below : --- "
 # cat $jobfile
-echo " --- this was the last line of "$0" above.  --- "
-echo " "
+# echo " --- this was the last line of "$0" above.  --- "
+# echo " "
 echo " --- first line of "$0" below : --- "
 cat $0
 echo " --- this was the last line of "$0" above.  --- "

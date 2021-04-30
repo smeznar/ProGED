@@ -6,7 +6,6 @@
  ("pyProGED.simg" "srm://dcache.arnes.si/data/arnes.si/gen.vo.sling.si/bogec/pyProGED.simg")
  ("fibonacci_oneby1.py" "")
  ("oeis_selection.csv" "")
- ("submit.xrsl" "")
  ("test_core.py" "")
 )
 (outputfiles = ("result-whatever.txt" "") )
