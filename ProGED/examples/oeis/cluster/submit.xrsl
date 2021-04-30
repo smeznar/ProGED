@@ -1,9 +1,9 @@
 &
 (executable = "play.sh")
-(jobname = "oeis50 + ord2 + nodir")
+(jobname = "oeis50 + ord4 + nodir")
 (inputfiles =
  ("play.sh" "")
- ("pyProGED.simg" "")
+ ("pyProGED.simg" "srm://dcache.arnes.si/data/arnes.si/gen.vo.sling.si/bogec/pyProGED.simg")
  ("fibonacci_oneby1.py" "")
  ("oeis_selection.csv" "")
  ("submit.xrsl" "")
@@ -12,8 +12,11 @@
 (outputfiles = ("result-whatever.txt" "") )
 (stdout="stdout.log")
 (stderr="stderr.log")
-(* (join=yes) *)
 (gmlog=gmlog)
-(memory=90305)
-(walltime="13 hours")
+(memory=10305)
+(walltime="2 days")
 
+
+(* 
+Readme: max Wall time and memory, see
+  the output of arcinfo -l cluster.net *)

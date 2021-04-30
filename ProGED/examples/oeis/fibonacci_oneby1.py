@@ -274,7 +274,8 @@ for seq_id in csv:
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
-      f" took {cpu_time} secconds.")
+      f" took {cpu_time} secconds, i.e. {cpu_time/60} minutes"
+      f" or {cpu_time/3600} hours.")
 
 def pretty_results(seq_name="fibonacci", is_direct=is_direct, order=order):
     """Print results in prettier form."""
