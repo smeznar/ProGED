@@ -16,17 +16,6 @@ order=ord
 
 cp ProGED/ProGED/examples/oeis/cluster/submit.xrsl . &&
 
-# ord0dir=$general$order"0-"$direct".xrsl"
-# ord2dir=$general$order"2-"$direct".xrsl"
-# ord4dir=$general$order"4-"$direct".xrsl"
-# ord2nodir=$general$order"2-no"$direct".xrsl"
-# ord4nodir=$general$order"4-no"$direct".xrsl"
-
-# cp submit.xrsl $ord4nodir &&
-# cp submit.xrsl $ord2nodir &&
-# cp submit.xrsl $ord4dir &&
-# cp submit.xrsl $ord2dir &&
-# cp submit.xrsl $ord0dir
 function sedply () {
 name=$general$3'-'$order$1$direct$2
 cat submit.xrsl \
@@ -45,7 +34,8 @@ sedply 4 True 100
 sedply 2 True 100 
 sedply 0 True 100 
 
-# for i in $general*.sh; do echo arcsub -c nsc.ijs.si -d info $i; done
+# for i in $general*.xrsl; do echo arcsub -c nsc.ijs.si -d info $i; done
+# for i in $general*'-'$order*$direct*.xrsl; do echo arcsub -c nsc.ijs.si -d info $i; done
 
 # cat play.sh | sed 's/--sample_size=\w\+/--sample_size=100/' | sed 's/--order=\w/--order=2/' | sed 's/--is_direct=\w\+/--is_direct=True/' >> $ord4nodir.sh
 
