@@ -1,11 +1,12 @@
 &
 (executable = "play.sh")
-(jobname = "oeis100 + nodir + ord2")
+(jobname = "oeis50 + ord2 + nodir")
 (inputfiles =
  ("play.sh" "")
  ("pyProGED.simg" "")
  ("fibonacci_oneby1.py" "")
  ("oeis_selection.csv" "")
+ ("submit.xrsl" "")
  ("test_core.py" "")
 )
 (outputfiles = ("result-whatever.txt" "") )
