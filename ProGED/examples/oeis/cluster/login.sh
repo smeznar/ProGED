@@ -20,7 +20,7 @@ function sedply () {
 name=$general$3'-'$order$1$direct$2
 cat submit.xrsl \
 	| sed 's/play.sh/'$name'.sh/' \
-	| sed 's/oeis50 + ord4 + nodir/'$name'/' \
+	| sed 's/generic jobname/'$name'/' \
 	> $name.xrsl
 cat play.sh  \
 	| sed 's/--order=\w/--order='$1'/' \

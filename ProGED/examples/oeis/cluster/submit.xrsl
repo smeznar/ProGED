@@ -1,6 +1,6 @@
 &
 (executable = "play.sh")
-(jobname = "oeis50 + ord4 + nodir")
+(jobname = "generic jobname")
 (inputfiles =
  ("play.sh" "")
  ("pyProGED.simg" "srm://dcache.arnes.si/data/arnes.si/gen.vo.sling.si/bogec/pyProGED.simg")
@@ -9,8 +9,8 @@
  ("test_core.py" "")
 )
 (outputfiles = ("result-whatever.txt" "") )
-(stdout="stdout.log")
-(stderr="stderr.log")
+(stdout="outstd.log")
+(stderr="errstd.log")
 (gmlog=gmlog)
 (memory=10305)
 (walltime="2 days")
