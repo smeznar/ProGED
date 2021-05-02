@@ -59,6 +59,7 @@ has_titles = 1
 csv = pd.read_csv('oeis_selection.csv')[has_titles:]
 # csv = csv.astype('int64')
 csv = csv.astype('float')
+terms_count, seqs_count = csv.shape
 # Old for fibonacci only:
 # seq_id = "A000045"
 # fibs = list(csv[seq_id])  # fibonacci = A000045
@@ -262,6 +263,9 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> generator_settings = {'{'}p_T: {p_T}, p_R: {p_R}{'}'}\n"
         f"=>> optimizer = {optimizer}\n"
         f"=>> timeout = {timeout}\n"
+        f"=>> number of terms in every sequence = {terms_count}\n"
+        f"=>> number of all considered sequences = {seqs_count}\n"
+        f"=>> list of considered sequences = {list(csv.columns)}\n"
     )
 start = time.perf_counter()
 FIRST_ID = "A000000"
