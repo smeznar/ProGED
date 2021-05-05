@@ -4,6 +4,4 @@
 	- put dummy parameter in estimation_settings
 	- rename dummy oeis, model_oeis_error, parameter in estimation_settings
 	- excepted cases put inside verbose if statement
-
-- q&a test_core
 	

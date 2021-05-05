@@ -142,6 +142,8 @@ random_seed = 1  # rec
 # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
 
+# task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
+task_type = "oeis"
 optimizer = DE_fit
 timeout = np.inf
 
@@ -182,7 +184,8 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "verbosity": 3,
             "verbosity": 1,
             # "verbosity": 0,
-             "task_type": "algebraic",
+             "task_type": task_type,
+             # "task_type": "algebraic",
              # "task_type": "oeis",
             # "task_type": "oeis_recursive_error",  # bad idea
              "lower_upper_bounds": lower_upper_bounds,
@@ -262,6 +265,7 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> grammar_template_name = {grammar_template_name}\n"
         f"=>> generator_settings = {'{'}p_T: {p_T}, p_R: {p_R}{'}'}\n"
         f"=>> optimizer = {optimizer}\n"
+        f"=>> task_type = {task_type}\n"
         f"=>> timeout = {timeout}\n"
         f"=>> number of terms in every sequence = {terms_count}\n"
         f"=>> number of all considered sequences = {seqs_count}\n"

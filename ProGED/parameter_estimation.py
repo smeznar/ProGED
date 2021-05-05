@@ -83,10 +83,7 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     - estimation_settings: look description of fit_models()
     """
     task_type = estimation_settings["task_type"]
-    if task_type == "algebraic":
-        return model_error(params, model, X, Y, _T=None,
-                            estimation_settings=estimation_settings)
-    elif task_type == "oeis":
+    if task_type in ("algebraic", "oeis"):
         return model_error(params, model, X, Y, _T=None,
                             estimation_settings=estimation_settings)
     elif task_type == "differential":
@@ -247,25 +244,25 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
         print("Returning dummy error. All is well.")
         return DUMMY
 
-def model_oeis_error (params, model, X, Y, _T, estimation_settings):
-    """Defines mean squared error as the error metric."""
-    if estimation_settings["verbosity"] >= 5:
-        print(params, "print: params before rounding")
-    try:
-        params = np.round(params)
-        if estimation_settings["verbosity"] >= 4:
-            print(params, "print: params after round")
-        testY = model.evaluate(X, *params)
-        res = np.mean((Y-testY)**2)
-        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
-            if estimation_settings["verbosity"] >= 2:
-                print("isnan(res), ... ")
-                print(model.expr, model.params, model.sym_params, model.sym_vars)
-            return DUMMY
-        return res
-    except Exception as error:
-        print("Programmer1 model_oeis_error: Params at error:", params, f"and {type(error)} with message:", error)
-        return DUMMY
+# def model_oeis_error (params, model, X, Y, _T, estimation_settings):
+#     """Defines mean squared error as the error metric."""
+#     if estimation_settings["verbosity"] >= 5:
+#         print(params, "print: params before rounding")
+#     try:
+#         params = np.round(params)
+#         if estimation_settings["verbosity"] >= 4:
+#             print(params, "print: params after round")
+#         testY = model.evaluate(X, *params)
+#         res = np.mean((Y-testY)**2)
+#         if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+#             if estimation_settings["verbosity"] >= 2:
+#                 print("isnan(res), ... ")
+#                 print(model.expr, model.params, model.sym_params, model.sym_vars)
+#             return DUMMY
+#         return res
+#     except Exception as error:
+#         print("Programmer1 model_oeis_error: Params at error:", params, f"and {type(error)} with message:", error)
+#         return DUMMY
 
 def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
     """Calls Hyperopt.
@@ -513,8 +510,6 @@ def find_parameters (model, X, Y, T, **estimation_settings):
         model.params = np.round(model.params)
         estimation_settings["objective_function"] = model_error
         # estimation_settings["objective_function"] = model_oeis_error
-    elif task_type == "oeis_recursive_error":
-        estimation_settings["objective_function"] = model_oeis_recursive_error
     else:
         types_string = "\", \"".join(TASK_TYPES)
         raise ValueError("Variable task_type has unsupported value "
