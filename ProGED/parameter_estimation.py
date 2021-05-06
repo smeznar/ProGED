@@ -86,7 +86,8 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     - estimation_settings: look description of fit_models()
     """
     task_type = estimation_settings["task_type"]
-    if task_type in ("algebraic", "integer_algebraic"):
+    # if task_type in ("algebraic", "integer_algebraic"):
+    if task_type == "algebraic":
         return model_error(params, model, X, Y, _T=None,
                             estimation_settings=estimation_settings)
     elif task_type == "differential":
@@ -605,7 +606,7 @@ class ParameterEstimator:
         except Exception as error:
             if self.estimation_settings["verbosity"] >= 1:
                 print((f"Excepted an error inside fit_one: Of type "
-                        "{type(error)} and message:{error}!! \nModel:"), model)
+                        f"{type(error)} and message:{error}!! \nModel:"), model)
             model.set_estimated({}, valid=False)
 
         if self.estimation_settings["verbosity"] > 0:

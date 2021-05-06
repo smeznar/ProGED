@@ -228,7 +228,8 @@ def test_equation_discoverer_hyperopt():
                  sample_size = 2,
                  verbosity = 1,
                  estimation_settings={
-                     "optimizer": hyperopt_fit,
+                     # "optimizer": hyperopt_fit,
+                     "optimizer": 'hyperopt',
                      "hyperopt_space_fn": hp.qnormal,
                      "hyperopt_space_args": (0.4, 0.5, 1/1000),
                      "hyperopt_max_evals": 100,
