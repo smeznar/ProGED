@@ -86,8 +86,8 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     - estimation_settings: look description of fit_models()
     """
     task_type = estimation_settings["task_type"]
-    # if task_type in ("algebraic", "integer_algebraic"):
-    if task_type == "algebraic":
+    if task_type in ("algebraic", "integer_algebraic"):
+    # if task_type == "algebraic":
         return model_error(params, model, X, Y, _T=None,
                             estimation_settings=estimation_settings)
     elif task_type == "differential":
@@ -249,6 +249,7 @@ def model_ode_error (params, model, X, Y, T, estimation_settings):
             print("Params at error:", params, 
                     f"and {type(error)} with message:", error)
             print("Returning default error. All is well.")
+
         return estimation_settings['default_error']
 
 # def model_integer_error (params, model, X, Y, _T, estimation_settings):
@@ -551,7 +552,7 @@ def find_parameters (model, X, Y, T, **estimation_settings):
     #         metamodel.evaluate, X, Y, T, p0=model.params, **estimation_settings)
     # else:
 
-    res = OPTIMZIER_LIBRARY[estimation_settings["optimizer"]](
+    res = OPTIMIZER_LIBRARY[estimation_settings['optimizer']](
         model, X, Y, T, p0=model.params, **estimation_settings)
     # res = DE_fit(model, X, Y, T, p0=model.params, **estimation_settings)
 
@@ -661,7 +662,7 @@ def fit_models (
         "verbosity": verbosity,
         "timeout": np.inf,
         "lower_upper_bounds": (-30,30),
-        "optimizer": DE_fit,
+        "optimizer": 'differential_evolution',
         "default_error": 10**9,
         }
     estimation_settings_preset.update(estimation_settings)
