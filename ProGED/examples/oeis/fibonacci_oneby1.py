@@ -22,6 +22,9 @@ message = ""
 double_flags = set(sys.argv[1:])
 flags_dict = { i.split("=")[0]:  i.split("=")[1] for i in sys.argv[1:] if len(i.split("="))>1}
 # Usage of flags_dict: $ fibonacci.py --order=3 --is_direct=True.
+# List of all flags:
+#   -n or --no-log .. do not log  # --do-log .. do log  # --msg .. log name  
+# --is_direct=<bool>  # --order=<num>  # --sample_size=<num>
 if len(sys.argv) >= 2:
     if sys.argv[1][0] == "-" and not sys.argv[1][1] == "-":
         single_flags = set(sys.argv[1][1:])
@@ -46,7 +49,7 @@ is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
 # is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
 random = str(np.random.random())[2:]
 log_filename = log_name + message + random + ".txt"
-if is_tee and is_tee_flag:
+if (is_tee and is_tee_flag) or ("--do-log" in double_flags):
     try:
         log_object = te.Tee(f"{log_directory}{log_filename}")
         print(f"Output will be logged in: {log_directory}{log_filename}")
@@ -115,7 +118,7 @@ is_direct = flags_dict.get("--is_direct", is_direct)
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
 # sample_size = 1
-# sample_size = 4
+sample_size = 4
 # sample_size = 2
 # sample_size = 3
 # sample_size = 6
@@ -123,7 +126,7 @@ grammar_template_name = "polynomial"
 # sample_size = 15
 # sample_size = 20
 # sample_size = 20
-sample_size = 100
+# sample_size = 100
 sample_size = int(flags_dict.get("--sample_size", sample_size))
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
@@ -144,8 +147,9 @@ random_seed = 1  # rec
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
 
 # task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
-task_type = "oeis"
-optimizer = DE_fit
+# task_type = "integer algebraic"
+task_type = "integer model algebraic"
+optimizer = 'differential_evolution'
 timeout = np.inf
 
 def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
@@ -187,7 +191,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "verbosity": 0,
              "task_type": task_type,
              # "task_type": "algebraic",
-             # "task_type": "oeis",
+             # "task_type": "integer algebraic",
             # "task_type": "oeis_recursive_error",  # bad idea
              "lower_upper_bounds": lower_upper_bounds,
              # "lower_upper_bounds": (-1000, 1000),  # najde (1001 pa ne) rec fib
@@ -199,9 +203,9 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
             # "lower_upper_bounds": (-4, 4),  # for direct fib
             # "lower_upper_bounds": (-5, 5), 
             # "lower_upper_bounds": (-8, 8),  # long enough for brute
-            # "optimizer": DE_fit_metamodel,
+            # "optimizer": 'differential_evolution',
             "optimizer": optimizer,
-            # "optimizer": hyperopt_fit,
+            # "optimizer": 'hyperopt',
             "timeout": timeout,
             # "timeout": 1,
             # "timeout": 13,
@@ -274,8 +278,10 @@ print("Running equation discovery for all oeis sequences, "
     )
 start = time.perf_counter()
 FIRST_ID = "A000000"
-# LAST_ID = "A246655"
+LAST_ID = "A246655"
 last_run = "A002378"
+
+FIRST_ID = LAST_ID
 # csv = csv.loc[:, csv.columns >= last_run]
 csv = csv.loc[:, csv.columns >= FIRST_ID]  # Cluster
 for seq_id in csv:
