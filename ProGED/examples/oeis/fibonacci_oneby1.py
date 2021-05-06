@@ -15,6 +15,7 @@ from hyperopt import hp, tpe, rand
 
 
 #####  To log output to file, for later inspection.  ########
+# 9.53 - 20min
 # Command line arguments (to avoid logging):
 is_tee_flag = True  # Do not change manually!! Change is_tee.
 message = ""

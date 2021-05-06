@@ -1,7 +1,0 @@
-      5.5.2021:
-- parameter_estimation:
-	- line 55 (old) remove
-	- put dummy parameter in estimation_settings
-	- rename dummy oeis, model_oeis_error, parameter in estimation_settings
-	- excepted cases put inside verbose if statement
-	
