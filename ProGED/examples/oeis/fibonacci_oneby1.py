@@ -147,7 +147,7 @@ random_seed = 1  # rec
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
 
 task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
-task_type = "integer algebraic"  # Originalno blo nastimano do 5.5.2021.
+# task_type = "integer algebraic"  # Originalno blo nastimano do 5.5.2021.
 optimizer = 'differential_evolution'
 timeout = np.inf
 
