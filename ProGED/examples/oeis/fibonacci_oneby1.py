@@ -278,11 +278,13 @@ print("Running equation discovery for all oeis sequences, "
 start = time.perf_counter()
 FIRST_ID = "A000000"
 LAST_ID = "A246655"
-last_run = "A002378"
+# last_run = "A002378"
 
-FIRST_ID = LAST_ID
-# csv = csv.loc[:, csv.columns >= last_run]
-csv = csv.loc[:, csv.columns >= FIRST_ID]  # Cluster
+start_id = FIRST_ID
+start_id = "A000045"
+end_id = LAST_ID
+end_id = "A000045"
+csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 for seq_id in csv:
     oeis_eq_disco(seq_id, is_direct, order)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
