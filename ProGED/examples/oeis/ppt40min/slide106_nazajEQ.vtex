@@ -1,0 +1,45 @@
+9.09
+
+  	( old: Nazaj na odkrivanje ena"cb )
+
+  	Nazaj na slide z izraz() odkrivanje ena"cb
+
+TL;DR : Tle pokazem isti slide, vendar namesto izraz pi"se konkretna enacba kot v naslednjem primeru:
+
+  Primer: (za eno izmed prej"snjih prosojnic, kjer je nastopal 'izraz') 
+S pomo"cjo gramatike generiramo izraz c0 + c1*x1*exp(x2**3) 
+in tako dobimo ena"cbo y = c0 + c1*x1*exp(x2**3)
+Za to optimiziramo min sum -//- ( y_i - c0 + c1*x_i1*exp(x_i2**3) )**2
+
+
+
+
+
+
+
+
+
+
+
+--- old -------------------------------------------------
+
+  Sedaj si smo videli, kako lahko definiramo gramatiko, znotraj
+katere lahko tvorimo enostavne ena"cbe (oz. izraze).
+Tako gramatiko lahko uporabimo v na"sem algoritmu za generiranje
+ena"cb. Oziroma za enkrat izrazov. Lahko bi na primer zgenerirali
+kar vse mogo"zne stavke v tej gramatiki (oz. pravilneje jeziku te gramatike). 
+Vendar teh ena"cb je veliko:( 
+Celo neskon"cno, tj. preve"c, da bi jih lahko generirali.
+Enostavna re"sitev: generiramo samo tiste stavke, katerih drevo izpeljave ima globino (oz. vi"sino)
+manj"so od neke privzete vi"sine.
+
+2.) Kako iz izraza do ena"cbe.
+
+Odgovor: Na kratko: gledamo samo ena"cbe tipa x0 = izraz(x1, x2, ..., xn).
+kjer, x0, x1, ... , xn predstavljajo vrednosti v i-tem stolpcu.
+	Na dolgo: Za primerjavo si najprej poglejmo klasi"cen problem 
+nadzorovanega strojnega u"cenja (npr. linearna regresija).
+
+
+
+

@@ -86,7 +86,7 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     - estimation_settings: look description of fit_models()
     """
     task_type = estimation_settings["task_type"]
-    if task_type in ("algebraic", "integer algebraic"):
+    if task_type in ("algebraic", "integer_algebraic"):
         return model_error(params, model, X, Y, _T=None,
                             estimation_settings=estimation_settings)
     elif task_type == "differential":
@@ -498,7 +498,7 @@ def find_parameters (model, X, Y, T, **estimation_settings):
         estimation_settings["objective_function"] = model_ode_error
 #     elif task_type == "differential_surrogate":
 #         estimation_settings["objective_function"] = meta_model_ode_error
-    elif task_type == "integer algebraic":
+    elif task_type == "integer_algebraic":
         estimation_settings["objective_function"] = (
             lambda params, model, X, Y, _T, estimation_settings:
                 model_error(np.round(params), model, X, Y, _T=None,

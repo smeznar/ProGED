@@ -1,0 +1,111 @@
+
+	
+	Verjetnost, da algoritem vrne dolo"ceno drevo
+
+
+  Za ilustracijo izra"cunajmo verjetnost, da bo algoritem
+vrnil stavek "vidim psa s teleskopom ."
+
+	P (Algoritem vrne tau) =
+	P( Algoritem vrne  
+		S -> - Povedek -> vidim		
+		    `- Predmet -> psa
+		    `- Prislovno_dolocilo_nacina
+			`- s
+			`- Predmet -> teleskopom 		 
+		    `- . 
+	) = ?
+
+Izra"cunajmo najprej vmesni korak oz. stanje, tj.
+P (Alg. vrne  
+	S -> - Povedek
+	    `- Predmet
+	    `- Prislovno_dolocilo_nacina
+	    `- .
+  ) =: P(Alg vrne tau_0) = ?
+To je trivialno vpra"sanje. Povedali smo, da algoritem za"cne v S
+in nato glede na porazdelitev:
+	S -> Povedek Predmet .  [0.3]
+	S -> Povedek Predmet Prislovno_dolocilo_nacina .  [0.7]
+z verjetnostjo 0.7 izbere drugo pravilo. Iskana verjetnost je torej 0.7.
+
+Nadaljujmo z vmesnim izra"cunmo:
+	P( Algoritem vrne  
+		S -> - Povedek -> vidim
+		    `- Predmet
+		    `- Prislovno_dolocilo_nacina
+		    `- . 
+	) = ?
+To lahko tudi zelo hitro ugibamo, da zna"sa produkt 0.7 * 0.9.
+Pogojujemo namre"c na dogodek, da je v prvem koraku algoritem 
+izbral pravilo "S -> Povedek Predmet Pdn ."  .
+Pa dajmo vseeno to na dolgo premislit.
+Mno"zico izidov razdelimo na dva dela in uporabimo formulo
+za popolno verjetnost, ki pravi:
+P(A) = P(A|H1)*P(H1) + P(A|H2)*P(H2),
+kjer je H1:={ dogodek, da v prvem koraku algoritem izbere 
+pravilo S-> Povedek Predmet Pdn . }
+ in H2:= H1^c 
+  ter A:= { dogodek, da v prvem koraku algoritem izbere 
+pravilo S-> Povedek Predmet Pdn . in v drugem koraku
+izbere pravilo Povedek -> vidim }
+
+Verjetnost P(H1) smo "ze velikokrat rekli, da je enaka 0.7.
+Verjetnost P(A|H1) je z verjetnost, da v prvem koraku
+algoritem izbere pravilo "S -> Povedek Predmer Pdn ."
+in v drugem koraku pravilo "Povedek -> vidim" pri pogoju,
+da v prvem koraku izberemo pravilo "S -> Povedek Predmet Pdn ."
+Ta pogojna verjetnost je ravno verjetnost iz definicije algoritma. 
+Povedali smo, da se algoritem na vsakem koraku odlo"ca glede na 
+neterminal in verjetnosti njegovih pravil, torej je gre ravno
+za pogojno verjetnost, ki jo sedaj potrebujemo.
+Ker ima pravilo "Povedek -> vidim" verjetnost 0.9, je
+pogojna verjetnost enaka P(A|H1) = 0.9.
+V drugem delu vsote je P(H2) = 1-P(H2) = 0.3 in
+P(A|H2) enaka verjetnosti dogodka, da v prvem koraku
+algoritem izbere pravilo "S -> Povedek Predmer Pdn ."
+in v drugem koraku pravilo "Povedek -> vidim" pri pogoju,
+da v prvem koraku NE izberemo pravila "S -> Povedek Predmet Pdn ."
+Ta dva dogodka A in H2 sta ravno protislovna, zato je verjetnost
+tega dogodka enaka 0 in tako dobimo verjetnost
+
+	P(Alg. vrne tau_0) = 0.7*0.9 + 0.3 * 0 = 0.7*0.9
+
+((
+ -//- enako naredi za delno drevo oz. za verjetnost:
+	P( Algoritem vrne  
+		S -> - Povedek -> vidim
+		    `- Predmet -> psa
+		    `- Prislovno_dolocilo_nacina
+		    `- . 
+	) = P( Alg vrne tau_1)  
+ ))
+
+Zakaj sem sedaj ponovil dvakrat (skoraj) eno in isto vajo?
+Zato, ker se mi zdi da je to bistvo razmi"sljanja na podro"cju
+procesov razvejanja. Tudi pri Verjetnosti 2, ki obravnava
+makrovske procese je bil skoraj vedno klju"c do uspeha to, da 
+smo pogojevali na prvi korak
+
+in kar je bolj pou"cno: to je enako ravno
+ = p( S -> Povedek Predmet Prislovno_dolocilo_nacina . )*
+ p( S -> vidim . )
+
+
+
+
+= p( tau_1)
+kjer sem z p( tau_1) ozna"cil verjetnost delnega drevesa izpeljave,
+"cesar sicer niti nisem definiral, ampak bi lahko podobno kot prej
+za drevo izpeljave, tj. produkt vseh verjetnosti pravil, ki nastopajo
+v delnem drevesu izpeljave. Tudi v prej"snjem primeru smo dobili 
+za rezultat ravno produkt vseh pravil znotraj delnega drevesa izpeljave.
+In to ni naklju"cje, to se zgodi vedno.
+In tukaj "ze lahko vidimo zakaj je tista verjetnost drevesa upravi"ceno
+imenovana verjetnost. "Ce bi nadaljevali z ra"cunanjem, bi lahko
+dokazali, da je P( Alg vrne tau ) = p( tau ) in izka"ze se, da ta 
+enakost velja za vsako drevo izpeljave tau.
+
+ 
+ 
+ 

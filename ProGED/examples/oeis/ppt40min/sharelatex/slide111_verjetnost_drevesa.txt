@@ -1,0 +1,30 @@
+
+
+
+
+	PCFG, next steps
+
+
+
+To je bila sedaj definicija verjetnostne gramatike.
+Naslednja stvar, ki jo lahko naredimo z njimi je, da definiramo
+t.i. verjetnost drevesa izpeljave (oz. raz"clenitvenega drevesa).
+Zakaj to imenujemo verjetnost bo jasno takoj.
+In sicer, to verjetnost drevesa dobimo enostavno tako, da zmno"zimo 
+verjetnosti vseh pravil znotraj drevesa.
+Z ena"cbo jo lahko definiramo tako:
+
+  \Forall t \in \Om : p(t) := \Pi_{A->\alph \in R}  p(A->\alph) ^{f(A->\alph; t)
+
+Torej, za vsako raz"clenitveno drevo t (tau), definiramo p(tau)
+kot produkt vseh verjetnosti produkcijskih pravil na potenco
+frekvence istega pravila znotraj raz"clenitvenega drevesa tau.
+Z f(A->\alph; tau) sem tako ozna"cil frekvenco oz. pogostost/
+pojavitev/kratnost pravila A->\alph v drevesu tau. In z 
+\Omega sem ozna"cil mno"zico vseh kon"cnih raz"clenitvenih dreves.
+"Ce pogledamo to ena"cbo ("ce komu ni povsem jasno): "ce pravila 
+A->\alph nismo uporabili v izpeljavi tau, bo frekvenca enaka 0
+in s tem verjetnost p(A->\alph) ^0 enaka 1. Kar ne vpliva 
+na celoten produkt. ("Ce pa se pojavi neko pravilo recimo 3-krat,
+pa verjetnost tega pravil pomno"cimo 3-krat (v potenci).)
+Ta ena"cba torej zahteva, da vpo"stevamo samo pravila, ki nastopajo v tau.

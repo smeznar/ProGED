@@ -1,0 +1,69 @@
+
+
+    izogib neskon"cnemu drevesu
+
+
+  Enostaven na nek na"cin "ze omenjen na"cin bi bil, da se ustavimo
+pri dolo"ceni vi"sini drevesa. Ko dose"zemo dolo"ceno vi"sino
+bi algoritem za trenutek ustavili in ponovno za"celi z generiranjem
+drevesa od za"cetka. Opazka pri tem je, da se s tem mno"zica
+vseh izidov in s tem celotna porazdelitev in verjetnostna situacija
+podre in posledi"cno ne nujno velja ve"c tista udobna enakost
+p(tau) = P(Alg vrne tau). Vse izide, ko se algoritem ne ustavi
+pri kon"cnem drevesu, smo namre"c s tem odstranili, kar ni
+nujno tako brezposledi"cno.
+  Iz meni trenutno ne "se raziskanih razlogov se pri ukvarjanju z 
+verjetnostimi gramatikami, pogosto obravnava tudi dodatno
+mno"zico izidov in sicer mno"zico \Omega vseh kon"cnih raz"clenitvenih dreves. 
+Z opazko, ki sem jo povedal malo prej, na za"cetku te prosojnice 
+sem sku"sal to na svoj na"cin pojasniti.
+
+  Lepa stvar pri tej novi izbiri je to, da je vsak izid hkrati tudi
+dogodek kar na videz poenostavi zadeve. Ima pa tudi pomanklivosti.
+Na \Omega lahko postavimo diskretno sigma algebro in poljubno dolo"cimo 
+verjetnosti vsakemu raz"clenitvenemu drevesu, paziti moramo le, da 
+se verjetnosti se"stejejo v 1.
+Najbolj o"citen na"cin bi bila definicija verjetnosti raz"clenitvenih 
+dreves v skladu s svojimi verjetnostmi drevesa p(tau) za poljubno
+kon"cno raz"clenitveno drevo tau, tj. P(tau):= p(tau).
+Problem pri tej definiciji je to, da ne dobimo nujno porazdelitve
+na \Omega, saj se vsota verjetnosti Sum_{tau \in \Omega} P(tau) =
+= Sum_{tau \in \Omega} p(tau) ne se"steje nujno v 1. Tej vsoti
+verjetnosti po vseh kon"cnih raz"clenitvenih drevesih pravimo
+Coverage oz. Pokritost .
+
+Za protiprimer mimogrede:
+  S -> SS [0.6]
+  S -> a  [0.4]
+
+je Pokritost = 0.?,
+medtem, ko je pri gramatiki:
+  S -> SS [0.5]
+  S -> a  [0.5]
+Pokritost enaka 1.
+
+
+Lahko seveda "se vedno za vsako gramatiko najdemo neko porazdelitev
+na \Omega, vednar iz zgornjega protiprimera vidimo, da obstajajo
+gramatike, pri katerih se nobena taka porazdelitev nebo ujemala
+v vseh kon"cnih drevesih iz \Omega z njihovimi verjetnostmi, tj.
+pogoj 
+\forall tau \in \Omega: P(tau) = p(tau) 
+pri njih nebo izpolnjen.
+
+
+Gramatika lahko izpolnjuje ta pogoj natanko tedaj, ko je 
+je njena pokritost enaka 1. Takarat pravimo, da je gramatika
+prava (preveril:riemanove ploskve), sicer pa neprava. 
+Kako pa izra"cunamo pokritost oz. kdaj bo pokritost enaka 1?
+Poanta naslednjega dela: procesi razvejsnja, je ravno 
+odgovoriti na to drugo vpra"sanje. V njem se sku"sam dokazati
+en izrek iz podro"cja procesov razvejanja, ki pod dolo"cenimi
+pogoji karakterizira kdaj bo gramatika prava.
+
+-----
+Timing: Hitro branje od za"cetka do tukaj: 29 minut.
+
+
+
+

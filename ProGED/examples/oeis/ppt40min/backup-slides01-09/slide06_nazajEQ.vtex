@@ -1,0 +1,24 @@
+9.09
+
+  	Nazaj na odkrivanje ena"cb
+
+Sedaj si smo videli, kako lahko definiramo gramatiko, znotraj
+katere lahko tvorimo enostavne ena"cbe (oz. izraze).
+Tako gramatiko lahko uporabimo v na"sem algoritmu za generiranje
+ena"cb. Oziroma za enkrat izrazov. Lahko bi na primer zgenerirali
+kar vse mogo"zne stavke v tej gramatiki (oz. pravilneje jeziku te gramatike). 
+Vendar teh ena"cb je veliko:( 
+Celo neskon"cno, tj. preve"c, da bi jih lahko generirali.
+Enostavna re"sitev: generiramo samo tiste stavke, katerih drevo izpeljave ima globino (oz. vi"sino)
+manj"so od neke privzete vi"sine.
+
+2.) Kako iz izraza do ena"cbe.
+
+Odgovor: Na kratko: gledamo samo ena"cbe tipa x0 = izraz(x1, x2, ..., xn).
+kjer, x0, x1, ... , xn predstavljajo vrednosti v i-tem stolpcu.
+	Na dolgo: Za primerjavo si najprej poglejmo klasi"cen problem 
+nadzorovanega strojnega u"cenja (npr. linearna regresija).
+
+
+
+

@@ -1,0 +1,33 @@
+
+
+   Uvod/ 
+
+-----------------------------------------------------
+V bistvu je to uvod 
+-----------------------------------------------------
+
+	Odkrivanje ena"cb (Equation discovery) je podpodro"cje na podro"cju strojnega u"cenja.
+
+   Strojno u"cenje, nekateri ga imenujejo tudi statisti"cno u"cenje, kar daje utis, 
+   da imamo tukaj opravka s podatki.
+   Na podro"cju odkrivanja ena"cb pa gre za algoritem, ki sku"sa iz teh podatkov izlu"s"citi 
+ena"cbo, ki bi se kar najbolje ujemala z njimi. Tu gre (preprosto povedano) za metodo 
+grobe sile (Brute force), ki generira vse mogo"ce ena"cbe in jih nato evalvira oz. (oceni 
+njihovo ujemanje s podatki. ((ter nas tako orientira ali smo odkrili ena"cbo ali ne))
+	"Ze tu na za"cetku se lahko vidi neu"cinkovitost oz. neprakti"cnost algoritma: tak 
+algoritem bo trajal veliko "casa za generiranje vseh mo"znih ena"cb, morda celo v nedogled.
+	Osrednji pojem mojega magisterskega dela je pojem t.i. verjetnostne gramatike (ali slovnica),
+kar je novej"si pristop k re"sevanju tega vpra"sanja. V tej predstavitvi bom sku"sal na kratko 
+predstaviti najprej bolj osnovni in starej"si pojem kontekstno-neodvisne gramatike in njeno povezavo
+z odkrivanjem ena"cb. 
+
+Nato bom lahko pojem nadgradil v pojem verjetnostne gramatike.
+Ko bom povedal kaj to pomeni za algoritem odkrivanja ena"cb se bom dotaknil teorije procesov razvejanja,
+kar trenutno predstavlja enega izmed obse"znej"sih delov moje magisterske.
+Definicija le tega se namre"c ujema z definicijo verjetnostne gramatike. 
+Za konec bom predstavil, kaj sem in kaj na"crtujem narediti glede prakti"cne uporabe verjetnostnih gramatik.
+
+
+
+
+

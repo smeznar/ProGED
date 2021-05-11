@@ -1,0 +1,121 @@
+
+
+  	Kontekstno-neodvisna Gramatika (Context-free grammar)
+
+
+  "Ce je kdo slu"cajno obiskoval predmet Teorija programskih jezikov, je ze slisal zanjo.
+Lahko si jo predstavljamo kot slovnico nekega vsakdanjega uradnega jezika, npr. Sloven"ska slovnica.
+Ta dolo"ca pravila, kako tvorimo stavke, ki so del tega jezika. Lahko bi rekli, da je nek
+stavek del jezika, "ce le zado"ca vsem pravilom slovnice. Enako velja za kontekstno-neodvisne
+gramatike (od sedaj naprej bom govoril gramatike) ((in v resnici velja veliko podobnosti)).
+
+def CFG:
+kontekstno-neodvisna gramatika je "cetverica, ki jo ozna"cimo z (Z,S,T,R), pri "cemer je
+Z mno"zica vseh simbolov (v tej gramatiki),
+S za"cetni simbol (start),
+N mno"zica vseh t.i. neterminalov (nonterminals = nonterminal symbols), 
+T mno"zica vseh t.i. terminalov(nonterminals = nonterminal symbols),
+R mno"zica vseh produkcijskih pravil (production/derivation rules).
+
+Pri tem je za"cetni simbol S znotraj A, presek N in T prazen, in unija enaka A.
+Bolj zanimivo je pri R.
+Produkcijsko pravilo r \in R je ozna"ceno z:
+A -> f_r ,
+kjer je A \in N in f_r \in Z* = niz simbolov iz Z.
+Sestavjeno je torej iz leve in desne strani pravila,
+in predstavlja kateri neterminal se lahko pretvori
+v kon"cno zaporedje simbolov. 
+Na levi strani je lahko natanko en neterminal in na desni vsaj en simbol.
+
+  Gramatika nam preko produkcijskih pravil sporo"ca, kako lahko tvorimo stavke v
+tej gramatiki. Tvorimo jih s pomo"cjo t.i. drevesa izpeljave (ali raz"clenitvenega drevesa) (derivation/parse tree)
+tako, da za"cnemo pri za"cetnem simbolu S, ki ga razglasimo za trenutno stav"cno obliko (sentential form).
+Nato ponavljamo isti korak v katerem vsak neterminale v trenutni stav"cni obliki, zamenjamo z nekim nizom 
+simbolov, tako da pri tem vpo"stevamo, da izbran neterminal ustreza levi in izbran niz ustreza  desni
+strani nekega pravila izpeljave. Stavek dobimo, ko v stav"cni obliki ne ostane ve"c noben neterminal.
+Stavkom ki jih tako dobimo pravimo, da so del jezika te konkretne gramatike.
+
+Npr. 
+T = vidim, psa, s, teleskopom, . 
+N = S Prislovno_dolocilo_nacina, Povedek, Predmet.
+R:
+S -> Povedek Predmet .
+S -> Povedek Predmet Prislovno_dolocilo_nacina .
+Prislovno_dolocilo_nacina -> s Predmet
+Predmet -> Predmet s Predmet
+Povedek -> vidim
+Predmet -> psa
+Predmet -> teleskopom
+
+vidim psa s teleskopom .
+
+S -> - Povedek 
+    `- Predmet 
+    `- Prislovno_dolocilo_nacina 
+    `- . 
+
+S -> - Povedek -> vidim		\ Povedek -> vidim
+    `- Predmet 
+    `- Prislovno_dolocilo_nacina 
+    `- . 
+
+S -> - Povedek -> vidim		
+    `- Predmet -> psa		\ Predmet -> psa
+    `- Prislovno_dolocilo_nacina 
+    `- . 
+
+S -> - Povedek -> vidim		
+    `- Predmet -> psa
+    `- Prislovno_dolocilo_nacina
+	`- s
+        `- Predmet 		 \ Prislovno_dolocilo_nacina -> s Predmet
+    `- . 
+
+S -> - Povedek -> vidim		
+    `- Predmet -> psa
+    `- Prislovno_dolocilo_nacina
+	`- s
+        `- Predmet -> teleskopom 		 \ Predmet -> teleskopom
+    `- . 
+= vidim psa s teleskopom .
+10.04 -2
+11.16-
+
+S -> Povedek Predmet Prislovno_dolocilo_nacina . 
+S -> vidim Predmet Prislovno_dolocilo_nacina .  \ Povedek -> vidim
+S -> vidim psa Prislovno_dolocilo_nacina .  \ Predmet -> psa
+S -> vidim psa s Predmet .  \ Prislovno_dolocilo_nacina -> s Predmet
+S -> vidim psa s teleskopom .  \ Predmet -> teleskopom
+
+primer 2:
+T = +, -, *, /, x, y, const
+N = S, E
+S -> E
+E -> E + E
+E -> E - E
+E -> E * E
+E -> E / E
+E -> x
+E -> y
+E -> const 
+
+x+y/(const*x/(const - const/y))    oklepajev ne bi smel napisati 
+			(vendar napisal za boljso pregledonst)
+
+x + y / const * x / const - const / y
+
+S - E - E - x
+     `- +
+     `- E - E - y
+         `- / 
+         `- E - E - const
+             `- *
+             `- E - E
+                 `- /
+           	 `- E - E - const
+           	     `- '-' 
+           	     `- E - E - const
+           		 `- / 
+           		  - E - y 
+
+

@@ -1,0 +1,25 @@
+
+
+    Uvod/ Algoritem za odkrivanje ena"cb
+
+  Preden za"cnem z gramatikami, je smiselno povedati zakaj bi jih sploh uporabili.
+Poglejmo si podrobneje kako izgleda algoritem za odkrivanje ena"cb.
+Sestavljen je iz ve"c komponent: ( Najbolj grobo lahko govorimo o dveh komponentah:)
+  - generator ena"cb
+  - evalvacija ena"cb.
+V resnici "se tretja faza, ko se moramo odlo"citi, ali je na"s algoritem odkril
+kak"sno ena"cbo in katere.
+Brez tretje faze imamo torej 
+- vhod: "podatki", v katerih odkrivamo ena"cbo.
+- izhod: "seznam vseh generiranih ena"cb, in njihova evalvacija"
+
+Kot sem "ze omenil, algoritem za odkrivanje ena"cb generira (veliko) ena"cbe.
+Kako jih sploh generira. Odgovor: Gramatika.
+((Tako, da predlagam, da si kar pogledamo kaj so gramatike, da bomo vedeli o kak"snih 
+ena"cbah sploh cel ta "cas govorimo.))
+
+
+-2
+
+
+

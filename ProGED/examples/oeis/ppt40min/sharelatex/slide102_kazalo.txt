@@ -1,0 +1,19 @@
+
+	Odkrivanje enačb za celoštevilska zaporedja z verjetnostnimi gramatikami
+
+
+
+   kazalo:
+     - Uvod 5m
+     - razvejanja. 15m
+     - empiricno 15m
+
+   = kazalo:
+    - Uvod:
+        `- odkrivanje ena"cb
+        `- pcfg
+    - Procesi razvejanja: 15m
+    - Uporaba na oeis: 15m
+        
+	
+    

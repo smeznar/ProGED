@@ -9,7 +9,7 @@ from ProGED.parameter_estimation import fit_models
 from ProGED.generate import generate_models
 from ProGED.generators.grammar import GeneratorGrammar
 from ProGED.examples.tee_so import Tee
-from ProGED.parameter_estimation import DE_fit, DE_fit_metamodel, hyperopt_fit
+from ProGED.parameter_estimation import DE_fit, hyperopt_fit#, DE_fit_metamodel
 
 # 0.1) save output into randomly named logfile:
 random = str(np.random.random())

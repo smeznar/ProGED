@@ -1,0 +1,27 @@
+
+
+	PCFG / Zakaj temu pravimo verjetnost drevesa
+
+
+  Zakaj temu pravimo verjetnost drevesa:
+
+Definicija verjetnostne gramatike, izgleda kot nala"s"c za uporabo
+v nasledjem naklju"cnem algoritmu.
+Enak postopek se odvija tudi v primeru procesa razvejanja,
+tj. tema, o kateri bom govoril v nadaljevanju.
+ Za"cnemo kot vedno v za"cetnem simbolu S. "Ce "zelimo nak koncu
+dobiti
+stavek, moramo uporabiti eno izmed pravil, ki ima na levi strani
+neterminal S. Tako, da algoritem se sedaj v trenutku odlo"citve,
+ko mora izbrati eno izmed teh pravil. In, ker se verjetnosti "teh 
+pravil se"stejejo v 1 imamo verjetnostno porazdelitev, ki 
+definira obna"sanje verjetnostnega algoritma na tem koraku.
+Algoritem izbere pravilo naklju"cno glede na to porazdelitev.
+Ko izbere pravilo, dobimo novo nedokon"cano raz"clenitveno drevo
+in algoritem lahko z istim postopkom naklju"cne izbire nadaljuje,
+dokler ne ostanejo na listih tega drevesa izpeljave samo "se 
+terminali.
+  In ta postopek, ki sem ga ravnokar opisal bo ustrezal tudi 
+opisu procesa razvejanja. Gre za eno in isto stvar.
+
+
