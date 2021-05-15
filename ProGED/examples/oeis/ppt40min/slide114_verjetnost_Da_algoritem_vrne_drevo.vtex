@@ -107,6 +107,8 @@ pravilo S-> Povedek Predmet Pdn, v drugem koraku
 izbere pravilo Povedek -> vidim in v tretjem pravilo
 Predmet -> psa}
 
+-- unfinished --
+
 ((
  -//- enako naredi za delno drevo oz. za verjetnost:
 	P( Algoritem vrne  

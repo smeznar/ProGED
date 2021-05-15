@@ -4,7 +4,7 @@
 
 
   Za ilustracijo izra"cunajmo verjetnost, da bo algoritem
-vrnil stavek "vidim psa s teleskopom ."
+vrnil stavek "vidim psa s teleskopom".
 
 	P (Algoritem vrne tau) =
 	P( Algoritem vrne  
@@ -46,7 +46,7 @@ P(A) = P(A|H1)*P(H1) + P(A|H2)*P(H2),
 kjer je H1:={ dogodek, da v prvem koraku algoritem izbere 
 pravilo S-> Povedek Predmet Pdn . }
  in H2:= H1^c 
-  ter A:= { dogodek, da v prvem koraku algoritem izbere 
+  ter A:= { dogodek, da v prvem koraku alecho echo goritem izbere 
 pravilo S-> Povedek Predmet Pdn . in v drugem koraku
 izbere pravilo Povedek -> vidim }
 
@@ -70,6 +70,42 @@ Ta dva dogodka A in H2 sta ravno protislovna, zato je verjetnost
 tega dogodka enaka 0 in tako dobimo verjetnost
 
 	P(Alg. vrne tau_0) = 0.7*0.9 + 0.3 * 0 = 0.7*0.9
+	= p( S -> - Povedek
+		 `- Predmet
+		 `- Prislovno_dolocilo_nacina)
+	  * p( Povedek -> vidim) =: p( tau_0)
+
+kar je ravno verjetnost obravnavanega delnega drevesa izpeljave.
+
+ ---------------------------------------------------------------------------------------------
+
+Izra"cunajmo sedaj na dolgo "se vmesni izra"cun verjetnosti:
+
+	P( Algoritem vrne na nekem koraku  
+		S -> - Povedek -> vidim
+		    `- Predmet -> psa
+		    `- Prislovno_dolocilo_nacina
+	) =: P( Alg vrne tau_1) = ?
+
+( in to drevo delne izpeljave ozna"cimo z tau_1.)
+
+Spet pogojujemo, tokrat na dogodek, da bomo v prej"snjem
+koraku dobili prej"snje delno drevo izpeljave
+	S -> - Povedek -> vidim
+	    `- Predmet 
+	    `- Prislovno_dolocilo_nacina
+
+
+P(A) = P(A|H1)*P(H1) + P(A|H2)*P(H2),
+kjer je H1:={ dogodek, da v prvem koraku algoritem izbere 
+pravilo S-> Povedek Predmet Pdn 
+in v drugem pravilo Povedek -> vidim
+ }
+ in H2:= H1^c 
+  ter A:= { dogodek, da v prvem koraku algoritem izbere 
+pravilo S-> Povedek Predmet Pdn, v drugem koraku
+izbere pravilo Povedek -> vidim in v tretjem pravilo
+Predmet -> psa}
 
 ((
  -//- enako naredi za delno drevo oz. za verjetnost:

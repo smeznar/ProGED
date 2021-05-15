@@ -28,3 +28,7 @@ in s tem verjetnost p(A->\alph) ^0 enaka 1. Kar ne vpliva
 na celoten produkt. ("Ce pa se pojavi neko pravilo recimo 3-krat,
 pa verjetnost tega pravil pomno"cimo 3-krat (v potenci).)
 Ta ena"cba torej zahteva, da vpo"stevamo samo pravila, ki nastopajo v tau.
+
+Opomba: Enako lahko definiramo tudi t.i. verjetnost delnega drevesa izpeljave (tj.
+drevesa, ki lahko vsebuje v listih tudi neterminale.). Torej, definiramo
+jo kot produkt vseh verjetnosti pravil znotraj drevesa.
