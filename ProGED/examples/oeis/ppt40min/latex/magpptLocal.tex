@@ -15,6 +15,28 @@ dg edges/.style={for tree={parent anchor=south, child anchor=north,align=center,
 dgii edges/.style={for tree={parent anchor=south, child anchor=north,base=bottom}},
 }
 
+\newcommand{\pgrammar}{
+    R :  \\
+    S $\to$ Povedek Predmet [0.3] \\
+    S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina [0.7] \\
+    Prislovno\_dolocilo\_nacina $\to$ s Predmet [1] \\
+    Povedek $\to$ vidim [0.9] \\
+    Povedek $\to$ dokazujem [0.1] \\
+    Predmet $\to$ Predmet s Predmet [0.2] \\
+    Predmet $\to$ psa [0.3] \\
+    Predmet $\to$ teleskopom [0.5]
+}
+\newcommand{\grammar}{
+      \only<2>{R :=  \\
+    S $\to$ Povedek Predmet \\
+    S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina [0.7] \\
+    Prislovno\_dolocilo\_nacina $\to$ s Predmet [1] \\
+    Povedek $\to$ vidim [0.9] \\
+    Povedek $\to$ dokazujem [0.1] \\
+    Predmet $\to$ Predmet s Predmet [0.2] \\
+    Predmet $\to$ psa [0.3] \\
+    Predmet $\to$ teleskopom [0.5]} 
+}
 % % down 4.4.2017
 \newcommand{\R}{\mathbb R}
 \newcommand{\N}{\mathbb N}
@@ -155,26 +177,26 @@ dgii edges/.style={for tree={parent anchor=south, child anchor=north,base=bottom
 	\end{block}
 \end{frame}
 
-\begin{frame}{Algoritem za odkrivanje ena"cb}
-% \frametitle{Naslov prosojnice}
-\framesubtitle{Linearna regresija}
-% 	\begin{block}{Odkrivanje enačb za celoštevilska zaporedja z verjetnostnimi gramatikami}
-\pause
-\invisible<1>{Trije koraki:}
-\pause
-	\begin{enumerate}[<+->]
-		\item Ena"cba \(y _i - c_0 + c_1\cdot x_{i1}  +
-		c_2\cdot x_{i2}+ \cdots + c_n\cdot x_{in}  \)
-	\item Napaka modela \[ \sum_{i=1} ^m (y _i - c_0 + c_1\cdot x_{i1}  +
-		c_2\cdot x_{i2}+ \cdots + c_n\cdot x_{in} )^2
-		\]
-kjer je $n+1$ "stevilo stolpcev, m "stevilo vrstic, $y_i$ element matrike X v i-ti vrstici
-in $(n+1)$-tem stolpcu, $x_{ij}$ element matrike X v i-ti vrstici in j-tem stolpcu.\\
-		X = [x|y]
-		\item Optimizacija konstant \( c_0, c_1, ..., c_n \), da bo
-		napaka modela "cim manj"sa.
-	\end{enumerate}
-\end{frame}
+% \begin{frame}{Algoritem za odkrivanje ena"cb}
+% % \frametitle{Naslov prosojnice}
+% \framesubtitle{Linearna regresija}
+% % 	\begin{block}{Odkrivanje enačb za celoštevilska zaporedja z verjetnostnimi gramatikami}
+% \pause
+% \invisible<1>{Trije koraki:}
+% \pause
+% 	\begin{enumerate}[<+->]
+% 		\item Ena"cba \(y _i - c_0 + c_1\cdot x_{i1}  +
+% 		c_2\cdot x_{i2}+ \cdots + c_n\cdot x_{in}  \)
+% 	\item Napaka modela \[ \sum_{i=1} ^m (y _i - c_0 + c_1\cdot x_{i1}  +
+% 		c_2\cdot x_{i2}+ \cdots + c_n\cdot x_{in} )^2
+% 		\]
+% kjer je $n+1$ "stevilo stolpcev, m "stevilo vrstic, $y_i$ element matrike X v i-ti vrstici
+% in $(n+1)$-tem stolpcu, $x_{ij}$ element matrike X v i-ti vrstici in j-tem stolpcu.\\
+% 		X = [x|y]
+% 		\item Optimizacija konstant \( c_0, c_1, ..., c_n \), da bo
+% 		napaka modela "cim manj"sa.
+% 	\end{enumerate}
+% \end{frame}
 
 % \begin{frame}{Algoritem za odkrivanje ena"cb}
 % \framesubtitle{Odkrivanje ena"cb}
@@ -631,82 +653,219 @@ in $(n+1)$-tem stolpcu, $x_{ij}$ element matrike X v i-ti vrstici in j-tem stolp
 
 % \end{frame}
 
-\begin{frame}{Algoritem za odkrivanje ena"cb}
-\framesubtitle{Odkrivanje ena"cb}
-Podobni trije koraki:
-	\begin{enumerate}
-	\item Generira seznam ena"cb (izrazov).
-	\item Napaka modela \[ \sum_{i=1} ^m (y _i - \textcolor{red}{\textbf{izraz}(c_0, \cdots,  c_n, x_{i1}, \cdots, x_{in})})^2  \]
-kjer so \( y_i, c_j\ in\ x_{ij} \)
-definirani enako kot prej.
-	\item Optimizacija konstant \( c_0, c_1, \cdots, c_n \).
-	\end{enumerate}
+% \begin{frame}{Algoritem za odkrivanje ena"cb}
+% \framesubtitle{Odkrivanje ena"cb}
+% Podobni trije koraki:
+% 	\begin{enumerate}
+% 	\item Generira seznam ena"cb (izrazov).
+% 	\item Napaka modela \[ \sum_{i=1} ^m (y _i - \textcolor{red}{\textbf{izraz}(c_0, \cdots,  c_n, x_{i1}, \cdots, x_{in})})^2  \]
+% kjer so \( y_i, c_j\ in\ x_{ij} \)
+% definirani enako kot prej.
+% 	\item Optimizacija konstant \( c_0, c_1, \cdots, c_n \).
+% 	\end{enumerate}
+% \end{frame}
+
+% \begin{frame}{Algoritem za odkrivanje ena"cb}
+% \framesubtitle{Odkrivanje ena"cb}
+% Podobni trije koraki:
+% 	\begin{enumerate}
+% 	\item Generira seznam ena"cb (izrazov).
+% 	\item Napaka modela \[ \sum_{i=1} ^m (y _i - \textcolor{red}{\textbf{
+%  \( c_0 + c_1 \cdot x_{i1} \cdot exp( x_{i2} ^2 ) \)
+% }})^2  \]
+% kjer so \( y_i, c_j\ in\ x_{ij} \)
+% definirani enako kot prej.
+% 	\item Optimizacija konstant \( c_0, c_1, \cdots, c_n \).
+% 	\end{enumerate}
+% \end{frame}
+
+% \begin{frame}{Prostor ena"cb}
+%     \begin{itemize}[<+->]
+%         \item S pogo"cjo gramatike generiramo seznam ena"cb.
+%         \item Teh je veliko.
+%         \item Naivna re"sitev: Samo ena"cbe do dolo"cene vi"sine.
+%         \item Druga re"sitev: Spremenimo gramatiko.
+% 	\invisible<1-4>{\item \color{red}{Verjetnostne gramatike}}
+%     \end{itemize}
+% \end{frame}
+
+% \section{Verjetnostne gramatike}
+
+% \begin{frame}{Verjetnostne kontekstno-neodvisne gramatike}
+% 	\pause
+% 	\begin{block}{Primer od prej:} 
+%     T := \{vidim, psa, s, teleskopom, dokazujem\}
+
+%     N := \{S, Prislovno\_dolocilo\_nacina,  Povedek,
+%     Predmet\} \\
+%     R := \{ \\
+% 	S $\to$ Povedek Predmet \only<3>{[0.3]} \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \only<3>{[0.7]}\\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \only<3>{[1]}\\
+%     Povedek $\to$ vidim \only<3>{[0.9]}\\
+%     Povedek $\to$ dokazujem \only<3>{[0.1]}\\
+%     Predmet $\to$ Predmet s Predmet \only<3>{[0.2]}\\
+%     Predmet $\to$ psa \only<3>{[0.3]}\\
+%     Predmet $\to$ teleskopom \only<3>{[0.5]}\\
+%     \}
+% 	\end{block}
+% \end{frame}
+
+% \begin{frame}
+% 	\begin{block}{Pogoj}
+% 		\( \forall A \in N:\)
+% 		\[ \sum_{ (A\to \alpha) \in R }  p(A \to \alpha) = 1, \]
+% 		kjer je \( p: R \to [0,1] \) funkcija,
+% 		ki produkcijskemu pravilu priredi njegovo verjetnost.
+% 	\end{block}
+% \end{frame}
+
+% \begin{frame}
+% 	\begin{block}{Verjetost raz"clenitvenega drevesa}
+% 		\( \forall \tau \in \Omega: \)
+% 		\[ p(\tau) := \prod_{(A \to \alpha) \in R} p(A \to \alpha)^{f(A \to \alpha; \tau)} \]
+% 		kjer je \( p(A \to \alpha) \) verjetnost produkcijskega pravila, 
+% 		\( f(A\to\alpha) \) frekvenca oz. kratnost pravila \( A\to\alpha \) 
+% 		v drevesu $\tau$ in $\Omega$ mno"zica vseh kon"cnih raz"clenitvenih dreves.
+% 	\end{block}
+% \end{frame}
+
+% \begin{frame}
+
+% 	\only<1>{$ \tau $ := \\
+% \begin{forest}
+% dgii edges
+% [S
+%   [Povedek
+%     [vidim]
+%   ]
+%   [Predmet
+%     [psa]
+%   ]
+%   [Prislovno\_Dolocilo\_Nacina
+%     [s]
+%     [Predmet [teleskopom]]
+%   ]
+% ]
+% \end{forest}}
+
+% 	\footnotesize
+% 	\only<2>{R :=  \\
+% 	S $\to$ Povedek Predmet [0.3] \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina [0.7] \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet [1] \\
+%     Povedek $\to$ vidim [0.9] \\
+%     Povedek $\to$ dokazujem [0.1] \\
+%     Predmet $\to$ Predmet s Predmet [0.2] \\
+%     Predmet $\to$ psa [0.3] \\
+% Predmet $\to$ teleskopom [0.5]} 
+
+% 	\vspace{0.5cm}   
+%     \small
+
+% 	\( p( \tau) = \) \\
+% 	\( = p(S\to\ Povedek\ Predmet Prislovno\_dolocilo\_nacina) \cdot \)
+% 	\( \cdot p(Povedek\ \to vidim) 
+% 	\cdot p(Predmet\ \to psa) \cdot \)
+% 	\( \cdot p(Prislovno\_dolocilo\_nacina\ \to s\ Predmet) \cdot \)
+% 	\( \cdot p(Predmet \to teleskopom) \) \\
+% 	% \( =  0.7 (S) x 1(vidim) x 0.3(psa) x 1 (Prislovno_dol_nacina) = 0.7*0.3=0.21
+% 	% \( =  0.7 (S) \cdot 0.9(vidim) \cdot 0.3(psa) \cdot 1 (Prislovno\_dol_nacina) \cdot 0.5(teleskopom) \)
+% 	\only<2>{\( =  0.7 \cdot 0.9 \cdot 0.3 \cdot 1 \cdot 0.5 = 0.0945 \)}
+% \end{frame}
+
+\begin{frame}{Naklju"cni algoritem}
+  \begin{enumerate}
+     \item Za"cnemo v $S$
+     \item Ponavljamo korak:\\
+     	V trenutni stav"cni obliki izberemo prvi neterminal, ki nastopa.
+     \item Izberemo pravilo s tem neterminalom.
+     \item Naklju"cno izbiramo glede na porazdelitev, podano z pravili
+     \item Kon"camo, ko dobimo stavek (ostanejo samo terminali). 
+  \end{enumerate}
 \end{frame}
 
-\begin{frame}{Algoritem za odkrivanje ena"cb}
-\framesubtitle{Odkrivanje ena"cb}
-Podobni trije koraki:
-	\begin{enumerate}
-	\item Generira seznam ena"cb (izrazov).
-	\item Napaka modela \[ \sum_{i=1} ^m (y _i - \textcolor{red}{\textbf{
- \( c_0 + c_1 \cdot x_{i1} \cdot exp( x_{i2} ^2 ) \)
-}})^2  \]
-kjer so \( y_i, c_j\ in\ x_{ij} \)
-definirani enako kot prej.
-	\item Optimizacija konstant \( c_0, c_1, \cdots, c_n \).
-	\end{enumerate}
-\end{frame}
+\begin{frame}{T.i. verjetnost drevesa}
 
-\begin{frame}{Prostor ena"cb}
-    \begin{itemize}[<+->]
-        \item S pogo"cjo gramatike generiramo seznam ena"cb.
-        \item Teh je veliko.
-        \item Naivna re"sitev: Samo ena"cbe do dolo"cene vi"sine.
-        \item Druga re"sitev: Spremenimo gramatiko.
-	\invisible<1-4>{\item \color{red}{Verjetnostne gramatike}}
-    \end{itemize}
-\end{frame}
-
-\section{Verjetnostne gramatike}
-
-\begin{frame}{Verjetnostne kontekstno-neodvisne gramatike}
-	\pause
-	\begin{block}{Primer od prej:} 
-    T := \{vidim, psa, s, teleskopom, dokazujem\}
-
-    N := \{S, Prislovno\_dolocilo\_nacina,  Povedek,
-    Predmet\} \\
-    R := \{ \\
-	S $\to$ Povedek Predmet \only<3>{[0.3]} \\
-    S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \only<3>{[0.7]}\\
-    Prislovno\_dolocilo\_nacina $\to$ s Predmet \only<3>{[1]}\\
-    Povedek $\to$ vidim \only<3>{[0.9]}\\
-    Povedek $\to$ dokazujem \only<3>{[0.1]}\\
-    Predmet $\to$ Predmet s Predmet \only<3>{[0.2]}\\
-    Predmet $\to$ psa \only<3>{[0.3]}\\
-    Predmet $\to$ teleskopom \only<3>{[0.5]}\\
-    \}
-	\end{block}
+  Verjetnost, da algoritem vrne drevo $\tau$:
+	\( P( \tau ) := P( Algoritem\ vrne\ \tau) : = \) \\
+	\( P( Algoritem\ vrne  \)
+	\begin{forest}
+  dgii edges
+  [S
+    [Povedek
+      [vidim]
+    ]
+    [Predmet
+      [psa]
+    ]
+    [Prislovno\_Dolocilo\_Nacina
+      [s]
+      [Predmet [teleskopom]]
+    ]
+  ]
+	\end{forest} 
+	) = ? \only<2>{ \( \ne p(\tau) \) }
 \end{frame}
 
 \begin{frame}
-	\begin{block}{Pogoj}
-		\( \forall A \in N:\)
-		\[ \sum_{ (A\to \alpha) \in R }  p(A \to \alpha) = 1, \]
-		kjer je \( p: R \to [0,1] \) funkcija,
-		ki produkcijskemu pravilu priredi njegovo verjetnost.
-	\end{block}
+	\( P( \tau_0 ) := P( Algoritem\ vrne\ \tau_0) : = \) \\
+	\( P( Algoritem\ vrne  \)
+	\begin{forest}
+  dgii edges
+  [S
+    [Povedek
+    ]
+    [Predmet
+    ]
+    [Prislovno\_Dolocilo\_Nacina
+    ]
+  ]
+	\end{forest} 
+	) = \only<1>{?} 
+	\only<3>{ \( 
+	 = p(S\to\ Povedek\ Predmet Prislovno\_dolocilo\_nacina) 
+	 = 0.7
+		\) } \\
+  \vspace{0.5cm}
+  \footnotesize
+	\only<2-3>{\pgrammar}
 \end{frame}
 
-\begin{frame}
-	\begin{block}{Verjetost raz"clenitvenega drevesa}
-		\( \forall \tau \in \Omega: \)
-		\[ p(t) := \prod_{(A \to \alpha) \in R} p(A \to \alpha)^{f(A \to \alpha; \tau)} \]
-		kjer je \( p: R \to [0,1] \) funkcija,
-		ki produkcijskemu pravilu priredi njegovo verjetnost.
-	\end{block}
+\begin{frame}[plain]
+	\( P( \tau_1 ) := P( Algoritem\ vrne\ \tau_1) : = \) \\
+	\( P( Algoritem\ vrne  \)
+	\begin{forest}
+  dgii edges
+  [S
+    [Povedek
+      [vidim]
+    ]
+    [Predmet
+    ]
+    [Prislovno\_Dolocilo\_Nacina
+    ]
+  ]
+	\end{forest} \\
+	) = \only<1>{?} 
+	 \only<2>{\( 0.7\cdot 0.9 \)} 
+	\only<3>{ \( 
+	  p(S\to\ Povedek\ Predmet Prislovno\_dolocilo\_nacina) 
+	 = 0.7
+		\) } \\
+  \vspace{0.5cm}
+	\( P(A) = P(A\|H_1)\cdot P(H_1) + P(A\|H_2)\cdot P(H_2) \),
+	kjer je \( H1:= \) \{dogodek, da v prvem koraku algoritem izbere 
+	pravilo  (S$\to$ Povedek Predmet Prislovno\_dolocilo\_nacina) \}
+	in \( H2:= H1^c \)
+	ter \( A:= \) \{ dogodek, da v prvem koraku alecho echo goritem izbere 
+	pravilo (S$\to$ Povedek Predmet Prislovno\_dolocilo\_nacina) 
+	in v drugem koraku izbere pravilo (Povedek $\to$ vidim) } \}
+  \footnotesize
+	\only<2>{\pgrammar}
 
 \end{frame}
+
 
 \section{Celo"stevilska zaporedja}
 \begin{frame}
