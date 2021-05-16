@@ -1,0 +1,715 @@
+\documentclass[t,usenames,dvipsnames]{beamer} % [t] pomeni poravnavo na vrh slida
+
+% \usepackage{etex} % vključi ta paket, če ti javi napako, da imaš naloženih preveč paketov.
+
+% standardni paketi
+\usepackage[slovene]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+% \usepackage{diagrams}
+	\usepackage{forest}
+\forestset{
+dg edges/.style={for tree={parent anchor=south, child anchor=north,align=center,base=bottom,where n children=0{tier=word,edge=dotted,calign with current edge}{}}},
+dgii edges/.style={for tree={parent anchor=south, child anchor=north,base=bottom}},
+}
+
+% % down 4.4.2017
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\definecolor{softyellow}{rgb}{0.98,0.98,0.75}
+\setbeamercolor{loweryel}{fg=black,bg=softyellow}
+% % up 4.4.2017
+
+% % down 2/3 prosojnica: crno
+% \usepackage{tikz}
+% \newcommand{\fillblack}[1]{
+% 	\begin{tikzpicture}[remember picture, overlay]
+% 	\node [shift={(0 cm,0cm)}]  at (current page.south west)
+% 	{%
+% 		\begin{tikzpicture}[remember picture, overlay] at (current page.south west)
+% 		\draw [fill=black] (0, 0) -- (0,#1 \paperheight) --
+% 		(\paperwidth,#1 \paperheight) -- (\paperwidth,0) -- cycle ;
+% 		\end{tikzpicture}
+% 	};
+% 	\draw (current page.north west) rectangle (current page.south east);
+% \end{tikzpicture}
+% }
+
+% % up 2/3 prosojnica: crno
+
+% \usepackage[small, nohug, heads=vee]{diagrams}
+% \diagramstyle[labelstyle=\scriptstyle]
+
+%\setbeamercovered{invisible} %default
+\setbeamercovered{transparent}
+%\setbeamercovered{dynamic}
+
+
+%\usepackage[dvipsnames]{color}
+
+\usepackage[normalem]{ulem} % za strikeout (prečrtat besedo)
+% na primer : \sout{Hello World}
+
+% paket, ki ga rabimo za risanje
+%\usepackage{tikz}
+
+%\usepackage{lmodern}                            % to get rid of font warnings
+%\renewcommand\textbullet{\ensuremath{\bullet}}  % to get rid of font warnings
+
+% podatki
+\title{Odkrivanje enačb za celoštevilska zaporedja z verjetnostnimi gramatikami}
+\author{Boštjan Gec}
+\institute{mentor: prof. dr. Ljupčo Todorovski}
+
+% tvoj izbran stil predstavitve
+%\usetheme{Singapore}
+\usetheme{Luebeck}
+%\usecolortheme{crane}
+%\usecolortheme{red}
+
+%themes: http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+	% Antibes sq -L, Berlin sq . . , Copenhagen w, Darmstadt ... , Frankfurt ... ,
+	% Ilmenau . ., JuanLesPins L, Luebeck sq w, Warsaw w
+	% + others with changed colortheme!
+% wins: Berlin or Luebeck or Darmstadt or Frankfurt
+
+% DIY  % % % % % % % % % % % % % % % % % % % % %
+%colors:
+%\documentclass[usenames,dvipsnames]{beamer}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+% \setbeamercolor{structure}{fg=RawSienna}
+% \setbeamercolor{structure}{fg=Brown}
+\setbeamercolor{structure}{fg=Bittersweet}
+\setbeamercolor{structure}{fg=ForestGreen}
+% \setbeamercolor{structure}{fg=OliveGreen}
+% \setbeamercolor{structure}{fg=Mahogany}
+% \setbeamercolor{structure}{fg=Sepia}
+% \setbeamercolor{structure}{fg=Orange}
+% \setbeamercolor{structure}{fg=BurntOrange}
+% \setbeamercolor{structure}{fg=Maroon}
+% \setbeamercolor{structure}{fg=BrickRed}
+
+
+%\useoutertheme{smoothtree}
+%\useinnertheme{rectangles}
+
+%\setbeamercolor{alerted text}{fg=orange}
+%\setbeamercolor{background canvas}{bg=orange}
+%\setbeamercolor{block body alerted}{bg=normal text.bg!90!black}
+%\setbeamercolor{block body}{bg=normal text.bg!90!black}
+%\setbeamercolor{block body example}{bg=normal text.bg!90!black}
+%\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+%\setbeamercolor{block title}{bg=OliveGreen!80!black}
+%\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+%\setbeamercolor{fine separation line}{}
+%\setbeamercolor{frametitle}{bg=OliveGreen, fg=white}
+%\setbeamercolor{item projected}{fg=brown}
+%\setbeamercolor{normal text}{bg=black,fg=orange} % <--- very good!
+%\setbeamercolor{palette sidebar primary}{bg=orange, use=normal text,fg=brown}
+%\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
+%\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
+%\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
+%\setbeamercolor{section in sidebar}{fg=brown}
+%\setbeamercolor{section in sidebar shaded}{fg=orange}
+%\setbeamercolor{separation line}{}
+%\setbeamercolor{sidebar}{bg=red, fg=brown}
+%\setbeamercolor{sidebar}{parent=palette primary}
+%\setbeamercolor{structure}{fg=Bittersweet}
+
+%\setbeamercolor{subsection in sidebar}{fg=brown}
+%\setbeamercolor{subsection in sidebar shaded}{fg=grey}
+%\setbeamercolor{title}{bg=OliveGreen}
+%\setbeamercolor{titlelike}{bg=OliveGreen}
+%
+%\setbeamertemplate{blocks}[circles]
+%%\setbeamertemplate{blocks}[rectangles][shadow=true]
+%\setbeamertemplate{background canvas}[vertical shading][bottom=white,top=structure.fg!25]
+%\setbeamertemplate{sidebar canvas left}[horizontal shading][left=white!40!black,right=black]
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\begin{document}
+
+
+\begin{frame}
+  \maketitle
+%  \fillblack{0.33}
+\end{frame}
+
+
+\section{Uvod}
+
+\begin{frame}{Uvod}
+	\begin{block}{Odkrivanje enačb za celoštevilska zaporedja z verjetnostnimi gramatikami}
+	\begin{itemize}
+		\item Odkrivanje ena"cb
+		\item Verjetnostne gramatike
+		\item Celo"stevilska zaporedja
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Algoritem za odkrivanje ena"cb}
+% \frametitle{Naslov prosojnice}
+\framesubtitle{Linearna regresija}
+% 	\begin{block}{Odkrivanje enačb za celoštevilska zaporedja z verjetnostnimi gramatikami}
+\pause
+\invisible<1>{Trije koraki:}
+\pause
+	\begin{enumerate}[<+->]
+		\item Ena"cba \(y _i - c_0 + c_1\cdot x_{i1}  +
+		c_2\cdot x_{i2}+ \cdots + c_n\cdot x_{in}  \)
+	\item Napaka modela \[ \sum_{i=1} ^m (y _i - c_0 + c_1\cdot x_{i1}  +
+		c_2\cdot x_{i2}+ \cdots + c_n\cdot x_{in} )^2
+		\]
+kjer je $n+1$ "stevilo stolpcev, m "stevilo vrstic, $y_i$ element matrike X v i-ti vrstici
+in $(n+1)$-tem stolpcu, $x_{ij}$ element matrike X v i-ti vrstici in j-tem stolpcu.\\
+		X = [x|y]
+		\item Optimizacija konstant \( c_0, c_1, ..., c_n \), da bo
+		napaka modela "cim manj"sa.
+	\end{enumerate}
+\end{frame}
+
+% \begin{frame}{Algoritem za odkrivanje ena"cb}
+% \framesubtitle{Odkrivanje ena"cb}
+% Podobni trije koraki:
+% 	\begin{enumerate}[<+->]
+% 	\item Generira seznam ena"cb (izrazov).
+% 	\item Napaka modela \[ \sum_{i=1} ^m (y _i - \textcolor{red}{\textbf{izraz}}(c_0, \cdots,  c_n, x_{i1}, \cdots, x_{in}))^2  \]
+% kjer so \( y_i, c_j\ in\ x_{ij} \)
+% definirani enako kot prej.
+% 	\item Optimizacija konstant \( c_0, c_1, \cdots, c_n \).
+% 	\end{enumerate}
+% \end{frame}
+
+% \begin{frame}{Kontekstno-neodvisna Gramatika}
+
+% 	\begin{block}{Definicija}
+% 	Kontekstno-neodvisna gramatika je "cetverica, ki jo ozna"cimo z (N,T,S,R), pri "cemer je:
+% 	\begin{itemize}
+% 	    \item T mno"zica vseh t.i. terminalnih simbolov
+% 	    \item N mno"zica vseh t.i. neterminalnih simbolov
+% 	    \item S za"cetni simbol
+% 	    \item R mno"zica vseh produkcijskih pravil
+% 	    \item N, T in R so kon"cne, za"cetni simbol S je znotraj N, presek N in T prazen.
+% 	    R je mno"zica parov \((A, \alpha)\), kjer \( A \in N \) in \( \alpha \in (N \cup T)^* \).
+% 	\end{itemize}
+%     \end{block}
+% \end{frame}
+
+% \begin{frame}{Kontekstno-neodvisna gramatika}
+% \subtitle{Drevo izpeljave}
+% 	\begin{block}{Definicija (Prepisovalna relacija)}
+% 	Prepisovalna relacija \( \Rightarrow_G \) na \( (N \cup T)^* \):
+% \[ \beta A \gamma \Rightarrow_G \beta \alpha \gamma, \]
+% "ce je \[ (A, \alpha) \in R, \]
+% kjer \( \beta, \gamma \in (N \cup T)^*. \)
+% 	\end{block}
+% 	\pause
+% 	\begin{block}{Navada}
+% 	     Pi"semo \(A \to \alpha\) namesto \((A, \alpha) \in R \) .
+%     \end{block}
+% \end{frame}
+
+% \begin{frame}
+%     T := \{vidim, psa, s, teleskopom, dokazujem\}
+
+%     N := \{S, Prislovno\_dolocilo\_nacina,  Povedek,
+%     Predmet\} \\
+%     R := \{ \\
+%     S $\to$ Povedek Predmet \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     Povedek $\to$ vidim \\
+%     Povedek $\to$ dokazujem \\
+%     Predmet $\to$ psa \\
+%     Predmet $\to$ teleskopom \\
+%     \}
+%     \invisible
+
+%     \begin{block}{Trdimo}
+%     Stavek:
+%     \[ \texttt{vidim psa s teleskopom} \]
+%     je element jezika te gramatike.
+%     \end{block}
+
+% \end{frame}
+
+% % \begin{frame}
+% % dsa
+% %	$ h \circ i = f \circ \overline{h} $,
+% %	oz. da spoden graf komutira.
+% % 	$$	\begin{diagram}
+% % 	1+X \times \mathrm{I} & & \rTo^{\overline{h}} & & 1+X \times A \\
+% % 	\dTo_{\mathit{i}} & & & & \dTo_{\mathnormal{f}} \\
+% % 	\textrm{I} & & \rTo^{h} & & A
+% % 	\end{diagram} $$
+
+% % \begin{forest}
+% % dg edges
+% % [V
+% %   [N
+% %     [D [the] ]
+% %      [child] ]
+% %   [reads]
+% %   [N
+% %     [D [a] ]
+% %     [book] ] ]
+% % \end{forest}
+% % S -> - Povedek -> vidim
+% %     `- Predmet -> psa
+% %     `- Prislovno_dolocilo_nacina
+% % 	`- s
+% %         `- Predmet -> teleskopom 		 \ Predmet -> teleskopom
+% % \end{frame}
+
+% \begin{frame}
+% \begin{forest}
+% dg edges
+% [S
+%   [Povedek
+%     [vidim]
+%   ]
+%   [Predmet
+%     [psa]
+%   ]
+%   [Prislovno\_Dolocilo\_Nacina
+%     [s]
+%     [Predmet [teleskopom]]
+%   ]
+% ]
+% \end{forest}
+
+% \vspace{1.5cm}
+% \footnotesize
+
+%     R : \\
+%     \begin{tabular}{l}
+%     S $\to$ Povedek Predmet \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     \end{tabular}
+%     \begin{tabular}{lllll}
+%     Povedek $\to$ vidim &&&&
+%     Povedek $\to$ dokazujem \\
+%     Predmet $\to$ psa &&&&
+%     Predmet $\to$ teleskopom \\
+%     \end{tabular}
+
+% \end{frame}
+
+% \begin{frame}
+% \begin{forest}
+% dgii edges
+% [S, red
+%   [Povedek, red, edge={red}]
+%   [Predmet, red, edge={red}]
+%   [Prislovno\_Dolocilo\_Nacina, red, edge={red}]
+% ]
+% \end{forest}
+
+% \vspace{1.5cm}
+% \footnotesize
+
+%     R : \\
+%     \begin{tabular}{l}
+%     S $\to$ Povedek Predmet \\
+%     \textcolor{red}{S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina} \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     \end{tabular}
+%     \begin{tabular}{lllll}
+%     Povedek $\to$ vidim &&&&
+%     Povedek $\to$ dokazujem \\
+%     Predmet $\to$ psa &&&&
+%     Predmet $\to$ teleskopom \\
+%     \end{tabular}
+
+% \end{frame}
+
+% \begin{frame}
+% \begin{forest}
+% dgii edges
+% [S
+%   [ Povedek, red [vidim, red, edge={red}] ]
+%   [Predmet]
+%   [Prislovno\_Dolocilo\_Nacina]
+% ]
+% \end{forest}
+
+% \vspace{1.5cm}
+% \footnotesize
+
+%     R : \\
+%     \begin{tabular}{l}
+%     S $\to$ Povedek Predmet \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     \end{tabular}
+%     \begin{tabular}{lllll}
+%     \textcolor{red}{Povedek $\to$ vidim} &&&&
+%     Povedek $\to$ dokazujem \\
+%     Predmet $\to$ psa &&&&
+%     Predmet $\to$ teleskopom \\
+%     \end{tabular}
+
+% \end{frame}
+
+% \begin{frame}
+% \begin{forest}
+% dgii edges
+% [S
+%   [ Povedek [vidim] ]
+%   [ Predmet, red [psa, red, edge={red}] ]
+%   [Prislovno\_Dolocilo\_Nacina]
+% ]
+% \end{forest}
+
+% \vspace{1.5cm}
+% \footnotesize
+
+%     R : \\
+%     \begin{tabular}{l}
+%     S $\to$ Povedek Predmet \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     \end{tabular}
+%     \begin{tabular}{lllll}
+%     Povedek $\to$ vidim &&&&
+%     Povedek $\to$ dokazujem \\
+%     \textcolor{red}{Predmet $\to$ psa} &&&&
+%     Predmet $\to$ teleskopom \\
+%     \end{tabular}
+
+% \end{frame}
+
+% \begin{frame}
+% \begin{forest}
+% dgii edges
+% [S
+%   [ Povedek [vidim] ]
+%   [ Predmet [psa] ]
+%   [ Prislovno\_Dolocilo\_Nacina, red
+%     % [s, red, edge={red} Predmet, red, edge={red}] ]
+%     [s, red, edge={red}]
+%     [Predmet, red, edge={red}]
+%     ]
+%   ]
+% ]
+% \end{forest}
+
+% \vspace{1.5cm}
+% \footnotesize
+
+%     R : \\
+%     \begin{tabular}{l}
+%     S $\to$ Povedek Predmet \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \\
+%     \textcolor{red}{Prislovno\_dolocilo\_nacina $\to$ s Predmet} \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     \end{tabular}
+%     \begin{tabular}{lllll}
+%     Povedek $\to$ vidim &&&&
+%     Povedek $\to$ dokazujem \\
+%     Predmet $\to$ psa &&&&
+%     Predmet $\to$ teleskopom \\
+%     \end{tabular}
+
+% \end{frame}
+
+% \begin{frame}
+% \begin{forest}
+% dgii edges
+% [S
+%   [ Povedek [vidim] ]
+%   [ Predmet [psa] ]
+%   [ Prislovno\_Dolocilo\_Nacina
+%     % [s, red, edge={red} Predmet, red, edge={red}] ]
+%     [s]
+%     [Predmet, red
+%         [teleskopom, red, edge={red}]
+%     ]
+%     ]
+%   ]
+% ]
+% \end{forest}
+
+% \vspace{1.5cm}
+% \footnotesize
+
+%     R : \\
+%     \begin{tabular}{l}
+%     S $\to$ Povedek Predmet \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     \end{tabular}
+%     \begin{tabular}{lllll}
+%     Povedek $\to$ vidim &&&&
+%     Povedek $\to$ dokazujem \\
+%     Predmet $\to$ psa &&&&
+%     \textcolor{red}{Predmet $\to$ teleskopom} \\
+%     \end{tabular}
+
+% \end{frame}
+
+% \begin{frame}
+% \begin{forest}
+% dgii edges
+% [S
+%   [ Povedek [vidim, red] ]
+%   [ Predmet [psa, red] ]
+%   [ Prislovno\_Dolocilo\_Nacina
+%     % [s, red, edge={red} Predmet, red, edge={red}] ]
+%     [s, red]
+%     [Predmet
+%         [teleskopom, red]
+%     ]
+%     ]
+%   ]
+% ]
+% \end{forest}
+
+% \vspace{1.5cm}
+% \footnotesize
+
+%     \textcolor{red}{T := \{vidim, psa, s, teleskopom, dokazujem\}} \\
+%     R : \\
+%     \begin{tabular}{l}
+%     S $\to$ Povedek Predmet \\
+%     S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \\
+%     Prislovno\_dolocilo\_nacina $\to$ s Predmet \\
+%     Predmet $\to$ Predmet s Predmet \\
+%     \end{tabular}
+%     \begin{tabular}{lllll}
+%     Povedek $\to$ vidim &&&&
+%     Povedek $\to$ dokazujem \\
+%     Predmet $\to$ psa &&&&
+%     Predmet $\to$ teleskopom \\
+%     \end{tabular}
+
+% \end{frame}
+
+% \begin{frame}{Primer: Univerzalna gramatika}
+
+% T := \{'+', '-', '*', '/', 'C', '(', ')', 'sin(', 'cos(', 'sqrt(', 'exp(', 'x1', 'x2', 'x3'\} \\
+% N:= \{S, F, T, R, V\} \\
+
+
+% R: \\
+% \begin{tabular}{lllll}
+%     S $\to$ S '+' F &&&&
+%     S $\to$ S '-' F \\
+%     S $\to$ F &&&&
+%     F $\to$ F '*' T \\
+%     F $\to$ F '/' T &&&&
+%     F $\to$ T \\
+%     T $\to$ R &&&&
+%     T $\to$ 'C' \\
+%     T $\to$ V &&&&
+%     R $\to$ '(' S ')' \\
+%     R $\to$ 'sin(' S ')' &&&&
+%     R $\to$ 'cos(' S ')' \\
+%     R $\to$ 'sqrt(' S ')' &&&&
+%     R $\to$ 'exp(' S ')'  \\
+%     V $\to$ 'x1' &&&&
+%     V $\to$ 'x2' \\
+%     V $\to$ 'x3'
+% \end{tabular}
+
+% \begin{block}{Primer stavka v tej gramatiki:}
+%   'C' '+' 'C' '*' 'x1' '*' 'exp(' 'x2' '*' 'x2' ')'
+% \end{block}
+
+% \end{frame}
+
+% \begin{frame}[plain]
+% \begin{columns}[T] % align columns
+% \begin{column}{.48\textwidth}
+% % \color{red}\rule{\linewidth}{4pt}
+% \footnotesize
+% \begin{forest}
+% dgii edges
+% [S
+%   [ S
+%     [ F [ T [ 'C' ] ] ]
+%   ]
+%   [ '+' ]
+%   [ F
+%     [ F [ T [ 'C' ] ] ]
+%     [ '*' ]
+%     [ T
+%         [ F [ T [ V [ 'x1' ] ] ] ]
+%         [ '*' ]
+%         [ T
+%             [ R
+%                 [ 'exp(' ]
+%                 [ S
+%                     [ F
+%                         [ F [ T [ V [ 'x2' ] ] ] ]
+%                         [ '*' ]
+%                         [ T [ V [ 'x2' ] ] ]
+%                     ]
+%                 ]
+%                 [ ')']
+%             ]
+%         ]
+%     ]
+%   ]
+% ]
+% \end{forest}
+
+% \end{column}
+% \hfill
+% \begin{column}{.48\textwidth}
+% \color{blue}\rule{\linewidth}{4pt}
+%     S $\to$ S '+' F  \\
+%     S $\to$ S '-' F \\
+%     S $\to$ F \\
+%     F $\to$ F '*' T \\
+%     F $\to$ F '/' T \\
+%     F $\to$ T \\
+%     T $\to$ R  \\
+%     T $\to$ 'C' \\
+%     T $\to$ V  \\
+%     R $\to$ '(' S ')'  \\
+%     R $\to$ 'sin(' S ')'  \\
+%     R $\to$ 'cos(' S ')'  \\
+%     R $\to$ 'sqrt(' S ')' \\
+%     R $\to$ 'exp(' S ')'  \\
+%     V $\to$ 'x1'  \\
+%     V $\to$ 'x2' \\
+%     V $\to$ 'x3'  \\
+
+% \end{column}%
+% \end{columns}
+
+% \end{frame}
+
+% \begin{frame}[plain]
+% \scriptsize
+% \begin{forest}
+% dg edges
+% [S
+%   [ S
+%     [ F [ T [ 'C' ] ] ]
+%   ]
+%   [ '+' ]
+%   [ F
+%     [ F [ T [ 'C' ] ] ]
+%         [ '*' ]
+%     [ T
+%         [ F [ T [ V [ 'x1' ] ] ] ]
+%         [ '*' ]
+%         [ T
+%             [ R
+%                 [ 'exp(' ]
+%                 [ S
+%                     [ F
+%                         [ F [ T [ V [ 'x2' ] ] ] ]
+%                         [ '*' ]
+%                         [ T [ V [ 'x2' ] ] ]
+%                     ]
+%                 ]
+%                 [ ')']
+%             ]
+%         ]
+%     ]
+%   ]
+% ]
+% \end{forest}
+
+% \end{frame}
+
+\begin{frame}{Algoritem za odkrivanje ena"cb}
+\framesubtitle{Odkrivanje ena"cb}
+Podobni trije koraki:
+	\begin{enumerate}
+	\item Generira seznam ena"cb (izrazov).
+	\item Napaka modela \[ \sum_{i=1} ^m (y _i - \textcolor{red}{\textbf{izraz}(c_0, \cdots,  c_n, x_{i1}, \cdots, x_{in})})^2  \]
+kjer so \( y_i, c_j\ in\ x_{ij} \)
+definirani enako kot prej.
+	\item Optimizacija konstant \( c_0, c_1, \cdots, c_n \).
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Algoritem za odkrivanje ena"cb}
+\framesubtitle{Odkrivanje ena"cb}
+Podobni trije koraki:
+	\begin{enumerate}
+	\item Generira seznam ena"cb (izrazov).
+	\item Napaka modela \[ \sum_{i=1} ^m (y _i - \textcolor{red}{\textbf{
+ \( c_0 + c_1 \cdot x_{i1} \cdot exp( x_{i2} ^2 ) \)
+}})^2  \]
+kjer so \( y_i, c_j\ in\ x_{ij} \)
+definirani enako kot prej.
+	\item Optimizacija konstant \( c_0, c_1, \cdots, c_n \).
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Prostor ena"cb}
+    \begin{itemize}[<+->]
+        \item S pogo"cjo gramatike generiramo seznam ena"cb.
+        \item Teh je veliko.
+        \item Naivna re"sitev: Samo ena"cbe do dolo"cene vi"sine.
+        \item Druga re"sitev: Spremenimo gramatiko.
+	\invisible<1-4>{\item \color{red}{Verjetnostne gramatike}}
+    \end{itemize}
+\end{frame}
+
+\section{Verjetnostne gramatike}
+
+\begin{frame}{Verjetnostne kontekstno-neodvisne gramatike}
+	\pause
+	\begin{block}{Primer od prej:} 
+    T := \{vidim, psa, s, teleskopom, dokazujem\}
+
+    N := \{S, Prislovno\_dolocilo\_nacina,  Povedek,
+    Predmet\} \\
+    R := \{ \\
+	S $\to$ Povedek Predmet \only<3>{[0.3]} \\
+    S $\to$ Povedek Predmet Prislovno\_dolocilo\_nacina \only<3>{[0.7]}\\
+    Prislovno\_dolocilo\_nacina $\to$ s Predmet \only<3>{[1]}\\
+    Povedek $\to$ vidim \only<3>{[0.9]}\\
+    Povedek $\to$ dokazujem \only<3>{[0.1]}\\
+    Predmet $\to$ Predmet s Predmet \only<3>{[0.2]}\\
+    Predmet $\to$ psa \only<3>{[0.3]}\\
+    Predmet $\to$ teleskopom \only<3>{[0.5]}\\
+    \}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Pogoj}
+		\( \forall A \in N:\)
+		\[ \sum_{ (A\to \alpha) \in R }  p(A \to \alpha) = 1, \]
+		kjer je \( p: R \to [0,1] \) funkcija,
+		ki produkcijskemu pravilu priredi njegovo verjetnost.
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Verjetost raz"clenitvenega drevesa}
+		\( \forall \tau \in \Omega: \)
+		\[ p(t) := \prod_{(A \to \alpha) \in R} p(A \to \alpha)^{f(A \to \alpha; \tau)} \]
+		kjer je \( p: R \to [0,1] \) funkcija,
+		ki produkcijskemu pravilu priredi njegovo verjetnost.
+	\end{block}
+
+\end{frame}
+
+\section{Celo"stevilska zaporedja}
+\begin{frame}
+\end{frame}
+
+\end{document}
