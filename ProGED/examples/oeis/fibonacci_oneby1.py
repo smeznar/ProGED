@@ -107,9 +107,11 @@ def grid (order, seq, direct=False):
 
 #######main#settings#####################################
 # Note: order and is_direct is overwritten by commandline arguments.
-order, is_direct = 2, False  # recursive
+# order, is_direct = 2, False  # recursive
 # order, is_direct = 4, False  # recursive
 # order, is_direct = 0, True  # direct
+order, is_direct = 2, True  # direct
+# order, is_direct = 4, True  # direct
 # Override manual settings with input cmd line flags:
 order = int(flags_dict.get("--order", order))
 is_direct = flags_dict.get("--is_direct", is_direct)
@@ -238,6 +240,7 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         }
     )
 
+    print(f"=>> Grammar used: \n{ED.generator}\n")
 
     # for i in range(0, 100):
     #     np.random.seed(i)
@@ -276,7 +279,7 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> timeout = {timeout}\n"
         f"=>> number of terms in every sequence = {terms_count}\n"
         f"=>> number of all considered sequences = {seqs_count}\n"
-        f"=>> list of considered sequences = {list(csv.columns)}\n"
+        f"=>> list of considered sequences = {list(csv.columns)}"
     )
 start = time.perf_counter()
 FIRST_ID = "A000000"
