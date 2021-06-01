@@ -105,12 +105,14 @@ def grid (order, seq, direct=False):
         return np.hstack((first_column, seq[indexes]))
     return seq[indexes]
 
+
+
 #######main#settings#####################################
 # Note: order and is_direct is overwritten by commandline arguments.
 # order, is_direct = 2, False  # recursive
 # order, is_direct = 4, False  # recursive
-# order, is_direct = 0, True  # direct
-order, is_direct = 2, True  # direct
+order, is_direct = 0, True  # direct
+# order, is_direct = 2, True  # direct
 # order, is_direct = 4, True  # direct
 # Override manual settings with input cmd line flags:
 order = int(flags_dict.get("--order", order))
@@ -118,7 +120,14 @@ is_direct = flags_dict.get("--is_direct", is_direct)
 
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
-grammar_template_name = "polynomial"
+# grammar_template_name = "polynomial"
+# grammar_template_name = "rational"
+grammar_template_name = "rational"
+# grammar_template_name = "simplerational"
+# grammar_template_name = "universal"
+# grammar_template_name = "polytrig"
+# grammar_template_name = "trigonometric"
+
 # sample_size = 1
 sample_size = 4
 # sample_size = 2
@@ -128,7 +137,8 @@ sample_size = 4
 # sample_size = 15
 # sample_size = 20
 # sample_size = 20
-# sample_size = 100
+sample_size = 100
+# sample_size = 1000
 sample_size = int(flags_dict.get("--sample_size", sample_size))
 lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
@@ -138,6 +148,7 @@ lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 
 p_T = [0.4, 0.6]  # default settings, does nothing
 p_R = [0.6, 0.4]
+p_F = [0.6, 0.4]
 # if (seq_name, order, is_direct) == ("fibonacci", 2, False):
 #     p_T = [0.4, 0.6]  # for rec fib
 #     p_R = [0.9, 0.1]
@@ -186,7 +197,9 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         generator_template_name = grammar_template_name,
         # generator_settings={"variables": ["'an_2'", "'an_1'"],
         generator_settings={"variables": variables,
-                             "p_T": p_T, "p_R": p_R
+                            # "functions": ["'exp'"],
+                            "functions": ["'sqrt'", "'exp'", ],
+                             "p_T": p_T, "p_R": p_R, "p_F": p_F,
                              },
 
         estimation_settings={
@@ -242,18 +255,18 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
 
     print(f"=>> Grammar used: \n{ED.generator}\n")
 
-    # for i in range(0, 100):
-    #     np.random.seed(i)
-    #     print("seed", i)
-    #     print(ED)
-    #     ED.generate_models()
-    #     print(ED.models)
-    #     ED.models = None
+    for i in range(0, 10):
+        np.random.seed(i)
+        print("seed", i)
+        print(ED)
+        ED.generate_models()
+        print(ED.models)
+        ED.models = None
 
-    # 1/0
+    1/0
     ED.generate_models()
     print(ED.models)
-    # 1/0
+    1/0
     seq_start = time.perf_counter()
     ED.fit_models()
     seq_cpu_time = time.perf_counter() - seq_start
@@ -290,6 +303,10 @@ start_id = FIRST_ID
 start_id = "A000045"
 end_id = LAST_ID
 end_id = "A000045"
+
+start_id = "A000041"
+end_id = "A000041"
+
 csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 for seq_id in csv:
     oeis_eq_disco(seq_id, is_direct, order)
