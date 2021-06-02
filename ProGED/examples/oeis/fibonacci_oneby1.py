@@ -65,8 +65,10 @@ csv = pd.read_csv('oeis_selection.csv')[has_titles:]
 csv = csv.astype('float')
 terms_count, seqs_count = csv.shape
 # Old for fibonacci only:
-# seq_id = "A000045"
-# fibs = list(csv[seq_id])  # fibonacci = A000045
+seq_id = "A000045"
+prt_id = "A000041"
+fibs = list(csv[seq_id])  # fibonacci = A000045
+prts = list(csv[prt_id])  # fibonacci = A000045
 # oeis = fibs
 
 # oeis = fibs[2:]
@@ -100,11 +102,61 @@ def grid (order, seq, direct=False):
     """
     n = seq.shape[0] # (40+1)
     indexes = np.fromfunction((lambda i,j:i+j), (n-order, order+1), dtype=int)
+    print(seq[indexes])
     first_column = indexes[:, [0]]
     if direct:
         return np.hstack((first_column, seq[indexes]))
     return seq[indexes]
 
+fibs = np.array(fibs)
+prts = np.array(prts)
+# def fij(i, j):
+#     # return 0 if (j<=i) else 2
+#     return max(i-j, 0)
+# def aij(i, j):
+#     # return fibs[i-j] if (j<=i) else 0
+#     # return fibs[i-j] if True else 0
+#     a = i
+#     b = j
+#     return 1 if a>2 else 0
+# def cutgrid(seq):
+#     n = len(seq)
+#     return np.fromfunction((lambda i,j: np.maximum(i-j,0) , (n-1, n-1))
+
+def grid2(seq):
+    n = len(seq)
+    frame = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
+    # indexes = np.fromfunction((lambda i,j: max(i-j, 0)), (n-1, n-1), dtype=int)
+    # indexes = np.fromfunction((lambda i,j: i-j), (n-1, n-1), dtype=int)
+    # indexes = np.fromfunction((lambda i,j: max(1,2)), (n-1, n-1), dtype=int)
+    # indexes = np.fromfunction(aij, (n-1, n-1), dtype=int)
+    indexes = seq[frame] * np.tri(n-1)
+    # indexes = seq[frame]
+    # indexes = frame * (frame + np.eye(n-1, n-1))
+    # indexes = frame + np.eye(n-1, n-1)
+    # indexes = frame
+    return indexes
+
+print(prts)
+print(fibs)
+# # grid(3, fibs, True)
+print(grid2(fibs))
+print(grid2(fibs)[:7,:6])
+print('cats:')
+print(grid2(prts)[:7,:6])
+# row = grid[3]
+# print(aij(1,1))
+# for i in range(10):
+#     for j in range(10):
+#         print(aij(i,j))
+
+# print(fibs)
+# print(fibs[row])
+print(grid2(fibs))
+# print(fibs[grid2(fibs)])
+# print(fij(1, 45))
+print('end of prog')
+1/0
 
 
 #######main#settings#####################################
