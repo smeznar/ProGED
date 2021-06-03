@@ -122,7 +122,7 @@ class EqDisco:
                   success_threshold = 1e-8,
                   verbosity = 1):        
         
-        if not task:
+        if task is None:
             if isinstance(data, type(None)):
                 raise TypeError ("Missing inputs. Either task object or data required.")
             else:
@@ -138,7 +138,7 @@ class EqDisco:
         else:
             raise TypeError ("Missing task information!")
         
-        if not variable_probabilities:
+        if variable_probabilities is None:
             variable_probabilities = [1/len(self.task.var_names)]*np.sum(self.task.variable_mask)
         generator_settings.update({"variables":self.task.symbols["x"], "p_vars": variable_probabilities})
         if isinstance(generator, BaseExpressionGenerator):
@@ -155,7 +155,7 @@ class EqDisco:
                              "Input: " + str(type(generator)))
             
         self.strategy = strategy
-        if not strategy_settings:
+        if strategy_settings is None:
             self.strategy_settings = {"N": sample_size}
         else:
             self.strategy_settings = strategy_settings
@@ -169,7 +169,7 @@ class EqDisco:
         
         
     def generate_models (self, strategy_settings = None):
-        if not strategy_settings:
+        if strategy_settings is None:
             strategy_settings = self.strategy_settings
         self.models = generate_models(self.generator, self.task.symbols, self.strategy, strategy_settings, verbosity=self.verbosity)
         return self.models

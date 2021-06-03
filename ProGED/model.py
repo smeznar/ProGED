@@ -159,7 +159,7 @@ class Model:
         Returns:
             callable function that takes variable values as inputs and return the model value.
         """
-        if not params:
+        if len(params) == 0:
             params = self.params
         return sp.lambdify(self.sym_vars, self.full_expr(*params), "numpy")
         # self.lamb_expr = sp.lambdify(self.sym_vars, self.expr.subs(list(zip(self.sym_params, params))), arg)

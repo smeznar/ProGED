@@ -135,26 +135,26 @@ def grid2(seq):
     data = np.hstack((np.array(seq)[1:].reshape(-1,1), np.arange(n-1).reshape(-1,1), cut_zero))
     return data
 
-print(prts)
-print(fibs)
-# # grid(3, fibs, True)
-print(grid2(fibs))
-print(grid2(prts))
-print(grid2(fibs)[:17,:48].astype(int))
-print('cats:')
-print(grid2(prts)[:7,:6])
-# row = grid[3]
-# print(aij(1,1))
-# for i in range(10):
-#     for j in range(10):
-#         print(aij(i,j))
-
+# print(prts)
 # print(fibs)
-# print(fibs[row])
-print(grid2(fibs))
-# print(fibs[grid2(fibs)])
-# print(fij(1, 45))
-print('end of prog')
+# # # grid(3, fibs, True)
+# print(grid2(fibs))
+# print(grid2(prts))
+# print(grid2(fibs)[:17,:48].astype(int))
+# print('cats:')
+# print(grid2(prts)[:7,:6])
+# # row = grid[3]
+# # print(aij(1,1))
+# # for i in range(10):
+# #     for j in range(10):
+# #         print(aij(i,j))
+
+# # print(fibs)
+# # print(fibs[row])
+# print(grid2(fibs))
+# # print(fibs[grid2(fibs)])
+# # print(fij(1, 45))
+# print('end of prog')
 # 1/0
 
 
@@ -224,6 +224,7 @@ def oeis_eq_disco(seq_id: str):
 
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
     data = grid2(np.array(list(csv[seq_id])))
+    data = grid2(np.array(list(csv[seq_id])[:2]))
     print('data shape', data.shape)
     n = data.shape[0] + 1  # = 50
     # variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
@@ -236,14 +237,21 @@ def oeis_eq_disco(seq_id: str):
     # print(variables)
     # print(data.shape, type(data), data)
     q = 1/2
-    p = 6/10
-    pis = [p**i for i in range(1, n-1)]
+    # q = 1/10
+    p = 8/10
+    pis = [max(p**i, 0) for i in range(1, (n-1)+1)]
+    # pis = [max(p**i-1e, 0) for i in range(1, (n-1)+1)]
+    print(len(pis), 'len pis')
     coef = (1-q)/sum(pis)
     variable_probabilities = np.hstack((np.array([q]), coef*np.array(pis)))
+    # variable_probabilities = [0.00001, 0.99999]
+    # variable_probabilities = [1, 0]
     # check probs
+    print('variable_probabilities', variable_probabilities, sum(variable_probabilities), len(variable_probabilities))
     # print('variable_probabilities', variable_probabilities, sum(variable_probabilities))
     # for i in range(len(variable_probabilities)-1):
     #     print(variable_probabilities[i]/variable_probabilities[i+1], pis[i]/pis[i+1])
+    # 1/0
 
 
     np.random.seed(random_seed)

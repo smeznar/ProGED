@@ -41,7 +41,7 @@ class EDTask:
         
         self.variable_mask[target_variable_index] = False
         
-        if not variable_names:
+        if variable_names is None:
             self.var_names = np.array([chr(ord("a")+i) for i in range(data.shape[-1])])
         else:
             self.var_names = np.array(variable_names)
