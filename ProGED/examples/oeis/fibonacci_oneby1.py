@@ -45,8 +45,8 @@ if len(sys.argv) >= 2:
 if not is_tee_flag:
     print("\nNo-log flag detected!\n")
 
-is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
-# is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
+# is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
+is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
 random = str(np.random.random())[2:]
 log_filename = log_name + message + random + ".txt"
 if (is_tee and is_tee_flag) or ("--do-log" in double_flags):
@@ -237,9 +237,9 @@ def oeis_eq_disco(seq_id: str):
     # print(variables)
     # print(data.shape, type(data), data)
     # q = 1/2
-    q = 1/10
+    q = 0.01/10
     # p = 8/10
-    p = 5/10
+    p = 3/10
     pis = [p**i for i in range(1, (n-1)+1)]
     # pis = [max(p**i, 0) for i in range(1, (n-1)+1)]
     # pis = [p**i+1e-04 for i in range(1, (n-1)+1)]
@@ -347,18 +347,18 @@ def oeis_eq_disco(seq_id: str):
 
     # 1/0
     # for i in range(0, 10):
-    for i in range(0, 1):
-        np.random.seed(i)
-        print("seed", i)
-        print(ED)
-        ED.generate_models()
-        print(ED.models)
-        ED.models = None
+    # for i in range(0, 10):
+    #     np.random.seed(i)
+    #     print("seed", i)
+    #     print(ED)
+    #     ED.generate_models()
+    #     print(ED.models)
+    #     ED.models = None
+    # 1/0
 
-    1/0
     ED.generate_models()
     print(ED.models)
-    1/0
+    # 1/0
     seq_start = time.perf_counter()
     ED.fit_models()
     seq_cpu_time = time.perf_counter() - seq_start
