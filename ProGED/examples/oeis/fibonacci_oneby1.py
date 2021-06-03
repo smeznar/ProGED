@@ -224,7 +224,7 @@ def oeis_eq_disco(seq_id: str):
 
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
     data = grid2(np.array(list(csv[seq_id])))
-    data = grid2(np.array(list(csv[seq_id])[:2]))
+    # data = grid2(np.array(list(csv[seq_id])[:2]))
     print('data shape', data.shape)
     n = data.shape[0] + 1  # = 50
     # variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
@@ -236,16 +236,26 @@ def oeis_eq_disco(seq_id: str):
     # print(variable_names)
     # print(variables)
     # print(data.shape, type(data), data)
-    q = 1/2
-    # q = 1/10
-    p = 8/10
-    pis = [max(p**i, 0) for i in range(1, (n-1)+1)]
-    # pis = [max(p**i-1e, 0) for i in range(1, (n-1)+1)]
+    # q = 1/2
+    q = 1/10
+    # p = 8/10
+    p = 5/10
+    pis = [p**i for i in range(1, (n-1)+1)]
+    # pis = [max(p**i, 0) for i in range(1, (n-1)+1)]
+    # pis = [p**i+1e-04 for i in range(1, (n-1)+1)]
+    print(pis)
     print(len(pis), 'len pis')
     coef = (1-q)/sum(pis)
+    # pis = coef * np.array(pis) + 1e-04
+    pis = coef * np.array(pis) + 1e-03
+    coef = (1-q)/sum(pis)
     variable_probabilities = np.hstack((np.array([q]), coef*np.array(pis)))
+    print(variable_probabilities)
+    print(min(variable_probabilities))
     # variable_probabilities = [0.00001, 0.99999]
     # variable_probabilities = [1, 0]
+    # 1/0
+
     # check probs
     print('variable_probabilities', variable_probabilities, sum(variable_probabilities), len(variable_probabilities))
     # print('variable_probabilities', variable_probabilities, sum(variable_probabilities))
@@ -335,7 +345,7 @@ def oeis_eq_disco(seq_id: str):
 
     print(f"=>> Grammar used: \n{ED.generator}\n")
 
-    1/0
+    # 1/0
     # for i in range(0, 10):
     for i in range(0, 1):
         np.random.seed(i)
