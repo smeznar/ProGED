@@ -45,11 +45,13 @@ if len(sys.argv) >= 2:
 if not is_tee_flag:
     print("\nNo-log flag detected!\n")
 
-# is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
-is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
-random = str(np.random.random())[2:]
-log_filename = log_name + message + random + ".txt"
-if (is_tee and is_tee_flag) or ("--do-log" in double_flags):
+is_tee, log_name, log_directory = False, "log_oeis_", "outputs/"
+# is_tee, log_name, log_directory = True, "log_oeis_", "outputs/"
+# random = str(np.random.random())[2:]
+timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+
+log_filename = log_name + message + timestamp + ".txt"
+if (is_tee and is_tee_flag) or ("--do-log" in double_flags) or ("--is_tee" in double_flags):
     try:
         log_object = te.Tee(f"{log_directory}{log_filename}")
         print(f"Output will be logged in: {log_directory}{log_filename}")
@@ -158,16 +160,16 @@ def grid2(seq):
 # 1/0
 
 
-#######main#settings#####################################
-# Note: order and is_direct is overwritten by commandline arguments.
-# order, is_direct = 2, False  # recursive
-# order, is_direct = 4, False  # recursive
-order, is_direct = 0, True  # direct
-# order, is_direct = 2, True  # direct
-# order, is_direct = 4, True  # direct
-# Override manual settings with input cmd line flags:
-order = int(flags_dict.get("--order", order))
-is_direct = flags_dict.get("--is_direct", is_direct)
+########main#settings#####################################
+## Note: order and is_direct is overwritten by commandline arguments.
+## order, is_direct = 2, False  # recursive
+## order, is_direct = 4, False  # recursive
+#order, is_direct = 0, True  # direct
+## order, is_direct = 2, True  # direct
+## order, is_direct = 4, True  # direct
+## Override manual settings with input cmd line flags:
+#order = int(flags_dict.get("--order", order))
+#is_direct = flags_dict.get("--is_direct", is_direct)
 
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
@@ -191,9 +193,9 @@ sample_size = 4
 sample_size = 100
 # sample_size = 1000
 sample_size = int(flags_dict.get("--sample_size", sample_size))
-lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
+### lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
-# lower_upper_bounds = (-5, 5)  # direct
+lower_upper_bounds = (-5, 5)  # direct
 # lower_upper_bounds = (-2, 2)  # direct
 #########################################################
 
@@ -210,11 +212,11 @@ random_seed = 1  # rec
 # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
 
-task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
-# task_type = "integer_algebraic"  # Originalno blo nastimano do 5.5.2021.
+# task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
+task_type = "integer_algebraic"  # Originalno blo nastimano do 5.5.2021.
 # If recursive, allways integer algebraic:
-if order > 0:
-    task_type = 'integer_algebraic'
+# if order > 0:
+#     task_type = 'integer_algebraic'
 optimizer = 'differential_evolution'
 timeout = np.inf
 
@@ -374,8 +376,8 @@ def oeis_eq_disco(seq_id: str):
 # Run eq. disco. on all oeis sequences:
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
-        f"=>> is_direct = {is_direct}\n"
-        f"=>> order of equation recursion = {order}\n"
+        # f"=>> is_direct = {is_direct}\n"
+        # f"=>> order of equation recursion = {order}\n"
         f"=>> sample_size = {sample_size}\n"
         f"=>> grammar_template_name = {grammar_template_name}\n"
         f"=>> generator_settings = {'{'}p_T: {p_T}, p_R: {p_R}{'}'}\n"
