@@ -69,6 +69,8 @@ seq_id = "A000045"
 prt_id = "A000041"
 fibs = list(csv[seq_id])  # fibonacci = A000045
 prts = list(csv[prt_id])  # fibonacci = A000045
+fibs = np.array(fibs)
+prts = np.array(prts)
 # oeis = fibs
 
 # oeis = fibs[2:]
@@ -101,15 +103,17 @@ def grid (order, seq, direct=False):
     +1 ... a_n column.
     """
     n = seq.shape[0] # (40+1)
+    # print(n)
     indexes = np.fromfunction((lambda i,j:i+j), (n-order, order+1), dtype=int)
-    print(seq[indexes])
+    # print(indexes)
+    # print(seq[indexes])
     first_column = indexes[:, [0]]
+    # print(first_column)
     if direct:
         return np.hstack((first_column, seq[indexes]))
+    # print('indexes')
+    # print(indexes)
     return seq[indexes]
-
-fibs = np.array(fibs)
-prts = np.array(prts)
 # def fij(i, j):
 #     # return 0 if (j<=i) else 2
 #     return max(i-j, 0)
@@ -125,23 +129,18 @@ prts = np.array(prts)
 
 def grid2(seq):
     n = len(seq)
-    frame = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
-    # indexes = np.fromfunction((lambda i,j: max(i-j, 0)), (n-1, n-1), dtype=int)
-    # indexes = np.fromfunction((lambda i,j: i-j), (n-1, n-1), dtype=int)
-    # indexes = np.fromfunction((lambda i,j: max(1,2)), (n-1, n-1), dtype=int)
-    # indexes = np.fromfunction(aij, (n-1, n-1), dtype=int)
-    indexes = seq[frame] * np.tri(n-1)
-    # indexes = seq[frame]
-    # indexes = frame * (frame + np.eye(n-1, n-1))
-    # indexes = frame + np.eye(n-1, n-1)
-    # indexes = frame
-    return indexes
+    indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
+    cut_zero = seq[indexes] * np.tri(n-1)
+    # data = np.hstack((np.array(seq)[:(n-1)].reshape(-1,1), np.arange(n-1).reshape(-1,1), seq[indexes]))
+    data = np.hstack((np.array(seq)[1:].reshape(-1,1), np.arange(n-1).reshape(-1,1), cut_zero))
+    return data
 
 print(prts)
 print(fibs)
 # # grid(3, fibs, True)
 print(grid2(fibs))
-print(grid2(fibs)[:7,:6])
+print(grid2(prts))
+print(grid2(fibs)[:17,:48].astype(int))
 print('cats:')
 print(grid2(prts)[:7,:6])
 # row = grid[3]
@@ -156,7 +155,7 @@ print(grid2(fibs))
 # print(fibs[grid2(fibs)])
 # print(fij(1, 45))
 print('end of prog')
-1/0
+# 1/0
 
 
 #######main#settings#####################################
@@ -172,9 +171,9 @@ is_direct = flags_dict.get("--is_direct", is_direct)
 
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
-# grammar_template_name = "polynomial"
+grammar_template_name = "polynomial"
 # grammar_template_name = "rational"
-grammar_template_name = "rational"
+# grammar_template_name = "rational"
 # grammar_template_name = "simplerational"
 # grammar_template_name = "universal"
 # grammar_template_name = "polytrig"
@@ -219,24 +218,43 @@ if order > 0:
 optimizer = 'differential_evolution'
 timeout = np.inf
 
-def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
+# def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
+def oeis_eq_disco(seq_id: str): 
     """Run eq. discovery of given OEIS sequence."""
 
-    data = grid(order, np.array(list(csv[seq_id])), is_direct)
-    variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
-    variable_names = ["n"]+variable_names_ if is_direct else variable_names_
-    variables = [f"'{an_i}'" for an_i in variable_names[:-1]]
+    # data = grid(order, np.array(list(csv[seq_id])), is_direct)
+    data = grid2(np.array(list(csv[seq_id])))
+    print('data shape', data.shape)
+    n = data.shape[0] + 1  # = 50
+    # variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
+    variable_names = ["an", "n"] + [f"an_{i}" for i in range(1, (n-1)+1)]
+    print('len variable_names', len(variable_names))
+    # variable_names = ["n"]+variable_names_ if is_direct else variable_names_
+    # variables = [f"'{an_i}'" for an_i in variable_names[1:]]
+    # print('len variables', len(variables))
     # print(variable_names)
     # print(variables)
     # print(data.shape, type(data), data)
+    q = 1/2
+    p = 6/10
+    pis = [p**i for i in range(1, n-1)]
+    coef = (1-q)/sum(pis)
+    variable_probabilities = np.hstack((np.array([q]), coef*np.array(pis)))
+    # check probs
+    # print('variable_probabilities', variable_probabilities, sum(variable_probabilities))
+    # for i in range(len(variable_probabilities)-1):
+    #     print(variable_probabilities[i]/variable_probabilities[i+1], pis[i]/pis[i+1])
+
 
     np.random.seed(random_seed)
     ED = EqDisco(
-        data = data,
-        task = None,
-        target_variable_index = -1,
+        data=data,
+        task=None,
+        # target_variable_index=-1,
+        target_variable_index=0,
         # variable_names=["an_2", "an_1", "an"],
         variable_names=variable_names,
+        variable_probabilities=variable_probabilities,
         # sample_size = 16,  # for recursive
         # sample_size = 10,  # for direct fib
         sample_size = sample_size,
@@ -248,11 +266,13 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
         generator = "grammar", 
         generator_template_name = grammar_template_name,
         # generator_settings={"variables": ["'an_2'", "'an_1'"],
-        generator_settings={"variables": variables,
-                            # "functions": ["'exp'"],
-                            "functions": ["'sqrt'", "'exp'", ],
-                             "p_T": p_T, "p_R": p_R, "p_F": p_F,
-                             },
+        generator_settings={
+            # "variables": variables,
+            # "functions": ["'exp'"],
+            # "functions": ["'sqrt'", "'exp'", ],
+             "p_T": p_T, "p_R": p_R, 
+             # "p_F": p_F,
+             },
 
         estimation_settings={
             # "verbosity": 3,
@@ -307,7 +327,9 @@ def oeis_eq_disco(seq_id: str, is_direct: bool, order: int):
 
     print(f"=>> Grammar used: \n{ED.generator}\n")
 
-    for i in range(0, 10):
+    1/0
+    # for i in range(0, 10):
+    for i in range(0, 1):
         np.random.seed(i)
         print("seed", i)
         print(ED)
@@ -356,12 +378,13 @@ start_id = "A000045"
 end_id = LAST_ID
 end_id = "A000045"
 
-start_id = "A000041"
-end_id = "A000041"
+# start_id = "A000041"
+# end_id = "A000041"
 
 csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 for seq_id in csv:
-    oeis_eq_disco(seq_id, is_direct, order)
+    # oeis_eq_disco(seq_id, is_direct, order)
+    oeis_eq_disco(seq_id)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
