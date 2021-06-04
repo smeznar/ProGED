@@ -134,7 +134,7 @@ def grid2(seq):
     indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
     cut_zero = seq[indexes] * np.tri(n-1)
     # data = np.hstack((np.array(seq)[:(n-1)].reshape(-1,1), np.arange(n-1).reshape(-1,1), seq[indexes]))
-    data = np.hstack((np.array(seq)[1:].reshape(-1,1), np.arange(n-1).reshape(-1,1), cut_zero))
+    data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
     return data
 
 # print(prts)
@@ -205,6 +205,10 @@ p_F = [0.6, 0.4]
 # if (seq_name, order, is_direct) == ("fibonacci", 2, False):
 #     p_T = [0.4, 0.6]  # for rec fib
 #     p_R = [0.9, 0.1]
+q = 1/2  # For direct Fibonacci.
+# q = 0.01/10  # For recursive Fibonacci.
+# p = 8/10
+p = 3/10
 
 # random_seed = 0
 random_seed = 1  # rec
@@ -212,8 +216,8 @@ random_seed = 1  # rec
 # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
 
-# task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
-task_type = "integer_algebraic"  # Originalno blo nastimano do 5.5.2021.
+task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
+# task_type = "integer_algebraic"  # Originalno blo nastimano do 5.5.2021.
 # If recursive, allways integer algebraic:
 # if order > 0:
 #     task_type = 'integer_algebraic'
@@ -238,10 +242,8 @@ def oeis_eq_disco(seq_id: str):
     # print(variable_names)
     # print(variables)
     # print(data.shape, type(data), data)
-    # q = 1/2
-    q = 0.01/10
-    # p = 8/10
-    p = 3/10
+    # q = q
+    # p = p
     pis = [p**i for i in range(1, (n-1)+1)]
     # pis = [max(p**i, 0) for i in range(1, (n-1)+1)]
     # pis = [p**i+1e-04 for i in range(1, (n-1)+1)]
@@ -379,6 +381,7 @@ print("Running equation discovery for all oeis sequences, "
         # f"=>> is_direct = {is_direct}\n"
         # f"=>> order of equation recursion = {order}\n"
         f"=>> sample_size = {sample_size}\n"
+        f"=>> grammar's q and p = {q} and {p}\n"
         f"=>> grammar_template_name = {grammar_template_name}\n"
         f"=>> generator_settings = {'{'}p_T: {p_T}, p_R: {p_R}{'}'}\n"
         f"=>> optimizer = {optimizer}\n"
