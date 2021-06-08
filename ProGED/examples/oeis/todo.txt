@@ -8,5 +8,6 @@ partitions
 1.6:
 - generalized oeis dataset
 - 10 sequences
+	- manually, sortby: references, number of references, #of links, google, ddg 
 - simple grammar
 
