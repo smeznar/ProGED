@@ -9,6 +9,8 @@ HTML_LENGTH = 10**6
 # MUCH_IDS = 200
 # MUCH_IDS = 50
 
+seqs = pd.read_csv("oeis_selection.csv")
+
  # The data u need
 # user_agent = 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'
 user_agent = 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20000101 Firefox/78.0'
@@ -78,25 +80,31 @@ def search_rank(top=20, goo=True, start=0, end=200):
         return ranksb[:top]
 # print(search_rank(20, goo=False))
 
+# print(search_rank(20))
+
+rankedb = [('A000040', 50600), ('A000045', 44600), ('A000005', 40800), ('A000217', 34000), ('A000002', 32500), ('A000010', 31400), ('A000001', 31100), ('A000041', 25300), ('A000203', 24700), ('A000079', 22200), ('A000290', 21500), ('A000009', 20300), ('A000720', 16600), ('A001221', 16400), ('A001065', 16300), ('A007318', 15900), ('A001227', 15000), ('A000032', 14300), ('A000578', 13800), ('A001157', 13400)]
+rankedb_dict = dict(rankedb)
+print('rankedb_dict', rankedb_dict)
+# rankedb_dict.pop('A000040')
+[rankedb_dict.pop(i) for i in (
+   'A000217',
+   'A000079',
+   'A000290',
+   'A007318',
+   'A000032',)]
+print('manual', rankedb_dict)
+rankedb = list(rankedb_dict.items())
+print(rankedb)
+
+for id_, rank in rankedb[0:30]:
+    print(id_, rank, seqs[id_][0])
+
+# seq = seqs['A000001']
+# print(seq.shape, seq[0], seq[2])
 
 
-print(search_rank(20))
-# refinement = 50
-# [( for i in 200/refinementj
-# for i in [(0,50), (50, 100), (100, 150), (150, 200)]:
 
-# for i in [(50, 100), (100, 150), (150, 200)]:
-# # for i in [(100, 150)]:
-#     print(i)
-#     if i[0]==0:
-#         continue
-#     print(search_rank(20, goo=False, start=i[0], end=i[1]))
 
-# li = {"a": 221, "b": 2, "c": 3}
-# li = [("b", 121), ("z", 2), ("c", 3)]
-# print(li)
-# sorted([(123, 23, 98), (1, 23,54), (32, 12, 53)], key=(lambda x: x[2]))
 
-# print(sorted(li))
 
-# print(time.perf_counter() - start)
+

@@ -1,0 +1,63 @@
+rankedb_dict {'A000040': 50600, 'A000045': 44600, 'A000005': 40800, 'A000217': 34000, 'A000002': 32500, 'A000010': 31400, 'A000001': 31100, 'A000041': 25300, 'A000203': 24700, 'A000079': 22200, 'A000290': 21500, 'A000009': 20300, 'A000720': 16600, 'A001221': 16400, 'A001065': 16300, 'A007318': 15900, 'A001227': 15000, 'A000032': 14300, 'A000578': 13800, 'A001157': 13400}
+manual {'A000040': 50600, 'A000045': 44600, 'A000005': 40800, 'A000002': 32500, 'A000010': 31400, 'A000001': 31100, 'A000041': 25300, 'A000203': 24700, 'A000009': 20300, 'A000720': 16600, 'A001221': 16400, 'A001065': 16300, 'A001227': 15000, 'A000578': 13800, 'A001157': 13400}
+[('A000040', 50600), ('A000045', 44600), ('A000005', 40800), ('A000002', 32500), ('A000010', 31400), ('A000001', 31100), ('A000041', 25300), ('A000203', 24700), ('A000009', 20300), ('A000720', 16600), ('A001221', 16400), ('A001065', 16300), ('A001227', 15000), ('A000578', 13800), ('A001157', 13400)]
+A000040 50600 The prime numbers.
+                    <br><font size=-1>(Formerly M0652 N0241)</font>
+                    
+
+A000045 44600 Fibonacci numbers: F(n) = F(n-1) + F(n-2) with F(0) = 0 and F(1) = 1.
+                    <br><font size=-1>(Formerly M0692 N0256)</font>
+                    
+
+A000005 40800 d(n) (also called tau(n) or sigma_0(n)), the number of divisors of n.
+                    <br><font size=-1>(Formerly M0246 N0086)</font>
+                    
+
+A000002 32500 Kolakoski sequence: a(n) is length of n-th run; a(1) = 1; sequence consists just of 1's and 2's.
+                    <br><font size=-1>(Formerly M0190 N0070)</font>
+                    
+
+A000010 31400 Euler totient function phi(n): count numbers &lt;= n and prime to n.
+                    <br><font size=-1>(Formerly M0299 N0111)</font>
+                    
+
+A000001 31100 Number of groups of order n.
+                    <br><font size=-1>(Formerly M0098 N0035)</font>
+                    
+
+A000041 25300 a(n) is the number of partitions of n (the partition numbers).
+                    <br><font size=-1>(Formerly M0663 N0244)</font>
+                    
+
+A000203 24700 a(n) = sigma(n), the sum of the divisors of n. Also called sigma_1(n).
+                    <br><font size=-1>(Formerly M2329 N0921)</font>
+                    
+
+A000009 20300 Expansion of Product_{m &gt;= 1} (1 + x^m); number of partitions of n into distinct parts; number of partitions of n into odd parts.
+                    <br><font size=-1>(Formerly M0281 N0100)</font>
+                    
+
+A000720 16600 pi(n), the number of primes &lt;= n. Sometimes called PrimePi(n) to distinguish it from the number 3.14159...
+                    <br><font size=-1>(Formerly M0256 N0090)</font>
+                    
+
+A001221 16400 Number of distinct primes dividing n (also called omega(n)).
+                    <br><font size=-1>(Formerly M0056 N0019)</font>
+                    
+
+A001065 16300 Sum of proper divisors (or aliquot parts) of n: sum of divisors of n that are less than n.
+                    <br><font size=-1>(Formerly M2226 N0884)</font>
+                    
+
+A001227 15000 Number of odd divisors of n.
+                    
+                    
+
+A000578 13800 The cubes: a(n) = n^3.
+                    <br><font size=-1>(Formerly M4499 N1905)</font>
+                    
+
+A001157 13400 sigma_2(n): sum of squares of divisors of n.
+                    <br><font size=-1>(Formerly M3799 N1551)</font>
+                    
+

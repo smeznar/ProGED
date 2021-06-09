@@ -1,0 +1,19 @@
+A000009	C	Expansion of Product_{m &gt;= 1} (1 + x^m); number of partitions of n into distinct parts; number of partitions of n into odd parts.	
+A000040	NT	The prime numbers.	
+A000124	C, V	Central polygonal numbers (the Lazy Caterer's sequence): n(n+1)/2 + 1; or, maximal number of pieces formed when slicing a pancake with n cuts.	
+A000219	C, V	Number of planar partitions (or plane partitions) of n.	
+A000292	C, V	Tetrahedral (or triangular pyramidal) numbers: a(n) = C(n+2,3) = n*(n+1)*(n+2)/6.	
+A000720	NT	pi(n), the number of primes &lt;= n. Sometimes called PrimePi(n) to distinguish it from the number 3.14159...	
+A001097	NT	Twin primes.	                    
+A001481	NT	Numbers that are the sum of 2 squares.	
+A001615	NT	Dedekind psi function: n * Product_{p|n, p prime} (1 + 1/p).	
+A002572	C	Number of partitions of 1 into n powers of 1/2; or (according to one definition of &quot;binary&quot;) the number of binary rooted trees.	
+A005230	F	Stern's sequence: a(1) = 1, a(n+1) is the sum of the m preceding terms, where m*(m-1)/2 &lt; n &lt;= m*(m+1)/2 or equivalently m = ceiling((sqrt(8*n+1)-1)/2) = <a href="/A002024" title="n appears n times; a(n) = floor(sqrt(2n) + 1/2).">A002024</a>(n).	
+			
+Plus: Katalanova.
+
+
+Reserve:
+A001045	F	Jacobsthal sequence (or Jacobsthal numbers): a(n) = a(n-1) + 2*a(n-2), with a(0) = 0, a(1) = 1; also a(n) = nearest integer to 2^n/3.	
+A027642	Analysis	Denominator of Bernoulli number B_n.	                    
+

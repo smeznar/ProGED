@@ -177,6 +177,7 @@ grammar_template_name = "polynomial"
 # grammar_template_name = "rational"
 # grammar_template_name = "rational"
 # grammar_template_name = "simplerational"
+# grammar_template_name = "simplerational2"
 # grammar_template_name = "universal"
 # grammar_template_name = "polytrig"
 # grammar_template_name = "trigonometric"
@@ -292,7 +293,8 @@ def oeis_eq_disco(seq_id: str):
             # "variables": variables,
             # "functions": ["'exp'"],
             # "functions": ["'sqrt'", "'exp'", ],
-             "p_T": p_T, "p_R": p_R, 
+             # "p_T": p_T, "p_R": p_R, 
+             "p_R": p_R, 
              # "p_F": p_F,
              },
 

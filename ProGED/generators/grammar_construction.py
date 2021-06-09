@@ -68,6 +68,20 @@ def construct_grammar_simplerational (p_S = [0.2, 0.8], p_P = [0.4, 0.3, 0.3], p
     grammar += construct_production(left="V", items=variables, probs=p_vars)
     return grammar
 
+def construct_grammar_simplerational2 (
+        p_S = [0.2, 0.8], p_P = [0.4, 0.3, 0.3], p_R = [0.4, 0.6],
+        p_M = [0.4, 0.6], p_F = [1], p_vars = [1], functions = ["'exp'"],
+        variables = ["'x'"]):
+    grammar = construct_production(left="S", items=["P '/' R", "P"], probs=p_S)
+    grammar += construct_production(left="P", 
+        items=["P '+' 'C' '*' R", "'C' '*' R", "'C'"], probs=p_P)
+    # grammar += construct_production(left="R", items=["F '(' 'C' '*' M ')'", "M"], probs=p_R)
+    grammar += construct_production(left="R", items=[f"{F} '(' 'C' '*' M ')'" for F in functions] + ["M"], probs=p_R)
+    grammar += construct_production(left="M", items=["M '*' V", "V"], probs=p_M)
+    grammar += construct_production(left="F", items=functions, probs=p_F)
+    grammar += construct_production(left="V", items=variables, probs=p_vars)
+    return grammar
+
 def construct_grammar_rational (p_S = [0.4, 0.6], p_T = [0.4, 0.6], p_vars = [1], p_R = [0.6, 0.4], p_F = [1],
                                   functions = ["'exp'"], variables = ["'x'"]):
     grammar = construct_production(left="S", items=["'(' E ')' '/' '(' E ')'"], probs=[1])
@@ -248,6 +262,7 @@ GRAMMAR_LIBRARY = {
     "universal-dim": construct_grammar_universal_dim,
     "rational": construct_grammar_rational,
     "simplerational": construct_grammar_simplerational,
+    "simplerational2": construct_grammar_simplerational2,
     "polytrig": construct_grammar_polytrig,
     "trigonometric": construct_grammar_trigonometric,
     "polynomial": construct_grammar_polynomial}
