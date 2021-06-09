@@ -1,0 +1,439 @@
+Index(['A000001', 'A000002', 'A000005', 'A000009', 'A000010', 'A000014',
+       'A000019', 'A000029', 'A000031', 'A000032',
+       ...
+       'A038566', 'A038567', 'A038568', 'A038569', 'A049310', 'A070939',
+       'A074206', 'A104725', 'A226898', 'A246655'],
+      dtype='object', length=108) <class 'str'>
+A000001
+number of results in Bing: 
+ 31100
+A000001 has ranks Bing:31100.
+A000002
+number of results in Bing: 
+ 32500
+A000002 has ranks Bing:32500.
+A000005
+number of results in Bing: 
+ 40800
+A000005 has ranks Bing:40800.
+A000009
+number of results in Bing: 
+ 20300
+A000009 has ranks Bing:20300.
+A000010
+number of results in Bing: 
+ 31400
+A000010 has ranks Bing:31400.
+A000014
+number of results in Bing: 
+ 12800
+A000014 has ranks Bing:12800.
+A000019
+number of results in Bing: 
+ 8240
+A000019 has ranks Bing:8240.
+A000029
+number of results in Bing: 
+ 9770
+A000029 has ranks Bing:9770.
+A000031
+number of results in Bing: 
+ 10300
+A000031 has ranks Bing:10300.
+A000032
+number of results in Bing: 
+ 14300
+A000032 has ranks Bing:14300.
+A000035
+number of results in Bing: 
+ 8180
+A000035 has ranks Bing:8180.
+A000040
+number of results in Bing: 
+ 50600
+A000040 has ranks Bing:50600.
+A000041
+number of results in Bing: 
+ 25300
+A000041 has ranks Bing:25300.
+A000045
+number of results in Bing: 
+ 44600
+A000045 has ranks Bing:44600.
+A000048
+number of results in Bing: 
+ 9650
+A000048 has ranks Bing:9650.
+A000069
+number of results in Bing: 
+ 10700
+A000069 has ranks Bing:10700.
+A000079
+number of results in Bing: 
+ 22200
+A000079 has ranks Bing:22200.
+A000120
+number of results in Bing: 
+ 12400
+A000120 has ranks Bing:12400.
+A000123
+number of results in Bing: 
+ 6750
+A000123 has ranks Bing:6750.
+A000124
+number of results in Bing: 
+ 8810
+A000124 has ranks Bing:8810.
+A000161
+number of results in Bing: 
+ 4950
+A000161 has ranks Bing:4950.
+A000203
+number of results in Bing: 
+ 24700
+A000203 has ranks Bing:24700.
+A000204
+number of results in Bing: 
+ 6970
+A000204 has ranks Bing:6970.
+A000217
+number of results in Bing: 
+ 34000
+A000217 has ranks Bing:34000.
+A000219
+number of results in Bing: 
+ 4830
+A000219 has ranks Bing:4830.
+A000225
+number of results in Bing: 
+ 8320
+A000225 has ranks Bing:8320.
+A000290
+number of results in Bing: 
+ 21500
+A000290 has ranks Bing:21500.
+A000292
+number of results in Bing: 
+ 9800
+A000292 has ranks Bing:9800.
+A000326
+number of results in Bing: 
+ 8260
+A000326 has ranks Bing:8260.
+A000330
+number of results in Bing: 
+ 8360
+A000330 has ranks Bing:8360.
+A000578
+number of results in Bing: 
+ 13800
+A000578 has ranks Bing:13800.
+A000583
+number of results in Bing: 
+ 5530
+A000583 has ranks Bing:5530.
+A000593
+number of results in Bing: 
+ 4410
+A000593 has ranks Bing:4410.
+A000594
+number of results in Bing: 
+ 5790
+A000594 has ranks Bing:5790.
+A000688
+number of results in Bing: 
+ 5590
+A000688 has ranks Bing:5590.
+A000720
+number of results in Bing: 
+ 16600
+A000720 has ranks Bing:16600.
+A000793
+number of results in Bing: 
+ 4380
+A000793 has ranks Bing:4380.
+A000796
+number of results in Bing: 
+ 8640
+A000796 has ranks Bing:8640.
+A000959
+number of results in Bing: 
+ 5400
+A000959 has ranks Bing:5400.
+A000961
+number of results in Bing: 
+ 6490
+A000961 has ranks Bing:6490.
+A001034
+number of results in Bing: 
+ 3670
+A001034 has ranks Bing:3670.
+A001037
+number of results in Bing: 
+ 4550
+A001037 has ranks Bing:4550.
+A001045
+number of results in Bing: 
+ 7480
+A001045 has ranks Bing:7480.
+A001055
+number of results in Bing: 
+ 6810
+A001055 has ranks Bing:6810.
+A001057
+number of results in Bing: 
+ 3500
+A001057 has ranks Bing:3500.
+A001065
+number of results in Bing: 
+ 16300
+A001065 has ranks Bing:16300.
+A001097
+number of results in Bing: 
+ 4480
+A001097 has ranks Bing:4480.
+A001113
+number of results in Bing: 
+ 7390
+A001113 has ranks Bing:7390.
+A001157
+number of results in Bing: 
+ 13400
+A001157 has ranks Bing:13400.
+A001221
+number of results in Bing: 
+ 16400
+A001221 has ranks Bing:16400.
+A001222
+number of results in Bing: 
+ 9860
+A001222 has ranks Bing:9860.
+A001227
+number of results in Bing: 
+ 15000
+A001227 has ranks Bing:15000.
+A001285
+number of results in Bing: 
+ 3300
+A001285 has ranks Bing:3300.
+A001358
+number of results in Bing: 
+ 10000
+A001358 has ranks Bing:10000.
+A001405
+number of results in Bing: 
+ 4420
+A001405 has ranks Bing:4420.
+A001462
+number of results in Bing: 
+ 3670
+A001462 has ranks Bing:3670.
+A001481
+number of results in Bing: 
+ 4750
+A001481 has ranks Bing:4750.
+A001511
+number of results in Bing: 
+ 5270
+A001511 has ranks Bing:5270.
+A001615
+number of results in Bing: 
+ 4980
+A001615 has ranks Bing:4980.
+A001969
+number of results in Bing: 
+ 6540
+A001969 has ranks Bing:6540.
+A002033
+number of results in Bing: 
+ 3360
+A002033 has ranks Bing:3360.
+A002083
+number of results in Bing: 
+ 2690
+A002083 has ranks Bing:2690.
+A002113
+number of results in Bing: 
+ 6060
+A002113 has ranks Bing:6060.
+A002322
+number of results in Bing: 
+ 5450
+A002322 has ranks Bing:5450.
+A002378
+number of results in Bing: 
+ 8060
+A002378 has ranks Bing:8060.
+A002487
+number of results in Bing: 
+ 6130
+A002487 has ranks Bing:6130.
+A002530
+number of results in Bing: 
+ 2550
+A002530 has ranks Bing:2550.
+A002531
+number of results in Bing: 
+ 2270
+A002531 has ranks Bing:2270.
+A002572
+number of results in Bing: 
+ 2550
+A002572 has ranks Bing:2550.
+A002620
+number of results in Bing: 
+ 5230
+A002620 has ranks Bing:5230.
+A002654
+number of results in Bing: 
+ 7290
+A002654 has ranks Bing:7290.
+A002808
+number of results in Bing: 
+ 7870
+A002808 has ranks Bing:7870.
+A003136
+number of results in Bing: 
+ 2910
+A003136 has ranks Bing:2910.
+A003484
+number of results in Bing: 
+ 1510
+A003484 has ranks Bing:1510.
+A004011
+number of results in Bing: 
+ 2310
+A004011 has ranks Bing:2310.
+A004018
+number of results in Bing: 
+ 4370
+A004018 has ranks Bing:4370.
+A004526
+number of results in Bing: 
+ 6160
+A004526 has ranks Bing:6160.
+A005100
+number of results in Bing: 
+ 9520
+A005100 has ranks Bing:9520.
+A005101
+number of results in Bing: 
+ 7250
+A005101 has ranks Bing:7250.
+A005117
+number of results in Bing: 
+ 9930
+A005117 has ranks Bing:9930.
+A005230
+number of results in Bing: 
+ 1770
+A005230 has ranks Bing:1770.
+A005408
+number of results in Bing: 
+ 10800
+A005408 has ranks Bing:10800.
+A005811
+number of results in Bing: 
+ 2550
+A005811 has ranks Bing:2550.
+A005843
+number of results in Bing: 
+ 10500
+A005843 has ranks Bing:10500.
+A006530
+number of results in Bing: 
+ 7790
+A006530 has ranks Bing:7790.
+A007318
+number of results in Bing: 
+ 15900
+A007318 has ranks Bing:15900.
+A008275
+number of results in Bing: 
+ 4840
+A008275 has ranks Bing:4840.
+A008277
+number of results in Bing: 
+ 6810
+A008277 has ranks Bing:6810.
+A008279
+number of results in Bing: 
+ 4100
+A008279 has ranks Bing:4100.
+A008292
+number of results in Bing: 
+ 5860
+A008292 has ranks Bing:5860.
+A008683
+number of results in Bing: 
+ 9790
+A008683 has ranks Bing:9790.
+A010060
+number of results in Bing: 
+ 6860
+A010060 has ranks Bing:6860.
+A018252
+number of results in Bing: 
+ 85
+A018252 has ranks Bing:85.
+A020639
+number of results in Bing: 
+ 80
+A020639 has ranks Bing:80.
+A020652
+number of results in Bing: 
+ 74
+A020652 has ranks Bing:74.
+A020653
+number of results in Bing: 
+ 86
+A020653 has ranks Bing:86.
+A025487
+number of results in Bing: 
+ 90
+A025487 has ranks Bing:90.
+A027642
+number of results in Bing: 
+ 7150
+A027642 has ranks Bing:7150.
+A038566
+number of results in Bing: 
+ 11500
+A038566 has ranks Bing:11500.
+A038567
+number of results in Bing: 
+ 67
+A038567 has ranks Bing:67.
+A038568
+number of results in Bing: 
+ 92
+A038568 has ranks Bing:92.
+A038569
+number of results in Bing: 
+ 52
+A038569 has ranks Bing:52.
+A049310
+number of results in Bing: 
+ 50
+A049310 has ranks Bing:50.
+A070939
+number of results in Bing: 
+ 34
+A070939 has ranks Bing:34.
+A074206
+number of results in Bing: 
+ 67
+A074206 has ranks Bing:67.
+A104725
+number of results in Bing: 
+ 967
+A104725 has ranks Bing:967.
+A226898
+number of results in Bing: 
+ 40
+A226898 has ranks Bing:40.
+A246655
+number of results in Bing: 
+ 3760
+A246655 has ranks Bing:3760.
+[('A000040', 50600), ('A000045', 44600), ('A000005', 40800), ('A000217', 34000), ('A000002', 32500), ('A000010', 31400), ('A000001', 31100), ('A000041', 25300), ('A000203', 24700), ('A000079', 22200), ('A000290', 21500), ('A000009', 20300), ('A000720', 16600), ('A001221', 16400), ('A001065', 16300), ('A007318', 15900), ('A001227', 15000), ('A000032', 14300), ('A000578', 13800), ('A001157', 13400)]
