@@ -176,8 +176,8 @@ seq_name = "general_wnb"
 grammar_template_name = "polynomial"
 # grammar_template_name = "rational"
 # grammar_template_name = "rational"
-# grammar_template_name = "simplerational"
-# grammar_template_name = "simplerational2"
+grammar_template_name = "simplerational"
+grammar_template_name = "simplerational2"
 # grammar_template_name = "universal"
 # grammar_template_name = "polytrig"
 # grammar_template_name = "trigonometric"
@@ -187,22 +187,35 @@ sample_size = 4
 # sample_size = 2
 # sample_size = 3
 # sample_size = 6
+sample_size = 10
 # sample_size = 16
 # sample_size = 15
 # sample_size = 20
-# sample_size = 20
-sample_size = 100
+# sample_size = 47
+# sample_size = 30
+sample_size = 50
+# sample_size = 100
 # sample_size = 1000
 sample_size = int(flags_dict.get("--sample_size", sample_size))
 ### lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
 # lower_upper_bounds = (-10, 10)  # recursive
 lower_upper_bounds = (-5, 5)  # direct
+lower_upper_bounds = (-4, 4)  # new grammar
 # lower_upper_bounds = (-2, 2)  # direct
 #########################################################
 
 p_T = [0.4, 0.6]  # default settings, does nothing
 p_R = [0.6, 0.4]
-p_F = [0.6, 0.4]
+p_F = [0.1, 0.8, 0.1]
+# p_F = [0.333, 0.333, 0.333]
+generator_settings = {
+    # "variables": variables,
+    # "functions": ["'exp'"],
+    "functions": ["'sqrt'", "'exp'", "'log'",],
+     # "p_T": p_T, "p_R": p_R, 
+     # "p_R": p_R, 
+     "p_F": p_F,
+     }
 # if (seq_name, order, is_direct) == ("fibonacci", 2, False):
 #     p_T = [0.4, 0.6]  # for rec fib
 #     p_R = [0.9, 0.1]
@@ -212,7 +225,8 @@ q = 1/2  # For direct Fibonacci.
 p = 3/10
 
 # random_seed = 0
-random_seed = 1  # rec
+# random_seed = 1  # rec
+random_seed = 5  # new grammar
 # seed 0 , size 20 (16)
 # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
@@ -268,7 +282,6 @@ def oeis_eq_disco(seq_id: str):
     #     print(variable_probabilities[i]/variable_probabilities[i+1], pis[i]/pis[i+1])
     # 1/0
 
-
     np.random.seed(random_seed)
     ED = EqDisco(
         data=data,
@@ -280,23 +293,16 @@ def oeis_eq_disco(seq_id: str):
         variable_probabilities=variable_probabilities,
         # sample_size = 16,  # for recursive
         # sample_size = 10,  # for direct fib
-        sample_size = sample_size,
+        sample_size=sample_size,
         # sample_size = 50,  # for recursive
         # sample_size = 38,  # for recursive
         # sample_size = 100,  # for recursive
-        verbosity = 0,
+        verbosity=0,
         # verbosity = 3,
-        generator = "grammar", 
+        generator="grammar", 
         generator_template_name = grammar_template_name,
         # generator_settings={"variables": ["'an_2'", "'an_1'"],
-        generator_settings={
-            # "variables": variables,
-            # "functions": ["'exp'"],
-            # "functions": ["'sqrt'", "'exp'", ],
-             # "p_T": p_T, "p_R": p_R, 
-             "p_R": p_R, 
-             # "p_F": p_F,
-             },
+        generator_settings=generator_settings,
 
         estimation_settings={
             # "verbosity": 3,
@@ -353,7 +359,6 @@ def oeis_eq_disco(seq_id: str):
 
     # 1/0
     # for i in range(0, 10):
-    # for i in range(0, 10):
     #     np.random.seed(i)
     #     print("seed", i)
     #     print(ED)
@@ -385,10 +390,13 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> sample_size = {sample_size}\n"
         f"=>> grammar's q and p = {q} and {p}\n"
         f"=>> grammar_template_name = {grammar_template_name}\n"
-        f"=>> generator_settings = {'{'}p_T: {p_T}, p_R: {p_R}{'}'}\n"
+        # f"=>> generator_settings = {'{'}p_T: {p_T}, p_R: {p_R}{'}'}\n"
+        f"=>> generator_settings = {generator_settings}\n"
         f"=>> optimizer = {optimizer}\n"
         f"=>> task_type = {task_type}\n"
         f"=>> timeout = {timeout}\n"
+        f"=>> random_seed = {random_seed}\n"
+        f"=>> lower_upper_bounds = {lower_upper_bounds}\n"
         f"=>> number of terms in every sequence = {terms_count}\n"
         f"=>> number of all considered sequences = {seqs_count}\n"
         f"=>> list of considered sequences = {list(csv.columns)}"
@@ -416,43 +424,43 @@ print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds, i.e. {cpu_time/60} minutes"
       f" or {cpu_time/3600} hours.")
 
-def pretty_results(seq_name="fibonacci", is_direct=is_direct, order=order):
-    """Print results in prettier form."""
-    if seq_name =="fibonacci":
-        assert oeis == fibs
-    if seq_name=="fibonacci" and is_direct and order==0:  # i.e. direct fib
-        # is_fibonacci_direct = True
-        # if is_fibonacci_direct:
-        phi = (1+5**(1/2))/2
-        c0, c1 = 1/5**(1/2), np.log(phi)
-        print(f" m c0: {c0}", f"c1:{c1}")
-        model = ED.models[5]  # direct fib
-    elif seq_name=="fibonacci" and not is_direct and order != 0:  # i.e. rec fib
-        model = ED.models[-1]
-    elif seq_name=="primes" and not is_direct and order != 0:  # i.e. rec primes
-        model = ED.models[7]  # primes
-    else:    
-        model = ED.models[-1]  # in general to update
+# def pretty_results(seq_name="fibonacci", is_direct=is_direct, order=order):
+#     """Print results in prettier form."""
+#     if seq_name =="fibonacci":
+#         assert oeis == fibs
+#     if seq_name=="fibonacci" and is_direct and order==0:  # i.e. direct fib
+#         # is_fibonacci_direct = True
+#         # if is_fibonacci_direct:
+#         phi = (1+5**(1/2))/2
+#         c0, c1 = 1/5**(1/2), np.log(phi)
+#         print(f" m c0: {c0}", f"c1:{c1}")
+#         model = ED.models[5]  # direct fib
+#     elif seq_name=="fibonacci" and not is_direct and order != 0:  # i.e. rec fib
+#         model = ED.models[-1]
+#     elif seq_name=="primes" and not is_direct and order != 0:  # i.e. rec primes
+#         model = ED.models[7]  # primes
+#     else:    
+#         model = ED.models[-1]  # in general to update
         
-    # an = model.lambdify()
-    an = model.lambdify(*np.round(model.params)) if order != 0 else model.lambdify(*model.params)
-    print("model:", model.get_full_expr())#, "[f(1), f(2), f(3)]:", an(1), an(2), an(3))
+#     # an = model.lambdify()
+#     an = model.lambdify(*np.round(model.params)) if order != 0 else model.lambdify(*model.params)
+#     print("model:", model.get_full_expr())#, "[f(1), f(2), f(3)]:", an(1), an(2), an(3))
 
-    cache = oeis[:order]  # update this
-    # cache = list(oeis[:order])
-    for n in range(order, len(oeis)):
-        prepend = [n] if is_direct else []
-        append = cache[-order:] if (order != 0) else []
-        cache += [int(np.round(an(*(prepend+append))))]
-        # print(prepend, append, prepend + append, (prepend + append), cache, an)
-    res = cache
-    print(oeis)
-    print(res)
-    error = 0
-    for i, j in zip(res, oeis):
-        print(i,j, i-j, error)
-        error += abs(i-j)
-    print(error)
-    return
-# pretty_results(seq_name=seq_name, is_direct=is_direct, order=order)
+#     cache = oeis[:order]  # update this
+#     # cache = list(oeis[:order])
+#     for n in range(order, len(oeis)):
+#         prepend = [n] if is_direct else []
+#         append = cache[-order:] if (order != 0) else []
+#         cache += [int(np.round(an(*(prepend+append))))]
+#         # print(prepend, append, prepend + append, (prepend + append), cache, an)
+#     res = cache
+#     print(oeis)
+#     print(res)
+#     error = 0
+#     for i, j in zip(res, oeis):
+#         print(i,j, i-j, error)
+#         error += abs(i-j)
+#     print(error)
+#     return
+# # pretty_results(seq_name=seq_name, is_direct=is_direct, order=order)
 

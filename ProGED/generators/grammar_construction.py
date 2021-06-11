@@ -75,10 +75,10 @@ def construct_grammar_simplerational2 (
     grammar = construct_production(left="S", items=["P '/' R", "P"], probs=p_S)
     grammar += construct_production(left="P", 
         items=["P '+' 'C' '*' R", "'C' '*' R", "'C'"], probs=p_P)
-    # grammar += construct_production(left="R", items=["F '(' 'C' '*' M ')'", "M"], probs=p_R)
-    grammar += construct_production(left="R", items=[f"{F} '(' 'C' '*' M ')'" for F in functions] + ["M"], probs=p_R)
+    grammar += construct_production(left="R", 
+        items=[f"{F} '(' 'C' '*' M ')'" for F in functions] + ["M"],
+        probs= list(0.4*np.array(p_F)) + [p_R[1]])
     grammar += construct_production(left="M", items=["M '*' V", "V"], probs=p_M)
-    grammar += construct_production(left="F", items=functions, probs=p_F)
     grammar += construct_production(left="V", items=variables, probs=p_vars)
     return grammar
 
