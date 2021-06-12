@@ -187,7 +187,7 @@ sample_size = 4
 # sample_size = 2
 # sample_size = 3
 # sample_size = 6
-sample_size = 10
+# sample_size = 10
 # sample_size = 16
 # sample_size = 15
 # sample_size = 20
@@ -206,8 +206,8 @@ lower_upper_bounds = (-4, 4)  # new grammar
 
 p_T = [0.4, 0.6]  # default settings, does nothing
 p_R = [0.6, 0.4]
-p_F = [0.1, 0.8, 0.1]
-# p_F = [0.333, 0.333, 0.333]
+# p_F = [0.1, 0.8, 0.1]
+p_F = [0.333, 0.333, 0.333]
 generator_settings = {
     # "variables": variables,
     # "functions": ["'exp'"],
@@ -216,6 +216,7 @@ generator_settings = {
      # "p_R": p_R, 
      "p_F": p_F,
      }
+
 # if (seq_name, order, is_direct) == ("fibonacci", 2, False):
 #     p_T = [0.4, 0.6]  # for rec fib
 #     p_R = [0.9, 0.1]
@@ -246,11 +247,11 @@ def oeis_eq_disco(seq_id: str):
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
     data = grid2(np.array(list(csv[seq_id])))
     # data = grid2(np.array(list(csv[seq_id])[:2]))
-    print('data shape', data.shape)
+    #%# print('data shape', data.shape)
     n = data.shape[0] + 1  # = 50
     # variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
     variable_names = ["an", "n"] + [f"an_{i}" for i in range(1, (n-1)+1)]
-    print('len variable_names', len(variable_names))
+    #%# print('len variable_names', len(variable_names))
     # variable_names = ["n"]+variable_names_ if is_direct else variable_names_
     # variables = [f"'{an_i}'" for an_i in variable_names[1:]]
     # print('len variables', len(variables))
@@ -262,21 +263,21 @@ def oeis_eq_disco(seq_id: str):
     pis = [p**i for i in range(1, (n-1)+1)]
     # pis = [max(p**i, 0) for i in range(1, (n-1)+1)]
     # pis = [p**i+1e-04 for i in range(1, (n-1)+1)]
-    print(pis)
-    print(len(pis), 'len pis')
+    # print(pis)
+    # print(len(pis), 'len pis')
     coef = (1-q)/sum(pis)
     # pis = coef * np.array(pis) + 1e-04
     pis = coef * np.array(pis) + 1e-03
     coef = (1-q)/sum(pis)
     variable_probabilities = np.hstack((np.array([q]), coef*np.array(pis)))
-    print(variable_probabilities)
-    print(min(variable_probabilities))
+    # print(variable_probabilities)
+    # print(min(variable_probabilities))
     # variable_probabilities = [0.00001, 0.99999]
     # variable_probabilities = [1, 0]
     # 1/0
 
     # check probs
-    print('variable_probabilities', variable_probabilities, sum(variable_probabilities), len(variable_probabilities))
+    #%# print('variable_probabilities', variable_probabilities, sum(variable_probabilities), len(variable_probabilities))
     # print('variable_probabilities', variable_probabilities, sum(variable_probabilities))
     # for i in range(len(variable_probabilities)-1):
     #     print(variable_probabilities[i]/variable_probabilities[i+1], pis[i]/pis[i+1])
@@ -383,6 +384,43 @@ def oeis_eq_disco(seq_id: str):
 # oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # oeis_eq_disco("A000045", is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # Run eq. disco. on all oeis sequences:
+
+start = time.perf_counter()
+FIRST_ID = "A000000"
+LAST_ID = "A246655"
+# last_run = "A002378"
+
+start_id = FIRST_ID
+# start_id = "A000045"
+end_id = LAST_ID
+# end_id = "A000045"
+
+# start_id = "A000041"
+# end_id = "A000041"
+
+selection = (
+        "A000009", 
+        "A000040", 
+        "A000045", 
+        "A000124", 
+        "A000219", 
+        "A000292", 
+        "A000720", 
+        "A001045", 
+        "A001097", 
+        "A001481", 
+        "A001615", 
+        "A002572", 
+        "A005230", 
+        "A027642", 
+        )
+# selection = ("A000045", )
+
+csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
+csv_ids = list(csv.columns)
+csv_ids = selection
+print(len(selection))
+
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
         # f"=>> is_direct = {is_direct}\n"
@@ -398,24 +436,11 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> random_seed = {random_seed}\n"
         f"=>> lower_upper_bounds = {lower_upper_bounds}\n"
         f"=>> number of terms in every sequence = {terms_count}\n"
-        f"=>> number of all considered sequences = {seqs_count}\n"
-        f"=>> list of considered sequences = {list(csv.columns)}"
-    )
-start = time.perf_counter()
-FIRST_ID = "A000000"
-LAST_ID = "A246655"
-# last_run = "A002378"
+        f"=>> number of all considered sequences = {len(csv_ids)}\n"
+        f"=>> list of considered sequences = {csv_ids}"
+        )
 
-start_id = FIRST_ID
-start_id = "A000045"
-end_id = LAST_ID
-end_id = "A000045"
-
-# start_id = "A000041"
-# end_id = "A000041"
-
-csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
-for seq_id in csv:
+for seq_id in csv_ids:
     # oeis_eq_disco(seq_id, is_direct, order)
     oeis_eq_disco(seq_id)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
