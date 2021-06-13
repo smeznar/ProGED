@@ -69,12 +69,13 @@ def construct_grammar_simplerational (p_S = [0.2, 0.8], p_P = [0.4, 0.3, 0.3], p
     return grammar
 
 def construct_grammar_simplerational2 (
-        p_S = [0.2, 0.8], p_P = [0.4, 0.3, 0.3], p_R = [0.4, 0.6],
+        p_S = [0.2, 0.8], p_P = [0.57, 0.43], p_R = [0.4, 0.6],
         p_M = [0.4, 0.6], p_F = [1], p_vars = [1], functions = ["'exp'"],
         variables = ["'x'"]):
     grammar = construct_production(left="S", items=["P '/' R", "P"], probs=p_S)
     grammar += construct_production(left="P", 
-        items=["P '+' 'C' '*' R", "'C' '*' R", "'C'"], probs=p_P)
+        # items=["P '+' 'C' '*' R", "'C' '*' R", "'C'"], probs=p_P)
+        items=["P '+' 'C' '*' R", "'C'"], probs=p_P)
     grammar += construct_production(left="R", 
         items=[f"{F} '(' 'C' '*' M ')'" for F in functions] + ["M"],
         probs= list(0.4*np.array(p_F)) + [p_R[1]])
