@@ -414,7 +414,7 @@ selection = (
         "A005230", 
         "A027642", 
         )
-# selection = ("A000045", )
+selection = ("A000045", )
 
 csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 csv_ids = list(csv.columns)

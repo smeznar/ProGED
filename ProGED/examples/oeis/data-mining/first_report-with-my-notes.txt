@@ -1,12 +1,83 @@
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 50
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = simplerational2
+=>> generator_settings = {'functions': ["'sqrt'", "'exp'", "'log'"], 'p_F': [0.333, 0.333, 0.333]}
+=>> optimizer = differential_evolution
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 5
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence = 50
+=>> number of all considered sequences = 14
+=>> list of considered sequences = ('A000009', 'A000040', 'A000045', 'A000124', 'A000219', 'A000292', 'A000720', 'A001045', 'A001097', 'A001481', 'A001615', 'A002572', 'A005230', 'A027642')
+=>> Grammar used: 
+Grammar with 61 productions (start state = S)
+    S -> P '/' R [0.2]
+    S -> P [0.8]
+    P -> P '+' 'C' '*' R [0.4]
+    P -> 'C' '*' R [0.3]
+    P -> 'C' [0.3]
+    R -> 'sqrt' '(' 'C' '*' M ')' [0.133253]
+    R -> 'exp' '(' 'C' '*' M ')' [0.133253]
+    R -> 'log' '(' 'C' '*' M ')' [0.133253]
+    R -> M [0.60024]
+    M -> M '*' V [0.4]
+    M -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
 
-2
-<class 'str'> 2.767240e+05
-utput will be logged in: outp
-23
-len(specs) 1
-seqs extracted: 14
-length of text of one seq's result: 13014
-log_length: 2.767240e+05
+ModelBox: 44 models
+
+sequences extracted: 14
 A000009
 check fitting 44 44
 error: 0.8282648275336897      model: 1.659*an_1 - 0.679*an_3 + 0.138       
@@ -55,7 +126,7 @@ error: 1000000000.0            model: -0.710*an_1 + 0.324*log(2.349*an_1) - 1.85
 error: 1000000000.0            model: -1.034*an_1*n**2 + 2.975*log(-1.327*n)
 
 
-A000040
+A000040     (no disc)
 check fitting 44 44
 error: 6.518908073445741       model: 0.703*an_1 + 0.144*an_2 + 0.802*n + 0.428
 error: 6.667923798151011       model: 0.843*an_1 + 0.113*n + 0.697*sqrt(n**2)
@@ -103,7 +174,7 @@ error: 1000000000.0            model: -3.922*an_1**2*an_3*n**2 - 3.677*n**2 - 2.
 error: 1000000000.0            model: 1.163*an_1 - 2.766*log(0.350*an_1) + 2.787*log(-1.317*an_1**5*an_2*n**3)
 
 
-A000045
+A000045 (fibonacci checked)
 check fitting 44 44
 error: 0.002525008139111645    model: 0.447*exp(0.481*n)                            
 error: 0.0186240574568429      model: 0.951*an_1 + 1.078*an_2 - 0.003*n + 0.095
@@ -151,7 +222,7 @@ error: 1.998068007863679e+18   model: 4.0*n
 error: 1.9980681654039537e+18  model: 0                                                                     
 
 
-A000124
+A000124  (discovered)
 check fitting 44 44
 error: 9.726250818315227e-11   model: 0.999*an_1 - 1.526*n + 2.526*sqrt(n**2)
 error: 1.0575367586859861e-06  model: 0.992*an_1 + 0.007*an_2 + 1.007*n - 0.006
@@ -201,8 +272,8 @@ error: 1000000000.0            model: 0.837*an_1**2*an_3*n**2 - 0.718*n**2 + 3.4
 error: 1000000000.0            model: 1.658*an_2*an_4*n/log(-2.794*an_1*an_2)         
 error: 1000000000.0            model: -2.904*an_1 + 1.359*log(2.313*an_1) + 3.329*log(3.923*an_1**5*an_2*n**3)
 
-
-A000219
+seq. 4
+A000219 (quick checked (no disc))
 check fitting 44 44
 error: 100000000               model: 3.137*an_1**2*n**2 + 0.464*an_29*n + 2.708*an_34 - 4.134 - 0.150*exp(-4.708*an_2)
 error: 100000000               model: -0.335*sqrt(an_1) - 3.925*an_35 + 0.809*n + 0.442 - 2.581*exp(-4.688*an_1**2*n**2)
@@ -250,7 +321,7 @@ error: 2.1909218965269489e+18  model: -1.998*n/an_1
 error: 2.1909218965269489e+18  model: 0                                                                     
 
 
-A000292
+A000292     (quick checked, discovered)
 check fitting 44 44
 error: 3.203874099327748e-07   model: 1.999*an_1 - 0.999*an_2 + 1.000*n - 0.000
     {-1} => discovered (seems True)   a_n = 2*a_{n-1} - a_{n-2} + n
@@ -300,7 +371,7 @@ error: 1000000000.0            model: -0.615*log(2.240*an_1*n)
 error: 1000000000.0            model: -2.540*an_1*n**2 - 3.347*log(-0.037*n)
 
 
-A000720
+A000720     (no disc?)
 check fitting 44 44
 error: 0.12588616768006808     model: 0.364*an_1 + 1.030*sqrt(n) + 0.001*n**2
 error: 0.12897762911839303     model: 0.209*n*exp(0.009*an_2) + 3.468 - 2.088*exp(-0.010*n**2)
@@ -348,10 +419,17 @@ error: 1000000000.0            model: -1.159*n/an_1
 error: 1000000000.0            model: -0.063*log(-1.398*an_1*n)                     
 
 
-A001045
+A001045  Jacobsthal sequence   (quick checked, discovered)
+[ a_n = a_{n-1} + 2*a_{n-2} ]
+[ a_n =? [2**n/3] , a lot formulas]
 check fitting 44 44
 error: 0.020408962209893834    model: 1.000*an_1 + 1.998*an_2                         
+    {-1, 1, 2} => discovered (True)   a_n = a_{n-1} + 2*a_{n-2} 
 error: 0.10008550924094338     model: 2.956*an_1 - 3.824*an_3 - 0.029    
+    {-1} => discovered (True)   a_n = 3*a_{n-1} - 4*a_{n-3} =
+                                    = a_{n-1} + 2*a_{n-1} - 4*a_{n-3}
+                                    = a_{n-1} + (2*a_{n-2}+4*a_{n-3}) - 4*a_{n-3}
+                                    = a_{n-1} + 2*a_{n-2} 
 error: 0.12861693170065824     model: 1.025*an_1 + 1.948*an_2 - 0.015*n + 0.087
 error: 0.9913482917708217      model: 3.999*an_2 + 0.043                            
 error: 100000000               model: 3.137*an_1**2*n**2 + 0.464*an_29*n + 2.708*an_34 - 4.134 - 0.150*exp(-4.708*an_2)
@@ -395,9 +473,8 @@ error: 9.581637189905048e+26   model: 3.899*n
 error: 9.58163718993315e+26    model: 3.755                                                      
 error: 9.581637189933723e+26   model: 0                                                                     
 
-
-A001097
-check fitting 44 44
+seq. 8 
+A001097 aka. Twin primes    (quick checked, no disc.)
 error: 128.21192135532627      model: 0.047*an_2*n/log(0.682*n) + 4.376*sqrt(n**2)
 error: 137.06989163559825      model: 0.427*an_1 + 0.606*an_2 + 0.286*n + 4.0
 error: 152.10646634079606      model: 0.499*an_1 + 0.578*an_2                       
@@ -444,7 +521,7 @@ error: 1000000000.0            model: 2.733*an_1 + 1.017*log(-1.154*an_1) - 1.33
 error: 1000000000.0            model: 2.378*an_1*n**2 - 0.260*log(-3.781*n)
 
 
-A001481
+A001481     (quick checked, no disc.)
 check fitting 44 44
 error: 1.284178938772559       model: 2.129*n*exp(0.001*an_2) - 4.0 + 2.832*exp(-0.076*n**2)
 error: 1.4784606228448307      model: -3.683*sqrt(n) + 2.863*n                        
@@ -491,8 +568,8 @@ error: 1000000000.0            model: -2.729*an_1 + 0.070*log(1.154*an_1) - 0.05
 error: 1000000000.0            model: -1.439*n/an_1                                              
 error: 1000000000.0            model: 2.500*log(3.225*an_1*n)                         
 
-
-A001615
+seq. 10
+A001615     (quick checked, no disc.)
 check fitting 44 44
 error: 39.32353285815786       model: -1.131*an_1 - 0.427*an_2 + 3.884*n + 0.181
 error: 47.80110154288164       model: -0.805*an_1 + 0.413*n + 2.357*sqrt(n**2)
@@ -540,7 +617,7 @@ error: 1000000000.0            model: -0.909*an_1**2*an_3*n**2 - 0.035*n**2 + 2.
 error: 1000000000.0            model: 0.211*an_1 + 0.919*log(-2.001*an_1) + 1.760*log(1.068*an_1**5*an_2*n**3)
 
 
-A002572
+A002572     (quick checked, no disc.)
 check fitting 44 44
 error: 64.80324710689928       model: 2.325*an_1 - 1.708*an_3 - 0.098    
 error: 107.28500870095584      model: 3.074*an_1 - 2.297*an_2 + 0.019*n + 0.070
@@ -588,7 +665,7 @@ error: 1.4482880543195585e+22  model: -2.100*n/an_1
 error: 1.4482880543195585e+22  model: 0                                                                     
 
 
-A005230
+A005230     (quick checked, no disc.)
 check fitting 44 44
 error: 100000000               model: 3.137*an_1**2*n**2 + 0.464*an_29*n + 2.708*an_34 - 4.134 - 0.150*exp(-4.708*an_2)
 error: 100000000               model: -0.335*sqrt(an_1) - 3.925*an_35 + 0.809*n + 0.442 - 2.581*exp(-4.688*an_1**2*n**2)
@@ -636,7 +713,7 @@ error: 4.849092890641519e+26   model: -0.696*n/an_1
 error: 4.849092890641519e+26   model: 0                                                                     
 
 
-A027642
+A027642     (quick checked, no disc.)
 check fitting 44 44
 error: 100000000               model: 3.137*an_1**2*n**2 + 0.464*an_29*n + 2.708*an_34 - 4.134 - 0.150*exp(-4.708*an_2)
 error: 100000000               model: -0.335*sqrt(an_1) - 3.925*an_35 + 0.809*n + 0.442 - 2.581*exp(-4.688*an_1**2*n**2)

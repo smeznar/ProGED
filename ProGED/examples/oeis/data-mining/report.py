@@ -1,14 +1,14 @@
-print(2)
+# print(2)
 import re
 data_filename = '../outputs_golden/cluster-sam100-ord0-dirTrue.log'
 data_filename = '../outputs_newgrammar/log_oeis_2021-06-12_10-29-38_success-14-newgrammar.txt'
 f = open(data_filename, mode='r', encoding='utf-8')
 log = f.read()
 log_length = len(log)
-print(type(log), f"{log_length:e}")
+# print(type(log), f"{log_length:e}")
 # print(log[1:3000])
-print(log[1:30])
-print(23)
+# print(log[1:30])
+# print(23)
 
 
 
@@ -124,8 +124,9 @@ mb = "ModelBox: \d+ models"
 
 specs = re.findall(pattern + grammy + mb, log)
 # print('specs:', specs)
-print('len(specs)', len(specs))
-# print(specs[0])
+print('specs:')
+# print('len(specs)', len(specs))
+print(specs[0])
 # # =======================End Of SPECS:================================
 
 seq_orig = "Parameter fitting for sequence A000001 took 209.85773301217705 secconds."
@@ -136,9 +137,9 @@ seqs = re.findall(
 seq_ids = re.findall("Parameter fitting for sequence (\w+) took \d+.\d+ secconds.", log)
 # print('seqs: \n', seqs[:150][0][-1000:], f"{len(seqs):e} {len(seqs[0]):e}")
 # print('seqs: \n', seqs[0])  # lengthy output
-print('seqs extracted:', f"{len(seqs)}")
-print('length of text of one seq\'s result:', f"{len(seqs[0])}")
-print(f'log_length: {log_length:e}')
+print('sequences extracted:', f"{len(seqs)}")
+# print('length of text of one seq\'s result:', f"{len(seqs[0])}")
+# print(f'log_length: {log_length:e}')
 seq = seqs[0]
 
 def look_seq(seq_log):
@@ -181,7 +182,8 @@ def look_seq(seq_log):
             print(f"{error:<30} {model}")
         print("\n")
 
-for i in seqs:
+for n, i in enumerate(seqs):
+    print('sequence', n)
     # print(i)
     look_seq(i)
 
