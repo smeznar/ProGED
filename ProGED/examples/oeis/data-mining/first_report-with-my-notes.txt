@@ -371,7 +371,13 @@ error: 1000000000.0            model: -0.615*log(2.240*an_1*n)
 error: 1000000000.0            model: -2.540*an_1*n**2 - 3.347*log(-0.037*n)
 
 
-A000720     (no disc?)
+A000720  PrimePi(n)   (no disc?)
+""number of primes <= n""
+(all formulas:)[
+ a(n) ~ n/log(n) ,
+For n >= 33, a(n) = 1 + Sum_{j=3..n} ((j-2)! - j*floor((j-2)!/j)) (Hardy and Wright); for n >= 1, a(n) = n - 1 + Sum_{j=2..n} (floor((2 - Sum_{i=1..j} (floor(j/i)-floor((j-1)/i)))/j)),
+a(n) = Sum_{j=2..n} H(-sin^2 (Pi*(Gamma(j)+1)/j)) where H(x) is the Heaviside step function, taking H(0)=1. - Keshav Raghavan, Jun 18 2016,
+]
 check fitting 44 44
 error: 0.12588616768006808     model: 0.364*an_1 + 1.030*sqrt(n) + 0.001*n**2
 error: 0.12897762911839303     model: 0.209*n*exp(0.009*an_2) + 3.468 - 2.088*exp(-0.010*n**2)
@@ -617,7 +623,7 @@ error: 1000000000.0            model: -0.909*an_1**2*an_3*n**2 - 0.035*n**2 + 2.
 error: 1000000000.0            model: 0.211*an_1 + 0.919*log(-2.001*an_1) + 1.760*log(1.068*an_1**5*an_2*n**3)
 
 
-A002572     (quick checked, no disc.)
+A002572  Number of partitions of 1 into n powers of 1/2   (quick checked, no disc.)
 check fitting 44 44
 error: 64.80324710689928       model: 2.325*an_1 - 1.708*an_3 - 0.098    
 error: 107.28500870095584      model: 3.074*an_1 - 2.297*an_2 + 0.019*n + 0.070
@@ -665,7 +671,8 @@ error: 1.4482880543195585e+22  model: -2.100*n/an_1
 error: 1.4482880543195585e+22  model: 0                                                                     
 
 
-A005230     (quick checked, no disc.)
+A005230  a Stern's sequence   (quick checked, no disc.)
+[a(1) = 1, a(n+1) is the sum of the m preceding terms, where m*(m-1)/2 < n <= m*(m+1)/2 or equivalently m = ceiling((sqrt(8*n+1)-1)/2) ]
 check fitting 44 44
 error: 100000000               model: 3.137*an_1**2*n**2 + 0.464*an_29*n + 2.708*an_34 - 4.134 - 0.150*exp(-4.708*an_2)
 error: 100000000               model: -0.335*sqrt(an_1) - 3.925*an_35 + 0.809*n + 0.442 - 2.581*exp(-4.688*an_1**2*n**2)
@@ -713,7 +720,8 @@ error: 4.849092890641519e+26   model: -0.696*n/an_1
 error: 4.849092890641519e+26   model: 0                                                                     
 
 
-A027642     (quick checked, no disc.)
+A027642  Denominator of Bernoulli number B_n   (quick checked, no disc.)
+[ no formula ]
 check fitting 44 44
 error: 100000000               model: 3.137*an_1**2*n**2 + 0.464*an_29*n + 2.708*an_34 - 4.134 - 0.150*exp(-4.708*an_2)
 error: 100000000               model: -0.335*sqrt(an_1) - 3.925*an_35 + 0.809*n + 0.442 - 2.581*exp(-4.688*an_1**2*n**2)
