@@ -18,13 +18,15 @@ Running equation discovery for all oeis sequences, with these settings:
 'A000219',  done
 'A000292',  done
 'A000720',  done
-'A001045', 
-'A001097', 
-'A001481', 
-'A001615', 
-'A002572', 
-'A005230', 
-'A027642')
+'A001045',  done
+'A001097',  done
+'A001481',  done
+'A001615',  done
+'A002572',  done
+'A005230',  done
+'A027642',  done
+)
+
 =>> Grammar used: 
 Grammar with 61 productions (start state = S)
     S -> P '/' R [0.2]
@@ -492,7 +494,19 @@ a(2*n) = 2*a(2*n-1)-1 for n >= 1, a(2*n+1) = 2*a(2*n)+1,
 a(2*n) = (4^n - 1)/3; a(2*n+1) = (2^(2*n+1) + 1)/3,
 a(n+1) = ceiling(2^n/3) + floor(2^n/3),
 a(n+1) = (ceiling(2^n/3))^2 - (floor(2^n/3))^2,
- a lot formulas]
+a(n+1) = A005578(n) + A000975(n-1) = A005578(n)^2 - A000975(n-1)^2,
+a(n) = ceiling(2^(n+1)/3) - ceiling(2^n/3) = A005578(n+1) - A005578(n),
+a(n) = floor(2^(n+1)/3) - floor(2^n/3) = A000975(n) - A000975(n-1),
+a(n) = A000975(n-1) + (1 + (-1)^(n-1))/2,
+a(n) = (1-(-1)^n)/2 + floor((2^n)/3),
+a(2*n-1) = a(n)^2 + 2*a(n-1)^2; a(2*n) = a(n+1)^2 - 4*a(n-1)^2,
+a(m+n) = a(m)*a(n+1) + 2*a(m-1)*a(n), e.g. m=1,
+a(m)*a(n+1) - a(m+1)*a(n) = (-2)^n*a(m-n), e.g. n=0,
+a(m)*a(n) + a(m-1)*a(n-1) - 2*a(m-2)*a(n-2) = 2^(m+n-3),
+a(m+n-1) = a(m)*a(n) + 2*a(m-1)*a(n-1); a(m+n) = a(m+1)*a(n+1) - 4*a(m-1)*a(n-1),
+a(2*n-1) = a(n)^2 + 2*a(n-1)^2; a(2*n) = a(n+1)^2 - 4*a(n-1)^2,
+done,
+]
 check fitting 44 44
 error: 0.020408962209893834    model: 1.000*an_1 + 1.998*an_2                         
     {-1, 1, 2} => discovered (True)   a_n = a_{n-1} + 2*a_{n-2} 
@@ -546,6 +560,7 @@ error: 9.581637189933723e+26   model: 0
 
 seq. 8 
 A001097 aka. Twin primes    (quick checked, no disc.)
+[ no formulas]
 error: 128.21192135532627      model: 0.047*an_2*n/log(0.682*n) + 4.376*sqrt(n**2)
 error: 137.06989163559825      model: 0.427*an_1 + 0.606*an_2 + 0.286*n + 4.0
 error: 152.10646634079606      model: 0.499*an_1 + 0.578*an_2                       
@@ -593,6 +608,8 @@ error: 1000000000.0            model: 2.378*an_1*n**2 - 0.260*log(-3.781*n)
 
 
 A001481     (quick checked, no disc.)
+[ ]
+[ a(n) ~ k*n*sqrt(log n) ]
 check fitting 44 44
 error: 1.284178938772559       model: 2.129*n*exp(0.001*an_2) - 4.0 + 2.832*exp(-0.076*n**2)
 error: 1.4784606228448307      model: -3.683*sqrt(n) + 2.863*n                        
@@ -641,6 +658,7 @@ error: 1000000000.0            model: 2.500*log(3.225*an_1*n)
 
 seq. 10
 A001615     (quick checked, no disc.)
+[ no formulas ]
 check fitting 44 44
 error: 39.32353285815786       model: -1.131*an_1 - 0.427*an_2 + 3.884*n + 0.181
 error: 47.80110154288164       model: -0.805*an_1 + 0.413*n + 2.357*sqrt(n**2)
@@ -689,6 +707,10 @@ error: 1000000000.0            model: 0.211*an_1 + 0.919*log(-2.001*an_1) + 1.76
 
 
 A002572  Number of partitions of 1 into n powers of 1/2   (quick checked, no disc.)
+[ ] 
+[ a(n) ~ c_1 * c_0^n,
+  a(n) ~ c_1 * c_0^n + c_3 * c_0^n * c_2^n,
+]
 check fitting 44 44
 error: 64.80324710689928       model: 2.325*an_1 - 1.708*an_3 - 0.098    
 error: 107.28500870095584      model: 3.074*an_1 - 2.297*an_2 + 0.019*n + 0.070
@@ -738,6 +760,9 @@ error: 1.4482880543195585e+22  model: 0
 
 A005230  a Stern's sequence   (quick checked, no disc.)
 [a(1) = 1, a(n+1) is the sum of the m preceding terms, where m*(m-1)/2 < n <= m*(m+1)/2 or equivalently m = ceiling((sqrt(8*n+1)-1)/2) ]
+[ a(n) ~ 2*a(n-1)
+done
+]
 check fitting 44 44
 error: 100000000               model: 3.137*an_1**2*n**2 + 0.464*an_29*n + 2.708*an_34 - 4.134 - 0.150*exp(-4.708*an_2)
 error: 100000000               model: -0.335*sqrt(an_1) - 3.925*an_35 + 0.809*n + 0.442 - 2.581*exp(-4.688*an_1**2*n**2)
