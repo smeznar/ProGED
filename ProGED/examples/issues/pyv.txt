@@ -1,0 +1,33 @@
+a*t**2
+a*t**2
+2*a*t**2
+2*a*t**2
+C0*a*t**2
+C0*a*t**2
+t*v0
+t*v0
+C0*t*v0 + a*t**2
+C0*t*v0
+C0*a*t**2 + a*t**2 + t*v0
+C0*a*t**2 + t*v0
+C0*a*t**2 + t*v0
+C0*a*t**2 + C1*t*v0 + a*t**2 + 2*t*v0
+C0*t*v0 + t*v0
+C0*t*v0 + t*v0
+C0*t*v0 + t*v0
+C0*t*v0 + t*v0
+C0*t*v0 + t*v0
+C0*t*v0 + t*v0
+##################### Results:
+error(model): 8.5642e-01, p(model): 2.5629e-08, model: 0.79108854349905*a*t**2 + 0.331703208149053*t*v0
+error(model): 9.4971e-01, p(model): 1.5000e-02, model: a*t**2 + 0.10418323284909*t*v0
+error(model): 9.5948e-01, p(model): 1.0000e-01, model: 0.949391356611867*a*t**2
+error(model): 9.7088e-01, p(model): 1.0000e-01, model: a*t**2
+error(model): 1.2748e+00, p(model): 1.5000e-02, model: 0.472149023369231*a*t**2 + t*v0
+error(model): 1.2748e+00, p(model): 2.2500e-03, model: 0.472149024019186*a*t**2 + t*v0
+error(model): 2.1941e+00, p(model): 1.5000e-02, model: 1.19325696350945*t*v0
+error(model): 2.1941e+00, p(model): 1.0000e-01, model: 1.19325697077519*t*v0
+error(model): 2.2669e+00, p(model): 1.0000e-01, model: t*v0
+error(model): 5.8721e+00, p(model): 1.5000e-02, model: 2*a*t**2
+MSE1 0.3561383095100407
+MSE2 0.0032075002430028625
