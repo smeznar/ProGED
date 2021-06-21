@@ -18,6 +18,8 @@ Details in https://arxiv.org/abs/2012.00428.
 - scipy
 - sympy
 - NLTK
+- hyperopt (optional)
+- pytest (optional)
 
 # Setup
 You can install the package directly from the git repository:
