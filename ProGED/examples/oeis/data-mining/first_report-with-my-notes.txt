@@ -101,11 +101,8 @@ A000009 Expansion of Product_{m >= 1} (1 + x^m)
 a lot
 
 1.) a(n) = P(n) - P(n-2) - P(n-4) + P(n-10) + P(n-14) + ... + (-1)^m P(n-2p_m) + ..., where P(n) is the partition function (A000041) and p_m = m(3m-1)/2 is the m-th generalized pentagonal number (A001318). - Jerome Malenfant, Feb 16 2011
-
 2.) More precise asymptotics: a(n) ~ exp(Pi*sqrt((n-1/24)/3)) / (4*3^(1/4)*(n-1/24)^(3/4)) * (1 + (Pi^2-27)/(24*Pi*sqrt(3*(n-1/24))) + (Pi^4-270*Pi^2-1215)/(3456*Pi^2*(n-1/24))). - Vaclav Kotesovec, Nov 30 2015
-
 3.) a(n) ~ exp(Pi*sqrt(n/3))/(4*3^(1/4)*n^(3/4)) * (1 + (Pi/(48*sqrt(3)) - (3*sqrt(3))/(8*Pi))/sqrt(n) + (Pi^2/13824 - 5/128 - 45/(128*Pi^2))/n).
-
 4.) a(n) ~ exp(Pi*sqrt(n/3) + (Pi/(48*sqrt(3)) - 3*sqrt(3)/(8*Pi))/sqrt(n) - (1/32 + 9/(16*Pi^2))/n) / (4*3^(1/4)*n^(3/4)).
 ]
 check fitting 44 44
@@ -210,257 +207,142 @@ error: 1000000000.0            model: 1.163*an_1 - 2.766*log(0.350*an_1) + 2.787
 
 
 A000045 (fibonacci checked)
-[]
-[
-F(n) = ((1+sqrt(5))^n - (1-sqrt(5))^n)/(2^n*sqrt(5)),
-Alternatively, F(n) = ((1/2+sqrt(5)/2)^n - (1/2-sqrt(5)/2)^n)/sqrt(5),
-F(n) = F(n-1) + F(n-2),
-F(n) = round(phi^n/sqrt(5)),
+[ F(n) = F(n-1) + F(n-2),]
+[notable mentions:
+]
 
+[oneliners:
+F(n) = F(n-1) + F(n-2)
+    ord0:
+F(n) = round(phi^n/sqrt(5)),
+F(n) = round(phi^(n+1)/(phi+2)). - Thomas Ordowski, Apr 20 2012
+F(n) = ((1+sqrt(5))^n - (1-sqrt(5))^n)/(2^n*sqrt(5)), 
+F(n) ~ phi*F(n-1)
+    copy: For n >= 1, a(n+1) = ceiling(phi*a(n)), if n is even and a(n+1) = floor(phi*a(n)), if n is odd (phi = golden ratio)
+a(n+1) = (a(n) + sqrt(4*(-1)^n + 5*(a(n))^2))/2;
+    copy(checked): F(n+1) = F(n)/2 + sqrt((-1)^n + 5*F(n)^2/4), n >= 0
+F(n) = round(log_2(2^(phi*F(n-1)) + 2^(phi*F(n-2)))), 
+approx. F(n+1) = sqrt((F(n))^2 - F(n-1)^2)
+approx. F(n+2) = 1/(1/F(n) - 1/F(n+1)) 
+a(n) = 2*a(n-2) + a(n-3), n > 2. - Gary Detlefs, Sep 08 2010
+F(n + 3) = 2F(n + 2) - F(n),
+ a(n)^2 - a(n-1)^2 = a(n+1)*a(n-2), see A121646.
+i.e.  a(n+1) = (a(n)^2 - a(n-1)^2)/a(n-2), see A121646.
+
+    ord>4:
+F(n + 4) = 3F(n + 2) - F(n), 
+ (F(n+2)*F(n+3)) - (F(n+1)*F(n+4)) + (-1)^n = 0.
+i.e. F(n+4) = ( (F(n+2)*F(n+3)) + (-1)^n ) /F(n+1) 
+F(n) = 4*F(n-3) + F(n-6). 
+F(n) = 4*F(n-2) - 2*F(n-3) - F(n-6). - Gary Detlefs, Apr 01 2012
+F(n + 8) = 7F(n + 4) - F(n), 
+F(n + 12) = 18F(n + 6) - F(n)
+F(n+10) = 11*F(n+5) + F(n).
+    copy: F(n) = ((1/2+sqrt(5)/2)^n - (1/2-sqrt(5)/2)^n)/sqrt(5),
+
+        ( wont disc(2n): )
+     sqrt(F(2n+1) + F(2n+2) + F(2n+3) + F(2n+4) + 2*(-1)^n) = (F(2n+1) + 2*(-1)^n)/F(n-1).
+    i.e.  F(2n+4) = (F(2n+1) + 2*(-1)^n)/F(n-1) + sqrt(F(2n+1) + F(2n+2) + F(2n+3) + 2*(-1)^n)
+     a(n) = sqrt((-1)^k*(a(n+k)^2 - a(k)*a(2n+k))), for any k. - Gary Detlefs, Dec 03 2010
+     i.e. a(2n+k) = ((-1)^k*a(n+k)^2 - a(n)^2)/a(n)
+    e.g. a(2n+1) = ((-1)^1*a(n+1)^2 - a(n)^2)/a(n)
+    F(2*n) = F(n+2)^2 - F(n+1)^2 - 2*F(n)^2. - Richard R. Forberg, Jun 04 2011
+    F(2*n) = F(n+1)^2 - F(n-1)^2,
+    i.e. F(2n+k+1) = F(n)*F(n+k) + F(n+1)*F(n+k+1)
+    i.e. F(2n+1) = F(n)^2 + F(n+1)^2
+    i.e.  F(3n) = F(n)^3 + F(n+1)^3 - F(n-1)^3 
+        (wont disc(cant solve):)
+    (F(n+3)^ 2 - F(n+1)^ 2)/F(n+2) = (F(n+3)+ F(n+1)) .))
+    (-1)^(n+1) = F(n)^2 + F(n)*F(1+n) - F(1+n)^2. 
+    F(n) = -F(n+2)(-2 + (F(n+1))^4 + 2*(F(n+1)^3*F(n+2)) - (F(n+1)*F(n+2))^2 2*F(n+1)(F(n+2))^3 + (F(n+2))^4)- F(n+1). 
+        (wont disc)
+    i.e. F(1+n) = 3*F(n) (mod p)
+      or F(3+n) = [5/p]*F([5/p]+n) (mod p)
+
+F(n+m+1) = F(n)*F(m) + F(n+1)*F(m+1) 
+ e.g. for m=1  ..  F(n+1+1) = F(n)*F(1) + F(n+1)*F(1+1) 
+ e.g. for m=4  ..  F(n+4+1) = F(n)*F(4) + F(n+1)*F(4+1) 
+F(n) = F(k)*F(n-k+3) - F(k-1)*F(n-k+2) - F(k-2)*F(n-k) + (-1)^k*F(n-2k+2). - Charlie Marion, Dec 04 2014
+a(n) = 2^(n^2+n) - (4^n-2^n-1)*floor(2^(n^2+n)/(4^n-2^n-1)) - 2^n*floor(2^(n^2) - (2^n-1-1/2^n)*floor(2^(n^2+n)/(4^n-2^n-1)))
+approx. F(n) = (F(k)+F(k-1))*F(n-k-2) + (2*F(k)+F(k-1))*F(n-k-1) 
+ F(n) = F(n-k+2)*F(k-1) + F(n-k+1)*F(k-2) 
+i.e. F(n+k) = (-(-1)^(n+k) * F(k)^2 + F(n)^2)/F(n-k)
+
+end of oneliners]
+
+[ all not cleaned equations (for archive)
+F(n) = ((1+sqrt(5))^n - (1-sqrt(5))^n)/(2^n*sqrt(5)), Alternatively, F(n) = ((1/2+sqrt(5)/2)^n - (1/2-sqrt(5)/2)^n)/sqrt(5),
+F(n) = round(phi^n/sqrt(5)),
+For n >= 1, F(n) = round(log_2(2^(phi*F(n-1)) + 2^(phi*F(n-2)))), where phi is the golden ratio
+a(n) = 2*a(n-2) + a(n-3), n > 2. - Gary Detlefs, Sep 08 2010
+F(n + 3) = 2F(n + 2) - F(n),
+F(n + 4) = 3F(n + 2) - F(n), 
+F(n + 8) = 7F(n + 4) - F(n), 
+F(n + 12) = 18F(n + 6) - F(n)
 
 a(n)=F(n) has the property: F(n)*F(m) + F(n+1)*F(m+1) = F(n+m+1). - Miklos Kristof, Nov 13 2003
 e.g. for m=1  ..  F(n+1+1) = F(n)*F(1) + F(n+1)*F(1+1) 
-
-
+e.g. for m=4  ..  F(n+4+1) = F(n)*F(4) + F(n+1)*F(4+1) 
 Conjecture 1: for n >= 2, sqrt(F(2n+1) + F(2n+2) + F(2n+3) + F(2n+4) + 2*(-1)^n) = (F(2n+1) + 2*(-1)^n)/F(n-1). [For a proof see Comments section.]
+i.e.  F(2n+4)  = (F(2n+1) + 2*(-1)^n)/F(n-1) + sqrt(F(2n+1) + F(2n+2) + F(2n+3) + 2*(-1)^n)
 
 Conjecture 2: for n >= 0, (F(n+2)*F(n+3)) - (F(n+1)*F(n+4)) + (-1)^n = 0.
-
-[Two more conjectures removed by Peter Luschny, Nov 17 2017 ]
-
-Theorem 1: for n >= 0, (F(n+3)^ 2 - F(n+1)^ 2)/F(n+2) = (F(n+3)+ F(n+1)).
-
+i.e (F(n+4)) = ( (F(n+2)*F(n+3)) + (-1)^n ) /F(n+1) 
+(( Theorem 1: for n >= 0, (F(n+3)^ 2 - F(n+1)^ 2)/F(n+2) = (F(n+3)+ F(n+1)) .))
 Theorem 2: for n >= 0, F(n+10) = 11*F(n+5) + F(n).
-
-Theorem 3: for n >= 6, F(n) = 4*F(n-3) + F(n-6). (End)
-
-Conjecture 2 of Rashid is actually a special case of the general law F(n)*F(m) + F(n+1)*F(m+1) = F(n+m+1) (take n <- n+1 and m <- -(n+4) in this law). - Harmel Nestra (harmel.nestra(AT)ut.ee), Apr 22 2005
-
-Conjecture 2 of Rashid Kurmang simplified: F(n)*F(n+3) = F(n+1)*F(n+2)-(-1)^n. Follows from d'Ocagne's identity: m=n+2. - Alex Ratushnyak, May 06 2012
-
-Conjecture: for all c such that 2-Phi <= c < 2*(2-Phi) we have F(n) = floor(Phi*a(n-1)+c) for n > 2. - Gerald McGarvey, Jul 21 2004
-
-|2*F(n) - 9*F(n+1)| = 4*A000032(n) + A000032(n+1). - Creighton Dement, Aug 13 2004
-
-For x > Phi, Sum_{n>=0} F(n)/x^n = x/(x^2 - x - 1) - Gerald McGarvey, Oct 27 2004
-
-F(n+1) = exponent of the n-th term in the series f(x, 1) determined by the equation f(x, y) = xy + f(xy, x). - Jonathan Sondow, Dec 19 2004
-
-a(n-1) = Sum_{k=0..n} (-1)^k*binomial(n-ceiling(k/2), floor(k/2)). - Benoit Cloitre, May 05 2005
-
-F(n+1) = Sum_{k=0..n} binomial((n+k)/2, (n-k)/2)(1+(-1)^(n-k))/2. - Paul Barry, Aug 28 2005
-
-Fibonacci(n) = Product_{j=1..ceiling(n/2)-1} (1 + 4(cos(j*Pi/n))^2). [Bicknell and Hoggatt, pp. 47-48.] - Emeric Deutsch, Oct 15 2006
-
-F(n) = 2^-(n-1)*Sum_{k=0..floor((n-1)/2)} binomial(n,2*k+1)*5^k. - Hieronymus Fischer, Feb 07 2006
-
-a(n) = (b(n+1) + b(n-1))/n where {b(n)} is the sequence A001629. - Sergio Falcon, Nov 22 2006
-
-F(n*m) = Sum_{k = 0..m} binomial(m,k)*F(n-1)^k*F(n)^(m-k)*F(m-k). The generating function of F(n*m) (n fixed, m = 0,1,2,...) is G(x) = F(n)*x / ((1 - F(n-1)*x)^2 - F(n)*x*(1 - F(n-1)*x) - (F(n)*x)^2). E.g., F(15) = 610 = F(5*3) = binomial(3,0)* F(4)^0*F(5)^3*F(3) + binomial(3,1)* F(4)^1*F(5)^2*F(2) + binomial(3,2)* F(4)^2*F(5)^1*F(1) + binomial(3,3)* F(4)^3*F(5)^0*F(0) = 1*1*125*2 + 3*3*25*1 + 3*9*5*1 + 1*27*1*0 = 250 + 225 + 135 + 0 = 610. - Miklos Kristof, Feb 12 2007
-
-From Miklos Kristof, Mar 19 2007: (Start)
-
-  Let L(n) = A000032(n) = Lucas numbers. Then:
-
-  For a >= b and odd b,  F(a+b) + F(a-b) = L(a)*F(b).
-
-  For a >= b and even b, F(a+b) + F(a-b) = F(a)*L(b).
-
-  For a >= b and odd b,  F(a+b) - F(a-b) = F(a)*L(b).
-
-  For a >= b and even b, F(a+b) - F(a-b) = L(a)*F(b).
-
-  F(n+m) + (-1)^m*F(n-m) = F(n)*L(m);
-
-  F(n+m) - (-1)^m*F(n-m) = L(n)*F(m);
-
-  F(n+m+k) + (-1)^k*F(n+m-k) + (-1)^m*(F(n-m+k) + (-1)^k*F(n-m-k)) = F(n)*L(m)*L(k);
-
-  F(n+m+k) - (-1)^k*F(n+m-k) + (-1)^m*(F(n-m+k) - (-1)^k*F(n-m-k)) = L(n)*L(m)*F(k);
-
-  F(n+m+k) + (-1)^k*F(n+m-k) - (-1)^m*(F(n-m+k) + (-1)^k*F(n-m-k)) = L(n)*F(m)*L(k);
-
-  F(n+m+k) - (-1)^k*F(n+m-k) - (-1)^m*(F(n-m+k) - (-1)^k*F(n-m-k)) = 5*F(n)*F(m)*F(k). (End)
-
-A corollary to Kristof 2007 is 2*F(a+b) = F(a)*L(b) + L(a)*F(b). - Graeme McRae, Apr 24 2014
-
-For n > m, the sum of the 2m consecutive Fibonacci numbers F(n-m-1) thru F(n+m-2) is F(n)*L(m) if m is odd, and L(n)*F(m) if m is even (see the McRae link). - Graeme McRae, Apr 24 2014.
-
-F(n) = b(n) + (p-1)*Sum_{k=2..n-1} floor(b(k)/p)*F(n-k+1) where b(k) is the digital sum analog of the Fibonacci recurrence, defined by b(k) = ds_p(b(k-1)) + ds_p(b(k-2)), b(0)=0, b(1)=1, ds_p=digital sum base p. Example for base p=10: F(n) = A010077(n) + 9*Sum_{k=2..n-1} A059995(A010077(k))*F(n-k+1). - Hieronymus Fischer, Jul 01 2007
-
-F(n) = b(n)+p*Sum_{k=2..n-1} floor(b(k)/p)*F(n-k+1) where b(k) is the digital product analog of the Fonacci recurrence, defined by b(k) = dp_p(b(k-1)) + dp_p(b(k-2)), b(0)=0, b(1)=1, dp_p=digital product base p. Example for base p=10: F(n) = A074867(n) + 10*Sum_{k=2..n-1} A059995(A074867(k))*F(n-k+1). - Hieronymus Fischer, Jul 01 2007
-
-a(n) = denominator of continued fraction [1,1,1,...] (with n ones); e.g., 2/3 = continued fraction [1,1,1]; where barover[1] = [1,1,1,...] = 0.6180339.... - Gary W. Adamson, Nov 29 2007
-
-F(n + 3) = 2F(n + 2) - F(n), F(n + 4) = 3F(n + 2) - F(n), F(n + 8) = 7F(n + 4) - F(n), F(n + 12) = 18F(n + 6) - F(n). - Paul Curtz, Feb 01 2008
-
-1 = 1/(1*2) + 1/(1*3) + 1/(2*5) + 1/(3*8) + 1/(5*13) + ... = 1/2 + 1/3 + 1/10 + 1/24 + 1/65 + 1/168 + ...; where A059929 = (0, 2, 3, 10, 24, 65, 168, ...). - Gary W. Adamson, Mar 16 2008
-
-a(2^n) = Product_{i=0..n-2} B(i) where B(i) is A001566. Example 3*7*47 = F(16). - Kenneth J Ramsey, Apr 23 2008
-
-F(n) = (1/(n-1)!) * (n^(n-1) - (C(n-2,0) + 4*C(n-2,1) + 3*C(n-2,2))*n^(n-2) + (10*C(n-3,0) + 49*C(n-3,1) + 95*C(n-3,2) + 83*C(n-3,3) + 27*C(n-3,4))*n^(n-3) - (90*C(n-4,0) + 740*C(n-4,1) + 2415*C(n-4,2) + 4110*C(n-4,3) + 3890*C(n-4,4) + 1950*C(n-4,5) + 405*C(n-4,6))*n^(n-4) + ... ). - André F. Labossière, Nov 24 2004
-
-a(n+1) = Sum_{k=0..n} A109466(n,k)*(-1)^(n-k). -Philippe Deléham, Oct 26 2008
-
-a(n) = Sum_{l_1=0..n+1} Sum_{l_2=0..n}...Sum_{l_i=0..n-i}... Sum_{l_n=0..1} delta(l_1,l_2,...,l_i,...,l_n), where delta(l_1,l_2,...,l_i,...,l_n) = 0 if any l_i + l_(i+1) >= 2 for i=1..n-1 and delta(l_1,l_2,...,l_i,...,l_n) = 1 otherwise. - Thomas Wieder, Feb 25 2009
-
-a(n+1) = 2^n sqrt(Product_{k=1..n} cos(k Pi/(n+1))^2+1/4)) (Kasteleyn's formula specialized). - Sarah-Marie Belcastro (smbelcas(AT)toroidalsnark.net), Jul 04 2009
-
-a(n+1) = Sum_{k=floor(n/2) mod 5} C(n,k) - Sum_{k=floor((n+5)/2) mod 5} C(n,k) = A173125(n) - A173126(n) = |A054877(n)-A052964(n-1)|. - Henry Bottomley, Feb 10 2010
-
-If p[i] = modp(i,2) and if A is Hessenberg matrix of order n defined by: A[i,j] = p[j-i+1], (i <= j), A[i,j]=-1, (i=j+1), and A[i,j]=0 otherwise. Then, for n >= 1, a(n)=det A. - Milan Janjic, May 02 2010
-
-Lim_{k->infinity} F(k+n)/F(k) = (L(n) + F(n)*sqrt(5))/2 with the Lucas numbers L(n)= A000032(n). - Johannes W. Meijer, May 27 2010
-
-For n >= 1, F(n) = round(log_2(2^(phi*F(n-1)) + 2^(phi*F(n-2)))), where phi is the golden ratio. - Vladimir Shevelev, Jun 24 2010, Jun 27 2010
-
-For n >= 1, a(n+1) = ceiling(phi*a(n)), if n is even and a(n+1) = floor(phi*a(n)), if n is odd (phi = golden ratio). - Vladimir Shevelev, Jul 01 2010
-
-a(n) = 2*a(n-2) + a(n-3), n > 2. - Gary Detlefs, Sep 08 2010
-
-a(2^n) = Product_{i=0..n-1} A000032(2^i). - Vladimir Shevelev, Nov 28 2010
-
+Theorem 3: for n >= 6, F(n) = 4*F(n-3) + F(n-6). 
+F(n) ~ phi*F(n-1)
+copy: For n >= 1, a(n+1) = ceiling(phi*a(n)), if n is even and a(n+1) = floor(phi*a(n)), if n is odd (phi = golden ratio)
 a(n)^2 - a(n-1)^2 = a(n+1)*a(n-2), see A121646.
-
+i.e.  a(n+1) = (a(n)^2 - a(n-1)^2)/a(n-2), see A121646.
 a(n) = sqrt((-1)^k*(a(n+k)^2 - a(k)*a(2n+k))), for any k. - Gary Detlefs, Dec 03 2010
+i.e. a(2n+k) = ((-1)^k*a(n+k)^2 - a(n)^2)/a(n)
+e.g. a(2n+1) = ((-1)^1*a(n+1)^2 - a(n)^2)/a(n)
 
 F(2*n) = F(n+2)^2 - F(n+1)^2 - 2*F(n)^2. - Richard R. Forberg, Jun 04 2011
-
 (-1)^(n+1) = F(n)^2 + F(n)*F(1+n) - F(1+n)^2.
-
   F(n) = -F(n+2)(-2 + (F(n+1))^4 + 2*(F(n+1)^3*F(n+2)) - (F(n+1)*F(n+2))^2 2*F(n+1)(F(n+2))^3 + (F(n+2))^4)- F(n+1). - Artur Jasinski, Nov 17 2011
-
-F(n) = 1 + Sum_{x=1..n-2} F(x). - Joseph P. Shoulak, Feb 05 2012
-
 F(n) = 4*F(n-2) - 2*F(n-3) - F(n-6). - Gary Detlefs, Apr 01 2012
-
 F(n) = round(phi^(n+1)/(phi+2)). - Thomas Ordowski, Apr 20 2012
-
-From Sergei N. Gladkovskii, Jun 03 2012: (Start)
-
-G.f. A(x) = x/(1-x-x^2) = G(0)/sqrt(5) where G(k)= 1 -((-1)^k)*2^k/(a^k - b*x*a^k*2^k/(b*x*2^k - 2*((-1)^k)*c^k/G(k+1))) and a=3+sqrt(5), b=1+sqrt(5), c=3-sqrt(5); (continued fraction, 3rd kind, 3-step).
-
-Let E(x) be the e.g.f., i.e.,
-
-E(x) = 1*x + 1/2*x^2 + 1/3*x^3 + 1/8*x^4 + 1/24*x^5 + 1/90*x^6 + 13/5040*x^7 + ...; then
-
-E(x) = G(0)/sqrt(5); G(k)= 1 -((-1)^k)*2^k/(a^k - b*x*a^k*2^k/(b*x*2^k - 2*((-1)^k)*(k+1)*c^k/G(k+1))), where a=3+sqrt(5), b=1+sqrt(5), c=3-sqrt(5); (continued fraction, 3rd kind, 3-step).
-
-(End)
-
-From Hieronymus Fischer, Nov 30 2012: (Start)
-
-F(n) = 1 + Sum_{j_1=1..n-2} 1 + Sum_{j_1=1..n-2} Sum_{j_2=1..j_1-2} 1 + Sum_{j_1=1..n-2} Sum_{j_2=1..j_1-2} Sum_{j_3=1..j_2-2} 1 + ... + Sum_{j_1=1..n-2} Sum_{j_2=1..j_1-2} Sum_{j_3=1..j_2-2} ... Sum_{j_k=1..j_(k-1)-2} 1, where k = floor((n-1)/2).
-
-Example: F(6) = 1 + Sum_{j=1..4} 1 + Sum_{j=1..4} Sum_{k=1..(j-2)} 1 + 0 = 1 + (1 + 1 + 1 + 1) + (1 + (1 + 1)) = 8.
-
-F(n) = Sum_{j=0..k} S(j+1,n-2j), where k = floor((n-1)/2) and the S(j,n) are the n-th j-simplex sums: S(1,n) = 1 is the 1-simplex sum, S(2,n) = Sum_{k=1..n} S(1,k) = 1+1+...+1 = n is the 2-simplex sum, S(3,n) = Sum_{k=1..n} S(2,k) = 1+2+3+...+n is the 3-simplex sum (= triangular numbers = A000217), S(4,n) = Sum_{k=1..n} S(3,k) = 1+3+6+...+n(n+1)/2 is the 4-simplex sum (= tetrahedral numbers = A000292) and so on.
-
-Since S(j,n) = binomial(n-2+j,j-1), the formula above equals the well-known binomial formula, essentially. (End)
-
-G.f. A(x) = x / (1 - x / (1 - x / (1 + x))). - Michael Somos, Jan 04 2013
-
-Sum_{n >= 1} (-1)^(n-1)/(a(n)*a(n+1)) = 1/phi (phi=golden ratio). - Vladimir Shevelev, Feb 22 2013
-
-From Vladimir Shevelev, Feb 24 2013: (Start)
-
+(noted start:)
 (1) Expression a(n+1) via a(n): a(n+1) = (a(n) + sqrt(5*(a(n))^2 + 4*(-1)^n))/2;
+F(n+1) = F(n)/2 + sqrt((-1)^n + 5*F(n)^2/4), n >= 0
+(noted end)
+F(n) = round(sqrt(F(n-1)^2 + F(n)^2 + F(n+1)^2)/2), for n > 0. - Richard R. Forberg, Jul 27 2014
+aprox.  F(n+1) = sqrt((F(n))^2 - F(n-1)^2)
+F(n) = round(2/(1/F(n) + 1/F(n+1) + 1/F(n+2)), for n > 0.  - Richard R. Forberg, Aug 03 2014
+approx.   F(n+2) = 1/(1/F(n) - 1/F(n+1)) 
+Define F(-n) to be F(n) for n odd and -F(n) for n even. Then for all n and k, 
+F(n) = F(k)*F(n-k+3) - F(k-1)*F(n-k+2) - F(k-2)*F(n-k) + (-1)^k*F(n-2k+2). - Charlie Marion, Dec 04 2014
+e.g. F(n) = F(4)*F(n-1) - F(3)*F(n-2) - F(2)*F(n-4) + (-1)^4*F(n-6)
 
-(2) Sum_{k=1...n} (-1)^(k-1)/(a(k)*a(k+1)) = a(n)/a(n+1);
-
-(3) a(n)/a(n+1) = 1/phi + r(n), where |r(n)| < 1/(a(n+1)*a(n+2)). (End)
-
-F(n+1) = F(n)/2 + sqrt((-1)^n + 5*F(n)^2/4), n >= 0. F(n+1) = U_n(i/2)/i^n, (U:= Chebyshef 2nd kind). - Bill Gosper, Mar 04 2013
-
-G.f.: -Q(0) where Q(k) = 1 - (1+x)/(1 - x/(x - 1/Q(k+1) )); (continued fraction). - Sergei N. Gladkovskii, Mar 06 2013
-
-G.f.: x-1-1/x + 1/x/Q(0), where Q(k) = 1 - (k+1)*x/(1 - x/(x - (k+1)/Q(k+1))); (continued fraction). - Sergei N. Gladkovskii, Apr 23 2013
-
-G.f.: x*G(0), where G(k)= 1 + x*(1+x)/(1 - x*(1+x)/(x*(1+x) + 1/G(k+1) )); (continued fraction). - Sergei N. Gladkovskii, Jul 08 2013
-
-G.f.: x^2 - 1 + 2*x^2/(W(0)-2), where W(k) = 1 + 1/(1 - x*(k + x)/( x*(k+1 + x) + 1/W(k+1) )); (continued fraction). - Sergei N. Gladkovskii, Aug 28 2013
-
-G.f.: Q(0) -1, where Q(k) = 1 + x^2 + (k+2)*x -x*(k+1 + x)/Q(k+1); (continued fraction). - Sergei N. Gladkovskii, Oct 06 2013
-
-Let b(n) = b(n-1) + b(n-2), with b(0) = 0, b(1) = phi. Then, for n >= 2, F(n) = floor(b(n-1)) if n is even, F(n) = ceiling(b(n-1)), if n is odd, with convergence. - Richard R. Forberg, Jan 19 2014
-
-a(n) = Sum_{t1*g(1)+t2*g(2)+...+tn*g(n)=n} multinomial(t1+t2 +...+tn,t1,t2,...,tn), where g(k)=2*k-1. - Mircea Merca, Feb 27 2014
-
-F(n) = round(sqrt(F(n-1)^2 + F(n)^2 + F(n+1)^2)/2), for n > 0. This rule appears to apply to any sequence of the form a(n) = a(n-1) + a(n-2), for any two values of a(0) and a(1), if n is sufficiently large. - Richard R. Forberg, Jul 27 2014
-
-F(n) = round(2/(1/F(n) + 1/F(n+1) + 1/F(n+2)), for n > 0. This rule also appears to apply to any sequence of the form a(n) = a(n-1) + a(n-2), for any two values of a(0) and a(1), if n is sufficiently large. - Richard R. Forberg, Aug 03 2014
-
-F(n) = round(1/(Sum_{j>=n+2} 1/F(j))). - Richard R. Forberg, Aug 14 2014
-
-a(n) = hypergeometric([-n/2+1/2, -n/2+1], [-n+1], -4) for n >= 2. - Peter Luschny, Sep 19 2014
-
-F(n) = (L(n+1)^2 - L(n-1)^2)/(5*L(n)), where L(n) is A000032(n), with a similar inverse relationship. - Richard R. Forberg, Nov 17 2014
-
-Consider the graph G[1-vertex;1-loop,2-loop] in comment above. Construct the power matrix array T(n,j) = [A^*j]*[S^*(j-1)] where A=(1,1,0,...) and S=(0,1,0,...)(A063524). [* is convolution operation] Define S^*0=I with I=(1,0,...). Then T(n,j) counts n-walks containing (j) loops and a(n-1) = Sum_{j=1...n} T(n,j). - David Neil McGrath, Nov 21 2014
-
-Define F(-n) to be F(n) for n odd and -F(n) for n even. Then for all n and k, F(n) = F(k)*F(n-k+3) - F(k-1)*F(n-k+2) - F(k-2)*F(n-k) + (-1)^k*F(n-2k+2). - Charlie Marion, Dec 04 2014
-
-F(n+k)^2 - L(k)*F(n)*F(n+k) + (-1)^k*F(n)^2 = (-1)^n*F(k)^2, if L(k) = A000032(k). - Alexander Samokrutov, Jul 20 2015
-
+[exp no disc:]
 F(2*n) = F(n+1)^2 - F(n-1)^2, similar to Koshy (D) and Forberg 2011, but different. - Hermann Stamm-Wilbrandt, Aug 12 2015
-
-F(n+1) = ceiling( (1/phi)*Sum_{k=0..n} F(k) ). - Tom Edgar, Sep 10 2015
-
-a(n) = (L(n-3) + L(n+3))/10 where L(n)=A000032(n). - J. M. Bergot, Nov 25 2015
-
-From Bob Selcoe, Mar 27 2016: (Start)
-
 F(n) = (F(2n+k+1) - F(n+1)*F(n+k+1))/F(n+k), k >= 0.
-
+e.g. F(2n+2) = (F(n) + F(n+2))*F(n+1)
 Thus when k=0: F(n) = sqrt(F(2n+1) - F(n+1)^2).
-
+i.e. F(2n+1) =  F(n)^2 + F(n+1)^2
 F(n) = (F(3n) - F(n+1)^3 + F(n-1)^3)^(1/3).
-
-F(n+2k) = binomial transform of any subsequence starting with F(n). Example F(6)=8: 1*8 = F(6)=8; 1*8 + 1*13 = F(8)=21; 1*8 + 2*13 + 1*21 = F(10)=55; 1*8 + 3*13 + 3*21 + 1*34 = F(12)=144, etc. This formula applies to Fibonacci-type sequences with any two seed values for a(0) and a(1) (e.g., Lucas sequence A000032: a(0)=2, a(1)=1).
-
-(End)
-
-F(n) = L(k)*F(n-k) + (-1)^(k+1)*F(n-2k) for all k >= 0, where L(k) = A000032(k). - Anton Zakharov, Aug 02 2016
-
-From Ilya Gutkovskiy, Aug 03 2016: (Start)
-
-a(n) = F_n(1), where F_n(x) are the Fibonacci polynomials.
-
-Inverse binomial transform of A001906.
-
-Number of zeros in substitution system {0 -> 11, 1 -> 1010} at step n from initial string "1" (1 -> 1010 -> 101011101011 -> ...) multiplied by 1/A000079(n). (End)
-
+i.e.  F(3n) = F(n)^3 + F(n+1)^3 - F(n-1)^3 
 For n>=2, a(n) = 2^(n^2+n) - (4^n-2^n-1)*floor(2^(n^2+n)/(4^n-2^n-1)) - 2^n*floor(2^(n^2) - (2^n-1-1/2^n)*floor(2^(n^2+n)/(4^n-2^n-1))). - Benoit Cloitre, Apr 17 2017
-
-For n > 0, a(n) = b(n+1) where b(n) = Sum_{k=1..n} b(n-k)*A000931(k-1), b(0) = 1. - J. Conrad, Apr 19 2017
-
-f(n+1) = Sum_{j=0..floor(n/2)} Sum_{k=0..j} binomial(n-2j,k)*binomial(j,k). - Tony Foster III, Sep 04 2017
-
-F(n) = Sum_{k=0..floor((n-1)/2)} ( (n-k-1)! / ((n-2k-1)! * k!) ). - Zhandos Mambetaliyev, Nov 08 2017
-
-For x even, F(n) = (F(n+x) + F(n-x))/L(x). For x odd, F(n) = (F(n+x) - F(n-x))/L(x) where n >= x in both cases. Therefore F(n) = F(2*n)/L(n) for n >= 0. - David James Sycamore, May 04 2018
-
-From Isaac Saffold, Jul 19 2018: (Start)
-
+[exp no disc (predict cannot find)]:
 Let [a/p] denote the Legendre symbol. Then, for an odd prime p:
-
   F(p+n) == [5/p]*F([5/p]+n) (mod p), if [5/p] = 1 or -1.
-
   F(p+n) == 3*F(n) (mod p), if [5/p] = 0 (i.e., p = 5).
-
-  This is true for negative-indexed terms as well, if this sequence is extended by the negafibonacci numbers (i.e., F(-n) = A039834(n)). (End)
-
-a(n) = A094718(4, n). a(n) = A101220(0, j, n).
-
-a(n) = A090888(0, n+1) = A118654(0, n+1) = A118654(1, n-1) = A109754(0, n) = A109754(1, n-1), for n > 0.
-
-a(n) = (L(n-3) + L(n-2) + L(n-1) + L(n))/5 with L(n)=A000032(n). - Art Baker, Jan 04 2019
+i.e. F(1+n) = 3*F(n) (mod p)
+  or F(3+n) = [5/p]*F([5/p]+n) (mod p)
 
 F(n) = F(k-1)*F(abs(n-k-2)) + F(k-1)*F(n-k-1) + F(k)*F(abs(n-k-2)) + 2*F(k)*F(n-k-1), for n > k > 0. - Joseph M. Shunia, Aug 12 2019
-
+approx. F(n) = (F(k)+F(k-1))*F(n-k-2) + (2*F(k)+F(k-1))*F(n-k-1) 
+e.g. F(n) = F(0)*F(n-3) + F(0)*F(n-2) + F(1)*F(n-3) + 2*F(1)*F(n-2)
+e.g. F(n) = F(1)*F(n-4) + F(1)*F(n-3) + F(2)*F(n-4) + 2*F(2)*F(n-3).
 F(n) = F(n-k+2)*F(k-1) + F(n-k+1)*F(k-2) for all k such that 2 <= k <= n. - Michael Tulskikh, Oct 09 2019
-
+e.g. k=3: F(n) = F(n-1)*F(2) + F(n-2)*F(1)
+e.g. k=4: F(n) = F(n+2)*F(3) + F(n-3)*F(2)
 F(n)^2 - F(n+k)*F(n-k) = (-1)^(n+k) * F(k)^2 for 2 <= k <= n [Catalan's identity]. - Hermann Stamm-Wilbrandt, May 07 2021 
+i.e. F(n+k) = (-(-1)^(n+k) * F(k)^2 + F(n)^2)/F(n-k)
+e.g. F(n+1) = (-(-1)^(n+1) * F(1)^2 + F(n)^2)/F(n-1)
+
 lots]
 check fitting 44 44
 error: 0.002525008139111645    model: 0.447*exp(0.481*n)                            
