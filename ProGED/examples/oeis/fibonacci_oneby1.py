@@ -193,7 +193,7 @@ sample_size = 4
 # sample_size = 20
 # sample_size = 47
 # sample_size = 30
-sample_size = 50
+# sample_size = 50
 # sample_size = 100
 # sample_size = 1000
 sample_size = int(flags_dict.get("--sample_size", sample_size))
@@ -378,6 +378,9 @@ def oeis_eq_disco(seq_id: str):
           f"took {seq_cpu_time} secconds.")
     print("\nFinal score:")
     for m in ED.models:
+        print(m)
+        print(m.__repr__())
+        print(type(m))
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
 
@@ -414,7 +417,7 @@ selection = (
         "A005230", 
         "A027642", 
         )
-selection = ("A000045", )
+# selection = ("A000045", )
 
 csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 csv_ids = list(csv.columns)
