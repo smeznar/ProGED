@@ -205,18 +205,17 @@ def print_skipping_empty(df, empty_type=type(0.0), empty=''):
     return 
 # print_skipping_empty(df)
 
-df
 csv_filename = "oeis_formulas.csv"
 # print(df)
 df.to_csv(csv_filename, index=False)
-# print_skipping_empty(df)
+print_skipping_empty(df)
 
 
 # # Check after download:
 check = pd.read_csv(csv_filename)
 print("Read file from csv:")
 # print(check)
-# print_skipping_empty(check)
+print_skipping_empty(check)
 
 
 

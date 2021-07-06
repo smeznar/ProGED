@@ -1,5 +1,6 @@
 # print(2)
 import re
+import pandas as pd
 data_filename = '../outputs_golden/cluster-sam100-ord0-dirTrue.log'
 data_filename = '../outputs_newgrammar/log_oeis_2021-06-12_10-29-38_success-14-newgrammar.txt'
 data_filename = '../outputs_newgrammar/cluster-sam100-new.log'
@@ -142,11 +143,26 @@ print('sequences extracted:', f"{len(seqs)}")
 # print(f'log_length: {log_length:e}')
 seq = seqs[0]
 
+formulas_file = "oeis_formulas.csv"
+formulas_df = pd.read_csv(formulas_file)
+def get_formulas(id_):
+    def empty_list(listi: list, empty_type=type(0.0), empty=''):
+        return [i for i in listi if (i!='' and not isinstance(i, empty_type))]
+    return empty_list(formulas_df[id_])
+# print(get_formulas('A000009'))
+
 def look_seq(seq_log):
     seq = seq_log
     seq_id = re.findall("Parameter fitting for sequence (\w+) took \d+.\d+ secconds.", seq)[0]
     print(seq_id)
     # print('seq:', seq[:800])
+
+    formulas = get_formulas(seq_id)
+    print('')
+    for i in formulas:
+        print(i)
+    print('')
+
     models_card = int(re.findall("ModelBox: (\d+) models", seq)[0])
     # print(models_card)
     fitting = re.findall("(model: [\w.+/*\-()\ ]+); p: [\de.+\-\ ]+ ; (error: [\de.+\-\ ]+)\n", seq) 
@@ -181,10 +197,13 @@ def look_seq(seq_log):
         #     # print(i[1])
             print(f"{error:<30} {model}")
         print("\n")
+    return
+
+
+
 
 for n, i in enumerate(seqs):
     print('sequence', n)
-    # print(i)
     look_seq(i)
 
 
