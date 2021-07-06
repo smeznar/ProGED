@@ -2,6 +2,7 @@
 import re
 data_filename = '../outputs_golden/cluster-sam100-ord0-dirTrue.log'
 data_filename = '../outputs_newgrammar/log_oeis_2021-06-12_10-29-38_success-14-newgrammar.txt'
+data_filename = '../outputs_newgrammar/cluster-sam100-new.log'
 f = open(data_filename, mode='r', encoding='utf-8')
 log = f.read()
 log_length = len(log)
@@ -9,7 +10,6 @@ log_length = len(log)
 # print(log[1:3000])
 # print(log[1:30])
 # print(23)
-
 
 
 # =======================SPECS:=======================================
