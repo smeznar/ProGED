@@ -21,7 +21,7 @@ dicti = {
 'For n = 1..15, a(n) = p + abs(p-3/2) + 1/2, where p = m + int((m-3)/2), and m = n + int((n-2)/8) + int((n-4)/8). - Timothy Hopper, Oct 23 2010',
 ],
 
-'A000040': [ 
+'A000045': [ 
     ' fibonacci',
     'disco yes',
 'F(n) = F(n-1) + F(n-2)',
@@ -156,49 +156,67 @@ dicti = {
 ' no formula ', ]
  }
 
-
-formulas = (
-    'A000009', 
-    'A000040',  
-    'A000045',  
-    'A000124',  
-    'A000219',  
-    'A000292',  
-    'A000720',  
-    'A001045',  
-    'A001097',  
-    'A001481',  
-    'A001615',  
-    'A002572',  
-    'A005230',  
-    'A027642',  
-)
+# start
 
 
+# formulas = (
+#     'A000009', 
+#     'A000040',  
+#     'A000045',  
+#     'A000124',  
+#     'A000219',  
+#     'A000292',  
+#     'A000720',  
+#     'A001045',  
+#     'A001097',  
+#     'A001481',  
+#     'A001615',  
+#     'A002572',  
+#     'A005230',  
+#     'A027642',  
+# )
 
-# table = [s9, s40, s45, ]
-# dicti = {i[0]: i[1:] for i in table}
-# print(table, dicti)
-# for i in dicti:
-#     print('key \n', i, 'value\n', dicti[i])
-print(dicti)
-for i in dicti:
-    print('key \n', i, 'value\n', dicti[i])
+
+
 maxi = max(len(dicti[key]) for key in dicti)
-print('maxi', maxi)
-# dicti = {key: dicti[key] + len(dicti[key]))*''}
-dicti_norm = {key: dicti[key] + (maxi-len(dicti[key]))*[''] for key in dicti}
-for i in dicti_norm:
-    print(len(dicti_norm[i]))
-print(dicti_norm, len(dicti_norm))
-# dicti = {'A09': ['a1', 'b2', 'c3', 'd',], }
-df = pd.DataFrame(dicti_norm)
-print(df)
-print(df[:4].head())
-for col in df:
-    print(col)
-    print(df[col][:5])
+# print('maxi', maxi)
 
+def renorm_dict(dictx: dict):
+    return {key: dictx[key] + (maxi-len(dictx[key]))*[''] for key in dictx} 
+
+def empty_list(listi: list, empty_type=type(0.0), empty=''):
+    return [i for i in listi if (i!='' and not isinstance(i, empty_type))]
+def empty_dict(dictx: dict, empty_typ=type(0.0), empty=''):
+    return {key: empty_list(dictx[key], empty) for key in dictx} 
+
+
+dicti_norm = renorm_dict(dicti)
+# for i in dicti_norm:
+#     print(len(dicti_norm[i]))
+# print(dicti_norm, len(dicti_norm))
+# dicti = {'A09': ['a1', 'b2', 'c3', 'd',], }
+
+df = pd.DataFrame(dicti_norm)
+def print_skipping_empty(df, empty_type=type(0.0), empty=''):
+    for id_ in df:
+        print('\n', id_)
+        for formula in empty_list(df[id_], empty_type, empty):
+            print(formula)
+    return 
+# print_skipping_empty(df)
+
+df
+csv_filename = "oeis_formulas.csv"
+# print(df)
+df.to_csv(csv_filename, index=False)
+# print_skipping_empty(df)
+
+
+# # Check after download:
+check = pd.read_csv(csv_filename)
+print("Read file from csv:")
+# print(check)
+# print_skipping_empty(check)
 
 
 
