@@ -174,6 +174,7 @@ def grid2(seq):
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
 grammar_template_name = "polynomial"
+grammar_template_name = "polynomial2"
 # grammar_template_name = "rational"
 # grammar_template_name = "rational"
 # grammar_template_name = "simplerational"
@@ -270,15 +271,15 @@ def oeis_eq_disco(seq_id: str):
     pis = coef * np.array(pis) + 1e-03
     coef = (1-q)/sum(pis)
     variable_probabilities = np.hstack((np.array([q]), coef*np.array(pis)))
-    # print(variable_probabilities)
-    # print(min(variable_probabilities))
     # variable_probabilities = [0.00001, 0.99999]
     # variable_probabilities = [1, 0]
     # 1/0
 
     # check probs
     #%# print('variable_probabilities', variable_probabilities, sum(variable_probabilities), len(variable_probabilities))
-    # print('variable_probabilities', variable_probabilities, sum(variable_probabilities))
+    # print('variable_probabilities', variable_probabilities)
+    # print('min(variable_probabilities)', min(variable_probabilities))
+    # print('sum(variable_probabilities)', sum(variable_probabilities))
     # for i in range(len(variable_probabilities)-1):
     #     print(variable_probabilities[i]/variable_probabilities[i+1], pis[i]/pis[i+1])
     # 1/0
@@ -378,9 +379,9 @@ def oeis_eq_disco(seq_id: str):
           f"took {seq_cpu_time} secconds.")
     print("\nFinal score:")
     for m in ED.models:
-        print(m)
-        print(m.__repr__())
-        print(type(m))
+        # print(m)
+        # print(m.__repr__())
+        # print(type(m))
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
 

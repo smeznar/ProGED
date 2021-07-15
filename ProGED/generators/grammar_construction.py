@@ -58,6 +58,17 @@ def construct_grammar_polynomial (p_S = [0.4, 0.6], p_T = [0.4, 0.6], p_vars = [
     grammar += construct_production(left="V", items=variables, probs=p_vars)
     return grammar
 
+def construct_grammar_polynomial2 (p_S = [0.4, 0.6], p_T = [0.4, 0.6], p_vars = [1], p_R = [0.6, 0.4], p_F = [1],
+                                  functions = ["'exp'"], variables = ["'x'"]):
+    grammar = construct_production(left="S", items=["S '+' 'C' '*' R", "R"], probs=p_S)
+    grammar += construct_production(
+        left="R",
+        items=["T"] + [f"{F} '(' T ')'" for F in functions],
+        probs= list(p_R[0]*np.array(p_F)) + [p_R[1]])
+    grammar += construct_production(left="T", items=["T '*' V", "V"], probs=p_T)
+    grammar += construct_production(left="V", items=variables, probs=p_vars)
+    return grammar
+
 def construct_grammar_simplerational (p_S = [0.2, 0.8], p_P = [0.4, 0.3, 0.3], p_R = [0.4, 0.6], p_M = [0.4, 0.6], 
                                       p_F = [1], p_vars = [1], functions = ["'exp'"], variables = ["'x'"]):
     grammar = construct_production(left="S", items=["P '/' R", "P"], probs=p_S)
@@ -78,7 +89,8 @@ def construct_grammar_simplerational2 (
         items=["P '+' 'C' '*' R", "'C'"], probs=p_P)
     grammar += construct_production(left="R", 
         items=[f"{F} '(' 'C' '*' M ')'" for F in functions] + ["M"],
-        probs= list(0.4*np.array(p_F)) + [p_R[1]])
+        # probs= list(0.4*np.array(p_F)) + [p_R[1]])
+        probs= list(p_R[0]*np.array(p_F)) + [p_R[1]])
     grammar += construct_production(left="M", items=["M '*' V", "V"], probs=p_M)
     grammar += construct_production(left="V", items=variables, probs=p_vars)
     return grammar
@@ -266,7 +278,9 @@ GRAMMAR_LIBRARY = {
     "simplerational2": construct_grammar_simplerational2,
     "polytrig": construct_grammar_polytrig,
     "trigonometric": construct_grammar_trigonometric,
-    "polynomial": construct_grammar_polynomial}
+    "polynomial": construct_grammar_polynomial,
+    "polynomial2": construct_grammar_polynomial2,
+    }
 
 
 
