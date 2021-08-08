@@ -3,21 +3,6 @@ import pandas as pd
 # from save_new_bfiles import bseqs  # before csv
 from selection import basic_info
 
-has_titles = 1  # csv has first (few) line(s) with title/name of sequence.
-df = pd.read_csv('oeis_selection.csv')[has_titles:]
-# 1/0
-# danger! in next line we should convert string terms to integers.
-bseqs = {id_: [int(term) for term in seq] for id_, seq in df.items()}
-
-# basic info, preview:
-# print(len(seqs), type(seqs), [len(seq) for _, seq in seqs.items()],
-#     [seq for _, seq in seqs.items()][0])  # preview
-# print(len(set(seqs)))
-
-basic_info(bseqs)
-# 1/0
-
-
 ## -- Check scrap against gzipped oeis database -- ##
 def check_scrap(seqs_dict: dict, is_bfile=False):
     # seqs = seqs_flat
@@ -66,5 +51,25 @@ def check_scrap(seqs_dict: dict, is_bfile=False):
     return
 # check_scrap()
 # check_scrap(bseqs, is_bfile=True)
-check_scrap(bseqs, is_bfile=True)
-print("end")
+# check_scrap(bseqs, is_bfile=True)
+# print("end")
+
+def check_out(is_bfile=False, has_titles=1, csv_filename: str ='oeis_selection.csv'):
+    # has_titles = 1  # csv has first (few) line(s) with title/name of sequence.
+    # df = pd.read_csv('oeis_selection.csv')[has_titles:]
+    df = pd.read_csv(csv_filename)[has_titles:]
+    # 1/0
+    # danger! in next line we should convert string terms to integers.
+    bseqs = {id_: [int(term) for term in seq] for id_, seq in df.items()}
+
+    # basic info, preview:
+    # print(len(seqs), type(seqs), [len(seq) for _, seq in seqs.items()],
+    #     [seq for _, seq in seqs.items()][0])  # preview
+    # print(len(set(seqs)))
+
+    basic_info(bseqs)
+    # 1/0
+    check_scrap(bseqs, is_bfile=True)
+    return
+
+# check_out(csv_filename='catalan_selection.csv')

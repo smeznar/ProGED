@@ -17,15 +17,19 @@ import header as header_module
 def bfile2list(id_: str, max_seq_length: int) -> list:
     """Fetch b-file and return list."""
 
-    max_read_url = (2+3+16+2) * max_seq_length
+    # max_read_url = (2+3+16+2) * max_seq_length
+    max_read_url = (2+3+28+2) * max_seq_length
     baddress = id_ + '/b' + id_[1:] +'.txt'
     print(baddress)
     # Make sure to read only *max_read_url* characters from URL.
     bfile = request.urlopen('https://oeis.org/'+baddress).read(max_read_url).decode()
-    new_seq_str = re.findall(r"\d+[ \t]+(-?\d+)\n", bfile)
+    # new_seq_str = re.findall(r"\d+[ \t]+(-?\d+)\n", bfile)
+    new_seq_str = re.findall(r"\d+[ \t]+(-?\d+)[ \t]?\n", bfile)
+    # new_seq_str = re.findall(r"\d+([^b]{1,10}-?\d+)\n", bfile)
     # Make sure to take only first *max_seq_length* terms of sequence.
     new_seq = [int(term) for term in new_seq_str[:max_seq_length]]
     return new_seq
+    # return new_seq_str
 
 def variable2file(variable, variable_name, filename) -> None:
     """Write variable to file using repr function."""

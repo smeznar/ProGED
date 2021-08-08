@@ -178,7 +178,7 @@ grammar_template_name = "polynomial2"
 # grammar_template_name = "rational"
 # grammar_template_name = "rational"
 # grammar_template_name = "simplerational"
-# grammar_template_name = "simplerational2"
+grammar_template_name = "simplerational2"
 # grammar_template_name = "universal"
 # grammar_template_name = "polytrig"
 # grammar_template_name = "trigonometric"
@@ -407,6 +407,7 @@ selection = (
         "A000040", 
         "A000045", 
         "A000124", 
+        "A000108", 
         "A000219", 
         "A000292", 
         "A000720", 
@@ -418,7 +419,7 @@ selection = (
         "A005230", 
         "A027642", 
         )
-# selection = ("A000045", )
+selection = ("A000108", )
 
 csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 csv_ids = list(csv.columns)
