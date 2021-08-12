@@ -1,0 +1,157 @@
+v 	
+
+a(n) = A000984(n)/(n+1) = binomial(2*n, n)/(n+1) = (2*n)!/(n!*(n+1)!).
+
+a(n) = binomial(2*n, n) - binomial(2*n, n-1).
+
+a(n) = Sum_{k=0..n-1} a(k)a(n-1-k).
+
+a(n) = Product_{k=2..n} (1 + n/k), if n > 1.
+
+G.f.: A(x) = (1 - sqrt(1 - 4*x)) / (2*x). G.f. A(x) satisfies A = 1 + x*A^2.
+
+a(n+1) = Sum_{i} binomial(n, 2*i)*2^(n-2*i)*a(i). - Touchard
+
+D-finite with recurrence: 2*(2*n-1)*a(n-1) = (n+1)*a(n).
+
+It is known that a(n) is odd if and only if n=2^k-1, k=0, 1, 2, 3, ... - Emeric Deutsch, Aug 04 2002, corrected by M. F. Hasler, Nov 08 2015
+
+Using the Stirling approximation in A000142 we get the asymptotic expansion a(n) ~ 4^n / (sqrt(Pi * n) * (n + 1)). - Dan Fux (dan.fux(AT)OpenGaia.com or danfux(AT)OpenGaia.com), Apr 13 2001
+
+Integral representation: a(n) = (1/(2*Pi))*Integral_{x=0..4} x^n*sqrt((4-x)/x). - Karol A. Penson, Apr 12 2001
+
+E.g.f.: exp(2*x)*(I_0(2*x)-I_1(2*x)), where I_n is Bessel function. - Karol A. Penson, Oct 07 2001
+
+a(n) = polygorial(n, 6)/polygorial(n, 3). - Daniel Dockery (peritus(AT)gmail.com), Jun 24 2003
+
+G.f. A(x) satisfies ((A(x) + A(-x)) / 2)^2 = A(4*x^2). - Michael Somos, Jun 27, 2003
+
+G.f. A(x) satisfies Sum_{k>=1} k(A(x)-1)^k = Sum_{n>=1} 4^{n-1}*x^n. - Shapiro, Woan, Getu
+
+a(n+m) = Sum_{k} A039599(n, k)*A039599(m, k). - Philippe Deléham, Dec 22 2003
+
+a(n+1) = (1/(n+1))*Sum_{k=0..n} a(n-k)*binomial(2k+1, k+1). - Philippe Deléham, Jan 24 2004
+
+a(n) = Sum_{k>=0} A008313(n, k)^2. - Philippe Deléham, Feb 14 2004
+
+a(m+n+1) = Sum_{k>=0} A039598(m, k)*A039598(n, k). - Philippe Deléham, Feb 15 2004
+
+C(n-1) = binomial(2*n-2,n-1)/n = (1/n!) * [ n^(n-1) + ( binomial(n-2,1) + binomial(n-2,2) )*n^(n-2) + ( 2*binomial(n-3,1) + 7*binomial(n-3,2) + 8*binomial(n-3,3) + 3*binomial(n-3,4) )*n^(n-3) + ( 6*binomial(n-4,1) + 38*binomial(n-4,2) + 93*binomial(n-4,3) + 111*binomial(n-4,4) + 65*binomial(n-4,5) + 15*binomial(n-4,6) )*n^(n-4) + ... ]. - André F. Labossière, Nov 10 2004, corrected by M. F. Hasler, Nov 10 2015
+
+a(n) = Sum_{k=0..n} (-1)^k*2^(n-k)*binomial(n, k)*binomial(k, floor(k/2)). - Paul Barry, Jan 27 2005
+
+Sum_{n>=0} 1/a(n) = 2 + 4*Pi/3^(5/2) = F(1,2;1/2;1/4) = A268813 = 2.806133050770763... (see L'Univers de Pi link). - Gerald McGarvey and Benoit Cloitre, Feb 13 2005
+
+a(n) = Sum_{k=0..floor(n/2)} ((n-2*k+1)*binomial(n, n-k)/(n-k+1))^2, which is equivalent to: a(n) = Sum_{k=0..n} A053121(n, k)^2, for n >= 0. - Paul D. Hanna, Apr 23 2005
+
+a((m+n)/2) = Sum_{k>=0} A053121(m, k)*A053121(n, k) if m+n is even. - Philippe Deléham, May 26 2005
+
+E.g.f. Sum_{n>=0} a(n) * x^(2*n) / (2*n)! = BesselI(1, 2*x) / x. - Michael Somos, Jun 22 2005
+
+Given g.f. A(x), then B(x) = x * A(x^3) satisfies 0 = f(x, B(X)) where f(u, v) = u - v + (u*v)^2 or B(x) = x + (x * B(x))^2 which implies B(-B(x)) = -x and also (1 + B^3) / B^2 = (1 - x^3) / x^2. - Michael Somos, Jun 27 2005
+
+a(n) = a(n-1)*(4-6/(n+1)). a(n) = 2a(n-1)*(8a(n-2)+a(n-1))/(10a(n-2)-a(n-1)). - Franklin T. Adams-Watters, Feb 08 2006
+
+Sum_{k>=1} a(k)/4^k = 1. - Franklin T. Adams-Watters, Jun 28 2006
+
+a(n) = A047996(2*n+1, n). - Philippe Deléham, Jul 25 2006
+
+Binomial transform of A005043. - Philippe Deléham, Oct 20 2006
+
+a(n) = Sum_{k=0..n} (-1)^k*A116395(n,k). - Philippe Deléham, Nov 07 2006
+
+a(n) = (1/(s-n))*Sum_{k=0..n} (-1)^k (k+s-n)*binomial(s-n,k) * binomial(s+n-k,s) with s a nonnegative free integer [H. W. Gould].
+
+a(k) = Sum_{i=1..k} |A008276(i,k)| * (k-1)^(k-i) / k!. - André F. Labossière, May 29 2007
+
+a(n) = Sum_{k=0..n} A129818(n,k) * A007852(k+1). - Philippe Deléham, Jun 20 2007
+
+a(n) = Sum_{k=0..n} A109466(n,k) * A127632(k). - Philippe Deléham, Jun 20 2007
+
+Row sums of triangle A124926. - Gary W. Adamson, Oct 22 2007
+
+Lim_{n->infinity}(1 + Sum_{k=0..n} a(k)/A004171(k)) = 4/Pi. - Reinhard Zumkeller, Aug 26 2008
+
+a(n) = Sum_{k=0..n} A120730(n,k)^2 and a(k+1) = Sum_{n>=k} A120730(n,k). - Philippe Deléham, Oct 18 2008
+
+Given an integer t >= 1 and initial values u = [a_0, a_1, ..., a_{t-1}], we may define an infinite sequence Phi(u) by setting a_n = a_{n-1} + a_0*a_{n-1} + a_1*a_{n-2} + ... + a_{n-2}*a_1 for n >= t. For example, the present sequence is Phi([1]) (also Phi([1,1])). - Gary W. Adamson, Oct 27 2008
+
+a(n) = Sum_{l_1=0..n+1} Sum_{l_2=0..n}...Sum_{l_i=0..n-i}...Sum_{l_n=0..1} delta(l_1,l_2,...,l_i,...,l_n) where delta(l_1,l_2,...,l_i,...,l_n) = 0 if any l_i < l_(i+1) and l_(i+1) <> 0 for i=1..n-1 and delta(l_1,l_2,...,l_i,...,l_n) = 1 otherwise. - Thomas Wieder, Feb 25 2009
+
+a(n) = A000680(n)/A006472(n+1). - Mark Dols, Jul 14 2010; corrected by M. F. Hasler, Nov 08 2015
+
+Let A(x) be the g.f., then B(x)=x*A(x) satisfies the differential equation B'(x)-2*B'(x)*B(x)-1=0. - Vladimir Kruchinin, Jan 18 2011
+
+G.f.: 1/(1-x/(1-x/(1-x/(...)))) (continued fraction). - Joerg Arndt, Mar 18 2011
+
+With F(x) = (1-2*x-sqrt(1-4*x))/(2*x) an o.g.f. in x for the Catalan series, G(x) = x/(1+x)^2 is the compositional inverse of F (nulling the n=0 term). - Tom Copeland, Sep 04 2011
+
+With H(x) = 1/(dG(x)/dx) = (1+x)^3 / (1-x), the n-th Catalan number is given by (1/n!)*((H(x)*d/dx)^n)x evaluated at x=0, i.e., F(x) = exp(x*H(u)*d/du)u, evaluated at u = 0. Also, dF(x)/dx = H(F(x)), and H(x) is the o.g.f. for A115291. - Tom Copeland, Sep 04 2011
+
+With F(x) = {1-sqrt[1-4*x]}/2 an o.g.f. in x for the Catalan series, G(x)= x*(1-x) is the compositional inverse and this relates the Catalan numbers to the row sums of A125181. - Tom Copeland, Sep 30 2011
+
+With H(x)=1/(dG(x)/dx)= 1/(1-2x), the n-th Catalan number (offset 1) is given by (1/n!)*((H(x)*d/dx)^n)x evaluated at x=0, i.e., F(x) = exp(x*H(u)*d/du)u, evaluated at u = 0. Also, dF(x)/dx = H(F(x)). - Tom Copeland, Sep 30 2011
+
+G.f.: (1-sqrt(1-4*x))/(2*x)=G(0) where G(k)=1+(4*k+1)*x/(k+1-2*x*(k+1)*(4*k+3)/(2*x*(4*k+3)+(2*k+3)/G(k+1))); (continued fraction). - Sergei N. Gladkovskii, Nov 30 2011
+
+E.g.f.: exp(2*x)*(BesselI(0,2*x)-BesselI(1,2*x))=G(0) where G(k)=1+(4*k+1)*x/((k+1)*(2*k+1)-x*(k+1)*(2*k+1)*(4*k+3)/(x*(4*k+3)+(k+1)*(2*k+3)/G(k+1))); (continued fraction). - Sergei N. Gladkovskii, Nov 30 2011
+
+E.g.f.: Hypergeometric([1/2],[2],4*x) which coincides with the e.g.f. given just above, and also by Karol A. Penson further above. - Wolfdieter Lang, Jan 13 2012
+
+a(n) = A208355(2*n-1) = A208355(2*n) for n > 0. - Reinhard Zumkeller, Mar 04 2012
+
+G.f.: 1 + 2*x/(U(0)-2*x) where U(k) = k*(4*x+1) + 2*x + 2 - x*(2*k+3)*(2*k+4)/U(k+1); (continued fraction, Euler's 1st kind, 1-step). - Sergei N. Gladkovskii, Sep 20 2012
+
+G.f.: hypergeom([1/2,1],[2],4*x). - Joerg Arndt, Apr 06 2013
+
+Special values of Jacobi polynomials, in Maple notation: a(n) = 4^n*JacobiP(n,1,-1/2-n,-1)/(n+1). - Karol A. Penson, Jul 28 2013
+
+For n > 0: a(n) = sum of row n in triangle A001263. - Reinhard Zumkeller, Oct 10 2013
+
+a(n) = binomial(2n,n-1)/n and a(n) mod n = binomial(2n,n) mod n = A059288(n). - Jonathan Sondow, Dec 14 2013
+
+a(n-1) = Sum_{t1+2*t2+...+n*tn=n} (-1)^(1+t1+t2+...+tn)*multinomial(t1+t2 +...+tn,t1,t2,...,tn)*a(1)^t1*a(2)^t2*...*a(n)^tn. - Mircea Merca, Feb 27 2014
+
+a(n) = Sum_{k=1..n} binomial(n+k-1,n)/n if n > 0. Alexander Adamchuk, Mar 25 2014
+
+a(n) = -2^(2*n+1) * binomial(n-1/2, -3/2). - Peter Luschny, May 06 2014
+
+a(n) = (4*A000984(n) - A000984(n+1))/2. - Stanislav Sykora, Aug 09 2014
+
+a(n) = A246458(n) * A246466(n). - Tom Edgar, Sep 02 2014
+
+a(n) = (2*n)!*[x^(2*n)]hypergeom([],[2],x^2). - Peter Luschny, Jan 31 2015
+
+a(n) = 4^(n-1)*hypergeom([3/2, 1-n], [3], 1). - Peter Luschny, Feb 03 2015
+
+a(2n) = 2*A000150(2n); a(2n+1) = 2*A000150(2n+1) + a(n). - John Bodeen, Jun 24 2015
+
+a(n) = Sum_{t=1..n+1} n^(t-1)*abs(Stirling1(n+1, t)) / Sum_{t=1..n+1} abs(Stirling1(n+1, t)), for n > 0, see (10) in Cereceda link. - Michel Marcus, Oct 06 2015
+
+a(n) ~ 4^(n-2)*(128 + 160/N^2 + 84/N^4 + 715/N^6 - 10180/N^8)/(N^(3/2)*Pi^(1/2)) where N = 4*n+3. - Peter Luschny, Oct 14 2015
+
+a(n) = Sum_{k=1..floor((n+1)/2)} (-1)^(k-1)*binomial(n+1-k,k)*a(n-k) if n > 0; and a(0) = 1. - David Pasino, Jun 29 2016
+
+Sum_{n>=0} (-1)^n/a(n) = 14/25 - 24*arccsch(2)/(25*sqrt(5)) = 14/25 - 24*A002390/(25*sqrt(5)) = 0.353403708337278061333... - Ilya Gutkovskiy, Jun 30 2016
+
+C(n) = (1/n) * Sum_{i+j+k=n-1} C(i)*C(j)*C(k)*(k+1), n >= 1. - Yuchun Ji, Feb 21 2016
+
+C(n) = 1 + Sum_{i+j+k<n-1} C(i)*C(j)*C(k). - Yuchun Ji, Sep 01 2016
+
+a(n) = A001700(n) - A162551(n) = binomial(2*n+1,n+1). - 2*binomial(2*n,n-1). - Taras Goy, Aug 09 2018
+
+G.f.: A(x) = (1 - sqrt(1 - 4*x)) / (2*x) = 2F1(1/2,1;2;4*x). G.f. A(x) satisfies A = 1 + x*A^2. - R. J. Mathar, Nov 17 2018
+
+C(n) = 1 + Sum_{i=0..n-1} A000245(i). - Yuchun Ji, Jan 10 2019
+
+From A.H.M. Smeets, Apr 11 2020: (Start)
+
+(1+sqrt(1+4*x))/2 = 1-Sum_{i >= 0}a(i)*(-x)^(i+1), for any complex x with |x| < 0.25; and sqrt(x+sqrt(x+sqrt(x+...))) = 1-Sum_{i >= 0}a(i)*(-x)^(i+1), for any complex x with |x| < 0.25 and x <> 0. (End)
+
+a(3n+1)*a(5n+4)*a(15n+10) = a(3n+2)*a(5n+2)*a(15n+11). The first case of Catalan product equation of a triple partition of 23n+15. - Yuchun Ji, Sep 27 2020
+
+a(n) = 4^n (-1)^(n+1) 3F2[{n + 1,n + 1/2,n}, {3/2,1}, -1], n>= 1. - Sergii Voloshyn, Oct 22 2020
+
+a(n) = 2^(1 + 2 n)* (-1)^(n)/(1 + n) *3F2[{n, 1/2 + n, 1 + n}, {1/2, 1}, -1]), n>= 1. - Sergii Voloshyn, Nov 08 2020
+
+a(n) = (1/Pi)*4^(n+1)*Integral_{x=0..Pi/2} cos(x)^(2*n)*sin(x)^2 dx. - Greg Dresden, May 30 2021 gtgT
