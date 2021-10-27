@@ -1,0 +1,195 @@
+=>> Grammar used: 
+Grammar with 59 productions (start state = S)
+    S -> P '/' R [0.2]
+    S -> P [0.8]
+    P -> P '+' 'C' '*' R [0.4]
+    P -> 'C' '*' R [0.3]
+    P -> 'C' [0.3]
+    R -> 'exp' '(' 'C' '*' M ')' [0.4]
+    R -> M [0.6]
+    M -> M '*' V [0.4]
+    M -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 10 models
+-> C0*an_1*n + C1*an_2 + C2*n + C3*exp(C4*an_15*n) + C5*exp(C6*an_5*n**2) + C7*n/an_1, p = 1.934014465850767e-19, parse trees = 1, valid = False
+-> C0*exp(C1*an_1)*exp(C2*an_1*n), p = 7.063391561408229e-05, parse trees = 1, valid = False
+-> C0*an_3 + C1*n, p = 0.00018413114754098364, parse trees = 1, valid = False
+-> C0*exp(C1*an_1) + C2, p = 0.007365245901639346, parse trees = 1, valid = False
+-> C0*an_1 + C1, p = 0.011047868852459019, parse trees = 1, valid = False
+-> C0*n, p = 0.04320000000000001, parse trees = 1, valid = False
+-> C0*exp(C1*an_1) + C2*exp(C3*an_2), p = 0.00017064832034399362, parse trees = 1, valid = False
+-> C0*an_1**2*an_2*an_3*n**2 + C1, p = 9.504293765059835e-11, parse trees = 1, valid = False
+-> C0*exp(C1*n), p = 0.0072000000000000015, parse trees = 1, valid = False
+-> C0*an_1**2*an_37*n + C1*an_1**2 + C2*an_1*n**2 + C3*an_17*an_2 + C4*exp(C5*an_1) + C6*exp(C7*an_1*n**2) + C8, p = 2.128269168040188e-22, parse trees = 1, valid = False
+Estimating model C0*an_1*n + C1*an_2 + C2*n + C3*exp(C4*an_15*n) + C5*exp(C6*an_5*n**2) + C7*n/an_1
+model: -2.19556007935595*an_1*n + 2.89279328451489*an_2 - 3.96773993422358*n - 0.521064738240948*exp(4.08595503093096*an_15*n) - 2.06385851626321*exp(-2.12224661413651*an_5*n**2) - 3.69971427881722*n/an_1; p: 1.934014465850767e-19  ; error: 100000000
+Estimating model C0*exp(C1*an_1)*exp(C2*an_1*n)
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: overflow encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: overflow encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: overflow encountered in multiply
+<string>:2: RuntimeWarning: overflow encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: overflow encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in multiply
+model: 1.47318754246464*exp(3.77158463738845*an_1)*exp(-1.29730807845366*an_1*n); p: 7.063391561408229e-05  ; error: 1000000000.0
+Estimating model C0*an_3 + C1*n
+model: 4.23606797747824*an_3 + 0.000245734458083069*n                        ; p: 0.00018413114754098364 ; error: 0.1728904778320277
+Estimating model C0*exp(C1*an_1) + C2
+model: 0.516325117836773*exp(3.00974402676217*an_1) + 4.33032183031463       ; p: 0.007365245901639346   ; error: 1000000000.0
+Estimating model C0*an_1 + C1
+model: 1.61803398874522*an_1 + 0.0144634865258075                            ; p: 0.011047868852459019   ; error: 0.032847383664306444
+Estimating model C0*n
+model: 5.0*n                                                                 ; p: 0.04320000000000001    ; error: 1.9980679684786148e+18
+Estimating model C0*exp(C1*an_1) + C2*exp(C3*an_2)
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+<string>:2: RuntimeWarning: overflow encountered in multiply
+<string>:2: RuntimeWarning: invalid value encountered in add
+<string>:2: RuntimeWarning: invalid value encountered in subtract
+model: 0.533959469098289*exp(1.76218679212387*an_1) + 3.37113103954041*exp(1.54598557668149*an_2); p: 0.00017064832034399362 ; error: 1000000000.0
+Estimating model C0*an_1**2*an_2*an_3*n**2 + C1
+model: 4.92927396562965                                                      ; p: 9.504293765059835e-11  ; error: 1.9980681613066186e+18
+Estimating model C0*exp(C1*n)
+model: 0.447213596813657*exp(0.481211824997795*n)                            ; p: 0.0072000000000000015  ; error: 0.015745320678833736
+Estimating model C0*an_1**2*an_37*n + C1*an_1**2 + C2*an_1*n**2 + C3*an_17*an_2 + C4*exp(C5*an_1) + C6*exp(C7*an_1*n**2) + C8
+model: -2.39684901421459*an_1**2*an_37*n + 3.04754563743345*an_1**2 - 3.06565717376672*an_1*n**2 + 1.3946088087994*an_17*an_2 + 0.246703091237337*exp(4.24807970399351*an_1) + 2.35065963288669 - 2.36703229512889*exp(-4.34038909315976*an_1*n**2); p: 2.128269168040188e-22  ; error: 100000000
+
+Parameter fitting for sequence A000045 took 41.591354684002 secconds.
+
+Final score:
+model: -2.19556007935595*an_1*n + 2.89279328451489*an_2 - 3.96773993422358*n - 0.521064738240948*exp(4.08595503093096*an_15*n) - 2.06385851626321*exp(-2.12224661413651*an_5*n**2) - 3.69971427881722*n/an_1; error: 100000000      
+model: 1.47318754246464*exp(3.77158463738845*an_1)*exp(-1.29730807845366*an_1*n); error: 1000000000.0   
+model: 4.23606797747824*an_3 + 0.000245734458083069*n; error: 0.1728904778320277
+model: 0.516325117836773*exp(3.00974402676217*an_1) + 4.33032183031463; error: 1000000000.0   
+model: 1.61803398874522*an_1 + 0.0144634865258075; error: 0.032847383664306444
+model: 5.0*n                         ; error: 1.9980679684786148e+18
+model: 0.533959469098289*exp(1.76218679212387*an_1) + 3.37113103954041*exp(1.54598557668149*an_2); error: 1000000000.0   
+model: 4.92927396562965              ; error: 1.9980681613066186e+18
+model: 0.447213596813657*exp(0.481211824997795*n); error: 0.015745320678833736
+model: -2.39684901421459*an_1**2*an_37*n + 3.04754563743345*an_1**2 - 3.06565717376672*an_1*n**2 + 1.3946088087994*an_17*an_2 + 0.246703091237337*exp(4.24807970399351*an_1) + 2.35065963288669 - 2.36703229512889*exp(-4.34038909315976*an_1*n**2); error: 100000000     

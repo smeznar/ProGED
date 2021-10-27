@@ -3,8 +3,8 @@
 (jobname = "fibonacci sample")
 (inputfiles =
  ("play.sh" "")
- (* ("pyProGED.simg" "srm://dcache.arnes.si/data/arnes.si/gen.vo.sling.si/bogec/pyProGED.simg") *)
-("pyProGED.simg" "")
+ ("pyProGED.simg" "srm://dcache.arnes.si/data/arnes.si/gen.vo.sling.si/bogec/pyProGED.simg")
+(* ("pyProGED.simg" "") *)
  ("fibonacci_oneby1.py" "")
  ("oeis_selection.csv" "")
  ("test_core.py" "")

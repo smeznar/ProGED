@@ -23,6 +23,6 @@ echo "I (cluster) am testing proged with pytest ..."
 singularity exec ~/pyProGED.simg python3 -m pytest ~/test_core.py
 
 echo "Let's finally execute the big program: "
-singularity exec ~/pyProGED.simg python3 ~/fibonacci_oneby1.py --sample_size=100  # online
+singularity exec ~/pyProGED.simg python3 ~/fibonacci_oneby1.py --sample_size=1000 --seq_only=A000045 # online
 echo "... This is the end of your personal cluster script. Everything was executed successfully!"
 

@@ -137,6 +137,10 @@ def grid2(seq):
     data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
     return data
 
+# print(grid2(['a_n', 'a_{n-1}']))
+# print([f"a_{{n-{i}}} & 1 & " for i in range(1, 50)])
+# 1/0
+
 # print(prts)
 # print(fibs)
 # # # grid(3, fibs, True)
@@ -258,7 +262,7 @@ def oeis_eq_disco(seq_id: str):
     # print('len variables', len(variables))
     # print(variable_names)
     # print(variables)
-    # print(data.shape, type(data), data)
+    print(data.shape, type(data), data)
     # q = q
     # p = p
     pis = [p**i for i in range(1, (n-1)+1)]
@@ -407,7 +411,7 @@ selection = (
         "A000040", 
         "A000045", 
         "A000124", 
-        "A000108", 
+        # "A000108", 
         "A000219", 
         "A000292", 
         "A000720", 
@@ -419,7 +423,9 @@ selection = (
         "A005230", 
         "A027642", 
         )
-selection = ("A000108", )
+# selection = ("A000045", )
+the_one_sequence = flags_dict.get("--seq_only", None)
+selection = selection if the_one_sequence is None else (the_one_sequence,)
 
 csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 csv_ids = list(csv.columns)
