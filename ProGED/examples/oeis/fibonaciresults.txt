@@ -1,0 +1,87 @@
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 5
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = simplerational2
+=>> generator_settings = {'functions': ["'sqrt'", "'exp'", "'log'"], 'p_F': [0.333, 0.333, 0.333]}
+=>> optimizer = differential_evolution
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 5
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+=>> Grammar used: 
+Grammar with 40 productions (start state = S)
+    S -> P '/' R [0.2]
+    S -> P [0.8]
+    P -> P '+' 'C' '*' R [0.57]
+    P -> 'C' [0.43]
+    R -> 'sqrt' '(' 'C' '*' M ')' [0.133253]
+    R -> 'exp' '(' 'C' '*' M ')' [0.133253]
+    R -> 'log' '(' 'C' '*' M ')' [0.133253]
+    R -> M [0.60024]
+    M -> M '*' V [0.4]
+    M -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.331758]
+    V -> 'an_2' [0.100189]
+    V -> 'an_3' [0.0307183]
+    V -> 'an_4' [0.00987713]
+    V -> 'an_5' [0.00362476]
+    V -> 'an_6' [0.00174905]
+    V -> 'an_7' [0.00118634]
+    V -> 'an_8' [0.00101753]
+    V -> 'an_9' [0.000966884]
+    V -> 'an_10' [0.000951691]
+    V -> 'an_11' [0.000947133]
+    V -> 'an_12' [0.000945766]
+    V -> 'an_13' [0.000945355]
+    V -> 'an_14' [0.000945232]
+    V -> 'an_15' [0.000945195]
+    V -> 'an_16' [0.000945184]
+    V -> 'an_17' [0.000945181]
+    V -> 'an_18' [0.00094518]
+    V -> 'an_19' [0.00094518]
+    V -> 'an_20' [0.00094518]
+    V -> 'an_21' [0.00094518]
+    V -> 'an_22' [0.00094518]
+    V -> 'an_23' [0.00094518]
+    V -> 'an_24' [0.00094518]
+    V -> 'an_25' [0.00094518]
+    V -> 'an_26' [0.00094518]
+    V -> 'an_27' [0.00094518]
+    V -> 'an_28' [0.00094518]
+    V -> 'an_29' [0.00094518]
+
+ModelBox: 5 models
+-> C0*an_1**2*an_3*n**4 + C1*an_1*an_14 + C2*n**2 + C3*log(C4*an_1) + C5, p = 4.884699636053873e-16, parse trees = 1, valid = False
+-> C0*n + C1, p = 0.035308523409363746, parse trees = 1, valid = False
+-> C0*an_1/an_2 + C1, p = 0.0002113330689625042, parse trees = 1, valid = False
+-> C0*an_2*an_3*n**2/sqrt(C1*an_2) + C2*n + C3*sqrt(C4*an_1**2*n**2) + C5, p = 5.736208596435445e-14, parse trees = 1, valid = False
+-> C0*an_2*an_4 + C1*log(C2*an_3*n) + C3, p = 3.102210664033017e-11, parse trees = 1, valid = False
+Estimating model C0*an_1**2*an_3*n**4 + C1*an_1*an_14 + C2*n**2 + C3*log(C4*an_1) + C5
+model: -2.40902403588894*an_1**2*an_3*n**4 + 3.0249688526287*an_1*an_14 + 3.70483087001483*n**2 + 4.2274961394567*log(-4.97785787467556*an_1) - 0.305116282424227; p: 4.884699636053873e-16  ; error: 100000000
+Estimating model C0*n + C1
+model: 4.0*n + 4.0                                                           ; p: 0.035308523409363746   ; error: 14743226563.034483
+Estimating model C0*an_1/an_2 + C1
+model: -0.0981809390781998*an_1/an_2 + 2.17166335386117                      ; p: 0.0002113330689625042  ; error: 1000000000.0
+Estimating model C0*an_2*an_3*n**2/sqrt(C1*an_2) + C2*n + C3*sqrt(C4*an_1**2*n**2) + C5
+model: 0.201696696553974*an_2*an_3*n**2/sqrt(-an_2) + 3.0047642075057*n - 4.08706047052354*sqrt(an_1**2*n**2) - 0.886163842206235; p: 5.736208596435445e-14  ; error: 100000000
+Estimating model C0*an_2*an_4 + C1*log(C2*an_3*n) + C3
+model: 3.57095153545894*an_2*an_4 + 3.42842338501005*log(-0.636449091768659*an_3*n) + 1.06771848418304; p: 3.102210664033017e-11  ; error: 1000000000.0
+
+Parameter fitting for sequence A000045 took 1.3648577540006954 secconds.
+
+Final score:
+model: -2.40902403588894*an_1**2*an_3*n**4 + 3.0249688526287*an_1*an_14 + 3.70483087001483*n**2 + 4.2274961394567*log(-4.97785787467556*an_1) - 0.305116282424227; error: 100000000      
+model: 4.0*n + 4.0                   ; error: 14743226563.034483
+model: -0.0981809390781998*an_1/an_2 + 2.17166335386117; error: 1000000000.0   
+model: 0.201696696553974*an_2*an_3*n**2/sqrt(-an_2) + 3.0047642075057*n - 4.08706047052354*sqrt(an_1**2*n**2) - 0.886163842206235; error: 100000000      
+model: 3.57095153545894*an_2*an_4 + 3.42842338501005*log(-0.636449091768659*an_3*n) + 1.06771848418304; error: 1000000000.0   
+
+Total time consumed by now:1.5185962190007558
+
+
+Equation discovery for all (chosen) OEIS sequences took 1.5186031600023853 secconds, i.e. 0.025310052666706422 minutes or 0.0004218342111117737 hours.

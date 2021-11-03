@@ -246,12 +246,13 @@ optimizer = 'differential_evolution'
 timeout = np.inf
 
 # def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
-def oeis_eq_disco(seq_id: str): 
+def oeis_eq_disco(seq_id: str, number_of_terms=50): 
     """Run eq. discovery of given OEIS sequence."""
 
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
-    data = grid2(np.array(list(csv[seq_id])))
-    # data = grid2(np.array(list(csv[seq_id])[:2]))
+    # data = grid2(np.array(list(csv[seq_id])))
+    # First 30 instead 50 terms in sequence (for catalan):
+    data = grid2(np.array(list(csv[seq_id])[:number_of_terms]))
     #%# print('data shape', data.shape)
     n = data.shape[0] + 1  # = 50
     # variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
@@ -262,7 +263,7 @@ def oeis_eq_disco(seq_id: str):
     # print('len variables', len(variables))
     # print(variable_names)
     # print(variables)
-    print(data.shape, type(data), data)
+    # print(data.shape, type(data), data)
     # q = q
     # p = p
     pis = [p**i for i in range(1, (n-1)+1)]
@@ -387,7 +388,11 @@ def oeis_eq_disco(seq_id: str):
         # print(m.__repr__())
         # print(type(m))
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
+    print("\nFinal score (sorted):")
+    for m in ED.models.retrieve_best_models(-1):
+        print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return
+
 
 # oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
 # oeis_eq_disco("A000045", is_direct, order)  # Run only one seq, e.g. the fibonaccis.
@@ -405,6 +410,8 @@ end_id = LAST_ID
 
 # start_id = "A000041"
 # end_id = "A000041"
+
+CATALAN = "A000108"
 
 selection = (
         "A000009", 
@@ -424,6 +431,7 @@ selection = (
         "A027642", 
         )
 # selection = ("A000045", )
+# selection = (CATALAN, )
 the_one_sequence = flags_dict.get("--seq_only", None)
 selection = selection if the_one_sequence is None else (the_one_sequence,)
 
@@ -431,6 +439,9 @@ csv = csv.loc[:, (start_id <= csv.columns) & (csv.columns <= end_id)]
 csv_ids = list(csv.columns)
 csv_ids = selection
 print(len(selection))
+
+NUMBER_OF_TERMS_PRESET = 50
+number_of_terms = int(flags_dict.get("--number_of_terms", NUMBER_OF_TERMS_PRESET))
 
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
@@ -446,14 +457,16 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> timeout = {timeout}\n"
         f"=>> random_seed = {random_seed}\n"
         f"=>> lower_upper_bounds = {lower_upper_bounds}\n"
-        f"=>> number of terms in every sequence = {terms_count}\n"
+        f"=>> number of terms in every sequence saved in csv = {terms_count}\n"
+        f"=>> number of terms in every sequence actually used = {number_of_terms}\n"
         f"=>> number of all considered sequences = {len(csv_ids)}\n"
         f"=>> list of considered sequences = {csv_ids}"
         )
 
+
 for seq_id in csv_ids:
     # oeis_eq_disco(seq_id, is_direct, order)
-    oeis_eq_disco(seq_id)
+    oeis_eq_disco(seq_id, number_of_terms=number_of_terms)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"

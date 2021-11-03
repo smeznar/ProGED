@@ -1,11 +1,15 @@
 # print(2)
 import re
 import pandas as pd
+import sys
 data_filename = '../outputs_golden/cluster-sam100-ord0-dirTrue.log'
 data_filename = '../outputs_newgrammar/log_oeis_2021-06-12_10-29-38_success-14-newgrammar.txt'
 data_filename = '../outputs_newgrammar/cluster-sam100-new.log'
 data_filename = '../firstCatalan.txt'
 data_filename = '../fibonaciresults.txt'
+data_filename = '../catalan_phd_output.txt'
+flags_dict = { i.split("=")[0]:  i.split("=")[1] for i in sys.argv[1:] if len(i.split("="))>1}
+data_filename = flags_dict.get("--data_filename", data_filename)
 f = open(data_filename, mode='r', encoding='utf-8')
 log = f.read()
 log_length = len(log)
@@ -129,7 +133,7 @@ specs = re.findall(pattern + grammy + mb, log)
 # print('specs:', specs)
 print('specs:')
 # print('len(specs)', len(specs))
-print(specs[0])
+print(specs[0] if len(specs)>0 else None)
 # # =======================End Of SPECS:================================
 
 seq_orig = "Parameter fitting for sequence A000001 took 209.85773301217705 secconds."
@@ -143,9 +147,18 @@ seq_ids = re.findall("Parameter fitting for sequence (\w+) took \d+.\d+ secconds
 print('sequences extracted:', f"{len(seqs)}")
 # print('length of text of one seq\'s result:', f"{len(seqs[0])}")
 # print(f'log_length: {log_length:e}')
+# print('seqs:', seqs)
 seq = seqs[0]
+def final_scores(log: str = log):
+    seqs = re.findall(
+            "Parameter fitting for sequence \w+ took \d+.\d+ secconds.\n"
+            "[\w\W]+?Total time consumed by now:\d+.\d+", log)
+    # print(seqs)
+    print('sequences extracted:', f"{len(seqs)}")
+    return seqs
+seqs_final_scores = final_scores(log)
 
-formulas_file = "oeis_formulas.csv"
+formulas_file = "oeis_formulas.csv" if data_filename[:2] == ".." else "data-mining/oeis_formulas.csv"
 formulas_df = pd.read_csv(formulas_file)
 def get_formulas(id_):
     def empty_list(listi: list, empty_type=type(0.0), empty=''):
@@ -153,28 +166,36 @@ def get_formulas(id_):
     return empty_list(formulas_df[id_])
 # print(get_formulas('A000009'))
 
-def look_seq(seq_log):
+def look_seq(seq_log, final_score: bool = False):
     seq = seq_log
     seq_id = re.findall("Parameter fitting for sequence (\w+) took \d+.\d+ secconds.", seq)[0]
-    print(seq_id)
+    print("seq ID:", seq_id)
     # print('seq:', seq[:800])
 
-    formulas = get_formulas(seq_id)
-    print('')
-    for i in formulas:
-        print(i)
-    print('')
+    # formulas = get_formulas(seq_id)
+    # print('')
+    # for i in formulas:
+    #     print(i)
+    # print('')
 
-    models_card = int(re.findall("ModelBox: (\d+) models", seq)[0])
+    # models_card = int(re.findall("ModelBox: (\d+) models", seq)[0])
     # print(models_card)
-    fitting = re.findall("(model: [\w.+/*\-()\ ]+); p: [\de.+\-\ ]+ ; (error: [\de.+\-\ ]+)\n", seq) 
+    if not final_score: # default (old)
+        fitting = re.findall("(model: [\w.+/*\-()\ ]+); p: [\de.+\-\ ]+ ; (error: [\de.+\-\ ]+)\n", seq)
+    else:
+        fitting = re.findall("(model: [\w.+/*\-()\ ]+); (error: [\de.+\-\ ]+)\n", seq)
     # fitting = re.findall("(model: )(([a-zA-Z_+/*\-()\ ]*?)([\d.]+))+([a-zA-Z_+/*\-()\ ]*); p: [\de.+\-\ ]+ ; (error: [\de.+\-\ ]+)\n", seq) 
     # print('substit', substit)
     # 1/0
 
-    print('check fitting', len(fitting), models_card)
-    if not len(fitting) == models_card:
+    # if not final_score:
+    # print('check fitting', len(fitting), models_card)
+    print('check fitting: len(fitting) vs. models_card', len(fitting))
+    if not final_score and not len(fitting) == models_card:
         print("!!!! REGULAR EXPRESSIONS NOT SUFFICIENTLLY COVERED !!!!")
+        print('len(fitting) vs models_card:', len(fitting), models_card)
+        print('fitting:', fitting)
+        # print('log:\n', seq)
     else:
         # for model, error in fitting:
         # # for n, i in enumerate(fitting):
@@ -202,12 +223,13 @@ def look_seq(seq_log):
     return
 
 
-
-
+IS_FINAL_SCORE = False  # default
+IS_FINAL_SCORE = True
+if IS_FINAL_SCORE:
+    seqs = seqs_final_scores
 for n, i in enumerate(seqs):
     print('sequence', n)
-    look_seq(i)
-
+    look_seq(i, IS_FINAL_SCORE)
 
 
 
