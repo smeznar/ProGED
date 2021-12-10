@@ -1,0 +1,130 @@
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 50
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = simplerational2
+=>> generator_settings = {'functions': ["'sqrt'", "'exp'", "'log'"], 'p_F': [0.333, 0.333, 0.333]}
+=>> optimizer = differential_evolution
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 10
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+=>> Grammar used: 
+Grammar with 60 productions (start state = S)
+    S -> P '/' R [0.2]
+    S -> P [0.8]
+    P -> P '+' 'C' '*' R [0.57]
+    P -> 'C' [0.43]
+    R -> 'sqrt' '(' 'C' '*' M ')' [0.133253]
+    R -> 'exp' '(' 'C' '*' M ')' [0.133253]
+    R -> 'log' '(' 'C' '*' M ')' [0.133253]
+    R -> M [0.60024]
+    M -> M '*' V [0.4]
+    M -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 48 models
+-> C0*n + C1, p = 0.035308523409363746, parse trees = 1, valid = False
+-> C0*an_1**2 + C1, p = 1.0623433449553126e-05, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_2 + C2, p = 0.0004473721678478247, parse trees = 1, valid = False
+-> C0/sqrt(C1*an_1), p = 0.0021980241276838607, parse trees = 1, valid = False
+-> C0*log(C1*n) + C2, p = 0.007838492196878752, parse trees = 1, valid = False
+-> C0*an_2 + C1*exp(C2*an_2) + C3, p = 2.9993053714515704e-05, parse trees = 1, valid = False
+-> C0*an_2*n + C1*sqrt(C2*n) + C3, p = 1.1434125802136665e-07, parse trees = 1, valid = False
+-> C0*an_1*an_2 + C1*n + C2*sqrt(C3*an_1) + C4*log(C5*an_24) + C6*log(C7*n) + C8, p = 1.2327745179753445e-12, parse trees = 1, valid = False
+-> C0/n, p = 0.01548619447779112, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_2 + C2*n + C3*sqrt(C4*an_1) + C5, p = 6.866256900266414e-08, parse trees = 1, valid = False
+-> C0*an_1**2*an_2 + C1*an_1*n**2/sqrt(C2*an_1*n**2) + C3*an_1 + C4*n + C5*sqrt(C6*n) + C7, p = 1.1477401631468904e-14, parse trees = 1, valid = False
+-> C0*an_1 + C1*exp(C2*an_12) + C3, p = 9.375301793159494e-07, parse trees = 1, valid = False
+-> C0*an_1*n + C1*an_1/sqrt(C2*an_1*an_2) + C3*n**2 + C4, p = 1.500682600406381e-09, parse trees = 1, valid = False
+-> C0*an_2 + C1*exp(C2*n) + C3, p = 0.000155341381974237, parse trees = 1, valid = False
+-> C0*an_10*an_2**2 + C1*n + C2*sqrt(C3*an_1*n) + C4, p = 2.8878579767930707e-11, parse trees = 1, valid = False
+-> C0*sqrt(C1*n) + C2, p = 0.007838492196878752, parse trees = 1, valid = False
+-> C0*an_1**2*n + C1*exp(C2*an_1) + C3, p = 8.410425168317292e-06, parse trees = 1, valid = False
+-> C0*n + C1*exp(C2*n**2) + C3*log(C4*an_1) + C5, p = 2.4060996638847956e-07, parse trees = 1, valid = False
+-> C0/an_2, p = 0.002990048478407757, parse trees = 1, valid = False
+-> C0*n + C1*sqrt(C2*an_1) + C3*sqrt(C4*an_1*n) + C5, p = 1.4987433569288731e-06, parse trees = 1, valid = False
+-> C0*an_1*an_2 + C1, p = 0.0008717216744262879, parse trees = 1, valid = False
+-> C0*an_1**2*n + C1*an_1 + C10 + C2*n + C3*sqrt(C4*an_1**2*an_2)/log(C5*an_1) + C6*exp(C7*an_1**2) + C8*log(C9*n), p = 7.786926495530017e-18, parse trees = 1, valid = False
+-> C0 + C1*an_2*n/an_1, p = 3.924317261823026e-05, parse trees = 1, valid = False
+-> C0*an_1*an_2 + C1*an_2*an_3*n**2 + C2, p = 8.18151031077273e-09, parse trees = 1, valid = False
+-> C0*an_1 + C1*sqrt(C2*n) + C3*sqrt(C4*an_2*n**3) + C5*exp(C6*an_1) + C7*log(C8*an_2*n**2) + C9, p = 4.6415439915899394e-14, parse trees = 1, valid = False
+-> C0*an_1**2/n + C1, p = 0.00012994673197168694, parse trees = 1, valid = False
+-> C0/log(C1*n**2), p = 0.000687587034813926, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + C2*sqrt(C3*n) + C4*sqrt(C5*an_1*an_34*n) + C6, p = 5.604102056884782e-11, parse trees = 1, valid = False
+-> C0*an_1*n + C1*n + C2, p = 4.756489585878044e-05, parse trees = 1, valid = False
+-> C0*an_1**2*n + C1*an_7*n + C2*n + C3, p = 1.3189644570274922e-12, parse trees = 1, valid = False
+-> C0*sqrt(C1*an_1*an_2*an_25*n) + C2 + C3*n**2/an_2, p = 2.5158767510911745e-12, parse trees = 1, valid = False
+-> C0*an_1**3*n**2 + C1*an_1**2*an_3*n + C10*exp(C11*an_1*n) + C12 + C2*an_1**2 + C3*an_1*n + C4*an_1 + C5*an_2 + C6*n**4 + C7*n + C8*sqrt(C9*an_1), p = 1.2945960100096818e-28, parse trees = 1, valid = False
+-> C0*log(C1*an_1*n) + C2, p = 0.0010022990022238408, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + C2, p = 0.00023782447929390207, parse trees = 1, valid = False
+-> C0*an_2*n + C1, p = 0.0013634621061539374, parse trees = 1, valid = False
+-> C0*an_1*n + C1*an_1 + C2*an_3 + C3*n**2 + C4, p = 2.425154061880907e-09, parse trees = 1, valid = False
+-> C0*exp(C1*an_1*an_4*n) + C2 + C3*exp(C4*an_1**2*an_2*n**2)/sqrt(C5*n), p = 1.097255119262072e-13, parse trees = 1, valid = False
+-> C0*n + C1*exp(C2*an_4*n) + C3, p = 3.062863097416559e-06, parse trees = 1, valid = False
+-> C0*an_1/n + C1*sqrt(C2*an_1*an_6) + C3, p = 9.980589526817867e-09, parse trees = 1, valid = False
+-> C0*log(C1*n**2) + C2, p = 0.0015676984393757508, parse trees = 1, valid = False
+-> C0*exp(C1*an_5) + C2, p = 5.475522326963571e-05, parse trees = 1, valid = False
+-> C0*an_1*log(C1*an_1)/n + C2*an_3 + C3*an_4*n + C4*n + C5, p = 7.0301830711220016e-12, parse trees = 1, valid = False
+-> C0*n + C1*sqrt(C2*n) + C3*exp(C4*an_1*n) + C5, p = 2.344188327504135e-06, parse trees = 1, valid = False
+-> C0*an_1 + C1*sqrt(C2*an_1**2*n**4) + C3, p = 4.415336661681701e-09, parse trees = 1, valid = False
+-> C0*an_2 + C1, p = 0.006817310530769685, parse trees = 1, valid = False
+-> C0*an_1**2*an_2 + C1*an_1 + C2*sqrt(C3*n) + C4*exp(C5*n) + C6*log(C7*an_1*an_2*an_3*n**2) + C8, p = 1.0118591254793582e-15, parse trees = 1, valid = False
+-> C0*an_1*n + C1*an_2 + C2*n + C3, p = 9.183750384391122e-06, parse trees = 1, valid = False
+-> C0*an_1*n + C1*an_2*n + C2*sqrt(C3*an_1) + C4*sqrt(C5*an_35) + C6*sqrt(C7*an_2*an_30) + C8, p = 1.7342224990940415e-17, parse trees = 1, valid = False
+Estimating model C0*n + C1
+model: 4.0*n + 0.801651382719064                                             ; p: 0.035308523409363746   ; error: 1.998068007197327e+18
+Estimating model C0*an_1**2 + C1
