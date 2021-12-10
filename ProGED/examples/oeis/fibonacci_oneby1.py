@@ -14,6 +14,12 @@ import ProGED.examples.tee_so as te  # Log using manually copied class from a fo
 from hyperopt import hp, tpe, rand
 
 
+##############################
+# Quick usage is with flags:
+#  --seq_only=A000045 --sample_size=3 # (Fibonacci with 3 models fited)  
+# search for flags with: flags_dict
+###############
+
 #####  To log output to file, for later inspection.  ########
 # 9.53 - 20min
 # Command line arguments (to avoid logging):
