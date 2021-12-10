@@ -477,7 +477,21 @@ def min_fit (model, X, Y):
     
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
-OPTIMIZER_LIBRARY = {"differential_evolution": DE_fit, "hyperopt": hyperopt_fit, "minimize": min_fit}
+# def exact_fit (model, X, Y):
+#     """Tries to fit exact integer equation into data. 
+#     When unsuccessful return trivial parameters with big error.
+#     Error values are possible only 2: 
+#         error 0 (can fit equation) or 10000 (cannot fit)
+#     """
+
+#     A, b = produce_matrix(model, X, Y)
+#     x = clumsy_solve(A,b)
+#     res = {"x":[], "fun": 10000} if x == [] else {"x":tuble? x[0], "fun": 10000}
+    
+#     return res
+
+# OPTIMIZER_LIBRARY = {"differential_evolution": DE_fit, "hyperopt": hyperopt_fit, "minimize": min_fit}
+# OPTIMIZER_LIBRARY = {"differential_evolution": DE_fit, "hyperopt": hyperopt_fit, "minimize": min_fit, "exact_fit": exact_fit}
 
 def find_parameters (model, X, Y, T, **estimation_settings):
     """Calls the appropriate fitting function. 

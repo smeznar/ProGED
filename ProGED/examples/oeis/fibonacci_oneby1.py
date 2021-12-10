@@ -13,6 +13,11 @@ from ProGED.parameter_estimation import DE_fit, hyperopt_fit  # integer_brute_fi
 import ProGED.examples.tee_so as te  # Log using manually copied class from a forum.
 from hyperopt import hp, tpe, rand
 
+print("\n"*5, "TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)")
+print("TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)")
+print("TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)")
+print("parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? ")
+print("TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)", "\n"*5, )
 
 ##############################
 # Quick usage is with flags:
@@ -21,7 +26,6 @@ from hyperopt import hp, tpe, rand
 ###############
 
 #####  To log output to file, for later inspection.  ########
-# 9.53 - 20min
 # Command line arguments (to avoid logging):
 is_tee_flag = True  # Do not change manually!! Change is_tee.
 message = ""
@@ -188,7 +192,7 @@ grammar_template_name = "polynomial2"
 # grammar_template_name = "rational"
 # grammar_template_name = "rational"
 # grammar_template_name = "simplerational"
-grammar_template_name = "simplerational2"
+# grammar_template_name = "simplerational2"
 # grammar_template_name = "universal"
 # grammar_template_name = "polytrig"
 # grammar_template_name = "trigonometric"
@@ -218,11 +222,14 @@ lower_upper_bounds = (-4, 4)  # new grammar
 p_T = [0.4, 0.6]  # default settings, does nothing
 p_R = [0.6, 0.4]
 # p_F = [0.1, 0.8, 0.1]
-p_F = [0.333, 0.333, 0.333]
+p_F = [0.333, 0.333, 0.333]  # before exact
+p_F = []  # for exact
+functions = ["'sqrt'", "'exp'", "'log'",]  # before exact
+functions = []
 generator_settings = {
     # "variables": variables,
     # "functions": ["'exp'"],
-    "functions": ["'sqrt'", "'exp'", "'log'",],
+    "functions": functions,
      # "p_T": p_T, "p_R": p_R, 
      # "p_R": p_R, 
      "p_F": p_F,
@@ -246,6 +253,7 @@ random_seed = int(flags_dict.get("--seed", random_seed))
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
 
 task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
+# task_type = "oeis_exact"  # For oeis exact equation discovery.
 # task_type = "integer_algebraic"  # Originalno blo nastimano do 5.5.2021.
 # If recursive, allways integer algebraic:
 # if order > 0:
@@ -261,7 +269,9 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     # data = grid2(np.array(list(csv[seq_id])))
     # First 30 instead 50 terms in sequence (for catalan):
     data = grid2(np.array(list(csv[seq_id])[:number_of_terms]))
-    #%# print('data shape', data.shape)
+    print('data shape', data.shape)
+    print('data:', data)
+    print('data[:4][:4] :', data[:6, :6], data[:, -2])
     n = data.shape[0] + 1  # = 50
     # variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
     variable_names = ["an", "n"] + [f"an_{i}" for i in range(1, (n-1)+1)]
