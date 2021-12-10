@@ -1,0 +1,34 @@
+Glede obstoja resitev je podobno (analogno) kot pri sistemu linearnih ena"cb (linearna algebra (LA)).
+
+Pri LA to ugotovimo preprosto:
+ Z gaussovo eliminacijo lahko pretvorimo  "8x5 + 8x1"  sistem v 
+ekvivalenten sistem podoben spodnjemu, tj. na diagonali enke in nato nicle.
+Pri vseh nicelnih vrsticah, razen pri prvi je na desni strani (pri b) element enak 0. 
+BTW: Stevilo enic na diagonali doloca rank in s tem dimenzijo morebitnih resitev.
+
+   A      b
+
+1 0 0 0 0 | b1
+0 1 0 0 0 | b2
+0 0 1 0 0 | b3
+0 0 0 0 0 | b4
+0 0 0 0 0 | 0
+0 0 0 0 0 | 0
+0 0 0 0 0 | 0
+0 0 0 0 0 | 0
+0 0 0 0 0 | 0
+
+
+Od tu enostavno odčitamo stevilo resitev:
+#1.)  b4 /= 0 (tj. b4 razlicen od 0) => neobstaja resitev 
+#2.)  b4 = 0  => obstaja (mogoce neskoncno) resitev (pri nas dimenzije 2): 
+    resitev = (x,y,z,w,v) = (b1, b2, b3, karkoli, karkoli)
+
+    V zgornjem primeru je rank 3, in zato dimenzija resitev 2. Če bi bile povsod na diagonali enice, bi
+    imeli rank 5 in zato samo eno resitev (b1, b2, b3, b4, b5).  BTW: V tem primeru diofantine's solve() fejla.
+
+
+
+Najbolj splosen sistem je predolocen (M>N, M vrstic, N stolpcev).
+Zelo verjetno je, da ne obstaja resitev, vendar lahko vseeno (glej npr. sistem samih enakih enacb).
+
