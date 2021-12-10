@@ -238,7 +238,8 @@ p = 3/10
 
 # random_seed = 0
 # random_seed = 1  # rec
-random_seed = 5  # new grammar
+random_seed = 5  # new grammar (65. model is rec, 57. model direct (exp) )   
+random_seed = int(flags_dict.get("--seed", random_seed))
 # seed 0 , size 20 (16)
 # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
 # seed 1 size 20 ali 4 an-1 + an-2 rec 
