@@ -259,7 +259,7 @@ task_type = "algebraic"  # Originalno blo nastimano do 5.5.2021.
 # if order > 0:
 #     task_type = 'integer_algebraic'
 optimizer = 'differential_evolution'
-# optimizer = 'oeis_exact'
+optimizer = 'oeis_exact'
 timeout = np.inf
 
 # def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 

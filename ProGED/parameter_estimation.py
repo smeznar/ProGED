@@ -478,23 +478,43 @@ def min_fit (model, X, Y):
     
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
-def exact_fit (model, X, Y):
-    """Tries to fit exact integer equation into data. 
-    When unsuccessful return trivial parameters with big error.
-    Error values are possible only 2: 
-        error 0 (can fit equation) or 10000 (cannot fit)
+def model2diofant (model, X, Y):
+    "Turns model with data into the matrix and vector of diofantine equations."
+    """
+    blueprint:
+    model -> 2models(c0*var + c1*var +..., vars + var + var + ...) ->  
+            -> manyModels( var1, var2, ..., varRight)
+            -> for every row in X: 
+                    A = [var1(X), var2(X), ..., var_n(X)], b = Y - other_sum_of_vars(X) 
+
+
     """
 
-    A, b = produce_matrix(model, X, Y)
-    A = Matrix(
+    A = sp.Matrix(
         [[3, 0 ],
         [0, 3],
         [1, 0]])
-    b = Matrix([6, 9, 2])
+    b = sp.Matrix([6, 9, 2])
+    return A, b
+
+def exact_fit (model, X, Y, T, p0, **estimation_settings):
+    """Tries to fit exact integer equation into data. 
+    When unsuccessful return trivial parameters with big error.
+    Error values are possible only 2: 
+        error 0 (can fit equation) or 20211211 (cannot fit)
+    """
+
+    mystic_integer =  time.strftime("%Y%m%d", time.localtime())
+    A, b = model2diofant(model, X, Y)
+    print("A, b:", A, b)
 
     x = clumsy_solve(A, b)
-    res = {"x":[], "fun": 10000} if x == [] else {"x": np.array((x[0].T)[:], 
-                                                dtype='float64'), "fun": 0}
+    if not x==[] and not len((x[0].T)[:])==len(p0):
+        message = "DIOFANTINE SOLUTION DO NOT HAVE SAME NUMBER OF ELEMENTS AS MODEL PARAMETERS!!!"
+        print(message)
+        # raise IndexError(message)
+    res = {"x": [mystic_integer for i in range(len(p0))], "fun": mystic_integer} \
+          if x == [] else {"x": (x[0].T)[:], "fun": 0}
 # "x": np.array((Matrix([[1], [2], [3]]).T)[:], dtype='float64')
     
     return res
