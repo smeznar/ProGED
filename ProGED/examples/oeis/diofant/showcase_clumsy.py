@@ -1,5 +1,5 @@
 from sympy import Matrix
-from clumsy_solver import clumsy_solve
+from ProGED.clumsy_solver import clumsy_solve
 
 # Only for solving system of *linear* equations.
 # For example, for equations (A*x = b):

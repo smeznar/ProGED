@@ -1,4 +1,3 @@
-
 from sympy import Matrix
 from diophantine import solve
 

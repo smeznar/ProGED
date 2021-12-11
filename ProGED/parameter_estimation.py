@@ -18,6 +18,7 @@ from ProGED.examples.tee_so import Tee
 from ProGED.model_box import ModelBox
 from ProGED.task import TASK_TYPES
 # from ProGED.optimizers import DE_fit, DE_fit_metamodel, hyperopt_fit, min_fit
+from ProGED.clumsy_solver import clumsy_solve
 
 # glitch-doctor downloaded from github:
 # from ProGED.glitch_doctor.metamodel import Metamodel
@@ -477,21 +478,29 @@ def min_fit (model, X, Y):
     
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
-# def exact_fit (model, X, Y):
-#     """Tries to fit exact integer equation into data. 
-#     When unsuccessful return trivial parameters with big error.
-#     Error values are possible only 2: 
-#         error 0 (can fit equation) or 10000 (cannot fit)
-#     """
+def exact_fit (model, X, Y):
+    """Tries to fit exact integer equation into data. 
+    When unsuccessful return trivial parameters with big error.
+    Error values are possible only 2: 
+        error 0 (can fit equation) or 10000 (cannot fit)
+    """
 
-#     A, b = produce_matrix(model, X, Y)
-#     x = clumsy_solve(A,b)
-#     res = {"x":[], "fun": 10000} if x == [] else {"x":tuble? x[0], "fun": 10000}
+    A, b = produce_matrix(model, X, Y)
+    A = Matrix(
+        [[3, 0 ],
+        [0, 3],
+        [1, 0]])
+    b = Matrix([6, 9, 2])
+
+    x = clumsy_solve(A, b)
+    res = {"x":[], "fun": 10000} if x == [] else {"x": np.array((x[0].T)[:], 
+                                                dtype='float64'), "fun": 0}
+# "x": np.array((Matrix([[1], [2], [3]]).T)[:], dtype='float64')
     
-#     return res
+    return res
 
 # OPTIMIZER_LIBRARY = {"differential_evolution": DE_fit, "hyperopt": hyperopt_fit, "minimize": min_fit}
-# OPTIMIZER_LIBRARY = {"differential_evolution": DE_fit, "hyperopt": hyperopt_fit, "minimize": min_fit, "exact_fit": exact_fit}
+OPTIMIZER_LIBRARY = {"differential_evolution": DE_fit, "hyperopt": hyperopt_fit, "minimize": min_fit, "oeis_exact": exact_fit}
 
 def find_parameters (model, X, Y, T, **estimation_settings):
     """Calls the appropriate fitting function. 
