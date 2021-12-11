@@ -394,8 +394,37 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     # 1/0
 
     ED.generate_models()
+    
+    # exact ed:
+    for i in ED.models:
+        print(i, type(i))
+        print(i.expr, type(i.expr),)
+        print(i.expr.func, i.expr.args) #.func, i.args)
+
+    #blueprint:
+    #1.) if type(expr) != Add naredi nekaj drugega ( uporabi algoritem pri #2.) )
+    #2.) if type(expr) == Add glej skico:
+    #   - (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2)  in naredi:
+    #   - funkcijo, ki vsakemu argumentu v expr.args priredi
+    #   - ( (1 (nima konstante), an_1 (expr), ..., (0 (ima konstanto), an_1*n (expr odstranimo konstanto), ...
+    #   - npr. (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2) ->  ((1, n**2), (1, an_1), (0, n), (0, an_1*n), (0, an_3*n**2))
+    #   - nato to pretvorimo v (1, 0, 0, 0) ... tj. index 0, da razdelimo v (n**2, an_1, ) in (n, an_1*n, an_3*n**2, )
+    #   - prvi tuple zdruzimo in koncamo z (n**2 + an_1, n, an_1*n, an_3*n**2)
+    #   - sedaj evalviramo:
+    #       - stolpec b = sp.lambdify(n**2 + an_1, lib="math")(X)-Y 
+    #       - stolpec A[:, 0] = sp.lambdify(an_1*n, lib="math")(X) 
+    #       - stolpec A[:, 1] = sp.lambdify(n, lib="math")(X) 
+    #       - ...
+    #   - sestavimo in vrnemo stolpce: A, b
+
+
+
+    # 
+
+    # EOf exact ed
+
     print(ED.models)
-    # 1/0
+    1/0
     seq_start = time.perf_counter()
     ED.fit_models()
     seq_cpu_time = time.perf_counter() - seq_start
