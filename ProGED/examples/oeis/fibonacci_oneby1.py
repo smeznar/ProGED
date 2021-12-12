@@ -3,6 +3,7 @@ direct, recursive or even direct-recursive equations.
 """
 
 import numpy as np
+import sympy as sp
 import pandas as pd
 import time
 import sys
@@ -395,11 +396,8 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
 
     ED.generate_models()
     
+    print(ED.models)
     # exact ed:
-    for i in ED.models:
-        print(i, type(i))
-        print(i.expr, type(i.expr),)
-        print(i.expr.func, i.expr.args) #.func, i.args)
 
     def model2diofant (model, X, Y):
         "Turns model with data into the matrix and vector of diofantine equations."
@@ -427,10 +425,13 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     #       - stolpec A[:, 1] = sp.lambdify(n, lib="math")(X) 
     #       - ...
     #   - sestavimo in vrnemo stolpce: A, b
+        if isinstance(model.expr, sp.Add):
+            terms = model.expr.args
+            print(type(terms), terms)
         print("inside model2diofant()")
-        print(isinstance(mode.expr, sympy))
-        print(isinstance(mode.expr, Add))
-        print(isinstance(mode.expr, pow))
+        # print(isinstance(model.expr, ))
+        print("Add", isinstance(model.expr, sp.Add))
+        print("Pow", isinstance(model.expr, sp.Pow))
         print("exiting model2diofant()")
 
 
@@ -441,12 +442,18 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         b = sp.Matrix([6, 9, 2])
         return A, b
 
+    for model in ED.models:
+        print(model, type(model))
+        print(model.expr, type(model.expr),)
+        print(model.expr.func, model.expr.args) #.func, model.args)
+        model2diofant(model, None, None)
+    print("returning 0 earlier")
+    return 0
 
     # 
 
     # EOf exact ed
 
-    print(ED.models)
     # 1/0
     seq_start = time.perf_counter()
     ED.fit_models()
