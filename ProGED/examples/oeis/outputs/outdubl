@@ -1,0 +1,647 @@
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 100
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 86
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 61 models
+-> C0*an_1 + C1*n + an_1, p = 0.0001271410481053481, parse trees = 1, valid = False
+-> C0*an_1 + an_2, p = 0.0026663800053749005, parse trees = 1, valid = False
+-> n**3, p = 0.007200000000000005, parse trees = 1, valid = False
+-> C0*an_4 + n, p = 0.00041114754098360654, parse trees = 1, valid = False
+-> an_1**2, p = 0.014715399086267138, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> C0*n + an_38*n, p = 7.868852459016397e-06, parse trees = 1, valid = False
+-> C0*n**2 + an_1, p = 0.0027619672131147556, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_2*n + n, p = 6.399312012899765e-05, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_6 + an_1**3, p = 5.8391659960821975e-08, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*an_1**3 + C1*an_1*an_5*n + an_2, p = 9.345888868975501e-10, parse trees = 1, valid = False
+-> C0*an_1**2*n + n, p = 0.0003531695780704116, parse trees = 1, valid = False
+-> an_1**2*n, p = 0.005886159634506859, parse trees = 2, valid = False
+-> an_2*n**2, p = 0.0013901639344262304, parse trees = 1, valid = False
+-> C0*n + an_2, p = 0.00417049180327869, parse trees = 1, valid = False
+-> C0*an_3 + C1*n**3 + n, p = 6.137704918032792e-06, parse trees = 1, valid = False
+-> C0*an_1**2 + an_1*n, p = 0.00022579694335649262, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + an_1*an_18*n, p = 7.719557108190832e-08, parse trees = 1, valid = False
+-> C0*n + an_1*n**2, p = 0.0005523934426229514, parse trees = 1, valid = False
+-> C0*an_1*n + an_2, p = 0.0005332760010749803, parse trees = 1, valid = False
+-> an_1*an_10*n**2, p = 1.688521277076056e-06, parse trees = 1, valid = False
+-> C0*an_1**2*an_4 + an_1**2, p = 5.495747515001257e-07, parse trees = 1, valid = False
+-> an_1*n, p = 0.023016393442622962, parse trees = 1, valid = False
+-> an_2, p = 0.034754098360655745, parse trees = 1, valid = False
+-> an_3*n**3, p = 8.524590163934432e-05, parse trees = 1, valid = False
+-> an_3, p = 0.010655737704918032, parse trees = 1, valid = False
+-> an_1*an_4*n**3, p = 3.504864283794682e-06, parse trees = 1, valid = False
+-> an_4*an_5*n, p = 9.573471886291022e-07, parse trees = 1, valid = False
+-> C0*an_2*n + n, p = 0.0008340983606557383, parse trees = 1, valid = False
+-> C0*an_2 + C1*n + an_1*an_2**2*n**2, p = 1.9084918703505777e-08, parse trees = 1, valid = False
+-> an_1**3, p = 0.0018816411946374378, parse trees = 1, valid = False
+-> C0*an_1 + n, p = 0.013809836065573775, parse trees = 1, valid = False
+-> C0*an_1*n + an_3, p = 0.00016350443429185711, parse trees = 1, valid = False
+-> C0*an_2 + C1*n + an_1*n, p = 7.679174415479718e-06, parse trees = 1, valid = False
+-> C0*n + an_1, p = 0.00019886163934426245, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_2*an_3*n + an_1**2*n, p = 1.2388075206595079e-08, parse trees = 1, valid = False
+-> C0*an_1*n**3 + an_2*n, p = 4.266208008599845e-06, parse trees = 1, valid = False
+-> C0*an_1**2*n + an_2*n, p = 1.3637878060278192e-05, parse trees = 1, valid = False
+-> C0*n**2 + an_1**2*an_2*n, p = 2.7275756120556386e-06, parse trees = 1, valid = False
+-> C0*an_1*n**3 + n, p = 0.00011047868852459028, parse trees = 1, valid = False
+-> C0*an_2*an_3*n + an_1, p = 6.313832435313972e-06, parse trees = 1, valid = False
+-> an_1*n**2, p = 0.009206557377049188, parse trees = 2, valid = False
+-> an_23*n**3, p = 2.6229508225530175e-06, parse trees = 1, valid = False
+-> C0*an_1**2*an_2*an_3*n**4 + C1*an_1 + C2*n + an_12, p = 2.1675638894601558e-14, parse trees = 1, valid = False
+-> C0*n + an_1*n**3, p = 0.00011047868852459028, parse trees = 1, valid = False
+-> C0*an_1**2*n**3 + an_2*n, p = 5.455151224111278e-07, parse trees = 1, valid = False
+-> C0*an_1**2*n**2 + n, p = 7.063391561408231e-05, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_32 + n, p = 3.018543402311273e-06, parse trees = 1, valid = False
+-> an_1*an_49*n**2, p = 1.6769685568395607e-06, parse trees = 1, valid = False
+-> an_1*an_3, p = 0.0013625369524321422, parse trees = 1, valid = False
+-> C0*an_1**2*n + C1*an_1*an_30*n**2 + C2*an_3 + C3*n + an_45*n, p = 1.2261627176342037e-16, parse trees = 1, valid = False
+-> C0*an_42 + C1*n + an_3*n, p = 5.5898951894652e-08, parse trees = 1, valid = False
+-> C0*n**2 + an_1*an_2, p = 0.00010665520021499607, parse trees = 1, valid = False
+-> C0*an_1*an_2**2*n**3 + an_1, p = 1.0532714567500832e-07, parse trees = 1, valid = False
+-> C0*n + an_4*n, p = 9.867540983606564e-06, parse trees = 1, valid = False
+-> C0*an_1*n + an_1, p = 0.0017658478903520573, parse trees = 1, valid = False
+-> C0*an_1 + an_1*n, p = 0.001765847890352057, parse trees = 1, valid = False
+-> C0*n + n**2, p = 0.004320000000000003, parse trees = 1, valid = False
+-> C0*an_1*n + C1*n + an_1*an_3*n, p = 5.017709852366504e-07, parse trees = 1, valid = False
+C0*an_1 + C1*n + an_1 <class 'ProGED.model.Model'>
+C0*an_1 + C1*n + an_1 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1, C0*an_1, C1*n)
+<class 'tuple'> (an_1, C0*an_1, C1*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1 + an_2 <class 'ProGED.model.Model'>
+C0*an_1 + an_2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_2, C0*an_1)
+<class 'tuple'> (an_2, C0*an_1)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+n**3 <class 'ProGED.model.Model'>
+n**3 <class 'sympy.core.power.Pow'>
+<class 'sympy.core.power.Pow'> (n, 3)
+inside model2diofant()
+Add False
+Pow True
+exiting model2diofant()
+C0*an_4 + n <class 'ProGED.model.Model'>
+C0*an_4 + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_4)
+<class 'tuple'> (n, C0*an_4)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1**2 <class 'ProGED.model.Model'>
+an_1**2 <class 'sympy.core.power.Pow'>
+<class 'sympy.core.power.Pow'> (an_1, 2)
+inside model2diofant()
+Add False
+Pow True
+exiting model2diofant()
+n <class 'ProGED.model.Model'>
+n <class 'sympy.core.symbol.Symbol'>
+<class 'sympy.core.symbol.Symbol'> ()
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+C0*n + an_38*n <class 'ProGED.model.Model'>
+C0*n + an_38*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*n, an_38*n)
+<class 'tuple'> (C0*n, an_38*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n**2 + an_1 <class 'ProGED.model.Model'>
+C0*n**2 + an_1 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1, C0*n**2)
+<class 'tuple'> (an_1, C0*n**2)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+n**2 <class 'ProGED.model.Model'>
+n**2 <class 'sympy.core.power.Pow'>
+<class 'sympy.core.power.Pow'> (n, 2)
+inside model2diofant()
+Add False
+Pow True
+exiting model2diofant()
+C0*an_1 + C1*an_2*n + n <class 'ProGED.model.Model'>
+C0*an_1 + C1*an_2*n + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_1, C1*an_2*n)
+<class 'tuple'> (n, C0*an_1, C1*an_2*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1 + C1*an_6 + an_1**3 <class 'ProGED.model.Model'>
+C0*an_1 + C1*an_6 + an_1**3 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1**3, C0*an_1, C1*an_6)
+<class 'tuple'> (an_1**3, C0*an_1, C1*an_6)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1 <class 'ProGED.model.Model'>
+an_1 <class 'sympy.core.symbol.Symbol'>
+<class 'sympy.core.symbol.Symbol'> ()
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+C0*an_1**3 + C1*an_1*an_5*n + an_2 <class 'ProGED.model.Model'>
+C0*an_1**3 + C1*an_1*an_5*n + an_2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_2, C0*an_1**3, C1*an_1*an_5*n)
+<class 'tuple'> (an_2, C0*an_1**3, C1*an_1*an_5*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1**2*n + n <class 'ProGED.model.Model'>
+C0*an_1**2*n + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_1**2*n)
+<class 'tuple'> (n, C0*an_1**2*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1**2*n <class 'ProGED.model.Model'>
+an_1**2*n <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (n, an_1**2)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_2*n**2 <class 'ProGED.model.Model'>
+an_2*n**2 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_2, n**2)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+C0*n + an_2 <class 'ProGED.model.Model'>
+C0*n + an_2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_2, C0*n)
+<class 'tuple'> (an_2, C0*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_3 + C1*n**3 + n <class 'ProGED.model.Model'>
+C0*an_3 + C1*n**3 + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_3, C1*n**3)
+<class 'tuple'> (n, C0*an_3, C1*n**3)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1**2 + an_1*n <class 'ProGED.model.Model'>
+C0*an_1**2 + an_1*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*an_1**2, an_1*n)
+<class 'tuple'> (C0*an_1**2, an_1*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1 + C1*n + an_1*an_18*n <class 'ProGED.model.Model'>
+C0*an_1 + C1*n + an_1*an_18*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*an_1, C1*n, an_1*an_18*n)
+<class 'tuple'> (C0*an_1, C1*n, an_1*an_18*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n + an_1*n**2 <class 'ProGED.model.Model'>
+C0*n + an_1*n**2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*n, an_1*n**2)
+<class 'tuple'> (C0*n, an_1*n**2)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1*n + an_2 <class 'ProGED.model.Model'>
+C0*an_1*n + an_2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_2, C0*an_1*n)
+<class 'tuple'> (an_2, C0*an_1*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1*an_10*n**2 <class 'ProGED.model.Model'>
+an_1*an_10*n**2 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_1, an_10, n**2)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+C0*an_1**2*an_4 + an_1**2 <class 'ProGED.model.Model'>
+C0*an_1**2*an_4 + an_1**2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1**2, C0*an_1**2*an_4)
+<class 'tuple'> (an_1**2, C0*an_1**2*an_4)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1*n <class 'ProGED.model.Model'>
+an_1*n <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_1, n)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_2 <class 'ProGED.model.Model'>
+an_2 <class 'sympy.core.symbol.Symbol'>
+<class 'sympy.core.symbol.Symbol'> ()
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_3*n**3 <class 'ProGED.model.Model'>
+an_3*n**3 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_3, n**3)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_3 <class 'ProGED.model.Model'>
+an_3 <class 'sympy.core.symbol.Symbol'>
+<class 'sympy.core.symbol.Symbol'> ()
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_1*an_4*n**3 <class 'ProGED.model.Model'>
+an_1*an_4*n**3 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_1, an_4, n**3)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_4*an_5*n <class 'ProGED.model.Model'>
+an_4*an_5*n <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_4, an_5, n)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+C0*an_2*n + n <class 'ProGED.model.Model'>
+C0*an_2*n + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_2*n)
+<class 'tuple'> (n, C0*an_2*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_2 + C1*n + an_1*an_2**2*n**2 <class 'ProGED.model.Model'>
+C0*an_2 + C1*n + an_1*an_2**2*n**2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*an_2, C1*n, an_1*an_2**2*n**2)
+<class 'tuple'> (C0*an_2, C1*n, an_1*an_2**2*n**2)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1**3 <class 'ProGED.model.Model'>
+an_1**3 <class 'sympy.core.power.Pow'>
+<class 'sympy.core.power.Pow'> (an_1, 3)
+inside model2diofant()
+Add False
+Pow True
+exiting model2diofant()
+C0*an_1 + n <class 'ProGED.model.Model'>
+C0*an_1 + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_1)
+<class 'tuple'> (n, C0*an_1)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1*n + an_3 <class 'ProGED.model.Model'>
+C0*an_1*n + an_3 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_3, C0*an_1*n)
+<class 'tuple'> (an_3, C0*an_1*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_2 + C1*n + an_1*n <class 'ProGED.model.Model'>
+C0*an_2 + C1*n + an_1*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*an_2, C1*n, an_1*n)
+<class 'tuple'> (C0*an_2, C1*n, an_1*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n + an_1 <class 'ProGED.model.Model'>
+C0*n + an_1 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1, C0*n)
+<class 'tuple'> (an_1, C0*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1 + C1*an_2*an_3*n + an_1**2*n <class 'ProGED.model.Model'>
+C0*an_1 + C1*an_2*an_3*n + an_1**2*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*an_1, an_1**2*n, C1*an_2*an_3*n)
+<class 'tuple'> (C0*an_1, an_1**2*n, C1*an_2*an_3*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1*n**3 + an_2*n <class 'ProGED.model.Model'>
+C0*an_1*n**3 + an_2*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_2*n, C0*an_1*n**3)
+<class 'tuple'> (an_2*n, C0*an_1*n**3)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1**2*n + an_2*n <class 'ProGED.model.Model'>
+C0*an_1**2*n + an_2*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_2*n, C0*an_1**2*n)
+<class 'tuple'> (an_2*n, C0*an_1**2*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n**2 + an_1**2*an_2*n <class 'ProGED.model.Model'>
+C0*n**2 + an_1**2*an_2*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*n**2, an_1**2*an_2*n)
+<class 'tuple'> (C0*n**2, an_1**2*an_2*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1*n**3 + n <class 'ProGED.model.Model'>
+C0*an_1*n**3 + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_1*n**3)
+<class 'tuple'> (n, C0*an_1*n**3)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_2*an_3*n + an_1 <class 'ProGED.model.Model'>
+C0*an_2*an_3*n + an_1 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1, C0*an_2*an_3*n)
+<class 'tuple'> (an_1, C0*an_2*an_3*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1*n**2 <class 'ProGED.model.Model'>
+an_1*n**2 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_1, n**2)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_23*n**3 <class 'ProGED.model.Model'>
+an_23*n**3 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_23, n**3)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+C0*an_1**2*an_2*an_3*n**4 + C1*an_1 + C2*n + an_12 <class 'ProGED.model.Model'>
+C0*an_1**2*an_2*an_3*n**4 + C1*an_1 + C2*n + an_12 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_12, C1*an_1, C2*n, C0*an_1**2*an_2*an_3*n**4)
+<class 'tuple'> (an_12, C1*an_1, C2*n, C0*an_1**2*an_2*an_3*n**4)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n + an_1*n**3 <class 'ProGED.model.Model'>
+C0*n + an_1*n**3 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*n, an_1*n**3)
+<class 'tuple'> (C0*n, an_1*n**3)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1**2*n**3 + an_2*n <class 'ProGED.model.Model'>
+C0*an_1**2*n**3 + an_2*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_2*n, C0*an_1**2*n**3)
+<class 'tuple'> (an_2*n, C0*an_1**2*n**3)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1**2*n**2 + n <class 'ProGED.model.Model'>
+C0*an_1**2*n**2 + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_1**2*n**2)
+<class 'tuple'> (n, C0*an_1**2*n**2)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1 + C1*an_32 + n <class 'ProGED.model.Model'>
+C0*an_1 + C1*an_32 + n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n, C0*an_1, C1*an_32)
+<class 'tuple'> (n, C0*an_1, C1*an_32)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+an_1*an_49*n**2 <class 'ProGED.model.Model'>
+an_1*an_49*n**2 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_1, an_49, n**2)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+an_1*an_3 <class 'ProGED.model.Model'>
+an_1*an_3 <class 'sympy.core.mul.Mul'>
+<class 'sympy.core.mul.Mul'> (an_1, an_3)
+inside model2diofant()
+Add False
+Pow False
+exiting model2diofant()
+C0*an_1**2*n + C1*an_1*an_30*n**2 + C2*an_3 + C3*n + an_45*n <class 'ProGED.model.Model'>
+C0*an_1**2*n + C1*an_1*an_30*n**2 + C2*an_3 + C3*n + an_45*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C2*an_3, C3*n, an_45*n, C0*an_1**2*n, C1*an_1*an_30*n**2)
+<class 'tuple'> (C2*an_3, C3*n, an_45*n, C0*an_1**2*n, C1*an_1*an_30*n**2)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_42 + C1*n + an_3*n <class 'ProGED.model.Model'>
+C0*an_42 + C1*n + an_3*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*an_42, C1*n, an_3*n)
+<class 'tuple'> (C0*an_42, C1*n, an_3*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n**2 + an_1*an_2 <class 'ProGED.model.Model'>
+C0*n**2 + an_1*an_2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*n**2, an_1*an_2)
+<class 'tuple'> (C0*n**2, an_1*an_2)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1*an_2**2*n**3 + an_1 <class 'ProGED.model.Model'>
+C0*an_1*an_2**2*n**3 + an_1 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1, C0*an_1*an_2**2*n**3)
+<class 'tuple'> (an_1, C0*an_1*an_2**2*n**3)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n + an_4*n <class 'ProGED.model.Model'>
+C0*n + an_4*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*n, an_4*n)
+<class 'tuple'> (C0*n, an_4*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1*n + an_1 <class 'ProGED.model.Model'>
+C0*an_1*n + an_1 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (an_1, C0*an_1*n)
+<class 'tuple'> (an_1, C0*an_1*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1 + an_1*n <class 'ProGED.model.Model'>
+C0*an_1 + an_1*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C0*an_1, an_1*n)
+<class 'tuple'> (C0*an_1, an_1*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*n + n**2 <class 'ProGED.model.Model'>
+C0*n + n**2 <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (n**2, C0*n)
+<class 'tuple'> (n**2, C0*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+C0*an_1*n + C1*n + an_1*an_3*n <class 'ProGED.model.Model'>
+C0*an_1*n + C1*n + an_1*an_3*n <class 'sympy.core.add.Add'>
+<class 'sympy.core.add.Add'> (C1*n, C0*an_1*n, an_1*an_3*n)
+<class 'tuple'> (C1*n, C0*an_1*n, an_1*an_3*n)
+inside model2diofant()
+Add True
+Pow False
+exiting model2diofant()
+returning 0 earlier
+
+Total time consumed by now:0.4994080769993161
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.4994145109994861 secconds, i.e. 0.008323575183324768 minutes or 0.0001387262530554128 hours.

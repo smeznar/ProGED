@@ -1,0 +1,1473 @@
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 10
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 14 models
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> an_1**2, p = 0.014715399086267138, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> C0*an_1*n + C1*an_3*n**2 + C2*n + an_1, p = 6.021251822839806e-08, parse trees = 1, valid = False
+-> C0*an_1*n**4 + an_1, p = 1.4126783122816469e-05, parse trees = 1, valid = False
+-> C0*an_1**2 + C1*an_1 + C2*n + n, p = 1.9508855906000964e-06, parse trees = 1, valid = False
+-> C0*an_3 + C1*n + an_1*n, p = 3.390427949475952e-08, parse trees = 1, valid = False
+-> C0*an_1 + an_1, p = 0.008829239451760283, parse trees = 1, valid = False
+-> C0*an_1 + an_1**2*n, p = 0.00022579694335649262, parse trees = 1, valid = False
+-> C0*n + an_1, p = 0.013809836065573775, parse trees = 1, valid = False
+-> C0*an_1**2 + C1*an_1*an_2*n + C2*an_12*n + an_1*n, p = 5.852422501542422e-12, parse trees = 1, valid = False
+-> C0*an_1*an_2 + C1*an_1*n + C2*an_1 + C3*n**2 + n**2, p = 3.013389764715634e-09, parse trees = 1, valid = False
+-> C0*an_1*an_3*n + an_1, p = 2.0907124384860418e-05, parse trees = 1, valid = False
+
+Total time consumed by now:0.1564152760001889
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.15642103100071836 secconds, i.e. 0.002607017183345306 minutes or 4.3450286389088435e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 11
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 17 models
+-> C0*an_3 + C1*n + n, p = 0.00015344262295081973, parse trees = 1, valid = False
+-> C0*an_1 + an_1*n**3, p = 7.063391561408231e-05, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> an_35, p = 0.00032786885245901656, parse trees = 1, valid = False
+-> C0*n + an_1**3*an_2*n**2, p = 4.1852635621050477e-08, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> an_4*n, p = 0.0006852459016393443, parse trees = 1, valid = False
+-> C0*an_1*an_2**2 + an_1, p = 1.3165893209376027e-05, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> C0*an_2 + C1*an_3 + C2*n + n, p = 4.266208008599842e-07, parse trees = 1, valid = False
+-> an_6, p = 0.0006067213114754098, parse trees = 1, valid = False
+-> C0*an_1 + n, p = 0.013809836065573775, parse trees = 1, valid = False
+-> C0*an_1*n + C1*n + an_38, p = 6.037086804622418e-07, parse trees = 1, valid = False
+-> C0*an_1*n**2 + an_1*an_2*an_4*n, p = 1.0383666719847516e-08, parse trees = 1, valid = False
+-> an_2, p = 0.034754098360655745, parse trees = 1, valid = False
+-> C0*an_1*an_2*n + C1*an_1 + C2*an_2 + an_1, p = 1.2121255125222267e-07, parse trees = 1, valid = False
+-> C0*n + n**2, p = 0.004320000000000003, parse trees = 1, valid = False
+
+Total time consumed by now:0.1515933339996991
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.15159813799982658 secconds, i.e. 0.002526635633330443 minutes or 4.2110593888840715e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 12
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 19 models
+-> C0*n + n, p = 0.021600000000000008, parse trees = 1, valid = False
+-> C0*n**2 + C1*n + n, p = 0.0005184000000000005, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> an_1**2*an_4, p = 5.602037174917727e-05, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> an_1**2*n**3, p = 0.0001177231926901372, parse trees = 1, valid = False
+-> C0*an_1 + n, p = 0.013809836065573775, parse trees = 1, valid = False
+-> an_1*n, p = 0.046032786885245924, parse trees = 2, valid = False
+-> C0*an_3 + an_3, p = 7.569649735734121e-05, parse trees = 1, valid = False
+-> C0*an_1**2 + C1*an_2*n + C2*an_3*n + an_2, p = 2.2446768750411597e-09, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*n + an_1*n**2, p = 0.0005523934426229514, parse trees = 1, valid = False
+-> C0*an_1**2*n + C1*n + an_2**2, p = 4.55013269316036e-09, parse trees = 1, valid = False
+-> an_1*n**2, p = 0.004603278688524594, parse trees = 1, valid = False
+-> C0*an_3 + an_1, p = 0.0008175221714592852, parse trees = 1, valid = False
+-> C0*an_1 + an_1, p = 0.008829239451760283, parse trees = 1, valid = False
+-> C0*an_49 + n, p = 3.934426229508197e-05, parse trees = 1, valid = False
+-> an_1**2*n, p = 0.0029430798172534293, parse trees = 1, valid = False
+-> an_1*an_2*n, p = 0.0008887933351249672, parse trees = 1, valid = False
+
+Total time consumed by now:0.15263193400005548
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.1526378090002254 secconds, i.e. 0.0025439634833370897 minutes or 4.23993913889515e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 13
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 21 models
+-> an_12, p = 0.0003280721359016393, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> an_1*n**3, p = 0.0009206557377049189, parse trees = 1, valid = False
+-> C0*n + n**2, p = 0.0005184000000000003, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> C0*an_1**2*n + an_3*n, p = 4.181424876972086e-06, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + an_1*n, p = 3.0513851545283566e-06, parse trees = 1, valid = False
+-> C0*n + n, p = 0.0025920000000000014, parse trees = 1, valid = False
+-> C0*an_1 + n**3, p = 0.0005523934426229513, parse trees = 1, valid = False
+-> C0*an_1**2*an_2*n + C1*n**2 + n, p = 3.2730907344667685e-07, parse trees = 1, valid = False
+-> C0*an_1 + an_1*n**2, p = 0.00035316957807041155, parse trees = 1, valid = False
+-> an_1**3*n**5, p = 6.02125182283981e-07, parse trees = 1, valid = False
+-> C0*an_1*an_2 + an_2**2, p = 3.976024729897034e-06, parse trees = 1, valid = False
+-> C0*an_1*n + n, p = 0.002761967213114756, parse trees = 1, valid = False
+-> C0*an_1 + C1*n**2 + C2*n + n**2, p = 7.954465573770502e-06, parse trees = 1, valid = False
+-> an_1*an_3*an_5, p = 1.9035807696092038e-06, parse trees = 1, valid = False
+-> C0*an_2*n + an_1*n, p = 0.00010665520021499607, parse trees = 1, valid = False
+-> C0*an_1*an_13*n**5 + C1*an_2**2 + an_2, p = 2.781561906215525e-13, parse trees = 1, valid = False
+-> C0*n + an_4, p = 0.00041114754098360654, parse trees = 1, valid = False
+-> C0*n**3 + n**2, p = 0.0001728000000000002, parse trees = 1, valid = False
+-> C0*n**3 + C1*n + an_2*n, p = 4.003672131147547e-06, parse trees = 1, valid = False
+
+Total time consumed by now:0.17627246400024887
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.1762779180007783 secconds, i.e. 0.0029379653000129718 minutes or 4.8966088333549526e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 14
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 20 models
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> C0*n + an_1*n, p = 0.002761967213114756, parse trees = 1, valid = False
+-> C0*an_1**2*n + an_1, p = 0.00022579694335649264, parse trees = 1, valid = False
+-> C0*n + n, p = 0.0025920000000000014, parse trees = 1, valid = False
+-> an_1*n**2, p = 0.009206557377049188, parse trees = 2, valid = False
+-> an_1*n**3, p = 0.0009206557377049189, parse trees = 1, valid = False
+-> an_1*n, p = 0.023016393442622962, parse trees = 1, valid = False
+-> C0*an_1**2*n + C1*n + n, p = 5.085641924213929e-06, parse trees = 1, valid = False
+-> an_1**2, p = 0.014715399086267138, parse trees = 1, valid = False
+-> C0*an_2 + n**4, p = 3.3363934426229555e-05, parse trees = 1, valid = False
+-> C0*an_1 + n, p = 0.013809836065573775, parse trees = 1, valid = False
+-> C0*n + an_1*an_2*n, p = 0.0001066552002149961, parse trees = 1, valid = False
+-> an_1*an_2, p = 0.0044439666756248344, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> an_2*an_5*n, p = 9.710890143032045e-06, parse trees = 1, valid = False
+-> an_3, p = 0.010655737704918032, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> an_45, p = 0.0003278688524590164, parse trees = 1, valid = False
+-> C0*n + an_1, p = 0.013809836065573775, parse trees = 1, valid = False
+-> C0*an_1*an_2*n**2 + C1*an_1*an_3*n**2 + C2*n + an_1**2*an_2*n**4, p = 4.697787169556725e-16, parse trees = 1, valid = False
+
+Total time consumed by now:0.1518346519997067
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.15184022999983426 secconds, i.e. 0.0025306704999972377 minutes or 4.217784166662063e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 15
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 21 models
+-> n**4, p = 0.0014400000000000016, parse trees = 1, valid = False
+-> an_2, p = 0.034754098360655745, parse trees = 1, valid = False
+-> an_1**2*an_3*n**2, p = 6.9690414616201425e-06, parse trees = 1, valid = False
+-> C0*n + n, p = 0.021600000000000008, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> n**3, p = 0.007200000000000005, parse trees = 1, valid = False
+-> C0*an_1*n + C1*an_2 + C2*n + an_1, p = 4.909636101700149e-06, parse trees = 1, valid = False
+-> C0*an_1*an_18 + C1*an_1*an_2*n + C2*an_3 + an_1*an_3, p = 1.6029646598041878e-13, parse trees = 1, valid = False
+-> C0*an_3 + an_1*n, p = 0.00016350443429185711, parse trees = 1, valid = False
+-> C0*an_1*n**2 + C1*n**2 + an_1, p = 8.476069873689879e-06, parse trees = 1, valid = False
+-> an_1**2*n, p = 0.0029430798172534293, parse trees = 1, valid = False
+-> C0*an_1*an_16 + C1*an_2*n + an_2, p = 4.501182676936089e-09, parse trees = 1, valid = False
+-> C0*an_2*n + an_1*n, p = 0.00010665520021499607, parse trees = 1, valid = False
+-> C0*an_4*n + an_1*n, p = 1.0514592851384043e-05, parse trees = 1, valid = False
+-> C0*an_1**2 + n**2, p = 0.00035316957807041144, parse trees = 1, valid = False
+-> an_2*n, p = 0.006950819672131151, parse trees = 1, valid = False
+-> an_1*n**2, p = 0.004603278688524594, parse trees = 1, valid = False
+-> C0*an_2 + an_3*n, p = 4.93774075069426e-05, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*an_1*n + C1*n + an_1*n, p = 5.0856419242139284e-06, parse trees = 1, valid = False
+-> C0*an_1*n + an_3, p = 0.00016350443429185711, parse trees = 1, valid = False
+
+Total time consumed by now:0.16747215800023696
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.1674773799995819 secconds, i.e. 0.002791289666659698 minutes or 4.6521494444328306e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 16
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 16 models
+-> C0*n + an_1*an_3*n**2, p = 6.540177371674286e-06, parse trees = 1, valid = False
+-> C0*n + an_3*n, p = 0.0002557377049180329, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*an_1 + n, p = 0.013809836065573775, parse trees = 1, valid = False
+-> C0*n**2 + n**2, p = 0.0008640000000000007, parse trees = 1, valid = False
+-> an_1**2, p = 0.014715399086267138, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + an_1**2*an_13*an_2, p = 1.906212221918712e-09, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> an_3, p = 0.010655737704918032, parse trees = 1, valid = False
+-> an_2**2, p = 0.0013420526142912605, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> C0*an_1 + an_1**2, p = 0.0011289847167824626, parse trees = 1, valid = False
+-> C0*an_2*n + n**2, p = 0.00016681967213114768, parse trees = 1, valid = False
+-> C0*an_1 + an_1*n, p = 0.001765847890352057, parse trees = 1, valid = False
+-> an_1*an_36*n, p = 8.384842784197802e-06, parse trees = 1, valid = False
+-> an_1*an_2*n**2, p = 0.00017775866702499345, parse trees = 1, valid = False
+
+Total time consumed by now:0.13662465300058102
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.13663035399986256 secconds, i.e. 0.002277172566664376 minutes or 3.7952876111072936e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 17
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 17 models
+-> C0*an_2**2*n + an_1**2, p = 2.633178641875206e-06, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> C0*an_1*n + C1*an_2*n**2 + n, p = 2.559724805159907e-06, parse trees = 1, valid = False
+-> an_1**2, p = 0.014715399086267138, parse trees = 1, valid = False
+-> an_2**2, p = 0.0013420526142912605, parse trees = 1, valid = False
+-> C0*an_1*an_4 + C1*an_1*n + n, p = 8.066933531881532e-07, parse trees = 1, valid = False
+-> an_1*an_2*n, p = 0.0008887933351249672, parse trees = 1, valid = False
+-> an_1*n**3, p = 0.0009206557377049189, parse trees = 1, valid = False
+-> C0*n + an_1, p = 0.013809836065573775, parse trees = 1, valid = False
+-> an_2, p = 0.034754098360655745, parse trees = 1, valid = False
+-> an_2*n, p = 0.006950819672131151, parse trees = 1, valid = False
+-> an_4*n, p = 0.0006852459016393443, parse trees = 1, valid = False
+-> an_1*n, p = 0.046032786885245924, parse trees = 2, valid = False
+-> C0*an_1**2*n + n, p = 0.0003531695780704116, parse trees = 1, valid = False
+-> C0*an_1 + n, p = 0.013809836065573775, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*an_1*an_2**2*n**2 + an_1, p = 5.266357283750414e-07, parse trees = 1, valid = False
+
+Total time consumed by now:0.13834220099943195
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.13834723599939025 secconds, i.e. 0.0023057872666565043 minutes or 3.8429787777608406e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 18
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 18 models
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> an_36, p = 0.00032786885245901645, parse trees = 1, valid = False
+-> C0*an_2*n + C1*n + n, p = 0.0001000918032786886, parse trees = 1, valid = False
+-> C0*an_1**3*n + n, p = 4.515938867129855e-05, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + an_3*an_37*n**2, p = 1.0967671808451372e-10, parse trees = 1, valid = False
+-> C0*n + n, p = 0.021600000000000008, parse trees = 1, valid = False
+-> C0*an_1**5*n**3 + C1*n**2 + C2*n + an_1, p = 5.4383210271077526e-11, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> an_2, p = 0.034754098360655745, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + an_1, p = 0.001059508734211234, parse trees = 1, valid = False
+-> C0*an_16*an_3 + n, p = 4.658269385479478e-07, parse trees = 1, valid = False
+-> C0*an_1 + an_1*n**2, p = 0.00035316957807041155, parse trees = 1, valid = False
+-> C0*n**3 + an_46*n, p = 3.147540983606561e-07, parse trees = 1, valid = False
+-> an_1*an_18*n, p = 8.384846574067673e-06, parse trees = 1, valid = False
+-> an_3, p = 0.010655737704918032, parse trees = 1, valid = False
+-> C0*an_15*n + an_11, p = 1.4362927384955564e-08, parse trees = 1, valid = False
+-> C0*an_1**2*an_4 + C1*an_1 + C2*n + an_1*n**3, p = 3.1655505686407274e-10, parse trees = 1, valid = False
+
+Total time consumed by now:0.1692196009998952
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.16922523100038234 secconds, i.e. 0.002820420516673039 minutes or 4.7007008611217316e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 19
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 17 models
+-> C0*n + an_1**2*an_31*n, p = 1.2865922698376576e-07, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*an_1*n**2 + an_1, p = 0.00035316957807041155, parse trees = 1, valid = False
+-> an_3**2, p = 0.000126160828928902, parse trees = 1, valid = False
+-> an_2, p = 0.034754098360655745, parse trees = 1, valid = False
+-> an_1*n, p = 0.023016393442622962, parse trees = 1, valid = False
+-> C0*an_1 + C1*an_2 + n, p = 0.0003199656006449881, parse trees = 1, valid = False
+-> C0*an_1**2*an_2*an_31*n**2 + C1*an_2 + an_21, p = 4.193502223034491e-14, parse trees = 1, valid = False
+-> C0*an_1 + n, p = 0.001059508734211234, parse trees = 1, valid = False
+-> C0*an_1**2*n**4 + C1*an_1 + n**3, p = 8.670602624889328e-09, parse trees = 1, valid = False
+-> C0*an_2 + an_1*n**3, p = 2.133104004299922e-05, parse trees = 1, valid = False
+-> C0*an_2 + C1*n + n**2, p = 2.3190669174952992e-06, parse trees = 1, valid = False
+-> n**2, p = 0.03600000000000001, parse trees = 1, valid = False
+-> C0*an_1*an_28*n + n**3, p = 4.024724536425689e-08, parse trees = 1, valid = False
+-> an_1*an_4, p = 0.0004381080354743349, parse trees = 1, valid = False
+-> C0*n + n**2, p = 0.004320000000000003, parse trees = 1, valid = False
+
+Total time consumed by now:0.14989849199992022
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.14990372700049193 secconds, i.e. 0.0024983954500081987 minutes or 4.163992416680331e-05 hours.
+
+
+
+
+
+ TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)
+parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? 
+TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...) 
+
+
+
+
+
+1
+Running equation discovery for all oeis sequences, with these settings:
+=>> sample_size = 25
+=>> grammar's q and p = 0.5 and 0.3
+=>> grammar_template_name = polynomial2
+=>> generator_settings = {'functions': [], 'p_F': []}
+=>> optimizer = oeis_exact
+=>> task_type = algebraic
+=>> timeout = inf
+=>> random_seed = 20
+=>> lower_upper_bounds = (-4, 4)
+=>> number of terms in every sequence saved in csv = 50
+=>> number of terms in every sequence actually used = 50
+=>> number of all considered sequences = 1
+=>> list of considered sequences = ('A000045',)
+data shape (49, 51)
+data: [[1.00000000e+00 1.00000000e+00 0.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [1.00000000e+00 2.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [2.00000000e+00 3.00000000e+00 1.00000000e+00 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ ...
+ [2.97121507e+09 4.70000000e+01 1.83631190e+09 ... 0.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [4.80752698e+09 4.80000000e+01 2.97121507e+09 ... 1.00000000e+00
+  0.00000000e+00 0.00000000e+00]
+ [7.77874205e+09 4.90000000e+01 4.80752698e+09 ... 1.00000000e+00
+  1.00000000e+00 0.00000000e+00]]
+data[:4][:4] : [[1. 1. 0. 0. 0. 0.]
+ [1. 2. 1. 0. 0. 0.]
+ [2. 3. 1. 1. 0. 0.]
+ [3. 4. 2. 1. 1. 0.]
+ [5. 5. 3. 2. 1. 1.]
+ [8. 6. 5. 3. 2. 1.]] [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1.]
+=>> Grammar used: 
+Grammar with 55 productions (start state = S)
+    S -> S '+' 'C' '*' R [0.4]
+    S -> R [0.6]
+    R -> T [1.0]
+    T -> T '*' V [0.4]
+    T -> V [0.6]
+    V -> 'n' [0.5]
+    V -> 'an_1' [0.319672]
+    V -> 'an_2' [0.0965392]
+    V -> 'an_3' [0.0295993]
+    V -> 'an_4' [0.0095173]
+    V -> 'an_5' [0.00349271]
+    V -> 'an_6' [0.00168534]
+    V -> 'an_7' [0.00114312]
+    V -> 'an_8' [0.00098046]
+    V -> 'an_9' [0.000931661]
+    V -> 'an_10' [0.000917021]
+    V -> 'an_11' [0.000912629]
+    V -> 'an_12' [0.000911311]
+    V -> 'an_13' [0.000910916]
+    V -> 'an_14' [0.000910798]
+    V -> 'an_15' [0.000910762]
+    V -> 'an_16' [0.000910751]
+    V -> 'an_17' [0.000910748]
+    V -> 'an_18' [0.000910747]
+    V -> 'an_19' [0.000910747]
+    V -> 'an_20' [0.000910747]
+    V -> 'an_21' [0.000910747]
+    V -> 'an_22' [0.000910747]
+    V -> 'an_23' [0.000910747]
+    V -> 'an_24' [0.000910747]
+    V -> 'an_25' [0.000910747]
+    V -> 'an_26' [0.000910747]
+    V -> 'an_27' [0.000910747]
+    V -> 'an_28' [0.000910747]
+    V -> 'an_29' [0.000910747]
+    V -> 'an_30' [0.000910747]
+    V -> 'an_31' [0.000910747]
+    V -> 'an_32' [0.000910747]
+    V -> 'an_33' [0.000910747]
+    V -> 'an_34' [0.000910747]
+    V -> 'an_35' [0.000910747]
+    V -> 'an_36' [0.000910747]
+    V -> 'an_37' [0.000910747]
+    V -> 'an_38' [0.000910747]
+    V -> 'an_39' [0.000910747]
+    V -> 'an_40' [0.000910747]
+    V -> 'an_41' [0.000910747]
+    V -> 'an_42' [0.000910747]
+    V -> 'an_43' [0.000910747]
+    V -> 'an_44' [0.000910747]
+    V -> 'an_45' [0.000910747]
+    V -> 'an_46' [0.000910747]
+    V -> 'an_47' [0.000910747]
+    V -> 'an_48' [0.000910747]
+    V -> 'an_49' [0.000910747]
+
+ModelBox: 17 models
+-> an_1, p = 0.11508196721311477, parse trees = 1, valid = False
+-> C0*an_1*an_2 + an_1, p = 0.00034094695150695456, parse trees = 1, valid = False
+-> C0*n + an_1*an_4, p = 6.308755710830424e-06, parse trees = 1, valid = False
+-> an_1*n**2, p = 0.009206557377049188, parse trees = 2, valid = False
+-> C0*an_1 + an_1*an_2*n**2, p = 1.0463158905262614e-06, parse trees = 1, valid = False
+-> C0*an_1*n + n, p = 0.002761967213114756, parse trees = 1, valid = False
+-> an_1**2, p = 0.014715399086267138, parse trees = 1, valid = False
+-> C0*n**3 + n, p = 0.0008640000000000007, parse trees = 1, valid = False
+-> an_1*an_3, p = 0.0013625369524321422, parse trees = 1, valid = False
+-> an_2, p = 0.034754098360655745, parse trees = 1, valid = False
+-> C0*an_9*n + C1*n + n, p = 9.659458622950824e-07, parse trees = 1, valid = False
+-> C0*an_1 + C1*n + an_1*an_19*an_2, p = 1.4904786786378e-08, parse trees = 1, valid = False
+-> C0*an_1**2*an_17 + C1*an_1*n + an_2, p = 1.905860595523951e-09, parse trees = 1, valid = False
+-> an_1*an_2, p = 0.0044439666756248344, parse trees = 1, valid = False
+-> an_1*n, p = 0.023016393442622962, parse trees = 1, valid = False
+-> n, p = 0.18000000000000002, parse trees = 1, valid = False
+-> an_1**2*n, p = 0.0029430798172534293, parse trees = 1, valid = False
+
+Total time consumed by now:0.1393578229999548
+
+
+Equation discovery for all (chosen) OEIS sequences took 0.13936319799995545 secconds, i.e. 0.002322719966665924 minutes or 3.871199944443207e-05 hours.

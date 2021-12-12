@@ -7,6 +7,7 @@ import sympy as sp
 import pandas as pd
 import time
 import sys
+import re 
 # from scipy.optimize import brute, shgo, rosen, dual_annealing
 
 from ProGED.equation_discoverer import EqDisco
@@ -188,7 +189,7 @@ def grid2(seq):
 
 # seq_name = "fibonacci"
 seq_name = "general_wnb"
-grammar_template_name = "polynomial"
+# grammar_template_name = "polynomial"
 grammar_template_name = "polynomial2"
 # grammar_template_name = "rational"
 # grammar_template_name = "rational"
@@ -244,10 +245,15 @@ q = 1/2  # For direct Fibonacci.
 # p = 8/10
 p = 3/10
 
-# random_seed = 0
+random_seed = 0  # polynomial2 grammar (rec is 41. model)
 # random_seed = 1  # rec
-random_seed = 5  # new grammar (65. model is rec, 57. model direct (exp) )   
-random_seed = 10  # new grammar rec (second model)
+# random_seed = 5  # simplerational2 grammar (65. model is rec, 57. model direct (exp) )   
+# random_seed = 10  # simplerational2 grammar for rec (sec or third model)
+# random_seed = 10  # simplerational2 grammar for rec (17. model)
+# random_seed = 33  # simplerational2 grammar for rec (first 5 models)
+# random_seed = 97  # simplerational2 grammar for rec (first 5 model)
+# random_seed = 70 # has additional terms, try it out # simplerational2 grammar for rec 
+random_seed = 86  # simplerational2 grammar for rec (second model) 
 random_seed = int(flags_dict.get("--seed", random_seed))
 # seed 0 , size 20 (16)
 # ??? seed3 size 15 an-1 + an-2 + c3 rec  ???
@@ -398,9 +404,20 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     
     print(ED.models)
     # exact ed:
+    # return 0
+    
 
     def model2diofant (model, X, Y):
-        "Turns model with data into the matrix and vector of diofantine equations."
+        """Turns model with data into the matrix and vector of diofantine equations.
+
+        It assumes polynomial model, i.e. sum of multiplied variables and constants.
+        Input:
+            - model: modelBox object? from model.py module
+            - X: data with non-target attributes (used in right-hand side of 
+                the equations)
+            - Y: column data with target attributes (right-hand side of the 
+                equations)
+        """
         """
         blueprint:
         model -> 2models(c0*var + c1*var +..., vars + var + var + ...) ->  
@@ -425,14 +442,63 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     #       - stolpec A[:, 1] = sp.lambdify(n, lib="math")(X) 
     #       - ...
     #   - sestavimo in vrnemo stolpce: A, b
-        if isinstance(model.expr, sp.Add):
-            terms = model.expr.args
-            print(type(terms), terms)
-        print("inside model2diofant()")
-        # print(isinstance(model.expr, ))
-        print("Add", isinstance(model.expr, sp.Add))
-        print("Pow", isinstance(model.expr, sp.Pow))
-        print("exiting model2diofant()")
+
+        print("->-> inside model2diofant() --- ")
+
+        expr = model.expr
+        # print(isinstance(expr, ))
+        print("Add", isinstance(expr, sp.Add))
+        print("Pow", isinstance(expr, sp.Pow))
+
+        def drop_constant(expr):
+            """Returns pair (bool, croped_expr), where bool logs the change
+            being done to the expression expr by cutting off the constant in 
+            summand `expr`. 
+
+            E.g.:
+                C1*expr -> (True, expr) or 
+                var -> (False, var)
+            """
+            return expr.has(*model.sym_params), expr.subs([(i, 1) for i in model.sym_params])
+
+        X = ED.task.data[:, 1:]
+        Y = ED.task.data[:, [0]]
+        # Xp = ED.task.data[4:8, 1:]
+        # Y = Yp
+        # print('Xp and Yp', Xp, '\n', Yp)
+        print(f"shapes: task.data {ED.task.data.shape}, X {X.shape}, Y {Y.shape}, ")
+
+        # Not really a shortcut:
+        # f = sp.lambdify(model.sym_vars, expr, "sympy") 
+        # Xm = X[4:8]
+        # print("Xm", Xm)
+        # ev = f(*Xm.T)
+        # print("evalved", ev)
+        # return 0
+
+        print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
+        if isinstance(expr, sp.Add):
+            summands = expr.args
+            filtered = [drop_constant(summand) for summand in summands]
+            with_constants = [summand[1] for summand in filtered if summand[0]]
+            without_constants = [summand[1] for summand in filtered if not summand[0]]
+            b0 = sp.Add(*tuple(without_constants))
+            print("\nall in:", expr, summands, filtered, with_constants, without_constants, b0)
+            # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
+            lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in with_constants]
+            columns = [list(f(*X[4:14].T)) for f in lambdas]
+            print("Xp and Yp\n", X[4:14, :6])
+            print("evals", columns)
+            A = sp.Matrix(columns).T
+            print("A", A)
+            # print('X', X)
+
+
+
+
+            # for summand in summands:
+            #     print(type(summand), summand
+            #     print(f"drop_constant({summand})", drop_constant(summand))
 
 
         A = sp.Matrix(
@@ -440,7 +506,10 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
             [0, 3],
             [1, 0]])
         b = sp.Matrix([6, 9, 2])
+        print("-<-< exiting model2diofant() --- ")
+
         return A, b
+    # return 0  # end here
 
     for model in ED.models:
         print(model, type(model))
