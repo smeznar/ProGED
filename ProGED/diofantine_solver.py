@@ -2,10 +2,12 @@ from sympy import Matrix
 from diophantine import solve
 
 
-def clumsy_solve(A: Matrix, b: Matrix):
-    """Avoiding implementation via exploiting already implemented code
-    by expanding system to force multiple solutions.
+def diofantine_solve(A: Matrix, b: Matrix):
+    """Solver of system of linear Diophantine equations based on python
+    package diofantine. Avoiding full implementation via exploiting already 
+    implemented code by expanding system to force multiple solutions.
     """
+
     try:  # First try to find 0 or infinite solutions.
         x = solve(A, b)
         return x

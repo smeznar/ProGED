@@ -401,6 +401,17 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         print(i.expr, type(i.expr),)
         print(i.expr.func, i.expr.args) #.func, i.args)
 
+    def model2diofant (model, X, Y):
+        "Turns model with data into the matrix and vector of diofantine equations."
+        """
+        blueprint:
+        model -> 2models(c0*var + c1*var +..., vars + var + var + ...) ->  
+                -> manyModels( var1, var2, ..., varRight)
+                -> for every row in X: 
+                        A = [var1(X), var2(X), ..., var_n(X)], b = Y - other_sum_of_vars(X) 
+
+
+        """
     #blueprint:
     #1.) if type(expr) != Add naredi nekaj drugega ( uporabi algoritem pri #2.) )
     #2.) if type(expr) == Add glej skico:
@@ -416,7 +427,19 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     #       - stolpec A[:, 1] = sp.lambdify(n, lib="math")(X) 
     #       - ...
     #   - sestavimo in vrnemo stolpce: A, b
+        print("inside model2diofant()")
+        print(isinstance(mode.expr, sympy))
+        print(isinstance(mode.expr, Add))
+        print(isinstance(mode.expr, pow))
+        print("exiting model2diofant()")
 
+
+        A = sp.Matrix(
+            [[3, 0 ],
+            [0, 3],
+            [1, 0]])
+        b = sp.Matrix([6, 9, 2])
+        return A, b
 
 
     # 
@@ -424,7 +447,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     # EOf exact ed
 
     print(ED.models)
-    1/0
+    # 1/0
     seq_start = time.perf_counter()
     ED.fit_models()
     seq_cpu_time = time.perf_counter() - seq_start

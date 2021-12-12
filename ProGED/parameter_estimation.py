@@ -18,7 +18,7 @@ from ProGED.examples.tee_so import Tee
 from ProGED.model_box import ModelBox
 from ProGED.task import TASK_TYPES
 # from ProGED.optimizers import DE_fit, DE_fit_metamodel, hyperopt_fit, min_fit
-from ProGED.clumsy_solver import clumsy_solve
+from ProGED.diofantine_solver import diofantine_solve
 
 # glitch-doctor downloaded from github:
 # from ProGED.glitch_doctor.metamodel import Metamodel
@@ -508,7 +508,7 @@ def exact_fit (model, X, Y, T, p0, **estimation_settings):
     A, b = model2diofant(model, X, Y)
     print("A, b:", A, b)
 
-    x = clumsy_solve(A, b)
+    x = diofantine_solve(A, b)
     if not x==[] and not len((x[0].T)[:])==len(p0):
         message = "DIOFANTINE SOLUTION DO NOT HAVE SAME NUMBER OF ELEMENTS AS MODEL PARAMETERS!!!"
         print(message)
