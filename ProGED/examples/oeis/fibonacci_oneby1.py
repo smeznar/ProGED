@@ -76,13 +76,17 @@ np.random.seed(0)
 has_titles = 1
 csv = pd.read_csv('oeis_selection.csv')[has_titles:]
 # csv = csv.astype('int64')
-csv = csv.astype('float')
+# print("csv", csv)
+# csv = csv.astype('float')
+print("csv", csv)
+# 1/0
 terms_count, seqs_count = csv.shape
 # Old for fibonacci only:
 seq_id = "A000045"
 prt_id = "A000041"
 fibs = list(csv[seq_id])  # fibonacci = A000045
 prts = list(csv[prt_id])  # fibonacci = A000045
+print("fibs", fibs)
 fibs = np.array(fibs)
 prts = np.array(prts)
 # oeis = fibs
@@ -141,14 +145,72 @@ def grid (order, seq, direct=False):
 #     n = len(seq)
 #     return np.fromfunction((lambda i,j: np.maximum(i-j,0) , (n-1, n-1))
 
-def grid2(seq):
+def grid2(seq: np.ndarray):  # seq.shape=(N, 1)
+    print("inside grid2")
+    print("seq", seq, seq[0], type(seq), type(seq[0]))
     n = len(seq)
+    # n = seq.shape[0]
+    print('n', n)
     indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
-    cut_zero = seq[indexes] * np.tri(n-1)
+    print('indexes', indexes)
+    cut_zero = seq[indexes].astype(int)
+    # cut_zero = seq.T[indexes]
+    print("cut_zero", cut_zero)
+    cut_zero = seq[indexes] * np.tri(n-1).astype(int)
+    print("cut_zero", cut_zero)
+    print("cut_zero 10", cut_zero[:10, :10])
     # data = np.hstack((np.array(seq)[:(n-1)].reshape(-1,1), np.arange(n-1).reshape(-1,1), seq[indexes]))
     data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
     return data
+    # return 0
 
+def grid_sympy(seq_id: str):  # seq.shape=(N, 1)
+    print("inside grid_sympy")
+    print("sympy", sp.Matrix(csv[seq_id]))
+    seq = sp.Matrix(csv[seq_id])
+    # return 0
+    # print("seq", seq, seq[0], type(seq), type(seq[0]))
+    print("seq", seq, seq[4], type(seq), type(seq[4]))
+    # return 0
+    n = len(seq)
+    # n = seq.shape[0]
+    print('n', n)
+    indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
+    indexes_sy = sp.Matrix(n-1, n-1, (lambda i,j: np.maximum(i-j,0)) )
+    # print('indexes', indexes, "indexes_sy\n", indexes_sy)
+    # print('sum', sum(sum(np.array(indexes_sy) != indexes)))  # dela
+    return 0
+    cut_zero = seq[indexes].astype(int)
+    # cut_zero = seq.T[indexes]
+    print("cut_zero", cut_zero)
+    cut_zero = seq[indexes] * np.tri(n-1).astype(int)
+    print("cut_zero", cut_zero)
+    print("cut_zero 10", cut_zero[:10, :10])
+    # data = np.hstack((np.array(seq)[:(n-1)].reshape(-1,1), np.arange(n-1).reshape(-1,1), seq[indexes]))
+    data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
+    # return data
+    return 0
+
+seq_id='A000108'
+# seq_id='A000045'
+print(grid_sympy(seq_id))
+1/0
+datal = grid2(np.array(list(csv[seq_id])[:50]).astype('float'))
+print('input grid2', np.array(list(csv[seq_id])[:50]))
+datal = np.array(sp.Matrix(csv[seq_id][:50]).T)[0]
+datal = grid2(np.array(sp.Matrix(csv[seq_id][:50]).T)[0])
+print("datal", datal)
+print("datal[10]", datal[:10, :10])
+print("datal[-10:]", datal[-4:, :4])
+1/0
+
+# print("csv[seq_id]", type(list(csv[seq_id])[0]))
+print("csv[seq_id]", (list(csv[seq_id])))
+print("sympy", sp.Matrix(list(csv[seq_id])))
+print("sympy", np.array(sp.Matrix(csv[seq_id])))
+print("csv[seq_id]", type(np.array(list(csv[seq_id]))))
+print("csv[seq_id]", [type(i) for i in csv[seq_id]])
+1/0
 # print(grid2(['a_n', 'a_{n-1}']))
 # print([f"a_{{n-{i}}} & 1 & " for i in range(1, 50)])
 # 1/0
@@ -461,12 +523,28 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
             """
             return expr.has(*model.sym_params), expr.subs([(i, 1) for i in model.sym_params])
 
-        X = ED.task.data[:, 1:]
-        Y = ED.task.data[:, [0]]
+
+        X = ED.task.data[:, 1:]  # dangerous if evaling big integers
+        print('X origin', X)
+        X = np.array(ED.task.data[:, 1:], dtype='int')  # solution 1
+        print('X numpy-int', X)
+        X = sp.Matrix(ED.task.data[:, 1:]).applyfunc(sp.Integer)
+        print('X sympy-int', X)
+        s = np.array([[13.], [655594.], [509552245179617111378493440.000]], dtype='int')
+        print(s)
+
+        Y = ED.task.data[:, [0]]  # dangerous if evaling big integers, e.g. lambdify
+        print('Y origin', Y)
+        Y = np.array(ED.task.data[:, [0]], dtype='int')  # solution 1
+        print('Y numpy-int', Y)
+        Y = sp.Matrix(ED.task.data[:, [0]]).applyfunc(sp.Integer)
+        print('Y sympy-int', Y)
+        # Y = sp.Matrix(np.array(ED.task.data[:, [0]], dtype='int'))  # solution 1
         # Xp = ED.task.data[4:8, 1:]
         # Y = Yp
         # print('Xp and Yp', Xp, '\n', Yp)
         print(f"shapes: task.data {ED.task.data.shape}, X {X.shape}, Y {Y.shape}, ")
+        return 0
 
         # Not really a shortcut:
         # f = sp.lambdify(model.sym_vars, expr, "sympy") 
@@ -477,21 +555,32 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         # return 0
 
         print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
-        if isinstance(expr, sp.Add):
-            summands = expr.args
-            filtered = [drop_constant(summand) for summand in summands]
-            with_constants = [summand[1] for summand in filtered if summand[0]]
-            without_constants = [summand[1] for summand in filtered if not summand[0]]
-            b0 = sp.Add(*tuple(without_constants))
-            print("\nall in:", expr, summands, filtered, with_constants, without_constants, b0)
-            # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
-            lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in with_constants]
-            columns = [list(f(*X[4:14].T)) for f in lambdas]
-            print("Xp and Yp\n", X[4:14, :6])
-            print("evals", columns)
-            A = sp.Matrix(columns).T
-            print("A", A)
-            # print('X', X)
+
+        summands = expr.args if isinstance(expr, sp.Add) else (expr,)
+        filtered = [drop_constant(summand) for summand in summands]
+        with_constants = [summand[1] for summand in filtered if summand[0]]
+        without_constants = [summand[1] for summand in filtered if not summand[0]]
+        # b0 = [sp.Add(*(without_constants))]
+        b0 = [sp.Add(*without_constants)]
+        exprs = with_constants + b0  # = A_exprs | b_expr
+        print("\nall in:", expr, summands, filtered, with_constants, without_constants, b0, exprs)
+        # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
+
+        lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in exprs]
+        lambdas = [sp.lambdify(model.sym_vars, column, "numpy") for column in exprs]
+        columns = [list(f(*X.T)) for f in lambdas]
+        print("Xp and Yp\n", X[4:14, :6])
+        print("evals", columns)
+        A_b = sp.Matrix(columns).T
+        # A_b = np.array(columns).T
+        print("A_b", A_b)
+        A = A_b[:, :-1]
+        b = Y - A_b[:, -1]
+        # b = Y - A_b[:, [-1]]  # if A_b is numpy
+        print('A b', A, b, A.shape, b.shape)
+        #NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
+
+        # print('X', X)
 
 
 
@@ -577,7 +666,7 @@ selection = (
         "A005230", 
         "A027642", 
         )
-# selection = ("A000045", )
+selection = ("A000045", )
 # selection = (CATALAN, )
 the_one_sequence = flags_dict.get("--seq_only", None)
 selection = selection if the_one_sequence is None else (the_one_sequence,)
