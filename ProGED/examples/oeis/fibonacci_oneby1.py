@@ -146,59 +146,49 @@ def grid (order, seq, direct=False):
 #     return np.fromfunction((lambda i,j: np.maximum(i-j,0) , (n-1, n-1))
 
 def grid2(seq: np.ndarray):  # seq.shape=(N, 1)
-    print("inside grid2")
-    print("seq", seq, seq[0], type(seq), type(seq[0]))
     n = len(seq)
     # n = seq.shape[0]
-    print('n', n)
     indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
-    print('indexes', indexes)
-    cut_zero = seq[indexes].astype(int)
-    # cut_zero = seq.T[indexes]
-    print("cut_zero", cut_zero)
     cut_zero = seq[indexes] * np.tri(n-1).astype(int)
-    print("cut_zero", cut_zero)
-    print("cut_zero 10", cut_zero[:10, :10])
     # data = np.hstack((np.array(seq)[:(n-1)].reshape(-1,1), np.arange(n-1).reshape(-1,1), seq[indexes]))
     data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
     return data
-    # return 0
 
-def grid_sympy(seq_id: str):  # seq.shape=(N, 1)
-    print("inside grid_sympy")
-    print("sympy", sp.Matrix(csv[seq_id]))
-    seq = sp.Matrix(csv[seq_id])
-    # return 0
-    # print("seq", seq, seq[0], type(seq), type(seq[0]))
-    print("seq", seq, seq[4], type(seq), type(seq[4]))
-    # return 0
+def grid_sympy(seq_id: str, number_of_terms: int):  # seq.shape=(N, 1)
+    seq = sp.Matrix(csv[seq_id][:number_of_terms])
     n = len(seq)
-    # n = seq.shape[0]
-    print('n', n)
-    indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
-    indexes_sy = sp.Matrix(n-1, n-1, (lambda i,j: np.maximum(i-j,0)) )
-    # print('indexes', indexes, "indexes_sy\n", indexes_sy)
-    # print('sum', sum(sum(np.array(indexes_sy) != indexes)))  # dela
-    return 0
-    cut_zero = seq[indexes].astype(int)
-    # cut_zero = seq.T[indexes]
-    print("cut_zero", cut_zero)
-    cut_zero = seq[indexes] * np.tri(n-1).astype(int)
-    print("cut_zero", cut_zero)
-    print("cut_zero 10", cut_zero[:10, :10])
-    # data = np.hstack((np.array(seq)[:(n-1)].reshape(-1,1), np.arange(n-1).reshape(-1,1), seq[indexes]))
-    data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
-    # return data
-    return 0
+    indexes_sympy_uncut = sp.Matrix(n-1, n-1, (lambda i,j: seq[max(i-j,0)]))
+    # indexes_sympy_uncut = sp.Matrix(n-1, n-1, (lambda i,j: (i-j>=0)*seq[i]))
+
+    data = sp.Matrix.hstack(
+                seq[1:,:], 
+                sp.Matrix([i for i in range(1, n)]),
+                indexes_sympy_uncut)
+    return data
 
 seq_id='A000108'
 # seq_id='A000045'
-print(grid_sympy(seq_id))
-1/0
-datal = grid2(np.array(list(csv[seq_id])[:50]).astype('float'))
-print('input grid2', np.array(list(csv[seq_id])[:50]))
-datal = np.array(sp.Matrix(csv[seq_id][:50]).T)[0]
-datal = grid2(np.array(sp.Matrix(csv[seq_id][:50]).T)[0])
+grids = grid_sympy(seq_id, 50)
+datal = grids
+# print('bool', grid_sympy(seq_id, 50) == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
+# 1/0
+# gridy2 =  grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)
+# print('grid_sympy', grids.shape, gridy2.shape)
+# print('type', type(grids), type(gridy2))
+# 1/0
+# print('grid_sympy', grids)
+# print('grid2', gridy2)
+# print('grid_sympy', grids[:10, :10])
+# print('grid2', gridy2[:10, :10])
+# print('grid_sympy',  grids[-4:, :4])
+# print('grid2',      gridy2[-4:, :4])
+# print('eq', grids[-4:, :4] == gridy2[-4:, :4])
+
+# 1/0
+# datal = grid2(np.array(list(csv[seq_id])[:50]).astype('float'))
+# print('input grid2', np.array(list(csv[seq_id])[:50]))
+# datal = np.array(sp.Matrix(csv[seq_id][:50]).T)[0]
+# datal = grid2(np.array(sp.Matrix(csv[seq_id][:50]).T)[0])
 print("datal", datal)
 print("datal[10]", datal[:10, :10])
 print("datal[-10:]", datal[-4:, :4])
