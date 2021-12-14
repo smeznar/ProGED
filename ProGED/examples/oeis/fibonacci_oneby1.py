@@ -145,7 +145,8 @@ def grid (order, seq, direct=False):
 #     n = len(seq)
 #     return np.fromfunction((lambda i,j: np.maximum(i-j,0) , (n-1, n-1))
 
-def grid2(seq: np.ndarray):  # seq.shape=(N, 1)
+
+def grid2(seq: np.ndarray):  # seq.shape=(1, N)
     n = len(seq)
     # n = seq.shape[0]
     indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
@@ -154,12 +155,19 @@ def grid2(seq: np.ndarray):  # seq.shape=(N, 1)
     data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
     return data
 
+def grid_numpy(seq_id: str, number_of_terms: int):
+    seq = np.array(sp.Matrix(list(csv[seq_id])[:number_of_terms]).T)[0]
+    n = len(seq)
+    # n = seq.shape[0]
+    indexes = np.fromfunction((lambda i,j: np.maximum(i-j,0)) , (n-1, n-1)).astype(int)
+    cut_zero = seq[indexes] * np.tri(n-1).astype(int)
+    data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
+    return data
+
 def grid_sympy(seq_id: str, number_of_terms: int):  # seq.shape=(N, 1)
     seq = sp.Matrix(csv[seq_id][:number_of_terms])
     n = len(seq)
-    indexes_sympy_uncut = sp.Matrix(n-1, n-1, (lambda i,j: seq[max(i-j,0)]))
-    # indexes_sympy_uncut = sp.Matrix(n-1, n-1, (lambda i,j: (i-j>=0)*seq[i]))
-
+    indexes_sympy_uncut = sp.Matrix(n-1, n-1, (lambda i,j: (seq[max(i-j,0)])*(1 if i>=j else 0)))
     data = sp.Matrix.hstack(
                 seq[1:,:], 
                 sp.Matrix([i for i in range(1, n)]),
@@ -170,21 +178,30 @@ seq_id='A000108'
 # seq_id='A000045'
 grids = grid_sympy(seq_id, 50)
 datal = grids
-# print('bool', grid_sympy(seq_id, 50) == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
+print('bool', grid_sympy(seq_id, 50) == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
+print('bool', grids == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
 # 1/0
+datan =  np.array(sp.Matrix(list(csv[seq_id])[:50]).T)[0]
+grid_nu = grid_numpy(seq_id, 50)
+print('datan', datan)
+gridy2 =  grid2(datan)
+print('bool lte', grids == sp.Matrix(gridy2))
+# print('bool lte', sum(not (gridy2 == grid_nu)))
+print('bool lte', sum(sum(gridy2 != grid_nu)))
+1/0
 # gridy2 =  grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)
-# print('grid_sympy', grids.shape, gridy2.shape)
-# print('type', type(grids), type(gridy2))
+print('grid_sympy', grids.shape, gridy2.shape)
+print('type', type(grids), type(gridy2))
 # 1/0
-# print('grid_sympy', grids)
-# print('grid2', gridy2)
-# print('grid_sympy', grids[:10, :10])
-# print('grid2', gridy2[:10, :10])
-# print('grid_sympy',  grids[-4:, :4])
-# print('grid2',      gridy2[-4:, :4])
-# print('eq', grids[-4:, :4] == gridy2[-4:, :4])
+print('grid_sympy', grids)
+print('grid2', gridy2)
+print('grid_sympy', grids[:10, :10])
+print('grid2', gridy2[:10, :10])
+print('grid_sympy',  grids[-4:, :4])
+print('grid2',      gridy2[-4:, :4])
+print('eq', grids[-4:, :4] == gridy2[-4:, :4])
 
-# 1/0
+1/0
 # datal = grid2(np.array(list(csv[seq_id])[:50]).astype('float'))
 # print('input grid2', np.array(list(csv[seq_id])[:50]))
 # datal = np.array(sp.Matrix(csv[seq_id][:50]).T)[0]
