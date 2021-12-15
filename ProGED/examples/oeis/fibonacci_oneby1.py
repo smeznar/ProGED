@@ -473,8 +473,9 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     ED.generate_models()
     
     print(ED.models)
+    print("task data", type(ED.task.data))
     # exact ed:
-    # return 0
+    return 0
 
     X = ED.task.data[:, 1:]  # dangerous if evaling big integers
     print('X origin', X)

@@ -18,7 +18,7 @@ from ProGED.examples.tee_so import Tee
 from ProGED.model_box import ModelBox
 from ProGED.task import TASK_TYPES
 # from ProGED.optimizers import DE_fit, DE_fit_metamodel, hyperopt_fit, min_fit
-from ProGED.diofantine_solver import diofantine_solve
+from ProGED.diophantine_solver import diophantine_solve
 
 # glitch-doctor downloaded from github:
 # from ProGED.glitch_doctor.metamodel import Metamodel
@@ -513,118 +513,118 @@ def min_fit (model, X, Y):
     ## return 0
 
 
-    #def model2diofant (model, X, Y):
-    #    """Turns model with data into the matrix and vector of diofantine equations.
+    def model2diophant (model, X, Y):
+        """Turns model with data into the matrix and vector of diophantine equations.
 
-    #    It assumes polynomial model, i.e. sum of multiplied variables and constants.
-    #    Input:
-    #        - model: modelBox object? from model.py module
-    #        - X: data with non-target attributes (used in right-hand side of 
-    #            the equations)
-    #        - Y: column data with target attributes (right-hand side of the 
-    #            equations)
-    #    """
-    #    """
-    #    blueprint:
-    #    model -> 2models(c0*var + c1*var +..., vars + var + var + ...) ->  
-    #            -> manyModels( var1, var2, ..., varRight)
-    #            -> for every row in X: 
-    #                    A = [var1(X), var2(X), ..., var_n(X)], b = Y - other_sum_of_vars(X) 
-
-
-    #    """
-    ##blueprint:
-    ##1.) if type(expr) != Add naredi nekaj drugega ( uporabi algoritem pri #2.) )
-    ##2.) if type(expr) == Add glej skico:
-    ##   - (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2)  in naredi:
-    ##   - funkcijo, ki vsakemu argumentu v expr.args priredi
-    ##   - ( (1 (nima konstante), an_1 (expr), ..., (0 (ima konstanto), an_1*n (expr odstranimo konstanto), ...
-    ##   - npr. (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2) ->  ((1, n**2), (1, an_1), (0, n), (0, an_1*n), (0, an_3*n**2))
-    ##   - nato to pretvorimo v (1, 0, 0, 0) ... tj. index 0, da razdelimo v (n**2, an_1, ) in (n, an_1*n, an_3*n**2, )
-    ##   - prvi tuple zdruzimo in koncamo z (n**2 + an_1, n, an_1*n, an_3*n**2)
-    ##   - sedaj evalviramo:
-    ##       - stolpec b = sp.lambdify(n**2 + an_1, lib="math")(X)-Y 
-    ##       - stolpec A[:, 0] = sp.lambdify(an_1*n, lib="math")(X) 
-    ##       - stolpec A[:, 1] = sp.lambdify(n, lib="math")(X) 
-    ##       - ...
-    ##   - sestavimo in vrnemo stolpce: A, b
-
-    #    print("->-> inside model2diofant() --- ")
-
-    #    expr = model.expr
-    #    # print(isinstance(expr, ))
-    #    print("Add", isinstance(expr, sp.Add))
-    #    print("Pow", isinstance(expr, sp.Pow))
-
-    #    def drop_constant(expr):
-    #        """Returns pair (bool, croped_expr), where bool logs the change
-    #        being done to the expression expr by cutting off the constant in 
-    #        summand `expr`. 
-
-    #        E.g.:
-    #            C1*expr -> (True, expr) or 
-    #            var -> (False, var)
-    #        """
-    #        return expr.has(*model.sym_params), expr.subs([(i, 1) for i in model.sym_params])
+        It assumes polynomial model, i.e. sum of multiplied variables and constants.
+        Input:
+            - model: modelBox object? from model.py module
+            - X: data with non-target attributes (used in right-hand side of 
+                the equations)
+            - Y: column data with target attributes (right-hand side of the 
+                equations)
+        """
+        """
+        blueprint:
+        model -> 2models(c0*var + c1*var +..., vars + var + var + ...) ->  
+                -> manyModels( var1, var2, ..., varRight)
+                -> for every row in X: 
+                        A = [var1(X), var2(X), ..., var_n(X)], b = Y - other_sum_of_vars(X) 
 
 
+        """
+    #blueprint:
+    #1.) if type(expr) != Add naredi nekaj drugega ( uporabi algoritem pri #2.) )
+    #2.) if type(expr) == Add glej skico:
+    #   - (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2)  in naredi:
+    #   - funkcijo, ki vsakemu argumentu v expr.args priredi
+    #   - ( (1 (nima konstante), an_1 (expr), ..., (0 (ima konstanto), an_1*n (expr odstranimo konstanto), ...
+    #   - npr. (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2) ->  ((1, n**2), (1, an_1), (0, n), (0, an_1*n), (0, an_3*n**2))
+    #   - nato to pretvorimo v (1, 0, 0, 0) ... tj. index 0, da razdelimo v (n**2, an_1, ) in (n, an_1*n, an_3*n**2, )
+    #   - prvi tuple zdruzimo in koncamo z (n**2 + an_1, n, an_1*n, an_3*n**2)
+    #   - sedaj evalviramo:
+    #       - stolpec b = sp.lambdify(n**2 + an_1, lib="math")(X)-Y 
+    #       - stolpec A[:, 0] = sp.lambdify(an_1*n, lib="math")(X) 
+    #       - stolpec A[:, 1] = sp.lambdify(n, lib="math")(X) 
+    #       - ...
+    #   - sestavimo in vrnemo stolpce: A, b
 
-    #    print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
+        print("->-> inside model2diophant() --- ")
 
-    #    summands = expr.args if isinstance(expr, sp.Add) else (expr,)
-    #    filtered = [drop_constant(summand) for summand in summands]
-    #    with_constants = [summand[1] for summand in filtered if summand[0]]
-    #    without_constants = [summand[1] for summand in filtered if not summand[0]]
-    #    # b0 = [sp.Add(*(without_constants))]
-    #    b0 = [sp.Add(*without_constants)]
-    #    exprs = with_constants + b0  # = A_exprs | b_expr
-    #    print("\nall in: expr, summands, filtered, with_constants, without_constants, b0, exprs:", )
-    #    print( expr, summands, filtered, with_constants, without_constants, b0, exprs)
-    #    # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
+        expr = model.expr
+        # print(isinstance(expr, ))
+        print("Add", isinstance(expr, sp.Add))
+        print("Pow", isinstance(expr, sp.Pow))
 
-    #    lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in exprs]
-    #    # lambdas = [sp.lambdify(model.sym_vars, column, "numpy") for column in exprs]
+        def drop_constant(expr):
+            """Returns pair (bool, croped_expr), where bool logs the change
+            being done to the expression expr by cutting off the constant in 
+            summand `expr`. 
 
-    #    # columns = [list(f(*X.T)) for f in lambdas]
-    #    # print(lambdas[0](X
-    #    # print('rows', [type(row), row.shape, len(row) for row in X])
-
-
-    #    # return 0
-    #    columns = [[f(*X[i_row, :]) for i_row in range(X.rows)] for f in lambdas]
-    #    print("Xp and Yp\n", X[4:14, :6])
-    #    print("evals", columns)
-    #    A_b = sp.Matrix(columns).T
-    #    # A_b = np.array(columns).T
-    #    print("A_b", A_b)
-    #    A = A_b[:, :-1]
-    #    b = Y - A_b[:, -1]
-    #    # b = Y - A_b[:, [-1]]  # if A_b is numpy
-    #    print('A b', A, b, A.shape, b.shape, type(A), type(b))
-    #    #NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
-
-    #    # print('X', X)
+            E.g.:
+                C1*expr -> (True, expr) or 
+                var -> (False, var)
+            """
+            return expr.has(*model.sym_params), expr.subs([(i, 1) for i in model.sym_params])
 
 
 
+        print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
 
-    #        # for summand in summands:
-    #        #     print(type(summand), summand
-    #        #     print(f"drop_constant({summand})", drop_constant(summand))
+        summands = expr.args if isinstance(expr, sp.Add) else (expr,)
+        filtered = [drop_constant(summand) for summand in summands]
+        with_constants = [summand[1] for summand in filtered if summand[0]]
+        without_constants = [summand[1] for summand in filtered if not summand[0]]
+        # b0 = [sp.Add(*(without_constants))]
+        b0 = [sp.Add(*without_constants)]
+        exprs = with_constants + b0  # = A_exprs | b_expr
+        print("\nall in: expr, summands, filtered, with_constants, without_constants, b0, exprs:", )
+        print( expr, summands, filtered, with_constants, without_constants, b0, exprs)
+        # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
+
+        lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in exprs]
+        # lambdas = [sp.lambdify(model.sym_vars, column, "numpy") for column in exprs]
+
+        # columns = [list(f(*X.T)) for f in lambdas]
+        # print(lambdas[0](X
+        # print('rows', [type(row), row.shape, len(row) for row in X])
 
 
-    #    A0 = sp.Matrix(
-    #        [[3, 0 ],
-    #        [0, 3],
-    #        [1, 0]])
-    #    b0 = sp.Matrix([6, 9, 2])
-    #    print("-<-< exiting model2diofant() --- ")
+        # return 0
+        columns = [[f(*X[i_row, :]) for i_row in range(X.rows)] for f in lambdas]
+        print("Xp and Yp\n", X[4:14, :6])
+        print("evals", columns)
+        A_b = sp.Matrix(columns).T
+        # A_b = np.array(columns).T
+        print("A_b", A_b)
+        A = A_b[:, :-1]
+        b = Y - A_b[:, -1]
+        # b = Y - A_b[:, [-1]]  # if A_b is numpy
+        print('A b', A, b, A.shape, b.shape, type(A), type(b))
+        #NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
 
-    #    return A, b
-    ## return 0  # end here
+        # print('X', X)
 
-def model2diofant (model, X, Y):
-    "Turns model with data into the matrix and vector of diofantine equations."
+
+
+
+            # for summand in summands:
+            #     print(type(summand), summand
+            #     print(f"drop_constant({summand})", drop_constant(summand))
+
+
+        A0 = sp.Matrix(
+            [[3, 0 ],
+            [0, 3],
+            [1, 0]])
+        b0 = sp.Matrix([6, 9, 2])
+        print("-<-< exiting model2diophant() --- ")
+
+        return A, b
+    # return 0  # end here
+
+def model2diophant (model, X, Y):
+    "Turns model with data into the matrix and vector of diophantine equations."
     """
     blueprint:
     model -> 2models(c0*var + c1*var +..., vars + var + var + ...) ->  
@@ -642,20 +642,26 @@ def model2diofant (model, X, Y):
     b = sp.Matrix([6, 9, 2])
     return A, b
 
-def exact_fit (model, X, Y, T, p0, **estimation_settings):
+# def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T: type(None), p0, **estimation_settings):
+def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0, **estimation_settings):
     """Tries to fit exact integer equation into data. 
+
     When unsuccessful return trivial parameters with big error.
     Error values are possible only 2: 
         error 0 (can fit equation) or 20211211 (cannot fit)
+
+    Inputs:
+        - model
+        - X ... expected sympy Matrix type
     """
 
     mystic_integer =  time.strftime("%Y%m%d", time.localtime())
-    A, b = model2diofant(model, X, Y)
+    A, b = model2diophant(model, X, Y)
     print("A, b:", A, b)
 
-    x = diofantine_solve(A, b)
+    x = diophantine_solve(A, b)
     if not x==[] and not len((x[0].T)[:])==len(p0):
-        message = "DIOFANTINE SOLUTION DO NOT HAVE SAME NUMBER OF ELEMENTS AS MODEL PARAMETERS!!!"
+        message = "DIOPHANTINE SOLUTION DO NOT HAVE SAME NUMBER OF ELEMENTS AS MODEL PARAMETERS!!!"
         print(message)
         # raise IndexError(message)
     res = {"x": [mystic_integer for i in range(len(p0))], "fun": mystic_integer} \
