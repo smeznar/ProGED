@@ -475,7 +475,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     print(ED.models)
     print("task data", type(ED.task.data))
     # exact ed:
-    return 0
+    # return 0
 
     X = ED.task.data[:, 1:]  # dangerous if evaling big integers
     print('X origin', X)
@@ -507,9 +507,14 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     # print("evalved", ev)
     # return 0
 
+    def model2data (model, X, Y, number_of_terms: int, max_order: int):
 
-    def model2diofant (model, X, Y):
-        """Turns model with data into the matrix and vector of diofantine equations.
+
+
+        return 0
+
+    def model2diophant (model, X, Y):
+        """Turns model with data into the matrix and vector of diophantine equations.
 
         It assumes polynomial model, i.e. sum of multiplied variables and constants.
         Input:
@@ -544,7 +549,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     #       - ...
     #   - sestavimo in vrnemo stolpce: A, b
 
-        print("->-> inside model2diofant() --- ")
+        print("->-> inside model2diophant() --- ")
 
         expr = model.expr
         # print(isinstance(expr, ))
@@ -613,7 +618,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
             [0, 3],
             [1, 0]])
         b0 = sp.Matrix([6, 9, 2])
-        print("-<-< exiting model2diofant() --- ")
+        print("-<-< exiting model2diophant() --- ")
 
         return A, b
     # return 0  # end here
@@ -622,11 +627,12 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         print(model, type(model))
         print(model.expr, type(model.expr),)
         print(model.expr.func, model.expr.args) #.func, model.args)
-        A, b = model2diofant(model, X, Y)
+        X, Y = model2data(model, X, Y)
+        A, b = model2diophant(model, X, Y)
         print('res A, b X Y', A, b, X, Y)
         print('res shape A, b X Y', A.shape, b.shape, X.shape, Y.shape)
     print("returning 0 earlier")
-    # return 0
+    return 0
 
     # 
 
