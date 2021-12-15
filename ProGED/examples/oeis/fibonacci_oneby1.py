@@ -174,53 +174,53 @@ def grid_sympy(seq_id: str, number_of_terms: int):  # seq.shape=(N, 1)
                 indexes_sympy_uncut)
     return data
 
-seq_id='A000108'
-# seq_id='A000045'
-grids = grid_sympy(seq_id, 50)
-datal = grids
-print('bool', grid_sympy(seq_id, 50) == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
-print('bool', grids == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
+# seq_id='A000108'
+# # seq_id='A000045'
+# grids = grid_sympy(seq_id, 50)
+# datal = grids
+# print('bool', grid_sympy(seq_id, 50) == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
+# print('bool', grids == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
+# # 1/0
+# datan =  np.array(sp.Matrix(list(csv[seq_id])[:50]).T)[0]
+# grid_nu = grid_numpy(seq_id, 50)
+# print('datan', datan)
+# gridy2 =  grid2(datan)
+# print('bool lte', grids == sp.Matrix(gridy2))
+# # print('bool lte', sum(not (gridy2 == grid_nu)))
+# print('bool lte', sum(sum(gridy2 != grid_nu)))
 # 1/0
-datan =  np.array(sp.Matrix(list(csv[seq_id])[:50]).T)[0]
-grid_nu = grid_numpy(seq_id, 50)
-print('datan', datan)
-gridy2 =  grid2(datan)
-print('bool lte', grids == sp.Matrix(gridy2))
-# print('bool lte', sum(not (gridy2 == grid_nu)))
-print('bool lte', sum(sum(gridy2 != grid_nu)))
-1/0
-# gridy2 =  grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)
-print('grid_sympy', grids.shape, gridy2.shape)
-print('type', type(grids), type(gridy2))
-# 1/0
-print('grid_sympy', grids)
-print('grid2', gridy2)
-print('grid_sympy', grids[:10, :10])
-print('grid2', gridy2[:10, :10])
-print('grid_sympy',  grids[-4:, :4])
-print('grid2',      gridy2[-4:, :4])
-print('eq', grids[-4:, :4] == gridy2[-4:, :4])
+# # gridy2 =  grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)
+# print('grid_sympy', grids.shape, gridy2.shape)
+# print('type', type(grids), type(gridy2))
+# # 1/0
+# print('grid_sympy', grids)
+# print('grid2', gridy2)
+# print('grid_sympy', grids[:10, :10])
+# print('grid2', gridy2[:10, :10])
+# print('grid_sympy',  grids[-4:, :4])
+# print('grid2',      gridy2[-4:, :4])
+# print('eq', grids[-4:, :4] == gridy2[-4:, :4])
 
-1/0
-# datal = grid2(np.array(list(csv[seq_id])[:50]).astype('float'))
-# print('input grid2', np.array(list(csv[seq_id])[:50]))
-# datal = np.array(sp.Matrix(csv[seq_id][:50]).T)[0]
-# datal = grid2(np.array(sp.Matrix(csv[seq_id][:50]).T)[0])
-print("datal", datal)
-print("datal[10]", datal[:10, :10])
-print("datal[-10:]", datal[-4:, :4])
-1/0
-
-# print("csv[seq_id]", type(list(csv[seq_id])[0]))
-print("csv[seq_id]", (list(csv[seq_id])))
-print("sympy", sp.Matrix(list(csv[seq_id])))
-print("sympy", np.array(sp.Matrix(csv[seq_id])))
-print("csv[seq_id]", type(np.array(list(csv[seq_id]))))
-print("csv[seq_id]", [type(i) for i in csv[seq_id]])
-1/0
-# print(grid2(['a_n', 'a_{n-1}']))
-# print([f"a_{{n-{i}}} & 1 & " for i in range(1, 50)])
 # 1/0
+# # datal = grid2(np.array(list(csv[seq_id])[:50]).astype('float'))
+# # print('input grid2', np.array(list(csv[seq_id])[:50]))
+# # datal = np.array(sp.Matrix(csv[seq_id][:50]).T)[0]
+# # datal = grid2(np.array(sp.Matrix(csv[seq_id][:50]).T)[0])
+# print("datal", datal)
+# print("datal[10]", datal[:10, :10])
+# print("datal[-10:]", datal[-4:, :4])
+# 1/0
+
+# # print("csv[seq_id]", type(list(csv[seq_id])[0]))
+# print("csv[seq_id]", (list(csv[seq_id])))
+# print("sympy", sp.Matrix(list(csv[seq_id])))
+# print("sympy", np.array(sp.Matrix(csv[seq_id])))
+# print("csv[seq_id]", type(np.array(list(csv[seq_id]))))
+# print("csv[seq_id]", [type(i) for i in csv[seq_id]])
+# 1/0
+# # print(grid2(['a_n', 'a_{n-1}']))
+# # print([f"a_{{n-{i}}} & 1 & " for i in range(1, 50)])
+# # 1/0
 
 # print(prts)
 # print(fibs)
@@ -345,7 +345,8 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
     # data = grid2(np.array(list(csv[seq_id])))
     # First 30 instead 50 terms in sequence (for catalan):
-    data = grid2(np.array(list(csv[seq_id])[:number_of_terms]))
+    # data = grid2(np.array(list(csv[seq_id])[:number_of_terms]))
+    data = grid_sympy(seq_id, number_of_terms)
     print('data shape', data.shape)
     print('data:', data)
     print('data[:4][:4] :', data[:6, :6], data[:, -2])
@@ -474,7 +475,37 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     print(ED.models)
     # exact ed:
     # return 0
-    
+
+    X = ED.task.data[:, 1:]  # dangerous if evaling big integers
+    print('X origin', X)
+    # X = np.array(ED.task.data[:, 1:], dtype='int')  # solution 1
+    # print('X numpy-int', X)
+    # X = sp.Matrix(ED.task.data[:, 1:]).applyfunc(sp.Integer)
+    # print('X sympy-int', X)
+    # s = np.array([[13.], [655594.], [509552245179617111378493440.000]], dtype='int')
+    # print(s)
+
+    Y = ED.task.data[:, [0]]  # dangerous if evaling big integers, e.g. lambdify
+    print('Y origin', Y)
+    # Y = np.array(ED.task.data[:, [0]], dtype='int')  # solution 1
+    # print('Y numpy-int', Y)
+    # Y = sp.Matrix(ED.task.data[:, [0]]).applyfunc(sp.Integer)
+    # print('Y sympy-int', Y)
+    # Y = sp.Matrix(np.array(ED.task.data[:, [0]], dtype='int'))  # solution 1
+    # Xp = ED.task.data[4:8, 1:]
+    # Y = Yp
+    # print('Xp and Yp', Xp, '\n', Yp)
+    print(f"shapes: task.data {ED.task.data.shape}, X {X.shape}, Y {Y.shape}, ")
+    # return 0
+
+    # Not really a shortcut:
+    # f = sp.lambdify(model.sym_vars, expr, "sympy") 
+    # Xm = X[4:8]
+    # print("Xm", Xm)
+    # ev = f(*Xm.T)
+    # print("evalved", ev)
+    # return 0
+
 
     def model2diofant (model, X, Y):
         """Turns model with data into the matrix and vector of diofantine equations.
@@ -531,35 +562,6 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
             return expr.has(*model.sym_params), expr.subs([(i, 1) for i in model.sym_params])
 
 
-        X = ED.task.data[:, 1:]  # dangerous if evaling big integers
-        print('X origin', X)
-        X = np.array(ED.task.data[:, 1:], dtype='int')  # solution 1
-        print('X numpy-int', X)
-        X = sp.Matrix(ED.task.data[:, 1:]).applyfunc(sp.Integer)
-        print('X sympy-int', X)
-        s = np.array([[13.], [655594.], [509552245179617111378493440.000]], dtype='int')
-        print(s)
-
-        Y = ED.task.data[:, [0]]  # dangerous if evaling big integers, e.g. lambdify
-        print('Y origin', Y)
-        Y = np.array(ED.task.data[:, [0]], dtype='int')  # solution 1
-        print('Y numpy-int', Y)
-        Y = sp.Matrix(ED.task.data[:, [0]]).applyfunc(sp.Integer)
-        print('Y sympy-int', Y)
-        # Y = sp.Matrix(np.array(ED.task.data[:, [0]], dtype='int'))  # solution 1
-        # Xp = ED.task.data[4:8, 1:]
-        # Y = Yp
-        # print('Xp and Yp', Xp, '\n', Yp)
-        print(f"shapes: task.data {ED.task.data.shape}, X {X.shape}, Y {Y.shape}, ")
-        return 0
-
-        # Not really a shortcut:
-        # f = sp.lambdify(model.sym_vars, expr, "sympy") 
-        # Xm = X[4:8]
-        # print("Xm", Xm)
-        # ev = f(*Xm.T)
-        # print("evalved", ev)
-        # return 0
 
         print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
 
@@ -570,12 +572,20 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         # b0 = [sp.Add(*(without_constants))]
         b0 = [sp.Add(*without_constants)]
         exprs = with_constants + b0  # = A_exprs | b_expr
-        print("\nall in:", expr, summands, filtered, with_constants, without_constants, b0, exprs)
+        print("\nall in: expr, summands, filtered, with_constants, without_constants, b0, exprs:", )
+        print( expr, summands, filtered, with_constants, without_constants, b0, exprs)
         # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
 
         lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in exprs]
-        lambdas = [sp.lambdify(model.sym_vars, column, "numpy") for column in exprs]
-        columns = [list(f(*X.T)) for f in lambdas]
+        # lambdas = [sp.lambdify(model.sym_vars, column, "numpy") for column in exprs]
+
+        # columns = [list(f(*X.T)) for f in lambdas]
+        # print(lambdas[0](X
+        # print('rows', [type(row), row.shape, len(row) for row in X])
+
+
+        # return 0
+        columns = [[f(*X[i_row, :]) for i_row in range(X.rows)] for f in lambdas]
         print("Xp and Yp\n", X[4:14, :6])
         print("evals", columns)
         A_b = sp.Matrix(columns).T
@@ -584,7 +594,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         A = A_b[:, :-1]
         b = Y - A_b[:, -1]
         # b = Y - A_b[:, [-1]]  # if A_b is numpy
-        print('A b', A, b, A.shape, b.shape)
+        print('A b', A, b, A.shape, b.shape, type(A), type(b))
         #NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
 
         # print('X', X)
@@ -597,11 +607,11 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
             #     print(f"drop_constant({summand})", drop_constant(summand))
 
 
-        A = sp.Matrix(
+        A0 = sp.Matrix(
             [[3, 0 ],
             [0, 3],
             [1, 0]])
-        b = sp.Matrix([6, 9, 2])
+        b0 = sp.Matrix([6, 9, 2])
         print("-<-< exiting model2diofant() --- ")
 
         return A, b
@@ -611,9 +621,11 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         print(model, type(model))
         print(model.expr, type(model.expr),)
         print(model.expr.func, model.expr.args) #.func, model.args)
-        model2diofant(model, None, None)
+        A, b = model2diofant(model, X, Y)
+        print('res A, b X Y', A, b, X, Y)
+        print('res shape A, b X Y', A.shape, b.shape, X.shape, Y.shape)
     print("returning 0 earlier")
-    return 0
+    # return 0
 
     # 
 
