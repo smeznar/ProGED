@@ -338,15 +338,26 @@ optimizer = 'differential_evolution'
 optimizer = 'oeis_exact'
 timeout = np.inf
 
+NUMBER_OF_TERMS_PRESET = 20
+number_of_terms = int(flags_dict.get("--number_of_terms", NUMBER_OF_TERMS_PRESET))
+oeis_number_of_terms = number_of_terms
+MAX_ORDER_PRESET = 20
+max_order = int(flags_dict.get("--number_of_terms", MAX_ORDER_PRESET))
+
 # def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
-def oeis_eq_disco(seq_id: str, number_of_terms=50): 
+# def oeis_eq_disco(seq_id: str, number_of_terms=50, max_order=20): 
+def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int): 
     """Run eq. discovery of given OEIS sequence."""
 
+    doc2 = """
+    data = grid ... 20+20 rows
+    ED.disco(estimation_settings['number_of_terms'] = 20)
+    """
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
     # data = grid2(np.array(list(csv[seq_id])))
     # First 30 instead 50 terms in sequence (for catalan):
     # data = grid2(np.array(list(csv[seq_id])[:number_of_terms]))
-    data = grid_sympy(seq_id, number_of_terms)
+    data = grid_sympy(seq_id, number_of_terms=(number_of_terms + max_order))
     print('data shape', data.shape)
     print('data:', data)
     print('data[:4][:4] :', data[:6, :6], data[:, -2])
@@ -408,6 +419,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         generator_settings=generator_settings,
 
         estimation_settings={
+            'oeis_number_of_terms': number_of_terms,
             "verbosity": 3,
             # "verbosity": 1,
             # "verbosity": 0,
@@ -507,11 +519,21 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
     # print("evalved", ev)
     # return 0
 
-    def model2data (model, X, Y, number_of_terms: int, max_order: int):
-
-
-
-        return 0
+    def model2data (model, X, Y, number_of_terms: int):
+        print('-->> inside model2data begin')
+        print(model.sym_vars, model.expr, type(model.sym_vars))
+        # indie = [(index, model.expr.has(var)) for index, var in enumerate(model.sym_vars)]
+        has_vars = [None for var in model.sym_vars if model.expr.has(var)]
+        nonrecursive_variables = 1  # vars= [n, an_1, ... an_49] \mapsto 1 => 
+        # => recursion_order = len(has_vars) - nonrecursive variables
+        recursion_order = len(has_vars) - nonrecursive_variables
+        remove_rows = recursion_order - 1  # remove first (recursion order - 1) rows. Explain by yourself.
+        # print(remove_rows, has_vars, nonrecursive_variables, recursion_order)
+        print('--<< inside model2data end')
+        # 1/0
+        X = X[remove_rows:(remove_rows + number_of_terms), :]
+        Y = Y[remove_rows:(remove_rows + number_of_terms), :]
+        return X, Y
 
     def model2diophant (model, X, Y):
         """Turns model with data into the matrix and vector of diophantine equations.
@@ -627,12 +649,13 @@ def oeis_eq_disco(seq_id: str, number_of_terms=50):
         print(model, type(model))
         print(model.expr, type(model.expr),)
         print(model.expr.func, model.expr.args) #.func, model.args)
-        X, Y = model2data(model, X, Y)
+        X, Y = model2data(model, X, Y, number_of_terms)
+        print('model2data, X, Y, X.shape, Y.shape', X, Y, X.shape, Y.shape)
         A, b = model2diophant(model, X, Y)
         print('res A, b X Y', A, b, X, Y)
         print('res shape A, b X Y', A.shape, b.shape, X.shape, Y.shape)
     print("returning 0 earlier")
-    return 0
+    # return 0
 
     # 
 
@@ -702,8 +725,6 @@ csv_ids = list(csv.columns)
 csv_ids = selection
 print(len(selection))
 
-NUMBER_OF_TERMS_PRESET = 50
-number_of_terms = int(flags_dict.get("--number_of_terms", NUMBER_OF_TERMS_PRESET))
 
 print("Running equation discovery for all oeis sequences, "
         "with these settings:\n"
@@ -728,7 +749,7 @@ print("Running equation discovery for all oeis sequences, "
 
 for seq_id in csv_ids:
     # oeis_eq_disco(seq_id, is_direct, order)
-    oeis_eq_disco(seq_id, number_of_terms=number_of_terms)
+    oeis_eq_disco(seq_id, number_of_terms=number_of_terms, max_order=max_order)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"

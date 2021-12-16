@@ -513,6 +513,23 @@ def min_fit (model, X, Y):
     ## return 0
 
 
+def model2data (model, X, Y, number_of_terms: int):
+    print('-->> inside model2data begin')
+    print(model.sym_vars, model.expr, type(model.sym_vars))
+    has_vars = [index+1 for index, var in enumerate(model.sym_vars) if model.expr.has(var)]
+    # has_vars = [var for var in model.sym_vars if model.expr.has(var)]
+    nonrecursive_variables = 1  # vars= [n, an_1, ... an_49] \mapsto 1 => 
+    # => recursion_order = len(has_vars) - nonrecursive variables
+    recursion_order = has_vars[-1] - nonrecursive_variables
+    remove_rows = recursion_order - 1  # remove first (recursion order - 1) rows. Explain by yourself.
+    print(model, model.expr, remove_rows, has_vars, nonrecursive_variables, recursion_order)
+    print('--<< inside model2data end')
+    # 1/0
+    X = X[remove_rows:(remove_rows + number_of_terms), :]
+    Y = Y[remove_rows:(remove_rows + number_of_terms), :]
+    return X, Y
+
+
 def model2diophant (model, X, Y):
     """Turns model with data into the matrix and vector of diophantine equations.
 
@@ -552,9 +569,9 @@ def model2diophant (model, X, Y):
     print("->-> inside model2diophant() --- ")
 
     expr = model.expr
-    # print(isinstance(expr, ))
-    print("Add", isinstance(expr, sp.Add))
-    print("Pow", isinstance(expr, sp.Pow))
+    # # print(isinstance(expr, ))
+    # print("Add", isinstance(expr, sp.Add))
+    # print("Pow", isinstance(expr, sp.Pow))
 
     def drop_constant(expr):
         """Returns pair (bool, croped_expr), where bool logs the change
@@ -569,7 +586,7 @@ def model2diophant (model, X, Y):
 
 
 
-    print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
+    # print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
 
     summands = expr.args if isinstance(expr, sp.Add) else (expr,)
     filtered = [drop_constant(summand) for summand in summands]
@@ -578,8 +595,8 @@ def model2diophant (model, X, Y):
     # b0 = [sp.Add(*(without_constants))]
     b0 = [sp.Add(*without_constants)]
     exprs = with_constants + b0  # = A_exprs | b_expr
-    print("\nall in: expr, summands, filtered, with_constants, without_constants, b0, exprs:", )
-    print( expr, summands, filtered, with_constants, without_constants, b0, exprs)
+    # print("\nall in: expr, summands, filtered, with_constants, without_constants, b0, exprs:", )
+    # print( expr, summands, filtered, with_constants, without_constants, b0, exprs)
     # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
 
     lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in exprs]
@@ -592,16 +609,16 @@ def model2diophant (model, X, Y):
 
     # return 0
     columns = [[f(*X[i_row, :]) for i_row in range(X.rows)] for f in lambdas]
-    print("Xp and Yp\n", X[4:14, :6])
-    print("evals", columns)
+    # print("Xp and Yp\n", X[4:14, :6])
+    # print("evals", columns)
     A_b = sp.Matrix(columns).T
     # A_b = np.array(columns).T
-    print("A_b", A_b)
+    # print("A_b", A_b)
     A = A_b[:, :-1]
     b = Y - A_b[:, -1]
-    # b = Y - A_b[:, [-1]]  # if A_b is numpy
-    print('A b', A, b, A.shape, b.shape, type(A), type(b))
-    #NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
+    ## b = Y - A_b[:, [-1]]  # if A_b is numpy
+    #print('A b', A, b, A.shape, b.shape, type(A), type(b))
+    ##NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
 
     # print('X', X)
 
@@ -639,7 +656,12 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
     mystic_integer = int(time.strftime("%Y%m%d", time.localtime()))  # non-zero error
     # Cuts off first reccursion_order rows from the grid matrix since 
     # unsolvable system with zeros.
-    X, Y = model2data(model, X, Y)
+    print('estimation_settings', estimation_settings)
+    print('estimation_settings[number_of_terms]', estimation_settings.get('oeis_number_of_terms', None))
+    print('estimation_settings[number_of_terms]', estimation_settings.get('optimizer', None))
+    # 1/0
+    X, Y = model2data(model, X, Y, number_of_terms=estimation_settings['oeis_number_of_terms'])
+    print("X, Y:", X, Y)
     A, b = model2diophant(model, X, Y)
     print("A, b:", A, b)
 
