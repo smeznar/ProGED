@@ -87,7 +87,11 @@ def model_error_general (params, model, X, Y, T, **estimation_settings):
     - estimation_settings: look description of fit_models()
     """
     task_type = estimation_settings["task_type"]
-    if task_type in ("algebraic", "integer_algebraic"):
+    optimizer = estimation_settings["optimizer"]
+    if optimizer == "oeis_exact":
+        return find_parameters(model, X, Y, T,
+                             **estimation_settings)["fun"]
+    elif task_type in ("algebraic", "integer_algebraic"):
         return model_error(params, model, X, Y, _T=None,
                             estimation_settings=estimation_settings)
     elif task_type == "differential":
@@ -521,8 +525,9 @@ def model2data (model, X, Y, number_of_terms: int):
     nonrecursive_variables = 1  # vars= [n, an_1, ... an_49] \mapsto 1 => 
     # => recursion_order = len(has_vars) - nonrecursive variables
     recursion_order = has_vars[-1] - nonrecursive_variables
-    remove_rows = recursion_order - 1  # remove first (recursion order - 1) rows. Explain by yourself.
-    print(model, model.expr, remove_rows, has_vars, nonrecursive_variables, recursion_order)
+    remove_rows = max(recursion_order-1, 0)  # remove first (recursion order - 1) rows. 
+    # Above is max(,0) just to make it nonnegative. Explain by yourself.
+    print('model, model.expr, remove_rows, has_vars, nonrecursive_variables, recursion_order', model, model.expr, remove_rows, has_vars, nonrecursive_variables, recursion_order)
     print('--<< inside model2data end')
     # 1/0
     X = X[remove_rows:(remove_rows + number_of_terms), :]
@@ -614,8 +619,8 @@ def model2diophant (model, X, Y):
     A_b = sp.Matrix(columns).T
     # A_b = np.array(columns).T
     # print("A_b", A_b)
-    A = A_b[:, :-1]
-    b = Y - A_b[:, -1]
+    A = A_b[:, :-1] if A_b.cols != 1 else sp.zeros(A_b.rows, 1)
+    b = Y - A_b[:, [-1]]
     ## b = Y - A_b[:, [-1]]  # if A_b is numpy
     #print('A b', A, b, A.shape, b.shape, type(A), type(b))
     ##NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])

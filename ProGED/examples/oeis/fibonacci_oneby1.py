@@ -649,11 +649,11 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
         print(model, type(model))
         print(model.expr, type(model.expr),)
         print(model.expr.func, model.expr.args) #.func, model.args)
-        X, Y = model2data(model, X, Y, number_of_terms)
-        print('model2data, X, Y, X.shape, Y.shape', X, Y, X.shape, Y.shape)
-        A, b = model2diophant(model, X, Y)
-        print('res A, b X Y', A, b, X, Y)
-        print('res shape A, b X Y', A.shape, b.shape, X.shape, Y.shape)
+        # X, Y = model2data(model, X, Y, number_of_terms)
+        # print('model2data, X, Y, X.shape, Y.shape', X, Y, X.shape, Y.shape)
+        # A, b = model2diophant(model, X, Y)
+        # print('res A, b X Y', A, b, X, Y)
+        # print('res shape A, b X Y', A.shape, b.shape, X.shape, Y.shape)
     print("returning 0 earlier")
     # return 0
 
