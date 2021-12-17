@@ -511,7 +511,6 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     print(f"shapes: task.data {ED.task.data.shape}, X {X.shape}, Y {Y.shape}, ")
     # return 0
 
-    # print("Xm", Xm)
     # ev = f(*Xm.T)
     # print("evalved", ev)
     # return 0
