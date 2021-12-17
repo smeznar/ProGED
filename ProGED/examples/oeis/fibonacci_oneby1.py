@@ -511,7 +511,6 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     print(f"shapes: task.data {ED.task.data.shape}, X {X.shape}, Y {Y.shape}, ")
     # return 0
 
-    # Not really a shortcut:
     # f = sp.lambdify(model.sym_vars, expr, "sympy") 
     # Xm = X[4:8]
     # print("Xm", Xm)
