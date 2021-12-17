@@ -596,10 +596,11 @@ def model2diophant (model, X, Y):
     summands = expr.args if isinstance(expr, sp.Add) else (expr,)
     filtered = [drop_constant(summand) for summand in summands]
     with_constants = [summand[1] for summand in filtered if summand[0]]
+    with_constants_nonempty = [sp.Add(0)] if with_constants==[] else with_constants
     without_constants = [summand[1] for summand in filtered if not summand[0]]
     # b0 = [sp.Add(*(without_constants))]
     b0 = [sp.Add(*without_constants)]
-    exprs = with_constants + b0  # = A_exprs | b_expr
+    exprs = with_constants_nonempty + b0  # = A_exprs | b_expr
     # print("\nall in: expr, summands, filtered, with_constants, without_constants, b0, exprs:", )
     # print( expr, summands, filtered, with_constants, without_constants, b0, exprs)
     # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
@@ -611,7 +612,6 @@ def model2diophant (model, X, Y):
     # print(lambdas[0](X
     # print('rows', [type(row), row.shape, len(row) for row in X])
 
-
     # return 0
     columns = [[f(*X[i_row, :]) for i_row in range(X.rows)] for f in lambdas]
     # print("Xp and Yp\n", X[4:14, :6])
@@ -619,27 +619,15 @@ def model2diophant (model, X, Y):
     A_b = sp.Matrix(columns).T
     # A_b = np.array(columns).T
     # print("A_b", A_b)
-    A = A_b[:, :-1] if A_b.cols != 1 else sp.zeros(A_b.rows, 1)
+    # A = A_b[:, :-1] if A_b.cols != 1 else sp.zeros(A_b.rows, 1)
+    A = A_b[:, :-1]
     b = Y - A_b[:, [-1]]
-    ## b = Y - A_b[:, [-1]]  # if A_b is numpy
-    #print('A b', A, b, A.shape, b.shape, type(A), type(b))
-    ##NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
 
-    # print('X', X)
-
-
-
-
-        # for summand in summands:
-        #     print(type(summand), summand
-        #     print(f"drop_constant({summand})", drop_constant(summand))
-
-
-    A0 = sp.Matrix(
-        [[3, 0 ],
-        [0, 3],
-        [1, 0]])
-    b0 = sp.Matrix([6, 9, 2])
+    # A0 = sp.Matrix(
+    #     [[3, 0 ],
+    #     [0, 3],
+    #     [1, 0]])
+    # b0 = sp.Matrix([6, 9, 2])
     print("-<-< exiting model2diophant() --- ")
 
     return A, b

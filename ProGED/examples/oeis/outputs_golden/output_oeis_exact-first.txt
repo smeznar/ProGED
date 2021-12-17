@@ -1,0 +1,376 @@
+
+Final score (sorted):
+model: an_1 + an_2                   ; error: 0              
+model: an_1*an_2 + an_1              ; error: 0              
+model: an_1*an_28*n + an_1           ; error: 0              
+model: an_1*an_32*n**2 + an_1        ; error: 0              
+model: an_1 + an_2                   ; error: 0              
+model: 2*an_1                        ; error: 0              
+model: an_1 + an_2                   ; error: 0              
+model: an_1*n + an_1                 ; error: 0              
+model: 2*an_1 - an_3                 ; error: 0              
+model: 2*an_1 - an_3                 ; error: 0              
+model: 2*an_2 + an_3                 ; error: 0              
+model: 2*an_1 - an_3                 ; error: 0              
+model: an_1 + an_2                   ; error: 0              
+model: 2*an_1*n + an_2 - an_3 + n    ; error: 0              
+model: an_1 + an_2                   ; error: 0              
+model: an_1 + an_2                   ; error: 0              
+model: 20211216*an_1**2*n + an_2 + 20211216*n**2 + 20211216*n; error: 20211216       
+model: an_3 + 20211216*n             ; error: 20211216       
+model: an_2 + 20211216*n**2 + 20211216*n; error: 20211216       
+model: an_1**2*n + 20211216*n        ; error: 20211216       
+model: 20211216*an_1 + 20211217*n**2 ; error: 20211216       
+model: an_1*an_2*n**3                ; error: 20211216       
+model: 20211216*an_1*an_2*n**2 + an_1; error: 20211216       
+model: an_4                          ; error: 20211216       
+model: 20211217*an_1 + 20211216*an_29 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_2*an_3 + an_1 + 20211216*an_2*n**2 + 20211216*n**3 + 20211216*n; error: 20211216       
+model: 20211216*an_1**2*an_8 + an_1*n + 20211216*n; error: 20211216       
+model: 20211216*an_1**2*an_3 + an_1*an_28 + 20211216*n; error: 20211216       
+model: an_1**2 + 20211216*an_1*an_6*n; error: 20211216       
+model: 20211216*an_1*n + 20211217*an_1 + 20211216*n; error: 20211216       
+model: an_1**2*an_2*n + 20211216*n   ; error: 20211216       
+model: an_37                         ; error: 20211216       
+model: 20211216*an_1**2*n + an_3*n   ; error: 20211216       
+model: an_1*n**2 + 20211216*an_3     ; error: 20211216       
+model: 20211216*an_1**2*n + 20211217*n; error: 20211216       
+model: 20211216*an_1 + an_10         ; error: 20211216       
+model: an_1*an_2*n**2 + 20211216*an_16; error: 20211216       
+model: an_6*n**3                     ; error: 20211216       
+model: an_1**3*an_17*n**3 + 20211216*an_1**2*n; error: 20211216       
+model: an_3*n + 20211216*n**2        ; error: 20211216       
+model: an_2*an_4                     ; error: 20211216       
+model: 20211216*an_1**2 + an_1       ; error: 20211216       
+model: 20211216*an_1*an_23 + an_1    ; error: 20211216       
+model: an_1*n**3                     ; error: 20211216       
+model: an_1 + 20211216*an_23         ; error: 20211216       
+model: an_1**2*n**2                  ; error: 20211216       
+model: an_2*n + 20211216*an_3        ; error: 20211216       
+model: an_1**2*n**4                  ; error: 20211216       
+model: an_30*n + 20211216*n          ; error: 20211216       
+model: an_1*an_2*n**2 + 20211216*an_1 + 20211216*n; error: 20211216       
+model: 20211216*an_1*n + an_1 + 20211216*an_33 + 20211216*n; error: 20211216       
+model: an_1**2*n + 20211216*an_1*an_2; error: 20211216       
+model: 20211216*an_1**2*n + 20211216*an_1*n + 20211216*an_36 + n; error: 20211216       
+model: an_1*an_2*n + 20211216*an_1*an_2 + 20211216*an_1; error: 20211216       
+model: 20211216*an_1**2*n**2 + an_5  ; error: 20211216       
+model: 20211216*an_1*n**2 + an_2*n**2; error: 20211216       
+model: an_1*an_2*n + 20211216*an_2*n**2; error: 20211216       
+model: 20211216*an_1*n + an_2 + 20211216*n; error: 20211216       
+model: an_1**4*n                     ; error: 20211216       
+model: 20211217*an_1**2              ; error: 20211216       
+model: 20211216*an_1**2*n + an_1 + 20211216*n; error: 20211216       
+model: 20211216*an_1**2*an_2*n + 20211216*an_1*n + an_2 + 20211216*n; error: 20211216       
+model: 20211216*n**4 + n             ; error: 20211216       
+model: an_2*n + 20211216*n           ; error: 20211216       
+model: an_1**2*an_3*an_4*n**3 + 20211216*an_1*an_2 + 20211216*an_1; error: 20211216       
+model: 20211216*n**2 + 20211217*n    ; error: 20211216       
+model: 20211216*an_1 + an_3 + 20211216*n; error: 20211216       
+model: 20211216*an_1 + an_31 + 20211216*n**2; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_2 + 20211216*n**3 + n**2; error: 20211216       
+model: an_39                         ; error: 20211216       
+model: 20211216*an_1*n**3 + 20211216*an_1*n + an_2*n; error: 20211216       
+model: an_1*an_25*n**2               ; error: 20211216       
+model: an_2 + 20211216*an_37         ; error: 20211216       
+model: 20211216*an_1*an_2*n + an_2*n ; error: 20211216       
+model: an_1**2*an_2*n**5             ; error: 20211216       
+model: 20211216*an_1 + 20211217*n    ; error: 20211216       
+model: an_1 + 20211216*an_18*n       ; error: 20211216       
+model: an_1*n**3 + 20211216*an_1     ; error: 20211216       
+model: 20211216*an_1*an_2 + an_1*n**2 + 20211216*an_1; error: 20211216       
+model: 20211216*an_1*n + an_28       ; error: 20211216       
+model: an_1*n**2 + 20211216*an_2 + 20211216*n; error: 20211216       
+model: an_1*n + 20211216*an_3        ; error: 20211216       
+model: an_1**3*an_15*an_2*n**3 + 20211216*an_1 + 20211216*n; error: 20211216       
+model: an_1**4 + 20211216*an_2       ; error: 20211216       
+model: 20211216*an_2 + n**4          ; error: 20211216       
+model: 20211216*an_11*an_2*n + an_2*n**4 + 20211216*n**2 + 20211216*n; error: 20211216       
+model: an_2 + 20211216*an_26*n**2 + 20211216*n; error: 20211216       
+model: an_1**2*n + 20211216*an_1*n   ; error: 20211216       
+model: an_1**2*an_2*an_22            ; error: 20211216       
+model: an_36                         ; error: 20211216       
+model: an_1**3*an_4*n                ; error: 20211216       
+model: 20211216*an_1**3 + 20211217*n ; error: 20211216       
+model: an_1*n**2 + 20211216*an_2     ; error: 20211216       
+model: 20211216*an_1*an_3*n**2 + n   ; error: 20211216       
+model: an_2*an_3*n                   ; error: 20211216       
+model: 20211216*an_1**2 + 20211216*an_1*n + an_1 + 20211216*n; error: 20211216       
+model: 20211216*an_2*n + n**2        ; error: 20211216       
+model: 20211216*an_1*an_2*n + 20211216*an_32*n + n; error: 20211216       
+model: 20211217*an_1 + 20211216*n    ; error: 20211216       
+model: 20211216*an_1**2 + 20211216*an_1 + an_4*n**2; error: 20211216       
+model: n**3 + 20211216*n             ; error: 20211216       
+model: 20211216*an_1**2*n + 20211216*an_1*n + 20211216*an_1 + an_3 + 20211216*n**2; error: 20211216       
+model: 20211216*an_1*an_4*n**2 + an_2; error: 20211216       
+model: 20211216*an_1**2*n**2 + an_1*n**3 + 20211216*an_1 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_2 + an_2*n**3; error: 20211216       
+model: an_1*an_2*n**3 + 20211216*an_1*n + 20211216*an_1 + 20211216*an_2*n**2; error: 20211216       
+model: 20211216*an_1**2 + an_1*an_2*n**2; error: 20211216       
+model: an_1*n + 20211216*an_2        ; error: 20211216       
+model: an_1**2*n**3                  ; error: 20211216       
+model: 20211216*an_3 + n**3          ; error: 20211216       
+model: an_1*n + 20211216*n**2        ; error: 20211216       
+model: an_1**2*an_2*an_3*n**3        ; error: 20211216       
+model: 20211216*an_1*an_26*an_3*n**2 + 20211216*an_1*n**2 + 20211216*an_2 + n; error: 20211216       
+model: 20211216*n**3 + 20211217*n    ; error: 20211216       
+model: an_1*an_3                     ; error: 20211216       
+model: an_1*an_2**2*an_38*n**2       ; error: 20211216       
+model: 20211216*an_1**2*n**3 + 20211216*an_1 + an_3; error: 20211216       
+model: an_1*an_2*n + 20211216*an_1   ; error: 20211216       
+model: 20211216*an_3 + n**2          ; error: 20211216       
+model: an_1*an_2 + 20211216*n**3     ; error: 20211216       
+model: an_1*an_2*n**5                ; error: 20211216       
+model: an_1*n**2 + 20211216*an_2*n + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_3 + an_1     ; error: 20211216       
+model: 20211216*an_1*an_11*an_5 + 20211216*an_1*n + 20211216*an_22 + n**2 + 20211216*n; error: 20211216       
+model: an_1*an_2*an_4*n              ; error: 20211216       
+model: 20211216*an_1*an_3*n + n      ; error: 20211216       
+model: 20211216*an_1*an_6*n + 20211217*n; error: 20211216       
+model: 20211216*an_1 + an_23*n**3 + 20211216*n; error: 20211216       
+model: n**5                          ; error: 20211216       
+model: 20211216*an_1*an_2 + an_2     ; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_1 + an_3*n**2 + 20211216*n; error: 20211216       
+model: an_1**2*n**2 + 20211216*an_1 + 20211216*n; error: 20211216       
+model: an_1*an_6 + 20211216*an_1     ; error: 20211216       
+model: an_1**2*an_2**2*an_32*n**3    ; error: 20211216       
+model: 20211216*an_2 + n             ; error: 20211216       
+model: 20211216*an_1 + an_4**2*n     ; error: 20211216       
+model: an_1*n**4                     ; error: 20211216       
+model: an_1 + 20211216*an_2*an_3*n + 20211216*an_2*n; error: 20211216       
+model: an_1**2 + 20211216*n          ; error: 20211216       
+model: an_1**2*n + 20211216*an_1     ; error: 20211216       
+model: an_19                         ; error: 20211216       
+model: 20211216*an_1*an_2 + 20211216*an_1 + n**2 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_2*an_3*n + 20211216*an_1 + an_2**2*an_34; error: 20211216       
+model: 20211216*an_1*an_2*n + 20211216*an_1*an_2 + 20211216*an_2*n**5 + n**2 + 20211216*n; error: 20211216       
+model: 20211216*an_1 + an_5          ; error: 20211216       
+model: 20211216*an_1*an_2 + 20211216*an_2*n + an_6 + 20211216*n; error: 20211216       
+model: an_1*an_2*an_31 + 20211216*an_29*n; error: 20211216       
+model: 20211217*an_1 + 20211216*an_3*n; error: 20211216       
+model: 20211216*an_1 + an_2*an_3*n**3 + 20211216*n**2 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_2 + an_1*n**3 + 20211216*an_1 + 20211216*n; error: 20211216       
+model: an_31                         ; error: 20211216       
+model: 20211216*an_1 + 20211216*n**3 + 20211217*n; error: 20211216       
+model: an_1**3*an_2*an_26*n**3       ; error: 20211216       
+model: an_26*n                       ; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_2*n + n; error: 20211216       
+model: an_1*an_21                    ; error: 20211216       
+model: 20211216*an_1**2*an_2*n + n**2 + 20211216*n; error: 20211216       
+model: an_2*n**3                     ; error: 20211216       
+model: 20211216*an_2*n**3 + 20211216*n**3 + 20211217*n; error: 20211216       
+model: 20211216*an_1**2 + an_1*an_2**2*n**2 + 20211216*an_1*n + 20211216*an_2 + 20211216*n**3; error: 20211216       
+model: 20211216*an_1**2 + 20211216*an_2*n + an_4 + 20211216*n; error: 20211216       
+model: 20211216*an_3**2*n + n**2     ; error: 20211216       
+model: an_20*n**2                    ; error: 20211216       
+model: 20211216*an_2 + 20211217*n    ; error: 20211216       
+model: an_1 + 20211216*an_3          ; error: 20211216       
+model: 20211216*an_1**2*n + 20211216*an_1 + n; error: 20211216       
+model: 20211216*an_1*an_3*an_31*n + 20211217*an_1 + 20211216*n**2; error: 20211216       
+model: 20211216*an_1 + an_2*an_30 + 20211216*n; error: 20211216       
+model: an_1*an_16*n                  ; error: 20211216       
+model: an_1*an_2 + 20211216*an_1     ; error: 20211216       
+model: an_1*an_3*n + 20211216*an_2*n ; error: 20211216       
+model: an_22                         ; error: 20211216       
+model: 20211216*an_1*an_3 + n        ; error: 20211216       
+model: an_1**4*n**5                  ; error: 20211216       
+model: 20211216*an_1**2*n + 20211216*an_1*an_2*n + an_2 + 20211216*n; error: 20211216       
+model: 20211216*an_1**2*n + 20211216*an_2 + n; error: 20211216       
+model: 20211216*an_33*n + n          ; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_1 + an_3; error: 20211216       
+model: 20211216*an_1*an_2*n + an_1*an_2; error: 20211216       
+model: an_1**2*an_34*n               ; error: 20211216       
+model: an_21                         ; error: 20211216       
+model: an_14*an_5*n**2 + 20211216*n**2; error: 20211216       
+model: 20211216*an_1**2*an_2 + 20211216*an_1*an_3 + n**2; error: 20211216       
+model: an_1**3*an_30                 ; error: 20211216       
+model: 20211216*an_2 + an_6*n**2     ; error: 20211216       
+model: 20211216*an_1*n**2 + 20211216*an_1 + n; error: 20211216       
+model: 20211216*an_1*an_2 + an_1     ; error: 20211216       
+model: 20211216*n**3 + n             ; error: 20211216       
+model: an_2*n                        ; error: 20211216       
+model: 20211217*an_1*n               ; error: 20211216       
+model: an_1*an_2*n                   ; error: 20211216       
+model: an_1*an_2*an_4*n**2           ; error: 20211216       
+model: an_3*n                        ; error: 20211216       
+model: an_1*an_3*n + 20211216*an_1*n + 20211216*n; error: 20211216       
+model: n**2 + 20211216*n             ; error: 20211216       
+model: an_1*n + 20211216*an_1        ; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_1 + n; error: 20211216       
+model: 20211216*an_1*n + an_1        ; error: 20211216       
+model: 20211216*an_1**2*an_2*n**3 + an_1; error: 20211216       
+model: an_1*an_2 + 20211216*n**2     ; error: 20211216       
+model: an_2*n + 20211216*an_32 + 20211216*n; error: 20211216       
+model: 20211216*an_1**2*n + 20211216*an_1*an_21*n**2 + 20211216*an_3 + an_35*n + 20211216*n; error: 20211216       
+model: an_1*an_2                     ; error: 20211216       
+model: an_1*an_39*n**2               ; error: 20211216       
+model: 20211216*an_1 + 20211216*an_22 + n; error: 20211216       
+model: 20211216*an_1**2*n**2 + n     ; error: 20211216       
+model: an_3*n + 20211216*n           ; error: 20211216       
+model: 20211216*an_1*an_2 + 20211216*an_1*n**2 + 20211216*an_8 + n; error: 20211216       
+model: an_1*an_18                    ; error: 20211216       
+model: an_1*n**2 + 20211216*n**2     ; error: 20211216       
+model: 20211216*an_1*n + n**2        ; error: 20211216       
+model: an_32                         ; error: 20211216       
+model: an_1**2*an_2*n                ; error: 20211216       
+model: an_24                         ; error: 20211216       
+model: an_1**3*n**4 + 20211216*an_1*n + 20211216*an_1; error: 20211216       
+model: 20211216*an_2*n**3 + 20211216*an_3 + n; error: 20211216       
+model: an_2*an_4*n                   ; error: 20211216       
+model: an_1**2*an_2*n**2             ; error: 20211216       
+model: 20211216*an_1**4*n**2 + an_1 + 20211216*n; error: 20211216       
+model: an_1*n + 20211216*an_1 + 20211216*n; error: 20211216       
+model: an_1**2 + 20211216*an_1*n + 20211216*n**2; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_2 + 20211217*n; error: 20211216       
+model: 20211216*an_1 + 20211216*an_3*n + 20211217*n; error: 20211216       
+model: an_1**3*an_3*an_36*n**2 + 20211216*an_2 + 20211216*n; error: 20211216       
+model: 20211216*an_1 + n**2          ; error: 20211216       
+model: an_1**2*an_2*an_4*n**3        ; error: 20211216       
+model: 20211217*n                    ; error: 20211216       
+model: 20211216*an_1*an_2 + n        ; error: 20211216       
+model: 20211216*an_7*n**3 + n        ; error: 20211216       
+model: 20211216*an_1**2*n**3 + an_2*n; error: 20211216       
+model: an_1*n**3 + 20211216*n        ; error: 20211216       
+model: 20211216*an_1**2*an_2*an_3*n**4 + 20211216*an_1 + an_5 + 20211216*n; error: 20211216       
+model: an_13*n**3                    ; error: 20211216       
+model: an_1*n**2 + 20211216*n        ; error: 20211216       
+model: an_1*an_9*n + 20211216*an_1 + 20211216*n; error: 20211216       
+model: 20211216*an_1**2 + an_1*n     ; error: 20211216       
+model: 20211216*an_2 + 20211216*n**3 + n; error: 20211216       
+model: an_2 + 20211216*n             ; error: 20211216       
+model: an_2*n**2                     ; error: 20211216       
+model: an_1**2*n                     ; error: 20211216       
+model: 20211216*an_1**2*n + n        ; error: 20211216       
+model: 20211216*an_1**3 + 20211216*an_1*an_4*n + an_2; error: 20211216       
+model: an_1                          ; error: 20211216       
+model: an_1**3 + 20211216*an_1 + 20211216*an_4; error: 20211216       
+model: 20211216*an_1 + 20211216*an_2*n + n; error: 20211216       
+model: n**2                          ; error: 20211216       
+model: an_1 + 20211216*n**2          ; error: 20211216       
+model: an_28*n + 20211216*n          ; error: 20211216       
+model: n                             ; error: 20211216       
+model: an_1**2                       ; error: 20211216       
+model: 20211216*an_3 + n             ; error: 20211216       
+model: n**3                          ; error: 20211216       
+model: 20211216*an_1*n + an_2        ; error: 20211216       
+model: an_1**3 + 20211216*an_1*n     ; error: 20211216       
+model: an_1*an_5*n**2                ; error: 20211216       
+model: an_1*n                        ; error: 20211216       
+model: an_1*n**2                     ; error: 20211216       
+model: an_1 + 20211216*an_2*an_3*n   ; error: 20211216       
+model: 20211216*an_1*n**3 + n        ; error: 20211216       
+model: an_1**2*an_2*n + 20211216*n**2; error: 20211216       
+model: 20211216*an_1**2*n + an_2*n   ; error: 20211216       
+model: 20211216*an_1*n**3 + an_2*n   ; error: 20211216       
+model: an_1**2*n + 20211216*an_1 + 20211216*an_2*an_3*n; error: 20211216       
+model: an_1 + 20211216*n             ; error: 20211216       
+model: an_1*n + 20211216*an_2 + 20211216*n; error: 20211216       
+model: 20211216*an_1*n + an_3        ; error: 20211216       
+model: 20211216*an_1 + n             ; error: 20211216       
+model: an_1**3                       ; error: 20211216       
+model: an_1*an_2**2*n**2 + 20211216*an_1 + 20211216*n; error: 20211216       
+model: 20211216*an_2*n + n           ; error: 20211216       
+model: an_3*an_4*n                   ; error: 20211216       
+model: an_1*an_3*n**3                ; error: 20211216       
+model: an_3                          ; error: 20211216       
+model: an_3*n**3                     ; error: 20211216       
+model: an_2                          ; error: 20211216       
+model: 20211216*an_1**2*an_3 + an_1**2; error: 20211216       
+model: an_1*n + 20211216*n           ; error: 20211216       
+model: 20211216*an_1**3*n + 20211216*an_1*n + an_33 + 20211216*n; error: 20211216       
+model: an_1 + 20211216*n**2 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_8*n**3 + an_1; error: 20211216       
+model: 20211216*n**5 + 20211216*n**4 + n; error: 20211216       
+model: an_1**2*an_6*n**4             ; error: 20211216       
+model: 20211216*an_1**2*an_2 + an_3*n; error: 20211216       
+model: 20211216*an_1 + n**4          ; error: 20211216       
+model: an_7*n                        ; error: 20211216       
+model: an_1*an_3*n                   ; error: 20211216       
+model: 20211216*an_1*an_2*n**2 + n**2; error: 20211216       
+model: 20211216*an_1*an_2*n**2 + an_2 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_2*n**4 + an_1; error: 20211216       
+model: 20211216*an_26*n**2 + n       ; error: 20211216       
+model: an_1*n**2 + 20211216*an_8     ; error: 20211216       
+model: an_1**2*an_3 + 20211216*an_1  ; error: 20211216       
+model: an_1**3*an_2*n**2             ; error: 20211216       
+model: an_1*an_4*n**2 + 20211216*an_2 + 20211216*n; error: 20211216       
+model: 20211216*an_2*n**4 + 20211217*n; error: 20211216       
+model: an_9                          ; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_1 + an_3 + 20211216*n; error: 20211216       
+model: 20211216*an_1**2 + 20211217*n ; error: 20211216       
+model: an_35                         ; error: 20211216       
+model: 20211216*an_1*an_3*n + 20211216*an_2 + n; error: 20211216       
+model: an_4*n                        ; error: 20211216       
+model: an_2**3*n**2                  ; error: 20211216       
+model: 20211216*an_1*an_2*n**2 + an_1*n + 20211216*an_1 + 20211216*an_2*an_4 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_3 + an_1*n   ; error: 20211216       
+model: an_1 + 20211216*an_2*n        ; error: 20211216       
+model: 20211216*an_1*n + 20211216*an_1 + 20211216*an_2 + 20211216*an_3*n**2 + 20211216*an_4 + n; error: 20211216       
+model: an_1*an_2*n**2                ; error: 20211216       
+model: 20211216*an_1**3*n + an_1**2*an_2*an_28*n**3; error: 20211216       
+model: 20211216*an_1**2*an_2 + 20211216*an_1*n + 20211216*an_1 + n; error: 20211216       
+model: 20211216*an_2 + 20211216*n**2 + n; error: 20211216       
+model: 20211216*an_1 + an_30 + 20211216*n; error: 20211216       
+model: an_1*an_12*an_2               ; error: 20211216       
+model: 20211216*an_1*n + an_1 + 20211216*n; error: 20211216       
+model: an_34*n                       ; error: 20211216       
+model: an_1*an_2 + 20211216*an_2*an_6*n**2 + 20211216*n; error: 20211216       
+model: 20211216*an_1 + n**2 + 20211216*n; error: 20211216       
+model: an_1**2*an_3*an_9*n**3        ; error: 20211216       
+model: an_1*n + 20211216*n**2 + 20211216*n; error: 20211216       
+model: an_1*an_2*n + 20211216*an_1*n**2; error: 20211216       
+model: an_29 + 20211216*n            ; error: 20211216       
+model: 20211217*an_1 + 20211216*an_5*n**2 + 20211216*n; error: 20211216       
+model: 20211216*an_1 + 20211216*n**2 + n; error: 20211216       
+model: 20211216*an_1*n + an_1 + 20211216*n**2; error: 20211216       
+model: an_1**3*n                     ; error: 20211216       
+model: 20211216*an_1*n + n**4        ; error: 20211216       
+model: an_1**2*an_3*n**2             ; error: 20211216       
+model: 20211216*an_1*n**2 + 20211217*n; error: 20211216       
+model: an_1*an_2**2                  ; error: 20211216       
+model: an_1*an_2 + 20211216*n**3 + 20211216*n; error: 20211216       
+model: 20211216*an_1 + 20211216*an_2 + n**2 + 20211216*n; error: 20211216       
+model: an_2*an_7 + 20211216*n        ; error: 20211216       
+model: an_1*an_33 + 20211216*n       ; error: 20211216       
+model: an_2**2                       ; error: 20211216       
+model: an_2 + 20211216*n**3          ; error: 20211216       
+model: 20211216*an_1 + 20211216*an_2 + n; error: 20211216       
+model: an_1**2*an_2                  ; error: 20211216       
+model: 20211217*an_1                 ; error: 20211216       
+model: 20211216*n**2 + n             ; error: 20211216       
+model: an_2**2 + 20211216*n          ; error: 20211216       
+model: an_1**2*an_35                 ; error: 20211216       
+model: 20211216*an_1**2*an_3 + 20211217*n; error: 20211216       
+model: 20211216*an_2 + an_4 + 20211216*n; error: 20211216       
+model: 20211216*an_1*an_2*n + an_1 + 20211216*n; error: 20211216       
+model: an_10*an_2                    ; error: 20211216       
+model: an_1**3*an_2*an_37*n**6 + 20211216*n; error: 20211216       
+model: an_2**3*an_20*n               ; error: 20211216       
+model: 20211216*an_1*n + n           ; error: 20211216       
+model: 20211216*an_5 + n             ; error: 20211216       
+model: an_3*n**5                     ; error: 20211216       
+model: an_1*an_3*n**2                ; error: 20211216       
+model: an_1**2*an_2 + 20211216*an_2*an_29; error: 20211216       
+model: an_1**2*an_2**2*n**2          ; error: 20211216       
+model: 20211216*an_1 + 20211216*an_3 + n; error: 20211216       
+model: 20211216*an_2*n**2 + n        ; error: 20211216       
+model: an_4*n**2                     ; error: 20211216       
+model: an_2*n**2 + 20211216*an_2     ; error: 20211216       
+model: an_1**3*n + 20211216*an_1*n   ; error: 20211216       
+model: 20211216*an_1**2*n + an_2*n**2; error: 20211216       
+model: an_2*n**3 + 20211216*n        ; error: 20211216       
+model: an_1*n**2 + 20211216*an_1     ; error: 20211216       
+model: 20211216*an_10 + n            ; error: 20211216       
+model: 20211216*an_1*n**2 + 20211217*an_1 + 20211216*an_3*n + 20211216*n; error: 20211216       
+model: 20211216*an_1**3*an_2*n**3 + n; error: 20211216       
+model: 20211216*an_1*an_2*n + an_2   ; error: 20211216       
+model: an_1**2 + 20211216*an_1       ; error: 20211216       
+model: 20211216*an_2*n + 20211217*n  ; error: 20211216       
+model: 20211216*an_1**2 + n          ; error: 20211216       
+model: 20211216*an_1*n**2 + n**2     ; error: 20211216       
+model: -1.21118477087832*an_1**3*n + 0.340682198262244*an_1**2*an_13*n - 1.51988715748233*an_1**2*n + an_1**2 - 4.06351123152819*an_1 + 3.52342140662638*an_2 + 2.63711880354394*n; error: 100000000      
+
+Total time consumed by now:23.63464487500096
+
+
+Equation discovery for all (chosen) OEIS sequences took 23.63466766700003 secconds, i.e. 0.39391112778333387 minutes or 0.006565185463055564 hours.
