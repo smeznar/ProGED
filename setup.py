@@ -26,6 +26,7 @@ setuptools.setup(
                         "nltk",
                         # "scikit-learn",
                         "hyperopt",
+                        "diophantine",
                         "pytest",
                        ]
 )
