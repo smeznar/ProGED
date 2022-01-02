@@ -41,8 +41,12 @@ def variable2file(variable, variable_name, filename) -> None:
           f"the file {filename}.")
     return
 
-def new_fetch (start=0, end=1e10, do_write=False, max_seq_length=100):
+def new_fetch (start=0, end=1e10, do_write=False, max_seq_length=100, output_file="save_new_bfiles.py"):
     """Fetch all sequences from b-files."""
+
+    # 0.) Check, if possible to write to file
+    if do_write:
+        variable2file({}, "empty_set", output_file)
 
     # 1.) First fetch total number of sequences do download.
     search=request.urlopen(
@@ -81,10 +85,12 @@ def new_fetch (start=0, end=1e10, do_write=False, max_seq_length=100):
     
     # 3.) Write sequences into file if need be:
     if do_write:
-        variable2file(seqs, "bseqs", "save_new_bfiles.py")
+        variable2file(seqs, "bseqs", output_file)
+
     return seqs
 # new_fetch(do_write=True)
-# new_fetch(10, 24, False, 50)
+# new_fetch(start=10, end=24, do_write=False, max_seq_length=55, output_file=None)
+new_fetch(start=0, end=1e10, do_write=True, max_seq_length=1000, output_file="saved_new_bfile2.py")
 
 def fetch_old(start=0, end=1e10, do_write=False):
     search=request.urlopen('https://oeis.org/search?q=keyword:core%20keyword:nice&fmt=text')
