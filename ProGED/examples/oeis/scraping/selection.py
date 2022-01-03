@@ -33,6 +33,16 @@ def basic_info(seqs, has_titles: int = 1, display_len: int = 100, float_limit=1e
 # basic_info(bseqs, has_titles=1, display_len=100)
 # 1/0
 
+def display_them(seqs, has_titles: int = 1, display_len: int = 100):
+    sorted_seqs = sorted([(i, seq) for i, seq in small.items()], key=(lambda x: x[0]))
+    for pair in sorted_seqs:
+        print('')
+        print(pair[0])
+        print(pair[1][0])
+        print(max(pair[1][1:50]), pair[1][1:50])
+
+    return
+
 def less_len(seqs, max_len=100, has_titles=1):
     """Make sure, which sequences have less than 100 terms. 
     Also see their max value.
@@ -83,12 +93,34 @@ def select(seqs: dict,
 if __name__ == "__main__":
     # execute only if run as a script
 
+    mag_selection = (
+            "A000009", 
+            "A000040", 
+            "A000045", 
+            "A000124", 
+            # "A000108", 
+            "A000219", 
+            "A000292", 
+            "A000720", 
+            "A001045", 
+            "A001097", 
+            "A001481", 
+            "A001615", 
+            "A002572", 
+            "A005230", 
+            "A027642", 
+            )
+
+    rankedbing = [('A000040', 50600), ('A000045', 44600), ('A000005', 40800), ('A000217', 34000), ('A000002', 32500), ('A000010', 31400), ('A000001', 31100), ('A000041', 25300), ('A000203', 24700), ('A000079', 22200), ('A000290', 21500), ('A000009', 20300), ('A000720', 16600), ('A001221', 16400), ('A001065', 16300), ('A007318', 15900), ('A001227', 15000), ('A000032', 14300), ('A000578', 13800), ('A001157', 13400)]
+    print(len(rankedbing))
+    1/0
+
     # filter accordingly only first 100 terms:
     # small = select(bseqs, head_length=100)
     # small = select(bseqs, head_length=50)
 
-    basic_info(bseqs)
-    less_len(bseqs, max_len=500)
+    # basic_info(bseqs)
+    # less_len(bseqs, max_len=500)
     # 1/0
 
     # 1/0
@@ -97,12 +129,34 @@ if __name__ == "__main__":
     # print('\n'*10)
     float_limit = 1e10
     float_limit = 1e16
-    small = select(bseqs, head_length=3500, has_titles=1, float_limit=float_limit)
-    print('small', small)
+    small3600 = select(bseqs, head_length=3580, has_titles=1, float_limit=float_limit)
+    small = select(bseqs, head_length=1000, has_titles=1, float_limit=float_limit)
+    small79 = select(bseqs, head_length=79, has_titles=1, float_limit=float_limit)
+    print('A000045' in small)
+    # print('small', small)
     print("selected:")
+    print("\nbasic_info(1000):")
     basic_info(small, display_len=20)
+    print("\nbasic_info(79):")
+    basic_info(small79, display_len=20)
+    print("\nbasic_info(3600):")
+    basic_info(small3600, display_len=20)
     # less_len(small, max_len=1000)
     display_len = 30
+    # display_them(small)
+    inter = set(mag_selection).intersection(small)
+    inter79 = set(mag_selection).intersection(small79)
+    inter3600 = set(mag_selection).intersection(small3600)
+    print('intersection 1000',  len(inter), 'of', len(mag_selection), inter)
+    print('intersection 79',  len(inter79), 'of', len(mag_selection), inter79)
+    print('intersection 3600',  len(inter3600), 'of', len(mag_selection), inter3600)
+    print('diff 1000 vs 79', inter.symmetric_difference(inter79))
+    print('diff 3600 vs 79', inter3600.symmetric_difference(inter79))
+    print('Result: not meaning loss in interesting sequences from 1000 to 3600')
+
+
+    # Sedaj sem pred odlo"citvijo: ali naj vzamem 1000 ali ve"c clenov in v podatkovni mno"zici nimam Fibonaccijevega zaporedja ali pa imam samo 79 clenov zaporedja (vrstic) in se vedno imam Fibonaccija. Kaj mi svetuješ?
+
 
 
     1/0

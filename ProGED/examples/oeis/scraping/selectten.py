@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import time
 import urllib.request
+from saved_new_bfile10000 import bseqs
 
 HTML_LENGTH = 10**6
 # HTML_LENGTH = 10**9
@@ -10,6 +11,9 @@ HTML_LENGTH = 10**6
 # MUCH_IDS = 50
 
 seqs = pd.read_csv("oeis_selection.csv")
+print(len(bseqs))
+1/0
+
 
  # The data u need
 # user_agent = 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'
@@ -50,7 +54,10 @@ def rank_gb(id_, goo=True):
 # print(rank_gb("A018252", goo=False))
 # print(rank_gb(id_))
 
-def search_rank(top=20, goo=True, start=0, end=200):
+# seqs_ids = pd.read_csv("oeis_selection.csv").columns[start:end]
+seqs_ids = pd.read_csv("oeis_selection.csv").columns
+
+def search_rank(ids: list , top=20, goo=True, start=0, end=200):
     # ids = pd.read_csv("oeis_selection.csv").columns[:first_columns]
     ids = pd.read_csv("oeis_selection.csv").columns[start:end]
     print(ids, type(ids[0]))
