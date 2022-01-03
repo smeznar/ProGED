@@ -90,7 +90,8 @@ def new_fetch (start=0, end=1e10, do_write=False, max_seq_length=100, output_fil
     return seqs
 # new_fetch(do_write=True)
 # new_fetch(start=10, end=24, do_write=False, max_seq_length=55, output_file=None)
-new_fetch(start=0, end=1e10, do_write=True, max_seq_length=1000, output_file="saved_new_bfile2.py")
+# new_fetch(start=0, end=1e10, do_write=True, max_seq_length=1000, output_file="saved_new_bfile2.py")
+# new_fetch(start=0, end=1e10, do_write=True, max_seq_length=10000, output_file="saved_new_bfile10000.py")
 
 def fetch_old(start=0, end=1e10, do_write=False):
     search=request.urlopen('https://oeis.org/search?q=keyword:core%20keyword:nice&fmt=text')
