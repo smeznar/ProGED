@@ -55,10 +55,7 @@ def check_scrap(seqs_dict: dict, is_bfile=False):
 # print("end")
 
 def check_out(is_bfile=False, has_titles=1, csv_filename: str ='oeis_selection.csv'):
-    # has_titles = 1  # csv has first (few) line(s) with title/name of sequence.
-    # df = pd.read_csv('oeis_selection.csv')[has_titles:]
     df = pd.read_csv(csv_filename)[has_titles:]
-    # 1/0
     # danger! in next line we should convert string terms to integers.
     bseqs = {id_: [int(term) for term in seq] for id_, seq in df.items()}
 
@@ -68,8 +65,7 @@ def check_out(is_bfile=False, has_titles=1, csv_filename: str ='oeis_selection.c
     # print(len(set(seqs)))
 
     basic_info(bseqs)
-    # 1/0
     check_scrap(bseqs, is_bfile=True)
     return
 
-# check_out(csv_filename='catalan_selection.csv')
+# check_out(csv_filename='oeis_dmkd.csv')
