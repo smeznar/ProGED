@@ -1,5 +1,7 @@
-# from save_new_bfiles import bseqs
-# Selection begins with select() (or 2 lines before).
+from save_new_bfiles import bseqs
+# Selection begins with select small (or 2 lines before).
+# New download:
+from saved_new_bfile2 import bseqs
 from saved_new_bfile10000 import bseqs
 
 def abs_max(seq):
@@ -14,6 +16,7 @@ def basic_info(seqs, has_titles: int = 1, display_len: int = 100, float_limit=1e
     lens = [len(seqs[id_][has_titles:]) for id_ in seqs]
     # len_tuples = [(id_, len(seqs[id_][has_titles:])) for id_ in seqs]
     maxs = [abs_max(seq[has_titles:]) for id_, seq in seqs.items()]
+
     # max_tuples = [(id_, abs_max(seq[has_titles:])) for id_, seq in seqs.items()]
     # min_len_index = lens.index(min(lens))
     # min_len_seq = seqs[min_len_index]
@@ -28,6 +31,7 @@ def basic_info(seqs, has_titles: int = 1, display_len: int = 100, float_limit=1e
     return
 # basic_info(bseqs)
 # basic_info(bseqs, has_titles=1, display_len=100)
+# 1/0
 
 def display_them(seqs, has_titles: int = 1, display_len: int = 100):
     sorted_seqs = sorted([(i, seq) for i, seq in small.items()], key=(lambda x: x[0]))
@@ -76,12 +80,12 @@ def print_big(seqs):
 # remove Mersene seq:
 # bseqs.pop('A000043')
 
-def select(seqs: dict,
-            head_length=1000,
-            float_limit=1e16,
+def select(seqs: dict, 
+            head_length=1000, 
+            float_limit=1e16, 
             has_titles=0):
-    small = {id_: seq[:head_length+has_titles] for id_, seq in seqs.items()
-            if abs_max(seq[has_titles:head_length+has_titles]) < float_limit
+    small = {id_: seq[:head_length+has_titles] for id_, seq in seqs.items() 
+            if abs_max(seq[has_titles:head_length+has_titles]) < float_limit 
                 and len(seq[has_titles:head_length+has_titles]) >= head_length}
     return small
 # small = select(bseqs)
@@ -89,22 +93,12 @@ def select(seqs: dict,
 if __name__ == "__main__":
     # execute only if run as a script
 
-    # dmkd:
-    small = select(bseqs, head_length=1000, has_titles=1, float_limit=1e16)
-    print('A000045' in small)
-    print("selected:")
-    print("\nbasic_info(1000):")
+    bseqs.pop('A000043')
+    small = select(bseqs, head_length=1000, has_titles=1)
+    print('\n'*10, 'just popped')
     basic_info(small, display_len=20)
     print(len(small))
-    # EOf dmkd:
-
-    # # Masters
-    # # filter accordingly only first 100 terms:
-    # small = select(bseqs, head_length=100)
-    # print("selected:")
-    # basic_info(small)
-    # print(len(small), small.popitem())
-    # # end of Masters
+    # print(small.popitem())
     
 # For use outside of this file.
 # final_selection = select(bseqs)
