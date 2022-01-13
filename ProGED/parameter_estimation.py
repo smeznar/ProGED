@@ -482,45 +482,11 @@ def min_fit (model, X, Y):
     
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
-    #print(ED.models)
-    ## exact ed:
-    ## return 0
 
-    #X = ED.task.data[:, 1:]  # dangerous if evaling big integers
-    #print('X origin', X)
-    ## X = np.array(ED.task.data[:, 1:], dtype='int')  # solution 1
-    ## print('X numpy-int', X)
-    ## X = sp.Matrix(ED.task.data[:, 1:]).applyfunc(sp.Integer)
-    ## print('X sympy-int', X)
-    ## s = np.array([[13.], [655594.], [509552245179617111378493440.000]], dtype='int')
-    ## print(s)
+def model2data (model, X, Y, nof_added_terms: int = None):
+    """Just crop the dataset.
 
-    #Y = ED.task.data[:, [0]]  # dangerous if evaling big integers, e.g. lambdify
-    #print('Y origin', Y)
-    ## Y = np.array(ED.task.data[:, [0]], dtype='int')  # solution 1
-    ## print('Y numpy-int', Y)
-    ## Y = sp.Matrix(ED.task.data[:, [0]]).applyfunc(sp.Integer)
-    ## print('Y sympy-int', Y)
-    ## Y = sp.Matrix(np.array(ED.task.data[:, [0]], dtype='int'))  # solution 1
-    ## Xp = ED.task.data[4:8, 1:]
-    ## Y = Yp
-    ## print('Xp and Yp', Xp, '\n', Yp)
-    #print(f"shapes: task.data {ED.task.data.shape}, X {X.shape}, Y {Y.shape}, ")
-    ## return 0
-
-    ## Not really a shortcut:
-    ## f = sp.lambdify(model.sym_vars, expr, "sympy") 
-    ## Xm = X[4:8]
-    ## print("Xm", Xm)
-    ## ev = f(*Xm.T)
-    ## print("evalved", ev)
-    ## return 0
-
-
-def model2data (model, X, Y, number_of_terms: int):
-    """Just crop the dataset. 
-
-    Its first of the 2 steps in exact_fit() function to prepare input 
+    Its first of the 2 steps in exact_fit() function to prepare input
     to the diofantine solver. Output is send to the model2diophant(),
     which accounts for the secont step.
 
@@ -529,26 +495,31 @@ def model2data (model, X, Y, number_of_terms: int):
     speed up the solving with diofantine solver.
 
     Inputs:
-        - number_of_terms = ((not jet implemented this way):number of equations added to the minimum 
-            of the required: n = model_order+2) 
+        - nof_added_terms = ((not jet implemented this way):number of
+            equations solved by diofantine solver.
+            Default = None ... means add (model_order + 2) equations.
     """
 
     print('-->> inside model2data begin')
+    print('model.expr, model.get_full_expr, model.sym_params', 
+        model.expr, model.get_full_expr(), model.sym_params)
     print(model.sym_vars, model.expr, type(model.sym_vars))
     has_vars = [index+1 for index, var in enumerate(model.sym_vars) if model.expr.has(var)]
     # has_vars = [var for var in model.sym_vars if model.expr.has(var)]
-    nonrecursive_variables = 1  # vars= [n, an_1, ... an_49] \mapsto 1 => 
+    nonrecursive_variables = 1  # vars= [n, an_1, ... an_49] \mapsto 1 =>
     # => recursion_order = len(has_vars) - nonrecursive variables
     recursion_order = has_vars[-1] - nonrecursive_variables
-    remove_rows = max(recursion_order-1, 0)  # remove first (recursion order - 1) rows. 
+    remove_rows = max(recursion_order-1, 0)  # remove first (recursion order - 1) rows.
     # Above is max(,0) just to make it nonnegative. Explain by yourself.
     print('model, model.expr, remove_rows, has_vars, nonrecursive_variables, ',
-        'recursion_order', model, model.expr, remove_rows, has_vars, 
+        'recursion_order', model, model.expr, remove_rows, has_vars,
         nonrecursive_variables, recursion_order)
     print('--<< inside model2data end')
     # 1/0
-    X = X[remove_rows:(remove_rows + number_of_terms), :]
-    Y = Y[remove_rows:(remove_rows + number_of_terms), :]
+    if nof_added_terms is None:
+        nof_added_terms = len(model.sym_params)
+    X = X[remove_rows:(remove_rows + nof_added_terms), :]
+    Y = Y[remove_rows:(remove_rows + nof_added_terms), :]
     return X, Y
 
 
@@ -668,10 +639,10 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
     # Cuts off first reccursion_order rows from the grid matrix since 
     # unsolvable system with zeros.
     print('estimation_settings', estimation_settings)
-    print('estimation_settings[number_of_terms]', estimation_settings.get('oeis_number_of_terms', None))
-    print('estimation_settings[number_of_terms]', estimation_settings.get('optimizer', None))
+    print('estimation_settings[oeis_nof_added_terms]', estimation_settings.get('oeis_nof_added_terms', None))
+    print('estimation_settings[optimizer]', estimation_settings.get('optimizer', None))
     # 1/0
-    X, Y = model2data(model, X, Y, number_of_terms=estimation_settings['oeis_number_of_terms'])
+    X, Y = model2data(model, X, Y, nof_added_terms=estimation_settings['oeis_nof_added_terms'])
     print("X, Y:", X, Y)
     A, b = model2diophant(model, X, Y)
     print("A, b:", A, b)

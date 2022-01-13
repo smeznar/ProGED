@@ -154,14 +154,16 @@ def grid_numpy(seq_id: str, number_of_terms: int):
 
 
 # seq = sp.Matrix(csv[seq_id])
-def grid_sympy(seq: sp.MutableDenseMatrix, number_of_terms: int = None):  # seq.shape=(N, 1)
-    # seq = seq if number_of_terms is None else seq[:number_of_terms]
-    seq = seq[:number_of_terms, :]
-    n = len(seq)
-    indexes_sympy_uncut = sp.Matrix(n-1, n-1, (lambda i,j: (seq[max(i-j,0)])*(1 if i>=j else 0)))
+# def grid_sympy(seq: sp.MutableDenseMatrix, nof_added_terms: int = None):  # seq.shape=(N, 1)
+def grid_sympy(seq: sp.MutableDenseMatrix, shape: tuple):  # seq.shape=(N, 1)
+    # seq = seq if nof_added_terms is None else seq[:nof_added_terms]
+    # seq = seq[:nof_added_terms, :]
+    seq = seq[:shape[0], :]
+    # n = len(seq)
+    indexes_sympy_uncut = sp.Matrix(shape[0]-1, shape[1]-1, (lambda i,j: (seq[max(i-j,0)])*(1 if i>=j else 0)))
     data = sp.Matrix.hstack(
-                seq[1:,:], 
-                sp.Matrix([i for i in range(1, n)]),
+                seq[1:,:],
+                sp.Matrix([i for i in range(1, shape[0])]),
                 indexes_sympy_uncut)
     return data
 
@@ -260,24 +262,25 @@ optimizer = 'differential_evolution'
 optimizer = 'oeis_exact'
 timeout = np.inf
 
-NUMBER_OF_TERMS_PRESET = 20
-number_of_terms = int(flags_dict.get("--number_of_terms", NUMBER_OF_TERMS_PRESET))
-oeis_number_of_terms = number_of_terms
+NOF_ADDED_TERMS_PRESET = 20
+nof_added_terms = int(flags_dict.get("--nof_added_terms", NOF_ADDED_TERMS_PRESET))
+oeis_nof_added_terms = nof_added_terms
 MAX_ORDER_PRESET = 20
 max_order = int(flags_dict.get("--max_order", MAX_ORDER_PRESET))
 
 # def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
-# def oeis_eq_disco(seq_id: str, number_of_terms=50, max_order=20): 
-# def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int): 
+# def oeis_eq_disco(seq_id: str, nof_added_terms=50, max_order=20): 
+# def oeis_eq_disco(seq_id: str, nof_added_terms: int, max_order: int): 
 def oeis_eq_disco(seq: sp.MutableDenseMatrix, 
         print_id: str, 
-        number_of_terms: int = None, 
+        # nof_added_terms: int = None, 
+        nof_added_terms: int = None, 
         max_order: int = None): 
     """Run eq. discovery of given OEIS sequence.
 
     Inputs:
         - seq: sympy matrix's column of shape (n,1), with first n terms
-        - number_of_terms (to be renamed to number_of_eqs):
+        - nof_added_terms (to be renamed to number_of_eqs):
             number of equations finally used in diofantine solver. 
             (todo: Default = None, i.e. final number of eqs is 
                 determined by number of variables in the model (equation).)
@@ -289,35 +292,52 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
 
     doc2 = """
     data = grid ... 20+20 rows
-    ED.disco(estimation_settings['number_of_terms'] = 20)
+    ED.disco(estimation_settings['nof_added_terms'] = 20)
     """
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
     # data = grid2(np.array(list(csv[seq_id])))
     # First 30 instead 50 terms in sequence (for catalan):
-    # data = grid2(np.array(list(csv[seq_id])[:number_of_terms]))
-    print('max_order before', max_order)
-    # max_order = sp.floor(seq.rows/2)-1 if max_order is None else max_order
-    print('max_order after', max_order)
+    # data = grid2(np.array(list(csv[seq_id])[:nof_added_terms]))
+
+    print('seq_id, nof_added_terms, max_order,  before', print_id, nof_added_terms, max_order)
+    max_order = sp.floor(seq.rows/2)-1 if max_order is None else max_order
+    shape = [nof_added_terms, max_order]
+    # nof_added_terms = None if nof_added_terms is None else max_order
+    # if nof_added_terms is None:
+    shape[0] = max_order + nof_added_terms if nof_added_terms is not None else seq.rows
+    print('seq_id, nof_added_terms, max_order, shape,  after', print_id, nof_added_terms, max_order, shape)
+
     # 1/0
-    data = grid_sympy(seq, number_of_terms=(number_of_terms + max_order))
+
+    # data = grid_sympy(seq, nof_added_terms=(nof_added_terms + max_order))
+    # shape = if nof_added_terms is None
+    # shape = (nof_added_terms + max_order, max_order) 
+    # shape
+    # shape = (2*max_order, max_order) if nof_added_terms is None else (nof_added_terms+max
+
+    data = grid_sympy(seq, list(shape))
     print('data shape', data.shape)
     print('data:', data)
     print('data[:4][:4] :', data[:6, :6], data[:, -2])
-    n = data.shape[0] + 1  # = 50
+    # 1/0
+
+    # n = data.shape[0] + 1  # = 50
+    m = data.shape[1] - 2  # = 50
     # variable_names_ = [f"an_{i}" for i in range(order, 0, -1)] + ["an"]
-    variable_names = ["an", "n"] + [f"an_{i}" for i in range(1, (n-1)+1)]
+    variable_names = ["an", "n"] + [f"an_{i}" for i in range(1, m+1)]
     #%# print('len variable_names', len(variable_names))
     # variable_names = ["n"]+variable_names_ if is_direct else variable_names_
     # variables = [f"'{an_i}'" for an_i in variable_names[1:]]
     # print('len variables', len(variables))
+
     print('variable_names', variable_names)
     # print(variables)
     # print(data.shape, type(data), data)
     # q = q
     # p = p
-    pis = [p**i for i in range(1, (n-1)+1)]
-    # pis = [max(p**i, 0) for i in range(1, (n-1)+1)]
-    # pis = [p**i+1e-04 for i in range(1, (n-1)+1)]
+    pis = [p**i for i in range(1, m+1)]
+    # pis = [max(p**i, 0) for i in range(1, m+1)]
+    # pis = [p**i+1e-04 for i in range(1, m+1)]
     # print(pis)
     # print(len(pis), 'len pis')
     coef = (1-q)/sum(pis)
@@ -351,7 +371,7 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
         generator_settings=generator_settings,
 
         estimation_settings={
-            'oeis_number_of_terms': number_of_terms,
+            'oeis_nof_added_terms': nof_added_terms,
             "verbosity": 3,
             # "verbosity": 1,
             # "verbosity": 0,
@@ -450,7 +470,7 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
         print(model, type(model))
         print(model.expr, type(model.expr),)
         print(model.expr.func, model.expr.args) #.func, model.args)
-        # X, Y = model2data(model, X, Y, number_of_terms)
+        # X, Y = model2data(model, X, Y, nof_added_terms)
         # print('model2data, X, Y, X.shape, Y.shape', X, Y, X.shape, Y.shape)
         # A, b = model2diophant(model, X, Y)
         # print('res A, b X Y', A, b, X, Y)
@@ -542,8 +562,8 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> random_seed = {random_seed}\n"
         f"=>> lower_upper_bounds = {lower_upper_bounds}\n"
         f"=>> number of terms in every sequence saved in csv = {terms_count}\n"
-        # f"=>> number of terms in every sequence actually used = {number_of_terms}\n"
-        f"=>> number_of_terms = {number_of_terms}\n"
+        # f"=>> number of terms in every sequence actually used = {nof_added_terms}\n"
+        f"=>> nof_added_terms = {nof_added_terms}\n"
         f"=>> number of all considered sequences = {len(csv_ids)}\n"
         f"=>> list of considered sequences = {csv_ids}"
         )
@@ -554,9 +574,9 @@ eq_discos = []
 for seq_id in csv_ids:
     seq = sp.Matrix(csv[seq_id])
     # oeis_eq_disco(seq_id, is_direct, order)
-    eq_discos += [oeis_eq_disco(seq, print_id=seq_id, 
-        number_of_terms=number_of_terms, max_order=max_order)]
-    # oeis_eq_disco(seq, print_id=seq_id)  #, number_of_terms=number_of_terms, max_order=max_order)
+    # eq_discos += [oeis_eq_disco(seq, print_id=seq_id, nof_added_terms=nof_added_terms, max_order=max_order)]
+    eq_discos += [oeis_eq_disco(seq, print_id=seq_id)]
+    # oeis_eq_disco(seq, print_id=seq_id)  #, nof_added_terms=nof_added_terms, max_order=max_order)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
