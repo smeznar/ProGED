@@ -1,7 +1,7 @@
-"""Run equation discovery on OEIS sequences to discover 
-direct, recursive or even direct-recursive equations.
+"""Run equation discovery on OEIS sequences to discover direct, recursive or even direct-recursive equations.
 """
 
+import pickle
 import numpy as np
 import sympy as sp
 import pandas as pd
@@ -20,6 +20,7 @@ print("TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)")
 print("TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)")
 print("parameter_estimation avoids more than 5 parameters to estimate. In oeis exact may use more than 5 constants? ")
 print("TRY GRAMMAR WITH / DIVIDING NONCONSTANT VARIABLES (an_1, n, ...)", "\n"*5, )
+print("IDEA: max ORDER for GRAMMAR = floor(DATASET ROWS (LEN(SEQ)))/2)-1")
 
 ##############################
 # Quick usage is with flags:
@@ -78,7 +79,7 @@ csv = pd.read_csv('oeis_selection.csv')[has_titles:]
 # csv = csv.astype('int64')
 # print("csv", csv)
 # csv = csv.astype('float')
-print("csv", csv)
+# print("csv", csv)
 # 1/0
 terms_count, seqs_count = csv.shape
 # Old for fibonacci only:
@@ -90,22 +91,8 @@ print("fibs", fibs)
 fibs = np.array(fibs)
 prts = np.array(prts)
 # oeis = fibs
-
-# oeis = fibs[2:]
-# fibs_old = [0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,
-#  1597,2584,4181,6765,10946,17711,28657,46368,75025,
-#  121393,196418,317811,514229,832040,1346269,
-#  2178309,3524578,5702887,9227465,14930352,24157817,
-#  39088169,63245986,102334155]
-# print(type(fibs[0]))
-# assert fibs_old[len(fibs_old)-1] == fibs[len(fibs_old)-1]
-# primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,
-#  61,67,71,73,79,83,89,97,101,103,107,109,113,127,
-#  131,137,139,149,151,157,163,167,173,179,181,191,
-#  193,197,199,211,223,227,229,233,239,241,251,257,
-#  263,269,271][:40+1]
-# oeis = primes
-# seq = numpy_seq
+# sp_seq = sp.Matrix(csv[seq_id])
+# print(sp_seq)
 
 # seq = np.array(oeis)
 
@@ -164,8 +151,12 @@ def grid_numpy(seq_id: str, number_of_terms: int):
     data = np.hstack((np.array(seq)[1:].reshape(-1, 1), np.arange(1, n).reshape(-1, 1), cut_zero))
     return data
 
-def grid_sympy(seq_id: str, number_of_terms: int):  # seq.shape=(N, 1)
-    seq = sp.Matrix(csv[seq_id][:number_of_terms])
+
+
+# seq = sp.Matrix(csv[seq_id])
+def grid_sympy(seq: sp.MutableDenseMatrix, number_of_terms: int = None):  # seq.shape=(N, 1)
+    # seq = seq if number_of_terms is None else seq[:number_of_terms]
+    seq = seq[:number_of_terms, :]
     n = len(seq)
     indexes_sympy_uncut = sp.Matrix(n-1, n-1, (lambda i,j: (seq[max(i-j,0)])*(1 if i>=j else 0)))
     data = sp.Matrix.hstack(
@@ -173,76 +164,6 @@ def grid_sympy(seq_id: str, number_of_terms: int):  # seq.shape=(N, 1)
                 sp.Matrix([i for i in range(1, n)]),
                 indexes_sympy_uncut)
     return data
-
-# seq_id='A000108'
-# # seq_id='A000045'
-# grids = grid_sympy(seq_id, 50)
-# datal = grids
-# print('bool', grid_sympy(seq_id, 50) == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
-# print('bool', grids == sp.Matrix(grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)))
-# # 1/0
-# datan =  np.array(sp.Matrix(list(csv[seq_id])[:50]).T)[0]
-# grid_nu = grid_numpy(seq_id, 50)
-# print('datan', datan)
-# gridy2 =  grid2(datan)
-# print('bool lte', grids == sp.Matrix(gridy2))
-# # print('bool lte', sum(not (gridy2 == grid_nu)))
-# print('bool lte', sum(sum(gridy2 != grid_nu)))
-# 1/0
-# # gridy2 =  grid2(np.array(list(csv[seq_id])[:50]).astype('float')).astype(int)
-# print('grid_sympy', grids.shape, gridy2.shape)
-# print('type', type(grids), type(gridy2))
-# # 1/0
-# print('grid_sympy', grids)
-# print('grid2', gridy2)
-# print('grid_sympy', grids[:10, :10])
-# print('grid2', gridy2[:10, :10])
-# print('grid_sympy',  grids[-4:, :4])
-# print('grid2',      gridy2[-4:, :4])
-# print('eq', grids[-4:, :4] == gridy2[-4:, :4])
-
-# 1/0
-# # datal = grid2(np.array(list(csv[seq_id])[:50]).astype('float'))
-# # print('input grid2', np.array(list(csv[seq_id])[:50]))
-# # datal = np.array(sp.Matrix(csv[seq_id][:50]).T)[0]
-# # datal = grid2(np.array(sp.Matrix(csv[seq_id][:50]).T)[0])
-# print("datal", datal)
-# print("datal[10]", datal[:10, :10])
-# print("datal[-10:]", datal[-4:, :4])
-# 1/0
-
-# # print("csv[seq_id]", type(list(csv[seq_id])[0]))
-# print("csv[seq_id]", (list(csv[seq_id])))
-# print("sympy", sp.Matrix(list(csv[seq_id])))
-# print("sympy", np.array(sp.Matrix(csv[seq_id])))
-# print("csv[seq_id]", type(np.array(list(csv[seq_id]))))
-# print("csv[seq_id]", [type(i) for i in csv[seq_id]])
-# 1/0
-# # print(grid2(['a_n', 'a_{n-1}']))
-# # print([f"a_{{n-{i}}} & 1 & " for i in range(1, 50)])
-# # 1/0
-
-# print(prts)
-# print(fibs)
-# # # grid(3, fibs, True)
-# print(grid2(fibs))
-# print(grid2(prts))
-# print(grid2(fibs)[:17,:48].astype(int))
-# print('cats:')
-# print(grid2(prts)[:7,:6])
-# # row = grid[3]
-# # print(aij(1,1))
-# # for i in range(10):
-# #     for j in range(10):
-# #         print(aij(i,j))
-
-# # print(fibs)
-# # print(fibs[row])
-# print(grid2(fibs))
-# # print(fibs[grid2(fibs)])
-# # print(fij(1, 45))
-# print('end of prog')
-# 1/0
 
 
 ########main#settings#####################################
@@ -281,6 +202,7 @@ sample_size = 4
 # sample_size = 30
 # sample_size = 50
 # sample_size = 100
+sample_size = 175
 # sample_size = 1000
 sample_size = int(flags_dict.get("--sample_size", sample_size))
 ### lower_upper_bounds = (-5, 5) if is_direct else (-10, 10)
@@ -342,12 +264,28 @@ NUMBER_OF_TERMS_PRESET = 20
 number_of_terms = int(flags_dict.get("--number_of_terms", NUMBER_OF_TERMS_PRESET))
 oeis_number_of_terms = number_of_terms
 MAX_ORDER_PRESET = 20
-max_order = int(flags_dict.get("--number_of_terms", MAX_ORDER_PRESET))
+max_order = int(flags_dict.get("--max_order", MAX_ORDER_PRESET))
 
 # def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
 # def oeis_eq_disco(seq_id: str, number_of_terms=50, max_order=20): 
-def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int): 
-    """Run eq. discovery of given OEIS sequence."""
+# def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int): 
+def oeis_eq_disco(seq: sp.MutableDenseMatrix, 
+        print_id: str, 
+        number_of_terms: int = None, 
+        max_order: int = None): 
+    """Run eq. discovery of given OEIS sequence.
+
+    Inputs:
+        - seq: sympy matrix's column of shape (n,1), with first n terms
+        - number_of_terms (to be renamed to number_of_eqs):
+            number of equations finally used in diofantine solver. 
+            (todo: Default = None, i.e. final number of eqs is 
+                determined by number of variables in the model (equation).)
+        - max_order : max order or max number of variables an_m that 
+            the grammar is allowed to generate.
+            (todo: Default = None, i.e. it should depend of size of 
+            input sequence length, i.e. = floor(len(seq)/2) -1)
+    """
 
     doc2 = """
     data = grid ... 20+20 rows
@@ -357,7 +295,11 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     # data = grid2(np.array(list(csv[seq_id])))
     # First 30 instead 50 terms in sequence (for catalan):
     # data = grid2(np.array(list(csv[seq_id])[:number_of_terms]))
-    data = grid_sympy(seq_id, number_of_terms=(number_of_terms + max_order))
+    print('max_order before', max_order)
+    # max_order = sp.floor(seq.rows/2)-1 if max_order is None else max_order
+    print('max_order after', max_order)
+    # 1/0
+    data = grid_sympy(seq, number_of_terms=(number_of_terms + max_order))
     print('data shape', data.shape)
     print('data:', data)
     print('data[:4][:4] :', data[:6, :6], data[:, -2])
@@ -368,7 +310,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     # variable_names = ["n"]+variable_names_ if is_direct else variable_names_
     # variables = [f"'{an_i}'" for an_i in variable_names[1:]]
     # print('len variables', len(variables))
-    # print(variable_names)
+    print('variable_names', variable_names)
     # print(variables)
     # print(data.shape, type(data), data)
     # q = q
@@ -385,16 +327,6 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     variable_probabilities = np.hstack((np.array([q]), coef*np.array(pis)))
     # variable_probabilities = [0.00001, 0.99999]
     # variable_probabilities = [1, 0]
-    # 1/0
-
-    # check probs
-    #%# print('variable_probabilities', variable_probabilities, sum(variable_probabilities), len(variable_probabilities))
-    # print('variable_probabilities', variable_probabilities)
-    # print('min(variable_probabilities)', min(variable_probabilities))
-    # print('sum(variable_probabilities)', sum(variable_probabilities))
-    # for i in range(len(variable_probabilities)-1):
-    #     print(variable_probabilities[i]/variable_probabilities[i+1], pis[i]/pis[i+1])
-    # 1/0
 
     np.random.seed(random_seed)
     ED = EqDisco(
@@ -512,131 +444,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     # return 0
 
 
-#    def model2data (model, X, Y, number_of_terms: int):
-#        print('-->> inside model2data begin')
-#        print(model.sym_vars, model.expr, type(model.sym_vars))
-#        # indie = [(index, model.expr.has(var)) for index, var in enumerate(model.sym_vars)]
-#        has_vars = [None for var in model.sym_vars if model.expr.has(var)]
-#        nonrecursive_variables = 1  # vars= [n, an_1, ... an_49] \mapsto 1 => 
-#        # => recursion_order = len(has_vars) - nonrecursive variables
-#        recursion_order = len(has_vars) - nonrecursive_variables
-#        remove_rows = recursion_order - 1  # remove first (recursion order - 1) rows. Explain by yourself.
-#        # print(remove_rows, has_vars, nonrecursive_variables, recursion_order)
-#        print('--<< inside model2data end')
-#        # 1/0
-#        X = X[remove_rows:(remove_rows + number_of_terms), :]
-#        Y = Y[remove_rows:(remove_rows + number_of_terms), :]
-#        return X, Y
 
-#    def model2diophant (model, X, Y):
-#        """Turns model with data into the matrix and vector of diophantine equations.
-
-#        It assumes polynomial model, i.e. sum of multiplied variables and constants.
-#        Input:
-#            - model: modelBox object? from model.py module
-#            - X: data with non-target attributes (used in right-hand side of 
-#                the equations)
-#            - Y: column data with target attributes (right-hand side of the 
-#                equations)
-#        """
-#        """
-#        blueprint:
-#        model -> 2models(c0*var + c1*var +..., vars + var + var + ...) ->  
-#                -> manyModels( var1, var2, ..., varRight)
-#                -> for every row in X: 
-#                        A = [var1(X), var2(X), ..., var_n(X)], b = Y - other_sum_of_vars(X) 
-
-
-#        """
-#    #blueprint:
-#    #1.) if type(expr) != Add naredi nekaj drugega ( uporabi algoritem pri #2.) )
-#    #2.) if type(expr) == Add glej skico:
-#    #   - (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2)  in naredi:
-#    #   - funkcijo, ki vsakemu argumentu v expr.args priredi
-#    #   - ( (1 (nima konstante), an_1 (expr), ..., (0 (ima konstanto), an_1*n (expr odstranimo konstanto), ...
-#    #   - npr. (n**2, an_1, C2*n, C0*an_1*n, C1*an_3*n**2) ->  ((1, n**2), (1, an_1), (0, n), (0, an_1*n), (0, an_3*n**2))
-#    #   - nato to pretvorimo v (1, 0, 0, 0) ... tj. index 0, da razdelimo v (n**2, an_1, ) in (n, an_1*n, an_3*n**2, )
-#    #   - prvi tuple zdruzimo in koncamo z (n**2 + an_1, n, an_1*n, an_3*n**2)
-#    #   - sedaj evalviramo:
-#    #       - stolpec b = sp.lambdify(n**2 + an_1, lib="math")(X)-Y 
-#    #       - stolpec A[:, 0] = sp.lambdify(an_1*n, lib="math")(X) 
-#    #       - stolpec A[:, 1] = sp.lambdify(n, lib="math")(X) 
-#    #       - ...
-#    #   - sestavimo in vrnemo stolpce: A, b
-
-#        print("->-> inside model2diophant() --- ")
-
-#        expr = model.expr
-#        # print(isinstance(expr, ))
-#        print("Add", isinstance(expr, sp.Add))
-#        print("Pow", isinstance(expr, sp.Pow))
-
-#        def drop_constant(expr):
-#            """Returns pair (bool, croped_expr), where bool logs the change
-#            being done to the expression expr by cutting off the constant in 
-#            summand `expr`. 
-
-#            E.g.:
-#                C1*expr -> (True, expr) or 
-#                var -> (False, var)
-#            """
-#            return expr.has(*model.sym_params), expr.subs([(i, 1) for i in model.sym_params])
-
-
-
-#        print("model.symbols aka. sym_vars", model.sym_vars, model.sym_params)
-
-#        summands = expr.args if isinstance(expr, sp.Add) else (expr,)
-#        filtered = [drop_constant(summand) for summand in summands]
-#        with_constants = [summand[1] for summand in filtered if summand[0]]
-#        without_constants = [summand[1] for summand in filtered if not summand[0]]
-#        # b0 = [sp.Add(*(without_constants))]
-#        b0 = [sp.Add(*without_constants)]
-#        exprs = with_constants + b0  # = A_exprs | b_expr
-#        print("\nall in: expr, summands, filtered, with_constants, without_constants, b0, exprs:", )
-#        print( expr, summands, filtered, with_constants, without_constants, b0, exprs)
-#        # lambds = [sp.lambdify(model.sym_vars, column, "numpy") for column in with_constants]
-
-#        lambdas = [sp.lambdify(model.sym_vars, column, "sympy") for column in exprs]
-#        # lambdas = [sp.lambdify(model.sym_vars, column, "numpy") for column in exprs]
-
-#        # columns = [list(f(*X.T)) for f in lambdas]
-#        # print(lambdas[0](X
-#        # print('rows', [type(row), row.shape, len(row) for row in X])
-
-
-#        # return 0
-#        columns = [[f(*X[i_row, :]) for i_row in range(X.rows)] for f in lambdas]
-#        print("Xp and Yp\n", X[4:14, :6])
-#        print("evals", columns)
-#        A_b = sp.Matrix(columns).T
-#        # A_b = np.array(columns).T
-#        print("A_b", A_b)
-#        A = A_b[:, :-1]
-#        b = Y - A_b[:, -1]
-#        # b = Y - A_b[:, [-1]]  # if A_b is numpy
-#        print('A b', A, b, A.shape, b.shape, type(A), type(b))
-#        #NOT A SOLUTION: type(Matrix(np.array(m, dtype='float')).applyfunc(Integer)[3])
-
-#        # print('X', X)
-
-
-
-
-#            # for summand in summands:
-#            #     print(type(summand), summand
-#            #     print(f"drop_constant({summand})", drop_constant(summand))
-
-
-#        A0 = sp.Matrix(
-#            [[3, 0 ],
-#            [0, 3],
-#            [1, 0]])
-#        b0 = sp.Matrix([6, 9, 2])
-#        print("-<-< exiting model2diophant() --- ")
-
-#        return A, b
-#    # return 0  # end here
 
     for model in ED.models:
         print(model, type(model))
@@ -658,7 +466,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     seq_start = time.perf_counter()
     ED.fit_models()
     seq_cpu_time = time.perf_counter() - seq_start
-    print(f"\nParameter fitting for sequence {seq_id} "
+    print(f"\nParameter fitting for sequence {print_id} "
           f"took {seq_cpu_time} secconds.")
     print("\nFinal score:")
     for m in ED.models:
@@ -669,7 +477,7 @@ def oeis_eq_disco(seq_id: str, number_of_terms: int, max_order: int):
     print("\nFinal score (sorted):")
     for m in ED.models.retrieve_best_models(-1):
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
-    return
+    return ED
 
 
 # oeis_eq_disco(seq_id, is_direct, order)  # Run only one seq, e.g. the fibonaccis.
@@ -734,15 +542,21 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> random_seed = {random_seed}\n"
         f"=>> lower_upper_bounds = {lower_upper_bounds}\n"
         f"=>> number of terms in every sequence saved in csv = {terms_count}\n"
-        f"=>> number of terms in every sequence actually used = {number_of_terms}\n"
+        # f"=>> number of terms in every sequence actually used = {number_of_terms}\n"
+        f"=>> number_of_terms = {number_of_terms}\n"
         f"=>> number of all considered sequences = {len(csv_ids)}\n"
         f"=>> list of considered sequences = {csv_ids}"
         )
 
 
+eq_discos = []
+
 for seq_id in csv_ids:
+    seq = sp.Matrix(csv[seq_id])
     # oeis_eq_disco(seq_id, is_direct, order)
-    oeis_eq_disco(seq_id, number_of_terms=number_of_terms, max_order=max_order)
+    eq_discos += [oeis_eq_disco(seq, print_id=seq_id, 
+        number_of_terms=number_of_terms, max_order=max_order)]
+    # oeis_eq_disco(seq, print_id=seq_id)  #, number_of_terms=number_of_terms, max_order=max_order)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
@@ -788,4 +602,6 @@ print(f"\nEquation discovery for all (chosen) OEIS sequences"
 #     print(error)
 #     return
 # # pretty_results(seq_name=seq_name, is_direct=is_direct, order=order)
+
+pickle.dump(eq_discos, open( "exact_models.p", "wb" ) )
 

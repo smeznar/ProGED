@@ -518,6 +518,21 @@ def min_fit (model, X, Y):
 
 
 def model2data (model, X, Y, number_of_terms: int):
+    """Just crop the dataset. 
+
+    Its first of the 2 steps in exact_fit() function to prepare input 
+    to the diofantine solver. Output is send to the model2diophant(),
+    which accounts for the secont step.
+
+    Dataset is cropped so that first noisy rows with zeros are cut
+    off and that only first few equations are considered (to hopefully
+    speed up the solving with diofantine solver.
+
+    Inputs:
+        - number_of_terms = ((not jet implemented this way):number of equations added to the minimum 
+            of the required: n = model_order+2) 
+    """
+
     print('-->> inside model2data begin')
     print(model.sym_vars, model.expr, type(model.sym_vars))
     has_vars = [index+1 for index, var in enumerate(model.sym_vars) if model.expr.has(var)]
@@ -527,7 +542,9 @@ def model2data (model, X, Y, number_of_terms: int):
     recursion_order = has_vars[-1] - nonrecursive_variables
     remove_rows = max(recursion_order-1, 0)  # remove first (recursion order - 1) rows. 
     # Above is max(,0) just to make it nonnegative. Explain by yourself.
-    print('model, model.expr, remove_rows, has_vars, nonrecursive_variables, recursion_order', model, model.expr, remove_rows, has_vars, nonrecursive_variables, recursion_order)
+    print('model, model.expr, remove_rows, has_vars, nonrecursive_variables, ',
+        'recursion_order', model, model.expr, remove_rows, has_vars, 
+        nonrecursive_variables, recursion_order)
     print('--<< inside model2data end')
     # 1/0
     X = X[remove_rows:(remove_rows + number_of_terms), :]
@@ -628,6 +645,7 @@ def model2diophant (model, X, Y):
     #     [0, 3],
     #     [1, 0]])
     # b0 = sp.Matrix([6, 9, 2])
+
     print("-<-< exiting model2diophant() --- ")
 
     return A, b
