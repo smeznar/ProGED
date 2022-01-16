@@ -514,12 +514,18 @@ def model2data (model, X, Y, nof_added_terms: int = None):
     print('model, model.expr, remove_rows, has_vars, nonrecursive_variables, ',
         'recursion_order', model, model.expr, remove_rows, has_vars,
         nonrecursive_variables, recursion_order)
-    print('--<< inside model2data end')
-    # 1/0
+    
     if nof_added_terms is None:
         nof_added_terms = len(model.sym_params)
     X = X[remove_rows:(remove_rows + nof_added_terms), :]
     Y = Y[remove_rows:(remove_rows + nof_added_terms), :]
+    if X.shape[0] == 0 or Y.shape[0] == 0:
+        error_string = "My raise in model2data(): removed too many rows or \
+            adding 0 rows since no constants"
+        print(error_string)
+        raise IndexError(error_string)
+    print('X an Y shapes:', X.shape, Y.shape)
+    print('--<< inside model2data end')
     return X, Y
 
 

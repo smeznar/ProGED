@@ -155,15 +155,15 @@ def grid_numpy(seq_id: str, number_of_terms: int):
 
 # seq = sp.Matrix(csv[seq_id])
 # def grid_sympy(seq: sp.MutableDenseMatrix, nof_added_terms: int = None):  # seq.shape=(N, 1)
-def grid_sympy(seq: sp.MutableDenseMatrix, shape: tuple):  # seq.shape=(N, 1)
+def grid_sympy(seq: sp.MutableDenseMatrix, max_order: int):  # seq.shape=(N, 1)
     # seq = seq if nof_added_terms is None else seq[:nof_added_terms]
     # seq = seq[:nof_added_terms, :]
-    seq = seq[:shape[0], :]
+    # seq = seq[:shape[0]-1, :]
     # n = len(seq)
-    indexes_sympy_uncut = sp.Matrix(shape[0]-1, shape[1]-1, (lambda i,j: (seq[max(i-j,0)])*(1 if i>=j else 0)))
+    indexes_sympy_uncut = sp.Matrix(seq.rows-1, max_order, (lambda i,j: (seq[max(i-j,0)])*(1 if i>=j else 0)))
     data = sp.Matrix.hstack(
                 seq[1:,:],
-                sp.Matrix([i for i in range(1, shape[0])]),
+                sp.Matrix([i for i in range(1, seq.rows)]),
                 indexes_sympy_uncut)
     return data
 
@@ -299,13 +299,13 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
     # First 30 instead 50 terms in sequence (for catalan):
     # data = grid2(np.array(list(csv[seq_id])[:nof_added_terms]))
 
+    print('----. inside oeis_eq_disco')
     print('seq_id, nof_added_terms, max_order,  before', print_id, nof_added_terms, max_order)
     max_order = sp.floor(seq.rows/2)-1 if max_order is None else max_order
-    shape = [nof_added_terms, max_order]
     # nof_added_terms = None if nof_added_terms is None else max_order
     # if nof_added_terms is None:
-    shape[0] = max_order + nof_added_terms if nof_added_terms is not None else seq.rows
-    print('seq_id, nof_added_terms, max_order, shape,  after', print_id, nof_added_terms, max_order, shape)
+    # shape[0] = max_order + nof_added_terms if nof_added_terms is not None else seq.rows
+    print('seq_id, nof_added_terms, max_order, shape,  after', print_id, nof_added_terms, max_order)
 
     # 1/0
 
@@ -315,10 +315,10 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
     # shape
     # shape = (2*max_order, max_order) if nof_added_terms is None else (nof_added_terms+max
 
-    data = grid_sympy(seq, list(shape))
+    data = grid_sympy(seq, max_order)
     print('data shape', data.shape)
-    print('data:', data)
-    print('data[:4][:4] :', data[:6, :6], data[:, -2])
+    print('data:', data.__repr__())
+    print('data[:4][:4] :', data[:6, :6].__repr__(), '\n', data[:, -2].__repr__())
     # 1/0
 
     # n = data.shape[0] + 1  # = 50
@@ -330,6 +330,7 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
     # variables = [f"'{an_i}'" for an_i in variable_names[1:]]
     # print('len variables', len(variables))
 
+    print('data.shape', data.shape)
     print('variable_names', variable_names)
     # print(variables)
     # print(data.shape, type(data), data)
@@ -442,7 +443,7 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
     # return 0
 
     X = ED.task.data[:, 1:]  # dangerous if evaling big integers
-    print('X origin', X)
+    print('X origin', X.__repr__())
     # X = np.array(ED.task.data[:, 1:], dtype='int')  # solution 1
     # print('X numpy-int', X)
     # X = sp.Matrix(ED.task.data[:, 1:]).applyfunc(sp.Integer)
@@ -451,7 +452,7 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
     # print(s)
 
     Y = ED.task.data[:, [0]]  # dangerous if evaling big integers, e.g. lambdify
-    print('Y origin', Y)
+    print('Y origin', Y.__repr__())
     # Y = np.array(ED.task.data[:, [0]], dtype='int')  # solution 1
     # print('Y numpy-int', Y)
     # Y = sp.Matrix(ED.task.data[:, [0]]).applyfunc(sp.Integer)
