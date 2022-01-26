@@ -624,5 +624,5 @@ print(f"\nEquation discovery for all (chosen) OEIS sequences"
 #     return
 # # pretty_results(seq_name=seq_name, is_direct=is_direct, order=order)
 
-pickle.dump(eq_discos, open( "exact_models.p", "wb" ) )
+# pickle.dump(eq_discos, open( "exact_models.p", "wb" ) )
 
