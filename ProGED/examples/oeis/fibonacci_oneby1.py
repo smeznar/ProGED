@@ -506,7 +506,11 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
         # print(type(m))
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     print("\nFinal score (sorted):")
-    for m in ED.models.retrieve_best_models(-1):
+    # for m in ED.models.retrieve_best_models(-1):
+    #     print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
+    sortedmy = [m for m in ED.models.retrieve_best_models(-1)]
+    sortedmy.reverse()
+    for m in sortedmy:
         print(f"model: {str(m.get_full_expr()):<30}; error: {m.get_error():<15}")
     return ED
 

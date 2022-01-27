@@ -523,7 +523,7 @@ def model2data (model, X, Y, sanity_nof_eqs: int, nof_eqs: int = None):
     if sanity_nof_eqs is None:
         raise ValueError("sanity should not be None! but it is anyway!!!!!")
     if remove_rows + len(model.sym_params) > X.rows or (
-            nof_eqs is not None and remove_rows + nof_eqs > X.rows):
+            isinstance(nof_eqs, int) and remove_rows + nof_eqs > X.rows):
         print("X.rows, remove_rows, len(model.sym_params), nof_eqs",
                 X.rows, remove_rows, len(model.sym_params), nof_eqs)
         raise ValueError("Need more data!!!!!")
@@ -663,7 +663,8 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
     """
 
     print('\n'*5)
-    mystic_integer = int(time.strftime("%Y%m%d", time.localtime()))  # non-zero error
+    # mystic_integer = int(time.strftime("%Y%m%d", time.localtime()))  # non-zero error
+    mystic_integer = 111  # non-zero error
     # Cuts off first reccursion_order rows from the grid matrix since 
     # unsolvable system with zeros.
     print('estimation_settings', estimation_settings)
@@ -686,7 +687,7 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
         print("A, b:", A, b)
         x = diophantine_solve(A, b)
         print('x', x)
-        return x
+        return x, A.rows
 
     # X, Y = model2data(model, X, Y, sanity_nof_eqs=sanity_nof_eqs,
     #     nof_eqs=nof_eqs)
@@ -696,7 +697,8 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
     # x = diophantine_solve(A, b)
     # print('x', x)
 
-    x = solve_it(model, X, Y, sanity_nof_eqs, nof_eqs)
+
+    x, rows = solve_it(model, X, Y, sanity_nof_eqs, nof_eqs)
 
 
     if not x==[] and not len((x[0].T)[:])==len(p0):
@@ -706,21 +708,27 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
 
     SECOND_CHECK_nof_eqs = 5
 
-    # if x != [] and A.rows < SECOND_CHECK_nof_eqs:
-    #     x = solve_it(model, X, Y, sanity_nof_eqs, SECOND_CHECK_nof_eqs)
-    #     if x == []:
-    #         print("double checking with {SECOND_CHECK_nof_eqs} equations really helped in finding False Positives!!!!!")
-    #     else:
-    #         print("Uuhuu! Eqation found even after double checking with {SECOND_CHECK_nof_eqs} equations :)")
 
-    # if x != []:
-    #     x = solve_it(model, X, Y, sanity_nof_eqs, "MAX_EQS")
-    #     if x == []:
-    #         print("triple checking with MAX number of equations \
-    #             really helped in finding False Positives!!!!!")
-    #     else:
-    #         print("Uuhuu! Eqation found even after triple checking \
-    #             with MAX number of equations :)")
+    print("-- ***** ---"*4, x != [], rows < SECOND_CHECK_nof_eqs)
+
+    if x != [] and rows < SECOND_CHECK_nof_eqs:
+        print("-- ***** ---"*4)
+        x, _ = solve_it(model, X, Y, sanity_nof_eqs, SECOND_CHECK_nof_eqs)
+        if x == []:
+            print(f"double checking with {SECOND_CHECK_nof_eqs} equations"
+                f"really helped in finding False Positives!!!!!")
+        else:
+            print(f"Uuhuu! Eqation found even after double checking"
+                f"with {SECOND_CHECK_nof_eqs} equations :)")
+
+    if x != []:
+        x, _ = solve_it(model, X, Y, sanity_nof_eqs, "MAX_EQS")
+        if x == []:
+            print("triple checking with MAX number of equations "
+                + "really helped in finding False Positives!!!!!")
+        else:
+            print("Uuhuu! Eqation found even after triple checking "
+                + "with MAX number of equations :)")
 
 
     res = {"x": [mystic_integer for i in range(len(p0))], "fun": mystic_integer} \
