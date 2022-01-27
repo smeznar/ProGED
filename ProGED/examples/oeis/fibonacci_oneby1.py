@@ -154,10 +154,10 @@ def grid_numpy(seq_id: str, number_of_terms: int):
 
 
 # seq = sp.Matrix(csv[seq_id])
-# def grid_sympy(seq: sp.MutableDenseMatrix, nof_added_terms: int = None):  # seq.shape=(N, 1)
+# def grid_sympy(seq: sp.MutableDenseMatrix, nof_eqs: int = None):  # seq.shape=(N, 1)
 def grid_sympy(seq: sp.MutableDenseMatrix, max_order: int):  # seq.shape=(N, 1)
-    # seq = seq if nof_added_terms is None else seq[:nof_added_terms]
-    # seq = seq[:nof_added_terms, :]
+    # seq = seq if nof_eqs is None else seq[:nof_eqs]
+    # seq = seq[:nof_eqs, :]
     # seq = seq[:shape[0]-1, :]
     # n = len(seq)
     indexes_sympy_uncut = sp.Matrix(seq.rows-1, max_order, (lambda i,j: (seq[max(i-j,0)])*(1 if i>=j else 0)))
@@ -262,28 +262,37 @@ optimizer = 'differential_evolution'
 optimizer = 'oeis_exact'
 timeout = np.inf
 
-NOF_ADDED_TERMS_PRESET = 20
-nof_added_terms = int(flags_dict.get("--nof_added_terms", NOF_ADDED_TERMS_PRESET))
-oeis_nof_added_terms = nof_added_terms
-MAX_ORDER_PRESET = 20
-max_order = int(flags_dict.get("--max_order", MAX_ORDER_PRESET))
+
+#### do not remove these rows: ################
+NOF_EQS_PRESET = None
+nof_eqs = int(flags_dict["--nof_eqs"]) if "--nof_eqs" in flags_dict else NOF_EQS_PRESET
+SANITY_NOF_EQS_PRESET = 7
+sanity_nof_eqs = int(flags_dict.get("--sanity_nof_eqs", SANITY_NOF_EQS_PRESET))
+MAX_ORDER_PRESET = None
+max_order = int(flags_dict["--max_order"]) if "--max_order" in flags_dict else MAX_ORDER_PRESET
+#### do not remove the rows above: ############
 
 # def oeis_eq_disco(seq_id: str, is_direct: bool, order: int): 
-# def oeis_eq_disco(seq_id: str, nof_added_terms=50, max_order=20): 
-# def oeis_eq_disco(seq_id: str, nof_added_terms: int, max_order: int): 
+# def oeis_eq_disco(seq_id: str, nof_eqs=50, max_order=20): 
+# def oeis_eq_disco(seq_id: str, nof_eqs: int, max_order: int): 
 def oeis_eq_disco(seq: sp.MutableDenseMatrix, 
         print_id: str, 
-        # nof_added_terms: int = None, 
-        nof_added_terms: int = None, 
-        max_order: int = None): 
+        # nof_eqs: int = None, 
+        nof_eqs: int = nof_eqs, 
+        sanity_nof_eqs: int = sanity_nof_eqs, 
+        max_order: int = max_order): 
     """Run eq. discovery of given OEIS sequence.
 
     Inputs:
         - seq: sympy matrix's column of shape (n,1), with first n terms
-        - nof_added_terms (to be renamed to number_of_eqs):
+        - nof_eqs (to be renamed to number_of_eqs):
             number of equations finally used in diofantine solver. 
             (todo: Default = None, i.e. final number of eqs is 
                 determined by number of variables in the model (equation).)
+        - sanity_nof_eqs (or sanity): is common sense's kind of minimum
+            number of equations to check by candidate equation. The 
+            exact_fit() checks for max(#constants, sanity - order) of 
+            equations by default. 
         - max_order : max order or max number of variables an_m that 
             the grammar is allowed to generate.
             (todo: Default = None, i.e. it should depend of size of 
@@ -292,28 +301,28 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
 
     doc2 = """
     data = grid ... 20+20 rows
-    ED.disco(estimation_settings['nof_added_terms'] = 20)
+    ED.disco(estimation_settings['nof_eqs'] = 20)
     """
     # data = grid(order, np.array(list(csv[seq_id])), is_direct)
     # data = grid2(np.array(list(csv[seq_id])))
     # First 30 instead 50 terms in sequence (for catalan):
-    # data = grid2(np.array(list(csv[seq_id])[:nof_added_terms]))
+    # data = grid2(np.array(list(csv[seq_id])[:nof_eqs]))
 
     print('----. inside oeis_eq_disco')
-    print('seq_id, nof_added_terms, max_order,  before', print_id, nof_added_terms, max_order)
+    print('seq_id, nof_eqs, max_order,  before', print_id, nof_eqs, max_order)
     max_order = sp.floor(seq.rows/2)-1 if max_order is None else max_order
-    # nof_added_terms = None if nof_added_terms is None else max_order
-    # if nof_added_terms is None:
-    # shape[0] = max_order + nof_added_terms if nof_added_terms is not None else seq.rows
-    print('seq_id, nof_added_terms, max_order, shape,  after', print_id, nof_added_terms, max_order)
+    # nof_eqs = None if nof_eqs is None else max_order
+    # if nof_eqs is None:
+    # shape[0] = max_order + nof_eqs if nof_eqs is not None else seq.rows
+    print('seq_id, nof_eqs, max_order, shape,  after', print_id, nof_eqs, max_order)
 
     # 1/0
 
-    # data = grid_sympy(seq, nof_added_terms=(nof_added_terms + max_order))
-    # shape = if nof_added_terms is None
-    # shape = (nof_added_terms + max_order, max_order) 
+    # data = grid_sympy(seq, nof_eqs=(nof_eqs + max_order))
+    # shape = if nof_eqs is None
+    # shape = (nof_eqs + max_order, max_order) 
     # shape
-    # shape = (2*max_order, max_order) if nof_added_terms is None else (nof_added_terms+max
+    # shape = (2*max_order, max_order) if nof_eqs is None else (nof_eqs+max
 
     data = grid_sympy(seq, max_order)
     print('data shape', data.shape)
@@ -372,7 +381,8 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
         generator_settings=generator_settings,
 
         estimation_settings={
-            'oeis_nof_added_terms': nof_added_terms,
+            'oeis_nof_eqs': nof_eqs,
+            'oeis_sanity_nof_eqs': sanity_nof_eqs,
             "verbosity": 3,
             # "verbosity": 1,
             # "verbosity": 0,
@@ -471,7 +481,7 @@ def oeis_eq_disco(seq: sp.MutableDenseMatrix,
         print(model, type(model))
         print(model.expr, type(model.expr),)
         print(model.expr.func, model.expr.args) #.func, model.args)
-        # X, Y = model2data(model, X, Y, nof_added_terms)
+        # X, Y = model2data(model, X, Y, nof_eqs)
         # print('model2data, X, Y, X.shape, Y.shape', X, Y, X.shape, Y.shape)
         # A, b = model2diophant(model, X, Y)
         # print('res A, b X Y', A, b, X, Y)
@@ -563,8 +573,7 @@ print("Running equation discovery for all oeis sequences, "
         f"=>> random_seed = {random_seed}\n"
         f"=>> lower_upper_bounds = {lower_upper_bounds}\n"
         f"=>> number of terms in every sequence saved in csv = {terms_count}\n"
-        # f"=>> number of terms in every sequence actually used = {nof_added_terms}\n"
-        f"=>> nof_added_terms = {nof_added_terms}\n"
+        # f"=>> nof_eqs = {nof_eqs}\n"
         f"=>> number of all considered sequences = {len(csv_ids)}\n"
         f"=>> list of considered sequences = {csv_ids}"
         )
@@ -575,54 +584,15 @@ eq_discos = []
 for seq_id in csv_ids:
     seq = sp.Matrix(csv[seq_id])
     # oeis_eq_disco(seq_id, is_direct, order)
-    # eq_discos += [oeis_eq_disco(seq, print_id=seq_id, nof_added_terms=nof_added_terms, max_order=max_order)]
+    # eq_discos += [oeis_eq_disco(seq, print_id=seq_id, nof_eqs=nof_eqs, max_order=max_order)]
     eq_discos += [oeis_eq_disco(seq, print_id=seq_id)]
-    # oeis_eq_disco(seq, print_id=seq_id)  #, nof_added_terms=nof_added_terms, max_order=max_order)
+    # oeis_eq_disco(seq, print_id=seq_id)  #, nof_eqs=nof_eqs, max_order=max_order)
     print(f"\nTotal time consumed by now:{time.perf_counter()-start}\n")
 cpu_time = time.perf_counter() - start
 print(f"\nEquation discovery for all (chosen) OEIS sequences"
       f" took {cpu_time} secconds, i.e. {cpu_time/60} minutes"
       f" or {cpu_time/3600} hours.")
 
-# def pretty_results(seq_name="fibonacci", is_direct=is_direct, order=order):
-#     """Print results in prettier form."""
-#     if seq_name =="fibonacci":
-#         assert oeis == fibs
-#     if seq_name=="fibonacci" and is_direct and order==0:  # i.e. direct fib
-#         # is_fibonacci_direct = True
-#         # if is_fibonacci_direct:
-#         phi = (1+5**(1/2))/2
-#         c0, c1 = 1/5**(1/2), np.log(phi)
-#         print(f" m c0: {c0}", f"c1:{c1}")
-#         model = ED.models[5]  # direct fib
-#     elif seq_name=="fibonacci" and not is_direct and order != 0:  # i.e. rec fib
-#         model = ED.models[-1]
-#     elif seq_name=="primes" and not is_direct and order != 0:  # i.e. rec primes
-#         model = ED.models[7]  # primes
-#     else:    
-#         model = ED.models[-1]  # in general to update
-        
-#     # an = model.lambdify()
-#     an = model.lambdify(*np.round(model.params)) if order != 0 else model.lambdify(*model.params)
-#     print("model:", model.get_full_expr())#, "[f(1), f(2), f(3)]:", an(1), an(2), an(3))
-
-#     cache = oeis[:order]  # update this
-#     # cache = list(oeis[:order])
-#     for n in range(order, len(oeis)):
-#         prepend = [n] if is_direct else []
-#         append = cache[-order:] if (order != 0) else []
-#         cache += [int(np.round(an(*(prepend+append))))]
-#         # print(prepend, append, prepend + append, (prepend + append), cache, an)
-#     res = cache
-#     print(oeis)
-#     print(res)
-#     error = 0
-#     for i, j in zip(res, oeis):
-#         print(i,j, i-j, error)
-#         error += abs(i-j)
-#     print(error)
-#     return
-# # pretty_results(seq_name=seq_name, is_direct=is_direct, order=order)
 
 # pickle.dump(eq_discos, open( "exact_models.p", "wb" ) )
 

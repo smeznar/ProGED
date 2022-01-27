@@ -483,7 +483,7 @@ def min_fit (model, X, Y):
     return minimize(optimization_wrapper, model.params, args = (model, X, Y))
 
 
-def model2data (model, X, Y, nof_added_terms: int = None):
+def model2data (model, X, Y, sanity_nof_eqs: int, nof_eqs: int = None):
     """Just crop the dataset.
 
     Its first of the 2 steps in exact_fit() function to prepare input
@@ -495,9 +495,13 @@ def model2data (model, X, Y, nof_added_terms: int = None):
     speed up the solving with diofantine solver.
 
     Inputs:
-        - nof_added_terms = ((not jet implemented this way):number of
+        - nof_eqs = ((not jet implemented this way):number of
             equations solved by diofantine solver.
-            Default = None ... means add (model_order + 2) equations.
+            Default = None ... means add max(#constants, sanity-order) equations.
+        - sanity_nof_eqs (or sanity): is common sense's kind of minimum
+            number of equations to check by candidate equation. The 
+            exact_fit() checks for max(#constants, sanity - order) of 
+            equations by default. 
     """
 
     print('-->> inside model2data begin')
@@ -514,11 +518,28 @@ def model2data (model, X, Y, nof_added_terms: int = None):
     print('model, model.expr, remove_rows, has_vars, nonrecursive_variables, ',
         'recursion_order', model, model.expr, remove_rows, has_vars,
         nonrecursive_variables, recursion_order)
-    
-    if nof_added_terms is None:
-        nof_added_terms = len(model.sym_params)
-    X = X[remove_rows:(remove_rows + nof_added_terms), :]
-    Y = Y[remove_rows:(remove_rows + nof_added_terms), :]
+
+    # special_error = -1
+    if sanity_nof_eqs is None:
+        raise ValueError("sanity should not be None! but it is anyway!!!!!")
+    if remove_rows + len(model.sym_params) > X.rows or (
+            nof_eqs is not None and remove_rows + nof_eqs > X.rows):
+        print("X.rows, remove_rows, len(model.sym_params), nof_eqs",
+                X.rows, remove_rows, len(model.sym_params), nof_eqs)
+        raise ValueError("Need more data!!!!!")
+
+    if nof_eqs is None:
+        print('sanity check for sanity :) before final setting of nof_eqs:'+'nof_eqs, sanity_nof_eqs, recursion_order', nof_eqs, sanity_nof_eqs, recursion_order)
+        # print('sanity -2')
+        nof_eqs = max(len(model.sym_params), sanity_nof_eqs - (recursion_order-1))
+        # print('sanity -1')
+    elif nof_eqs == "MAX_EQS":
+        nof_eqs = X.rows
+
+    print('chosen final nof_eqs:', nof_eqs) 
+    X = X[remove_rows:(remove_rows + nof_eqs), :]
+    Y = Y[remove_rows:(remove_rows + nof_eqs), :]
+
     if X.shape[0] == 0 or Y.shape[0] == 0:
         error_string = "My raise in model2data(): removed too many rows or \
             adding 0 rows since no constants"
@@ -641,24 +662,67 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
         - X ... expected sympy Matrix type
     """
 
+    print('\n'*5)
     mystic_integer = int(time.strftime("%Y%m%d", time.localtime()))  # non-zero error
     # Cuts off first reccursion_order rows from the grid matrix since 
     # unsolvable system with zeros.
     print('estimation_settings', estimation_settings)
-    print('estimation_settings[oeis_nof_added_terms]', estimation_settings.get('oeis_nof_added_terms', None))
+    # print('estimation_settings[oeis_nof_eqs]', estimation_settings.get('oeis_nof_eqs', None))
+    # print('estimation_settings[oeis_sanity_nof_eqs]', estimation_settings.get('oeis_sanity_nof_eqs', 7))
     print('estimation_settings[optimizer]', estimation_settings.get('optimizer', None))
-    # 1/0
-    X, Y = model2data(model, X, Y, nof_added_terms=estimation_settings['oeis_nof_added_terms'])
-    print("X, Y:", X, Y)
-    A, b = model2diophant(model, X, Y)
-    print("A, b:", A, b)
+    nof_eqs = estimation_settings.get('oeis_nof_eqs', None)
+    sanity_nof_eqs = estimation_settings.get('oeis_sanity_nof_eqs', 7)
+    print('nof_eqs', nof_eqs)
+    print('sanity_nof_eqs', sanity_nof_eqs)
 
-    x = diophantine_solve(A, b)
-    print('x', x)
+    # 1/0
+    X0, Y0 = X, Y 
+
+    def solve_it (model, X, Y, sanity_nof_eqs, nof_eqs):
+        X, Y = model2data(model, X, Y, sanity_nof_eqs=sanity_nof_eqs,
+            nof_eqs=nof_eqs)
+        print("X, Y:", X, Y)
+        A, b = model2diophant(model, X, Y)
+        print("A, b:", A, b)
+        x = diophantine_solve(A, b)
+        print('x', x)
+        return x
+
+    # X, Y = model2data(model, X, Y, sanity_nof_eqs=sanity_nof_eqs,
+    #     nof_eqs=nof_eqs)
+    # print("X, Y:", X, Y)
+    # A, b = model2diophant(model, X, Y)
+    # print("A, b:", A, b)
+    # x = diophantine_solve(A, b)
+    # print('x', x)
+
+    x = solve_it(model, X, Y, sanity_nof_eqs, nof_eqs)
+
+
     if not x==[] and not len((x[0].T)[:])==len(p0):
         message = "DIOPHANTINE SOLUTION DO NOT HAVE SAME NUMBER OF ELEMENTS AS MODEL PARAMETERS!!!"
         print(message)
         # raise IndexError(message)
+
+    SECOND_CHECK_nof_eqs = 5
+
+    # if x != [] and A.rows < SECOND_CHECK_nof_eqs:
+    #     x = solve_it(model, X, Y, sanity_nof_eqs, SECOND_CHECK_nof_eqs)
+    #     if x == []:
+    #         print("double checking with {SECOND_CHECK_nof_eqs} equations really helped in finding False Positives!!!!!")
+    #     else:
+    #         print("Uuhuu! Eqation found even after double checking with {SECOND_CHECK_nof_eqs} equations :)")
+
+    # if x != []:
+    #     x = solve_it(model, X, Y, sanity_nof_eqs, "MAX_EQS")
+    #     if x == []:
+    #         print("triple checking with MAX number of equations \
+    #             really helped in finding False Positives!!!!!")
+    #     else:
+    #         print("Uuhuu! Eqation found even after triple checking \
+    #             with MAX number of equations :)")
+
+
     res = {"x": [mystic_integer for i in range(len(p0))], "fun": mystic_integer} \
           if x == [] else {"x": (x[0].T)[:], "fun": 0}
 # "x": np.array((Matrix([[1], [2], [3]]).T)[:], dtype='float64')
@@ -766,6 +830,12 @@ class ParameterEstimator:
             print("Estimating model " + str(model.expr))
         try:
             if len(model.params) > 5:
+                print("--->>>"*4, "model.params", model.params)
+                print("printing model params, since len(model.params) >5",
+                    f"model: {str(model.get_full_expr()):<70}; "
+                    + f"p: {model.p:<23}; "
+                    + f"error: {model.get_error()}"
+                    + f"model.params: {model.params}")
                 pass
             elif len(model.params) < 1:
                 model.set_estimated({"x":[], "fun":model_error_general(
@@ -788,6 +858,8 @@ class ParameterEstimator:
                     + f"p: {model.p:<23}; "
                     + f"error: {model.get_error()}")
 
+        if len(model.params) > 4:
+            print("--->>>"*4, "model.params", model.params)
         return model
     
 def fit_models (
