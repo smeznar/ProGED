@@ -683,11 +683,37 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
         X, Y = model2data(model, X, Y, sanity_nof_eqs=sanity_nof_eqs,
             nof_eqs=nof_eqs)
         print("X, Y:", X, Y)
+        print("Y vs. eq(X)")
         A, b = model2diophant(model, X, Y)
         print("A, b:", A, b)
         x = diophantine_solve(A, b)
         print('x', x)
         return x, A.rows
+
+    def check_it (model, x, X, Y, sanity_nof_eqs, nof_eqs):
+        X, Y = model2data(model, X, Y, sanity_nof_eqs=sanity_nof_eqs,
+            nof_eqs=nof_eqs)
+        print("--- --- >> inside check_it(), what is model.sym_vars and"
+            + " model.expr", model.params, model.expr)
+        # solution = (x[0].T)[:]
+        # fitted_model = model.
+        # substitution = zip((x[0].T)[:], model.sym_params)
+
+        if len((x[0].T)[:]) != len(model.sym_params):
+            raise IndexError("Something went wrong with the number of constants")
+        expr = model.expr.subs([(symbol, solution) for symbol, solution in
+            zip(model.sym_params, (x[0].T)[:])])
+        print("expr with solution constants", expr, expr.__repr__())
+        f = sp.lambdify(model.sym_vars, expr, "sympy")
+        rows = [f(*X[i_row, :]) for i_row in range(X.rows)]
+        print('rows', rows, type(rows[0]))
+        eq = sp.Matrix(rows)
+        print('Y vs eq, Y:', Y)
+        print('eq:', eq)
+        print('shapes Y and eq:', Y.shape, eq.shape)
+        return Y == eq
+        # return
+
 
     # X, Y = model2data(model, X, Y, sanity_nof_eqs=sanity_nof_eqs,
     #     nof_eqs=nof_eqs)
@@ -698,7 +724,10 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
     # print('x', x)
 
 
-    x, rows = solve_it(model, X, Y, sanity_nof_eqs, nof_eqs)
+    x, nrows = solve_it(model, X, Y, sanity_nof_eqs, nof_eqs)
+    # maybe it would be better to take into the account also
+    # number of solutions of diofantine_solver().
+
 
 
     if not x==[] and not len((x[0].T)[:])==len(p0):
@@ -709,12 +738,12 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
     SECOND_CHECK_nof_eqs = 5
 
 
-    print("-- ***** ---"*4, x != [], rows < SECOND_CHECK_nof_eqs)
+    # print("-- ***** ---"*4, x != [], nrows < SECOND_CHECK_nof_eqs)
 
-    if x != [] and rows < SECOND_CHECK_nof_eqs:
+    if x != [] and nrows < SECOND_CHECK_nof_eqs:
         print("-- ***** ---"*4)
         x, _ = solve_it(model, X, Y, sanity_nof_eqs, SECOND_CHECK_nof_eqs)
-        if x == []:
+        if x == []:  # maybe it would be better to check_it() on this step.
             print(f"double checking with {SECOND_CHECK_nof_eqs} equations"
                 f"really helped in finding False Positives!!!!!")
         else:
@@ -722,7 +751,7 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
                 f"with {SECOND_CHECK_nof_eqs} equations :)")
 
     if x != []:
-        x, _ = solve_it(model, X, Y, sanity_nof_eqs, "MAX_EQS")
+        x, _ = solve_it(model, X, Y, sanity_nof_eqs, "MAX_EQS")  # diophiantine_solver() finds only one solution.
         if x == []:
             print("triple checking with MAX number of equations "
                 + "really helped in finding False Positives!!!!!")
@@ -730,6 +759,15 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
             print("Uuhuu! Eqation found even after triple checking "
                 + "with MAX number of equations :)")
 
+            # print("--- --- >> inside check_it(), what is model.sym_vars and")
+            # print(check_it(model, x, X, Y, sanity_nof_eqs, nof_eqs="MAX_EQS"))
+            if not check_it(model, x, X, Y, sanity_nof_eqs, nof_eqs="MAX_EQS"):  # To double-check latest solution.
+                print("quadruple checking via concrete constants really "
+                    + "helped in finding False Positives!!!!!")
+                # x = []
+            else:
+                print("Uuhuu! Eqation found even after quadruple checking "
+                    + "with MAX number of equations :)")
 
     res = {"x": [mystic_integer for i in range(len(p0))], "fun": mystic_integer} \
           if x == [] else {"x": (x[0].T)[:], "fun": 0}

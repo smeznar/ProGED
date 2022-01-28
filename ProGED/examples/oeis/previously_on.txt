@@ -1,0 +1,8 @@
+sample_size=200
+
+model: 112*an_1 + 111*n              ; error: 111            
+model: an_1*an_17*n**2 + an_1        ; error: 0              
+model: an_1 + an_2                   ; error: 0              
+model: an_1*an_2 + an_1              ; error: 0              
+model: 2*an_2 + an_3                 ; error: 0              
+model: an_1 + an_2                   ; error: 0    
