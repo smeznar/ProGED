@@ -735,8 +735,21 @@ def exact_fit (model, X: sp.MutableDenseMatrix, Y: sp.MutableDenseMatrix, T, p0,
         print(message)
         # raise IndexError(message)
 
-    SECOND_CHECK_nof_eqs = 5
 
+    # following idea: 
+    #  1.) quickly find solution on as small system as possible.
+    #  2.) quickly check fitted solution on whole sequence (for all 
+    # applicable terms).
+    #  3.) slowly generalise(since used more terms) solution to biggest 
+    # system possible (using all terms to assume as many equations as 
+    # possible.
+    #  4.) quickly repeat 2. step of checking the fitted solution.
+    #  5.) Todo: clumsily check "using recursive function and sequence"
+    # if equation holds.
+    #  6.) Todo: function with input list of fitted models that downloads 
+    # b-file and check equation for as many terms as specified.
+
+    SECOND_CHECK_nof_eqs = 5
 
     # print("-- ***** ---"*4, x != [], nrows < SECOND_CHECK_nof_eqs)
 
