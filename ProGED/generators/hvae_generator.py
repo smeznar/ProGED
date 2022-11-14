@@ -10,6 +10,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 from torch.utils.data import Dataset, Sampler
 from tqdm import tqdm
+import editdistance
 
 
 class SymType(Enum):
@@ -17,6 +18,7 @@ class SymType(Enum):
     Const = 2
     Operator = 3
     Fun = 4
+    Literal = 5
 
 
 universal_symbols = [{"symbol": 'x1', "type": SymType.Var, "precedence": 5},
@@ -41,7 +43,11 @@ class GeneratorHVAE(BaseExpressionGenerator):
         self.generator_type = "HVAE"
         self.decoding_dict = symbols
         self.precedence = {t["symbol"]: t["precedence"] for t in symbols}
-        self.constant = [t["symbol"] for t in symbols if t["type"]==SymType.Const][0]
+        constants = [t["symbol"] for t in symbols if t["type"]==SymType.Const]
+        if len(constants) > 0:
+            self.constant = constants[0]
+        else:
+            self.constant = "c"
         self.variables = variables
         if isinstance(model, str):
             self.model = torch.load(model)
@@ -112,7 +118,47 @@ class GeneratorHVAE(BaseExpressionGenerator):
         else:
             return GeneratorHVAE(model, variables, symbols)
 
-    def generate_one(self):
+    @staticmethod
+    def benchmark_reconstruction(data, generator=None, cv=1, test_percent=0.2, variables=["x"],
+                                 symbols=universal_symbols, representation_size=64, hidden_size=64, batch_size=32,
+                                 epochs=20):
+        # data = np.random.permutation(data)
+        if cv < 2:
+            if generator is not None:
+                error, var = generator.test_reconstruction(data, symbols)
+            else:
+                train_examples = int((1-test_percent)*len(data))
+                generator = GeneratorHVAE.train_and_init(data[:train_examples], variables, symbols, representation_size,
+                                                         hidden_size, batch_size, epochs)
+                error, var = generator.test_reconstruction(data[train_examples:], symbols)
+        else:
+            error, var = 0, 0
+            # kf = KFold()
+            # distances = []
+            # for i, (train_idx, test_idx) in enumerate(kf.split(trees)):
+            #     print(f"Fold {i + 1}")
+            #     distances.append(one_fold(train=[trees[i] for i in train_idx], test=[trees[i] for i in test_idx]))
+            #     print(f"Mean: {np.mean(distances[-1])}, Var: {np.var(distances[-1])}")
+            #     print()
+            # fm = [np.mean(d) for d in distances]
+            # print(f"Mean: {np.mean(fm)}, Var: {np.var(fm)}, All: {', '.join([str(f) for f in fm])}")
+        print(f"Error: {error}, Var: {var}")
+
+    def test_reconstruction(self, data, symbols):
+        s_for_tokenization = {t["symbol"]: t for i, t in enumerate(symbols)}
+        trees = [tokens_to_tree(e, s_for_tokenization) for e in data]
+        dataset = TreeDataset(symbols, train=[], test=trees)
+
+        total_distance = []
+        for t in dataset.test:
+            latent = self.model.encode(t)[0]
+            pt = self.model.decode(latent, self.decoding_dict)
+            total_distance.append(editdistance.eval(t.to_list(notation="postfix"), pt.to_list(notation="postfix")))
+
+        # TODO: Possibly add a histogram showing distribution of the error
+        return np.mean(total_distance), np.var(total_distance)
+
+    def generate_one(self, **kwargs):
         inp = torch.normal(self.input_mean)
         tree = self.model.decode(inp, self.decoding_dict)
         # print(str(tree))
@@ -160,12 +206,15 @@ class Node:
                 return [self.symbol] + ["("] + left + [")"]
             return left + [self.symbol] + right
         else:
-            if len(left) > 0 and len(right) == 0:
+            if len(left) > 0 and len(right) == 0 and precedence[self.symbol] > 0:
                 return [self.symbol] + ["("] + left + [")"]
 
-            if self.left is not None and precedence[self.symbol] > precedence[self.left.symbol]:
+            if len(left) > 0 and len(right) == 0 and precedence[self.symbol] <= 0:
+                return ["("] + left + [")"] + [self.symbol]
+
+            if self.left is not None and -1 < precedence[self.left.symbol] < precedence[self.symbol]:
                 left = ["("] + left + [")"]
-            if self.right is not None and precedence[self.symbol] > precedence[self.right.symbol]:
+            if self.right is not None and -1 < precedence[self.right.symbol] < precedence[self.symbol]:
                 right = ["("] + right + [")"]
             return left + [self.symbol] + right
 
@@ -231,7 +280,7 @@ class Node:
         return BCE + KLD, BCE, KLD
 
     def trim_to_height(self, max_height, types, const_symbol="c"):
-        if max_height == 1 and types[self.symbol] is not SymType.Const and types[self.symbol] is not SymType.Var:
+        if max_height == 1 and types[self.symbol] not in [SymType.Const, SymType.Var, SymType.Literal]:
             self.symbol = const_symbol
             self.left = None
             self.right = None
@@ -270,7 +319,7 @@ def tokens_to_tree(tokens, symbols):
     for token in tokens:
         if token == "(":
             operator_stack.append(token)
-        elif token in symbols and (symbols[token]["type"] is SymType.Var or symbols[token]["type"] is SymType.Const):
+        elif token in symbols and symbols[token]["type"] in [SymType.Var, SymType.Const, SymType.Literal]:
             out_stack.append(Node(token))
         elif token in symbols and symbols[token]["type"] is SymType.Fun:
             operator_stack.append(token)

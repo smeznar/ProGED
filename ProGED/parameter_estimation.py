@@ -462,6 +462,29 @@ def model_error(params, model, X, Y, _T=None, estimation_settings=None):
             print(f"Program is returning default_error: {estimation_settings['default_error']}")
         return estimation_settings['default_error']
 
+def R2_error(params, model, X, Y, _T=None, estimation_settings=None):
+    """Defines mean squared error as the error metric."""
+
+    try:
+        verbosity = estimation_settings['verbosity']
+
+        testY = model.evaluate(X, *params)
+        res = np.mean((Y-testY)**2)
+
+        if np.isnan(res) or np.isinf(res) or not np.isreal(res):
+            if verbosity > 1:
+                print("isnan, isinf, isreal =", np.isnan(res), np.isinf(res), not np.isreal(res))
+                print(model.expr, model.params, model.sym_params, model.sym_vars)
+            return estimation_settings['default_error']
+        return res
+
+    except Exception as error:
+        if verbosity > 1:
+            print("model_error: Params at error:", params, f"and {type(error)} with message:", error)
+        if verbosity > 0:
+            print(f"Program is returning default_error: {estimation_settings['default_error']}")
+        return -1
+
 
 def model_error_general(params, model, X, Y, T, **estimation_settings):
     """Calculate error of model with given parameters in general with type of error given.

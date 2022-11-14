@@ -47,7 +47,7 @@ class Model:
         full_expr: Produce symbolic expression with parameters substituted by their values.
     """
     
-    def __init__(self, expr, params=[], sym_params=[], sym_vars = [], code="", p=1, grammar=None):
+    def __init__(self, expr, params=[], sym_params=[], sym_vars = [], code="", representation=None, p=1, grammar=None):
         """Initialize a Model with the initial parse tree and information on the task.
         
         Arguments:
@@ -88,11 +88,15 @@ class Model:
         self.sym_vars = sp.symbols(sym_vars)
         self.p = 0
         self.trees = {} #trees has form {"code":[p,n]}"
-        
+        self.representation = set()
+
         self.add_tree(code, p)
 
         self.estimated = {}
         self.valid = False
+
+        if representation is not None:
+            self.representation.add(representation[0])
 
         # extra parameters, i.e. initial values
         self.initials = [(np.random.random()-0.5)*10 for _ in range(len(sym_vars) - len(self.observed))]
@@ -110,7 +114,11 @@ class Model:
         else:
             self.trees[code] = [p,1]
             self.p += p
-        
+
+    def add_representation(self, representation):
+        if representation is not None:
+            self.representation.add(representation[0])
+
     def set_estimated(self, result, valid=True):
         """Store results of parameter estimation and set validity of model according to input.
         

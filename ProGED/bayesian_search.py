@@ -76,7 +76,8 @@ class BayesianSearch:
     def search(self, data, iterations=10, eqs_per_iter=10):
         # Randomly sample and test equations that are going to be used to train the bayesian optimization model
         x, y = self._initialize(data)
-
+        self.data_len = data.shape[0]
+        self.SStot = np.sum(np.power(data[:, -1]-np.mean(data[:, -1]), 2))
         # Find the best values and k for the logistic function, such that the current best value transforms into 0.5
         best_ind = y.argmin()
         best_y = [y[0, best_ind, 0].item()]
@@ -94,7 +95,7 @@ class BayesianSearch:
 
         for i in range(iterations):
             # Train the gaussian process model. X is normalized and y transformed using the logistic function
-            model = self._fit_gp_model(normalize(x, bounds=self.bounds), self._logistic_transform(y))
+            model = self._fit_gp_model(normalize(x, bounds=self.bounds), self._r2_transform(y))
 
             # Initialize the MC sampler and the acquisition function
             qmc_sampler = SobolQMCNormalSampler(num_samples=self.mc_samples)
@@ -182,5 +183,7 @@ class BayesianSearch:
     def _find_logistic_fun_k(best_y):
         return -np.log(3)/best_y
 
-    def _logistic_transform(self, x):
-        return 2 / (1 + torch.exp(-self.k * x))
+    # def _r2_transform(self, x):
+    #     return 2 / (1 + torch.exp(-self.k * x))
+    def _r2_transform(self, x):
+        return 1 - ((np.power(x, 2)*self.data_len)/self.SStot)

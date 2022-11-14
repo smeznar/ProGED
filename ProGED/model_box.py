@@ -91,13 +91,20 @@ class ModelBox:
         else:
             grammar = ""
 
+        if "representation" in info:
+            representation = info["representation"]
+        else:
+            representation = None
+
         if str(expr) in self.models_dict:
             self.models_dict[str(expr)].add_tree(code, p)
+            self.models_dict[str(expr)].add_representation(representation)
         else:
             if not params:
                 params = [(np.random.random()-0.5)*10 for i in range(len(symbols_params))]
                 
-            self.models_dict[str(expr)] = Model(grammar=grammar, expr = expr, sym_vars = x, sym_params = symbols_params, params=params, code=code, p=p)
+            self.models_dict[str(expr)] = Model(grammar=grammar, expr=expr, sym_vars=x, sym_params=symbols_params,
+                                                params=params, code=code, representation=representation, p=p)
         
         return True, str(expr)
     

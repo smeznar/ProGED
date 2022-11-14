@@ -3,7 +3,6 @@
 from ProGED.model_box import ModelBox
 from ProGED.generators.base_generator import ProGEDMaxAttemptError
 
-
 """Functions for generating models using a given generator. 
 
 Attributes:
@@ -25,7 +24,8 @@ Methods:
 """
 
 
-def generate_models(model_generator, symbols, strategy = "monte-carlo", system_size=1, strategy_settings = {"N":5}, verbosity=0):
+def generate_models(model_generator, symbols, strategy="monte-carlo", system_size=1, strategy_settings={"N": 5},
+                    verbosity=0):
     """Generate models using given generator and specified strategy.
     
     generate_models is intended as an interface to the generation methods defined in the module.
@@ -47,19 +47,22 @@ def generate_models(model_generator, symbols, strategy = "monte-carlo", system_s
     """
     if isinstance(strategy, str):
         if strategy in STRATEGY_LIBRARY:
-            return STRATEGY_LIBRARY[strategy](model_generator, symbols, system_size=system_size, observed=None, verbosity=verbosity, **strategy_settings)
+            return STRATEGY_LIBRARY[strategy](model_generator, symbols, system_size=system_size, observed=None,
+                                              verbosity=verbosity, **strategy_settings)
         else:
-            raise KeyError ("Strategy name not found in library.\n"\
-                            "Input: " + strategy)
-                
+            raise KeyError("Strategy name not found in library.\n" \
+                           "Input: " + strategy)
+
     elif isinstance(strategy, lambda x: x):
         return strategy(model_generator, symbols, **strategy_settings)
-    
-    else:
-        raise TypeError ("Unknown strategy type. Expecting: string or callable.\n"\
-                         "Input: " + str(type(strategy)))
 
-def monte_carlo_sampling (model_generator, symbols, N=5, system_size=1, max_repeat=10, max_total_repeats=None, verbosity=0, observed=None):
+    else:
+        raise TypeError("Unknown strategy type. Expecting: string or callable.\n" \
+                        "Input: " + str(type(strategy)))
+
+
+def monte_carlo_sampling(model_generator, symbols, N=5, system_size=1, max_repeat=10, max_total_repeats=None,
+                         verbosity=0, observed=None):
     """Generate models using the Monte-Carlo approach to sampling.
     
     Randomly sample the stochastic generator until N models have been generated. 
@@ -82,47 +85,54 @@ def monte_carlo_sampling (model_generator, symbols, N=5, system_size=1, max_repe
         ModelBox instance containing the generated models.
     """
     models = ModelBox(observed=observed)
-    
+
     if not max_total_repeats:
-        max_total_repeats = N*max_repeat
-    
+        max_total_repeats = N * max_repeat
+
     current_total = 0
     while len(models) < N and current_total < max_total_repeats:
         good = False
         n = 0
         try:
             while not good and n < max_repeat:
-                exprs = []; codes = []; p = 1
+                exprs, codes, representations, p = [], [], [], 1
 
                 for _ in range(system_size):
                     sample, pi, code = model_generator.generate_one()
                     exprs += ["".join(sample)]
-                    codes += [code]
+                    if isinstance(code, str):
+                        codes.append(code)
+                        representations.append(None)
+                    else:
+                        codes.append("")
+                        representations.append(code)
                     p *= pi
                 codes = ",".join(codes)
 
                 if verbosity > 1:
                     print("-> ", exprs, p, codes)
-                    
-                valid, expr = models.add_model(exprs, symbols, p=p, info = {"grammar": model_generator, "code": codes})
-                
+
+                valid, expr = models.add_model(exprs, symbols, p=p, info={"grammar": model_generator, "code": codes,
+                                                                          "representation": representations})
+
                 if verbosity > 1:
                     print("---> ", valid, expr)
-                    
+
                 if valid:
                     good = True
                 n += 1
-    
+
             if verbosity > 0 and len(models) > 0:
                 print(models[-1])
         except ProGEDMaxAttemptError:
             n += 1
-        
+
         current_total += n
-        
+
     return models
 
-def monte_carlo_sampling_2 (model_generator, symbols, N=5, max_repeat = 10, max_total_repeats = None, verbosity=0):
+
+def monte_carlo_sampling_2(model_generator, symbols, N=5, max_repeat=10, max_total_repeats=None, verbosity=0):
     """Generate models using the Monte-Carlo approach to sampling.
     
     Randomly sample the stochastic generator until N models have been generated. 
@@ -145,10 +155,10 @@ def monte_carlo_sampling_2 (model_generator, symbols, N=5, max_repeat = 10, max_
         ModelBox instance containing the generated models.
     """
     models = ModelBox()
-    
+
     if not max_total_repeats:
-        max_total_repeats = N*max_repeat
-    
+        max_total_repeats = N * max_repeat
+
     current_total = 0
     while len(models) < N and current_total < max_total_repeats:
         good = False
@@ -157,41 +167,41 @@ def monte_carlo_sampling_2 (model_generator, symbols, N=5, max_repeat = 10, max_
             while not good and n < max_repeat:
                 sample, p, code = model_generator.generate_one()
                 expr_str = "".join(sample)
-                
+
                 if verbosity > 1:
                     print("-> ", expr_str, p, code)
-                    
+
                 valid, expr = models.add_model(expr_str, symbols, model_generator, code=code, p=p)
-                
+
                 if verbosity > 1:
                     print("---> ", valid, expr)
-                    
+
                 if valid:
                     good = True
                 n += 1
-    
+
             if verbosity > 0 and len(models) > 0:
                 print(models[-1])
         except ProGEDMaxAttemptError:
             n += 1
-        
+
         current_total += n
-        
+
     return models
 
-STRATEGY_LIBRARY = {"monte-carlo": monte_carlo_sampling}
 
+STRATEGY_LIBRARY = {"monte-carlo": monte_carlo_sampling}
 
 if __name__ == "__main__":
     print("--- generate.py test ---")
     import numpy as np
     from generators.grammar_construction import grammar_from_template
+
     np.random.seed(0)
-    generator = grammar_from_template("polynomial", {"variables":["'x'", "'y'"], "p_vars":[0.3,0.7]})
-    symbols = {"x":['x', 'y'], "start":"S", "const":"C"}
+    generator = grammar_from_template("polynomial", {"variables": ["'x'", "'y'"], "p_vars": [0.3, 0.7]})
+    symbols = {"x": ['x', 'y'], "start": "S", "const": "C"}
     N = 10
-    
-    models = generate_models(generator, symbols, strategy_settings = {"N":10})
-    
+
+    models = generate_models(generator, symbols, strategy_settings={"N": 10})
+
     print(models)
-                        

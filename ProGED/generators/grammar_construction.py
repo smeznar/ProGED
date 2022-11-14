@@ -95,6 +95,16 @@ def construct_grammar_universal (p_sum=[0.2, 0.2, 0.6], p_mul = [0.2, 0.2, 0.6],
     grammar += construct_production(left="V", items=variables, probs=p_vars)
     return grammar
 
+def construct_grammar_feynman (p_sum=[0.2, 0.2, 0.6], p_mul = [0.2, 0.2, 0.6], p_rec = [0.25, 0.2, 0.55],
+                                 variables=["'a'", "'b'", "'c'"], p_vars=[0.35,0.35,0.3],
+                                 functions=["sin", "cos", "sqrt", "exp"], p_functs=[0.6, 0.1, 0.1, 0.1, 0.1]):
+    #grammar = construct_production(left="S", items=["E '+' 'C'"], probs=[1])
+    grammar = construct_production(left="S", items=["S '+' F", "S '-' F", "F"], probs=p_sum)
+    grammar += construct_production(left="F", items=["F '*' T", "F '/' T", "T"], probs=p_mul)
+    grammar += construct_production(left="T", items=["R", "'C'", "V"], probs=p_rec)
+    grammar += construct_production(left="R", items=["'(' S ')'"] + ["'"+f+"(' S ')'" for f in functions], probs=p_functs)
+    grammar += construct_production(left="V", items=variables, probs=p_vars)
+    return grammar
 
 def unit_to_string (unit, unit_symbols=["m", "s", "kg", "T", "V"]):
     return "".join([unit_symbols[i]+str(unit[i]) for i in range(len(unit))])

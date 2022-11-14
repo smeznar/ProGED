@@ -47,9 +47,9 @@ eqs = read_equations("data/eqs_5_4k.txt")
 data = generate_data(lambda z: 1/3 + z + z*z/2)
 
 # Train/Load the model
-generator = GeneratorHVAE.train_and_init(eqs, ["x"], universal_symbols, epochs=20,
-                                         hidden_size=64, representation_size=64,
-                                         model_path="./parameters/test1.pt")
+# generator = GeneratorHVAE.train_and_init(eqs, ["x"], universal_symbols, epochs=20,
+#                                          hidden_size=64, representation_size=64,
+#                                          model_path="./parameters/test1.pt")
 generator = GeneratorHVAE("./parameters/test1.pt", ["x"], universal_symbols)
 
 # Run Bayesian search and print out the results
