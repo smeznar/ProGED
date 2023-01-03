@@ -47,7 +47,7 @@ class GeneratorHVAE(BaseExpressionGenerator):
         if len(constants) > 0:
             self.constant = constants[0]
         else:
-            self.constant = "c"
+            self.constant = "C"
         self.variables = variables
         if isinstance(model, str):
             self.model = torch.load(model)
@@ -100,7 +100,7 @@ class GeneratorHVAE(BaseExpressionGenerator):
                     prog_bar.update(batch_size)
 
                     iter_counter += 1
-                    if iter_counter < 2400:
+                    if iter_counter < 2800:
                         lmbda = (np.tanh((iter_counter - 4500) / 1000) + 1) / 2
 
                     if verbose and i == midpoint:
@@ -164,6 +164,12 @@ class GeneratorHVAE(BaseExpressionGenerator):
         # print(str(tree))
         tree.change_redundant_variables(self.variables, self.constant)
         return tree.to_list(with_precedence=True, precedence=self.precedence), 0, str(inp.tolist())
+
+    def encode_list(self, equation):
+        s_for_tokenization = {t["symbol"]: t for i, t in enumerate(self.decoding_dict)}
+        tree = tokens_to_tree(equation, s_for_tokenization)
+        tree.create_target_vector({t["symbol"]: i for i, t in enumerate(self.decoding_dict)}, len(self.decoding_dict))
+        return self.model.encode(tree)
 
     def decode_latent(self, latent):
         tree = self.model.decode(latent, self.decoding_dict)

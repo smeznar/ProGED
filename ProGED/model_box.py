@@ -157,7 +157,7 @@ class ModelBox:
         """ Rename all constants: c -> cn, where n is the index of the associated term"""
         constants = [symbols["const"].strip("'")+str(i) for i in range(len(constind))]
         char_list[constind] = constants
-        return sp.sympify("".join(char_list)), tuple(constants)
+        return sp.sympify("".join(char_list), evaluate=False), tuple(constants)
             
     def simplify_constants(self, eq, c, var):
         if len(eq.args) == 0:

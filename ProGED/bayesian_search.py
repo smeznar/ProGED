@@ -4,13 +4,15 @@ from botorch.models import SingleTaskGP
 from gpytorch.mlls.exact_marginal_log_likelihood import ExactMarginalLogLikelihood
 from botorch.utils.transforms import normalize, unnormalize
 from botorch.utils.sampling import draw_sobol_normal_samples
-from botorch.fit import fit_gpytorch_model
+from botorch.fit import fit_gpytorch_mll
 from botorch.acquisition.monte_carlo import qExpectedImprovement, qUpperConfidenceBound
 from botorch.sampling.samplers import SobolQMCNormalSampler
 from botorch.optim import optimize_acqf
 
 from ProGED.equation_discoverer import EqDisco
 from ProGED.generators.load_generator import LoadGenerator
+
+import sympy as sp
 
 
 class BayesianSearch:
@@ -73,58 +75,134 @@ class BayesianSearch:
         self.raw_samples = raw_samples
         self.verbose = verbose
 
-    def search(self, data, iterations=10, eqs_per_iter=10):
+    def random(self, data, test, iterations=10, eqs_per_iter=10):
+        x = draw_sobol_normal_samples(self.dimension, iterations*eqs_per_iter)
+        best_x = []
+        best_y = []
+        by = None
+        bx = None
+        for i in range(iterations):
+            x_i, y_i = self._score_candidates(x[i*eqs_per_iter:(i+1)*eqs_per_iter], data)
+            best_ind = y_i.argmin()
+            if i == 0:
+                best_x.append(x_i[0, best_ind, :])
+                bx = best_x[0]
+                r2_train = self.r2(best_x[-1][None, None, :], data)
+                by = r2_train
+                r2_test = self.r2(best_x[-1][None, None, :], test)
+                best_y.append(r2_test)
+            else:
+                temp_y = self.r2(x_i[0, best_ind, :][None, None, :], data)
+                if temp_y > by:
+                    by = temp_y
+                    bx = x_i[0, best_ind, :]
+                best_x.append(bx)
+                best_y.append(self.r2(best_x[-1][None, None, :], test))
+
+            if self.verbose:
+                print("------------------------")
+                print(f"Iteration {i+1}/{iterations}")
+                print(f"Best value train: {by}")
+                print(f"Best value test: {best_y[-1]}")
+                print(f"Best equation: {''.join(self.generator.decode_latent(best_x[-1][None, None, :]))}")
+                print("------------------------")
+                print()
+
+            if best_y[-1] >= 1:
+                best_x += [best_x[-1]]*(100-len(best_x))
+                best_y += [best_y[-1]]*(100-len(best_y))
+                break
+
+        return best_x[-1][None, None, :], best_y[-1], best_x, best_y
+
+
+    def search(self, data, test, iterations=10, eqs_per_iter=10):
         # Randomly sample and test equations that are going to be used to train the bayesian optimization model
         x, y = self._initialize(data)
-        self.data_len = data.shape[0]
-        self.SStot = np.sum(np.power(data[:, -1]-np.mean(data[:, -1]), 2))
+
         # Find the best values and k for the logistic function, such that the current best value transforms into 0.5
         best_ind = y.argmin()
-        best_y = [y[0, best_ind, 0].item()]
         best_x = [x[0, best_ind, :]]
-        self.k = BayesianSearch._find_logistic_fun_k(best_y[0])
+        r2 = self.r2(best_x[-1][None, None, :], data)
+        # best_y = [y[0, best_ind, 0].item()]
+
+        self.k = BayesianSearch._find_logistic_fun_k(y[0, best_ind, 0].item() + 1e-25)
+        by = r2
+
+        r2 = self.r2(best_x[-1][None, None, :], test)
+        best_y = [r2]
 
         if self.verbose:
             print()
             print("------------------------")
             print("Iteration 0")
-            print(f"Best value {best_y[-1]}")
+            print(f"Best value train: {by}")
+            print(f"Best value test: {best_y[-1]}")
             print(f"Best equation: {''.join(self.generator.decode_latent(best_x[-1][None, None, :]))}")
             print("------------------------")
             print()
 
+        bx = best_x[0]
+
         for i in range(iterations):
             # Train the gaussian process model. X is normalized and y transformed using the logistic function
-            model = self._fit_gp_model(normalize(x, bounds=self.bounds), self._r2_transform(y))
+            model = self._fit_gp_model(normalize(x, bounds=self.bounds), self._logistic_transform(y))
 
             # Initialize the MC sampler and the acquisition function
             qmc_sampler = SobolQMCNormalSampler(num_samples=self.mc_samples)
-            qEI = qExpectedImprovement(model=model, sampler=qmc_sampler, best_f=1)
-            # qEI = qUpperConfidenceBound(model=model, sampler=qmc_sampler, beta=0.5)
+            # qEI = qExpectedImprovement(model=model, sampler=qmc_sampler, best_f=1)
+            qEI = qUpperConfidenceBound(model=model, sampler=qmc_sampler, beta=0.5)
 
             # Optimize the acquisition function, find new candidates and evaluate them
             new_x = self._optimize_and_find_candidates(qEI, eqs_per_iter)
             new_x, new_y = self._score_candidates(new_x, data)
 
             # Update training points
-            x = torch.hstack((x, new_x))
-            y = torch.hstack((y, new_y))
+            # x = torch.hstack((x, new_x))
+            # y = torch.hstack((y, new_y))
+            temp_y = self.r2(new_x[0, new_y.argmin(), :][None, None, :], data)
+            if temp_y > by:
+                by = temp_y
+                bx = x[0, y.argmin(), :]
+
+            x = new_x
+            y = new_y
 
             # Update progress
             best_ind = y.argmin()
-            best_y.append(y[0, best_ind, 0].item())
-            best_x.append(x[0, best_ind, :])
+            # best_y.append(y[0, best_ind, 0].item())
+            # best_x.append(x[0, best_ind, :])
+            # best_y.append(by)
+            best_x.append(bx)
 
             self.state_dict = model.state_dict()
+            r2 = self.r2(best_x[-1][None, None, :], test)
+            best_y.append(r2)
+
             if self.verbose:
-                print()
                 print("------------------------")
                 print(f"Iteration {i+1}/{iterations}")
-                print(f"Best value {best_y[-1]}")
+                print(f"Best value train: {by}")
+                print(f"Best value test: {best_y[-1]}")
                 print(f"Best equation: {''.join(self.generator.decode_latent(best_x[-1][None, None, :]))}")
                 print("------------------------")
                 print()
-        return x, y, best_x, best_y
+        return best_x[-1][None, None, :], best_y[-1], best_x, best_y
+
+
+    def r2(self, x, test):
+        best_equation = sp.parse_expr("".join(self.generator.decode_latent(x)).replace("^", "**"))
+        # print(best_equation)
+        predicted_values = []
+        for i in range(test.shape[0]):
+            if test.shape[1] == 2:
+                predicted_values.append(best_equation.subs("X", test[i, 0]))
+            else:
+                predicted_values.append(best_equation.subs([("X", test[i, 0]), ("Y", test[i, 1])]))
+        predicted_values = np.array(predicted_values)
+        real_values = test[:, -1]
+        average = np.mean(real_values)
+        return 1 - (np.sum((predicted_values - real_values) ** 2) / np.sum((real_values - average) ** 2))
 
     def _initialize(self, data):
         initial_x = draw_sobol_normal_samples(self.dimension, self.initial_samples)
@@ -145,7 +223,7 @@ class BayesianSearch:
             model.load_state_dict(self.state_dict)
         mll = ExactMarginalLogLikelihood(model.likelihood, model)
         mll.to(x)
-        fit_gpytorch_model(mll)
+        fit_gpytorch_mll(mll)
         return model
 
     def _optimize_and_find_candidates(self, acq_func, num_candidates):
@@ -183,7 +261,5 @@ class BayesianSearch:
     def _find_logistic_fun_k(best_y):
         return -np.log(3)/best_y
 
-    # def _r2_transform(self, x):
-    #     return 2 / (1 + torch.exp(-self.k * x))
-    def _r2_transform(self, x):
-        return 1 - ((np.power(x, 2)*self.data_len)/self.SStot)
+    def _logistic_transform(self, x):
+        return 2 / (1 + torch.exp(-self.k * x))

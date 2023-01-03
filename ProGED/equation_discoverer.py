@@ -217,7 +217,8 @@ class EqDisco:
             model = models[eq]
             for representation in model.representation:
                 try:
-                    res.append({"eq": eq, "error": model.get_error(dummy=dummy), "p": model.p, "code": representation})
+                    res.append({"eq": eq, "error": model.get_error(dummy=dummy), "p": model.p, "code": representation,
+                                "trees": len(model.trees)})
                 except Exception as error:
                     print(f"Failed to write results for equation {eq}.")
         res = sorted(res, key=lambda x: x["error"])

@@ -2,6 +2,7 @@
 
 from ProGED.model_box import ModelBox
 from ProGED.generators.base_generator import ProGEDMaxAttemptError
+from multiprocessing import Process
 
 """Functions for generating models using a given generator. 
 
@@ -61,6 +62,22 @@ def generate_models(model_generator, symbols, strategy="monte-carlo", system_siz
                         "Input: " + str(type(strategy)))
 
 
+def run_with_limited_time(func, args, kwargs, time):
+    """Runs a function with time limit
+
+    :param func: The function to run
+    :param args: The functions args, given as tuple
+    :param kwargs: The functions keywords, given as dict
+    :param time: The time limit in seconds
+    :return: True if the function ended successfully. False if it was terminated.
+    """
+    p = Process(target=func, args=args, kwargs=kwargs)
+    p.start()
+    p.join(time)
+    if p.is_alive():
+        raise Exception
+    return True
+
 def monte_carlo_sampling(model_generator, symbols, N=5, system_size=1, max_repeat=10, max_total_repeats=None,
                          verbosity=0, observed=None):
     """Generate models using the Monte-Carlo approach to sampling.
@@ -91,6 +108,7 @@ def monte_carlo_sampling(model_generator, symbols, N=5, system_size=1, max_repea
 
     current_total = 0
     while len(models) < N and current_total < max_total_repeats:
+        print(len(models))
         good = False
         n = 0
         try:
