@@ -1,7 +1,9 @@
 import os, sys
 
 my_lib_path = os.path.abspath('../../')
+other_baselines = "/home/sebastian/Downloads/10174_efficient_generator_of_algebra-Supplementary Material/hvae_code/other_baselines"
 sys.path.append(my_lib_path)
+sys.path.append(other_baselines)
 
 import argparse
 import json
@@ -18,12 +20,14 @@ from pymoo.core.termination import Termination
 from pymoo.termination.max_gen import MaximumGenerationTermination
 from sympy.testing.pytest import ignore_warnings
 from sympy import parse_expr
+from tqdm import tqdm
 
 from ProGED.generators.hvae_generator import GeneratorHVAE, SymType, HVAE, Encoder, Decoder, GRU122, GRU221, tokens_to_tree
 from ProGED.generators.grammar import GeneratorGrammar
 from ProGED import EqDisco
 from ProGED import Model
 
+import equation_vae
 
 universal_symbols = [{"symbol": 'X', "type": SymType.Var, "precedence": 5},
                      # {"symbol": 'Y', "type": SymType.Var, "precedence": 5},
@@ -70,14 +74,14 @@ R -> 'sqrt' [0.2]"""
 
 def read_eq_data(eq_number):
     train = []
-    with open(f"data/nguyen/nguyen{eq_number}_corrected_train.csv", "r") as file:
+    with open(f"data/nguyen/nguyen{eq_number}_train.csv", "r") as file:
         file.readline()
         for row in file:
             line = [float(t) for t in row.strip().split(",")]
             train.append(line)
 
     test = []
-    with open(f"data/nguyen/nguyen{eq_number}_corrected_test.csv", "r") as file:
+    with open(f"data/nguyen/nguyen{eq_number}_test.csv", "r") as file:
         file.readline()
         for row in file:
             line = [float(t) for t in row.strip().split(",")]
@@ -184,11 +188,26 @@ class RandomMutation(Mutation):
         return np.array(new, dtype=np.float32)
 
 
-# problem.generator.decode_latent(torch.tensor(X[i] + np.random.random(X.shape[1])*std*3, dtype=torch.float)[None, None, :])
+def eval_eq(eq, data, default_value=1e10):
+    try:
+        eq_model = Model(eq, sym_vars=["X"])
+        with ignore_warnings(RuntimeWarning):
+            yp = eq_model.evaluate(data[:, :-1])
+            if any(np.iscomplex(yp)):
+                yp = yp.real()
+        rmse = np.sqrt(np.square(np.subtract(data[:, -1], yp)).mean())
+        if np.isfinite(rmse):
+            return rmse
+        else:
+            return default_value
+    except:
+        return default_value
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Nguyen benchmark', description='Run a ED benchmark')
     parser.add_argument("-eq_num", choices=range(1, 11), required=True, action="store", type=int)
-    parser.add_argument("-baseline", choices=['ProGED', 'HVAE_random', 'HVAE_evo'], action='store', required=True)
+    parser.add_argument("-baseline", choices=['ProGED', 'HVAE_random', 'HVAE_evo', 'CVAE_random', 'CVAE_evo', 'GVAE_random', 'GVAE_evo'], action='store', required=True)
     parser.add_argument("-params", action='store', default=None)
     parser.add_argument("-dimension", action="store", type=int)
     args = parser.parse_args()
@@ -223,11 +242,36 @@ if __name__ == '__main__':
                 problem.models[i]["trees"] = problem.evaluated_models[problem.models[i]["eq"]]
             json.dump(problem.models, file)
     elif args.baseline == "CVAE_random":
-        pass
+        charlist = ['X', 'c', '+', '-', '*', '/', '^', 'sin', 'cos', '(', ')', '']
+        char_weights = "/home/sebastian/Downloads/10174_efficient_generator_of_algebra-Supplementary Material/hvae_code/other_baselines/eq_cvae_h32_c234_L32_E5_batchB.hdf5"
+        model = equation_vae.EquationCharacterModel(char_weights, latent_rep_size=args.dimension, charlist=charlist)
+        seen_eqs = dict()
+        for _ in tqdm(range(2000)):
+            eqs = model.decode(np.random.normal(size=(50, args.dimension)))
+            for eq in eqs:
+                if eq in seen_eqs:
+                    seen_eqs[eq]["trees"] += 1
+                else:
+                    rmse = eval_eq(eq, train)
+                    seen_eqs[eq] = {"eq": eq, "error": rmse, "trees": 1}
+        with open(f"results/cvae_random/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
+            json.dump(list(seen_eqs.values()), file)
     elif args.baseline == "CVAE_evo":
         pass
     elif args.baseline == "GVAE_random":
-        pass
+        grammar_weights = "/home/sebastian/Downloads/10174_efficient_generator_of_algebra-Supplementary Material/hvae_code/other_baselines/eq_gvae_h128_c234_L128_E150_batchB.hdf5"
+        model = equation_vae.EquationGrammarModel(grammar_weights, latent_rep_size=args.dimension)
+        seen_eqs = dict()
+        for _ in tqdm(range(2000)):
+            eqs = model.decode(np.random.normal(size=(50, args.dimension)))
+            for eq in eqs:
+                if eq in seen_eqs:
+                    seen_eqs[eq]["trees"] += 1
+                else:
+                    rmse = eval_eq(eq, train)
+                    seen_eqs[eq] = {"eq": eq, "error": rmse, "trees": 1}
+        with open(f"results/gvae_random/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
+            json.dump(list(seen_eqs.values()), file)
     elif args.baseline == "GVAE_evo":
         pass
 
