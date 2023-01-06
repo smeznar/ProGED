@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import signal
 
 import numpy as np
 import sympy as sp
@@ -11,6 +12,15 @@ including its expression, symbols, parameters, the parse trees that simplify to 
 and associated information and references. 
 Class methods serve as an interfance to interact with the model.
 The class is intended to be used as part of an equation discovery algorithm."""
+
+
+class TimeoutException(Exception):   # Custom exception class
+    pass
+
+
+def timeout_handler(signum, frame):   # Custom signal handler
+    raise TimeoutException
+
 
 class Model:
     """Class that represents a single model, defined by its canonical expression string.
@@ -66,12 +76,24 @@ class Model:
         self.grammar = grammar
         self.params = params
         self.observed = [s.strip("'") for s in sym_vars]
-        
+
+        # default_handler = signal.getsignal(signal.SIGALRM)
+        # signal.signal(signal.SIGALRM, timeout_handler)
+
         if isinstance(expr, type("")):
-            self.expr = sp.sympify(expr)
+            # signal.alarm(1)
+            try:
+                self.expr = sp.sympify(expr)
+            except TimeoutException:
+                print(f"Parsing {expr} took too long")
+                self.expr = sp.parse_expr(expr, evaluate=False)
+            # finally:
+                # signal.alarm(0)
         else:
             self.expr = expr
-     
+
+        # signal.signal(signal.SIGALRM, default_handler)
+
         try:
             self.sym_params = sp.symbols(sym_params)
             if type(self.sym_params) != type((1,2)):

@@ -27,6 +27,9 @@ from ProGED.generators.hvae_generator import GeneratorHVAE, SymType, HVAE, Encod
 from ProGED.generators.grammar import GeneratorGrammar
 from ProGED import EqDisco
 from ProGED import Model
+from ProGED import ModelBox
+from ProGED import EDTask
+from ProGED.parameter_estimation import fit_models
 
 import equation_vae
 
@@ -75,18 +78,14 @@ R -> 'sqrt' [0.2]"""
 
 def read_eq_data(eq_number):
     train = []
-    with open(f"data/nguyen/nguyen{eq_number}_corrected_train.csv", "r") as file:
-        file.readline()
-        for row in file:
-            line = [float(t) for t in row.strip().split(",")]
-            train.append(line)
-
     test = []
-    with open(f"data/nguyen/nguyen{eq_number}_corrected_test.csv", "r") as file:
-        file.readline()
-        for row in file:
-            line = [float(t) for t in row.strip().split(",")]
-            test.append(line)
+    with open(f"/home/sebastianmeznar/Downloads/Feynman_without_units/{eq_number}", "r") as file:
+        for i, row in enumerate(file):
+            line = [float(t) for t in row.strip().split(" ")]
+            if i < 10000:
+                train.append(line)
+            elif i < 20000:
+                test.append(line)
     return np.array(train), np.array(test)
 
 
@@ -94,6 +93,7 @@ class SRProblem(ElementwiseProblem):
     def __init__(self, generator, tdata, dim, default_value=1e10):
         self.generator = generator
         self.tdata = tdata
+        self.task = EDTask(data=tdata, target_variable_index=-1, constant_symbol="C")
         self.default_value = default_value
         self.input_mean = torch.zeros(next(generator.model.decoder.parameters()).size(0))
         self.models = []
@@ -101,35 +101,48 @@ class SRProblem(ElementwiseProblem):
         self.best_f = 9e+50
         super().__init__(n_var=dim, n_obj=1)
 
-    def add_model(self, model, score):
-        model_str = str(model)
-        if model_str in self.evaluated_models:
-            self.evaluated_models[model_str] += 1
+    def check_model(self, model):
+        if isinstance(model, str):
+            model_s = model
         else:
-            if isinstance(score, complex):
-                score = score.real
-            self.evaluated_models[model_str] = 1
-            self.models.append({"eq": model_str, "error": score})
+            model_s = str(model)
+        if model_s in self.models:
+            self.models[model_s]["trees"] += 1
+            return self.models[model_s]["error"]
+        else:
+            if model_s == "":
+                self.models[""] = {"eq": "", "error": self.default_value, "trees": 1}
+                return self.default_value
+            else:
+                try:
+                    with ignore_warnings(RuntimeWarning):
+                        mb = ModelBox()
+                        mb.add_model(model_s, self.task.symbols)
+                        fit_models(mb, self.task.data)
+                        a = 0
+                        if any(np.iscomplex(yp)):
+                            yp = yp.real()
+                    rmse = np.sqrt(np.square(np.subtract(self.tdata[:, -1], yp)).mean())
+                    if not np.isfinite(rmse):
+                        rmse = self.default_value
+                except:
+                    rmse = self.default_value
+                finally:
+                    self.models[model_s] = {"eq": model_s, "error": rmse, "trees": 1}
+                    return rmse
 
     def _evaluate(self, x, out, *args, **kwargs):
         eq = self.generator.decode_latent(torch.tensor(x)[None, None, :])
-        model = Model("".join(eq), sym_vars=["X"])
         try:
-            with ignore_warnings(RuntimeWarning):
-                yp = model.evaluate(self.tdata[:, :-1])
-                if any(np.iscomplex(yp)):
-                    yp = yp.real()
-            rmse = np.sqrt(np.square(np.subtract(self.tdata[:, -1], yp)).mean())
-            if np.isfinite(rmse):
-                out["F"] = rmse
-            else:
-                out["F"] = self.default_value
-        except Exception:
-            out["F"] = self.default_value
+            model = Model(eq, sym_vars=["X"])
+            rmse = self.check_model(model)
+            out["F"] = rmse
+        except:
+            rmse = self.check_model("")
+            out["F"] = rmse
         finally:
-            if out['F'] < self.best_f:
-                self.best_f = out['F']
-            self.add_model(model, out['F'])
+            if rmse < self.best_f:
+                self.best_f = rmse
 
 
 class SRProblemOther(Problem):
@@ -279,6 +292,7 @@ def eval_eq(eq, data, default_value=1e10):
         signal.alarm(0)
         signal.signal(signal.SIGALRM, default_handler)
         return value, good
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Nguyen benchmark', description='Run a ED benchmark')

@@ -15,6 +15,7 @@ import sympy as sp
 import pandas as pd
 from ProGED import Model
 
+import signal
 
 def read_test_data(eq_number):
     test = []
@@ -26,18 +27,36 @@ def read_test_data(eq_number):
     return np.array(test)
 
 
+class TimeoutException(Exception):   # Custom exception class
+    pass
+
+
+def timeout_handler(signum, frame):   # Custom signal handler
+    raise TimeoutException
+
+
 def read_json_data(jo, test, file, baseline):
     changed = False
     exprs = []
     real_values = test[:, -1]
     bottom = np.sum((real_values - np.mean(real_values)) ** 2)
     name = baseline + "_" + file.split("/")[-1]
+    default_handler = signal.getsignal(signal.SIGALRM)
+    signal.signal(signal.SIGALRM, timeout_handler)
 
+    index_invalid = None
     for e in jo:
-        if "test" not in e or "r2" not in e:
+        if not e["valid"]:
+            if index_invalid is None:
+                index_invalid = len(exprs)
+                exprs.append(["", float(1e10), float(1e10), 0.0, int(e["trees"])])
+            else:
+                exprs[index_invalid][-1] += e["trees"]
+        elif "test" not in e or "r2" not in e:
             changed = True
-            expr = Model(e["eq"], sym_vars=(["X"] if test.shape[1] == 2 else ["X", "Y"]))
+            signal.alarm(1)
             try:
+                expr = Model(e["eq"], sym_vars=(["X"] if test.shape[1] == 2 else ["X", "Y"]))
                 predicted_values = expr.evaluate(test[:, :-1])
                 if any(np.iscomplex(predicted_values)):
                     predicted_values = predicted_values.real()
@@ -50,12 +69,16 @@ def read_json_data(jo, test, file, baseline):
             except:
                 rmse = 1e10
                 r2 = 0
+            finally:
+                signal.alarm(0)
             exprs.append([e['eq'], float(e['error']), rmse, r2, int(e["trees"])])
         else:
             exprs.append([e['eq'], float(e['error']), float(e["test"]), float(e["r2"]), int(e["trees"])])
 
+    signal.signal(signal.SIGALRM, default_handler)
+
     if changed:
-        with open(f"results/ready/{name}", "w") as f:
+        with open(f"results/others/{name}", "w") as f:
             json.dump(exprs, f)
     return exprs
 
@@ -84,7 +107,7 @@ def create_sequential_results(exprs, step=50):
     if success:
         steps.append(exprs[k])
     repeated_steps.append(steps)
-    return repeated_steps, [k], [exprs[-1][2] < 1e-10]
+    return repeated_steps, [k], [success]
 
 
 def create_random_results(exprs_start, step=50, repeats=1):
@@ -97,7 +120,7 @@ def create_random_results(exprs_start, step=50, repeats=1):
     repeated_steps, ks, successes = [], [], []
     for j in range(repeats):
         success = False
-        exprs = np.random.permutation(expressions, )
+        exprs = np.random.permutation(expressions)
         seen_exprs = set()
         new_exprs = []
         for e in exprs:
@@ -105,10 +128,10 @@ def create_random_results(exprs_start, step=50, repeats=1):
                 new_exprs.append(e)
                 seen_exprs.add(e[0])
         exprs = new_exprs
-        best_ind, best_val = 0, float(exprs[0][1])
+        best_ind, best_val = 0, float(exprs[0][2])
         for k in range(1, len(exprs)):
-            if float(exprs[k][1]) < best_val:
-                best_ind, best_val = k, float(exprs[k][1])
+            if float(exprs[k][2]) < best_val:
+                best_ind, best_val = k, float(exprs[k][2])
 
                 if best_val < 1e-8:
                     success = True
@@ -125,7 +148,7 @@ def create_random_results(exprs_start, step=50, repeats=1):
             steps.append(exprs[k])
         repeated_steps.append(steps)
         ks.append(k)
-        successes.append(exprs[k][2] < 1e-10)
+        successes.append(success)
     return repeated_steps, ks, successes
 
 
@@ -149,23 +172,42 @@ def create_steps_figure(eq_num, results, step=50):
 
 
 if __name__ == '__main__':
-    eq_num = 9
+    eq_num = 3
     # baselines = ["HVAE Evo", "HVAE Random"]
     # baselines = ["HVAE", "HVAE Evo", "ProGED"]
     # # baselines = ["HVAE 16", "HVAE 32", "HVAE 64", "HVAE 128", "HVAE Evo", "ProGED"]
-    baselines = ["HVAE", "ProGED", "HVAE,Evo"]
-    # baselines = ["HVAE 16", "HVAE 32", "HVAE 64", "HVAE 128", "HVAE Evo", "ProGED"]
+    # baselines = ["HVAE", "ProGED", "HVAE,Evo"]
+    baselines = ["CVAE32", "CVAE64", "CVAE128", "GVAE32", "GVAE64", "GVAE128"]
     test = read_test_data(eq_num)
 
     steps = []
     ks = []
     successes = []
-    for baseline in baselines:
-        files = glob(f"results/ready/{baseline}_nguyen_{eq_num}_*")
+    paths = ["/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/cvae_32",
+             "/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/cvae_64",
+             "/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/cvae_128",
+             "/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/gvae_32",
+             "/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/gvae_64",
+             "/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/gvae_128"]
+    # paths = ["/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/hvae_random_32",
+    #          "/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/ProGED_corrected",
+    #          "/home/sebastianmeznar/Projects/ProGED/ProGED/examples/results/hvae_evo"]
+    for baseline, path in zip(baselines, paths):
+    # for baseline in baselines:
+    #     files = glob(f"results/ready/{baseline}_nguyen_{eq_num}_*")
+        files = glob(path+f"/nguyen_{eq_num}_*")
         for file in files:
+            exists = False
+            name = f"{baseline}_{file.split('/')[-1]}"
+            if os.path.exists(f"results/others/{name}"):
+                file = f"results/others/{name}"
+                exists = True
             with open(file, 'r') as f:
-                exprs = json.load(f)
-                # exprs = read_json_data(jo, test, file, baseline)
+                if exists:
+                    exprs = json.load(f)
+                else:
+                    jo = json.load(f)
+                    exprs = read_json_data(jo, test, file, baseline)
                 if baseline == "HVAE,Evo":
                     a, b, c = create_sequential_results(exprs)
                 else:
@@ -183,7 +225,7 @@ if __name__ == '__main__':
                     steps[i][1][j] += [steps[i][1][j][-1] for _ in range(max_len-len(steps[i][1][j]))]
 
     print(f"Nguyen {eq_num}")
-    print("Evaluation was succesfull:")
+    print("Evaluation was successful:")
     for baseline in baselines:
         total = 0
         successful = 0
