@@ -10,19 +10,15 @@ from ProGED.generators.grammar import GeneratorGrammar
 
 # equations_path = "nguyen_expressions.txt"
 equations_path = None
-save_expressions_path = "nguyen_expressions2.txt"
-param_path = "./parameters/nguyen2_32.pt"
+save_expressions_path = "feynman_expressions2.txt"
+param_path = "./parameters/feynman2_32.pt"
 # param_path = None
 
 universal_symbols = [{"symbol": 'X', "type": SymType.Var, "precedence": 5},
                      {"symbol": 'Y', "type": SymType.Var, "precedence": 5},
+                     {"symbol": 'C', "type": SymType.Const, "precedence": 5},
                      {"symbol": '^2', "type": SymType.Fun, "precedence": -1},
                      {"symbol": '^3', "type": SymType.Fun, "precedence": -1},
-                     # {"symbol": '^4', "type": SymType.Fun, "precedence": -1},
-                     # {"symbol": '^5', "type": SymType.Fun, "precedence": -1},
-                     # {"symbol": '^6', "type": SymType.Fun, "precedence": -1},
-                     # {"symbol": '^7', "type": SymType.Fun, "precedence": -1},
-                     # {"symbol": '^8', "type": SymType.Fun, "precedence": -1},
                      {"symbol": '+', "type": SymType.Operator, "precedence": 0},
                      {"symbol": '-', "type": SymType.Operator, "precedence": 0},
                      {"symbol": '*', "type": SymType.Operator, "precedence": 1},
@@ -30,8 +26,7 @@ universal_symbols = [{"symbol": 'X', "type": SymType.Var, "precedence": 5},
                      {"symbol": 'sqrt', "type": SymType.Fun, "precedence": 5},
                      {"symbol": 'sin', "type": SymType.Fun, "precedence": 5},
                      {"symbol": 'cos', "type": SymType.Fun, "precedence": 5},
-                     {"symbol": 'exp', "type": SymType.Fun, "precedence": 5},
-                     {"symbol": 'log', "type": SymType.Fun, "precedence": 5}]
+                     {"symbol": 'exp', "type": SymType.Fun, "precedence": 5}]
 
 grammar = """E -> E '+' F [0.2]
 E -> E '-' F [0.2]
@@ -40,20 +35,19 @@ F -> F '*' T [0.2]
 F -> F '/' T [0.2]
 F -> T [0.6]
 T -> V [0.4]
-T -> '(' E ')' P [0.2]
-T -> '(' E ')' [0.2]
-T -> R '(' E ')' [0.2]
+T -> 'C' [0.3]
+T -> A [0.3]
+A -> '(' E ')' P [0.1]
+A -> '(' E ')' [0.55]
+A -> R '(' E ')' [0.35]
 V -> 'X' [0.5]
 V -> 'Y' [0.5]
-P -> '^2' [0.38961039]
-P -> '^3' [0.25974026]
-P -> '^4' [0.19480519]
-P -> '^5' [0.15584416]
-R -> 'sin' [0.2]
-R -> 'cos' [0.2]
-R -> 'exp' [0.2]
-R -> 'log' [0.2]
-R -> 'sqrt' [0.2]"""
+P -> '^2' [0.8]
+P -> '^3' [0.2]
+R -> 'sin' [0.25]
+R -> 'cos' [0.25]
+R -> 'exp' [0.25]
+R -> 'sqrt' [0.25]"""
 
 
 def generate_train_expressions(cfg, num_expressions=100, max_generated=None, symbols=universal_symbols):
@@ -101,7 +95,7 @@ if __name__ == '__main__':
 
     # Read/Generate training expressions
     if equations_path is None:
-        train_expressions = generate_train_expressions(grammar, num_expressions=35000)
+        train_expressions = generate_train_expressions(grammar, num_expressions=40000)
         if save_expressions_path is not None:
             with open(save_expressions_path, "w") as file:
                 for e in train_expressions:
@@ -114,13 +108,13 @@ if __name__ == '__main__':
                 train_expressions.append(l.strip().split(" "))
 
     # Read data
-    train, test = read_eq_data(args.eq_num)
+    # train, test = read_eq_data(args.eq_num)
 
     # Train/Load the model
     # if param_path is None:
     generator = GeneratorHVAE.train_and_init(train_expressions, ["X", "Y"], universal_symbols, epochs=20,
                                              hidden_size=32, representation_size=32,
-                                             model_path="./parameters/nguyen2_32.pt")
+                                             model_path="./parameters/feynman2_32.pt")
     # else:
     #     generator = GeneratorHVAE(param_path, ["X"], universal_symbols)
 
