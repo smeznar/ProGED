@@ -172,7 +172,7 @@ def create_steps_figure(eq_num, results, step=50):
 
 
 if __name__ == '__main__':
-    eq_num = 3
+    eq_num = 8
     # baselines = ["HVAE Evo", "HVAE Random"]
     # baselines = ["HVAE", "HVAE Evo", "ProGED"]
     # # baselines = ["HVAE 16", "HVAE 32", "HVAE 64", "HVAE 128", "HVAE Evo", "ProGED"]

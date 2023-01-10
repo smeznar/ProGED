@@ -33,8 +33,9 @@ from ProGED.parameter_estimation import fit_models
 
 # import equation_vae
 
-universal_symbols = [{"symbol": 'X', "type": SymType.Var, "precedence": 5},
-                     {"symbol": 'Y', "type": SymType.Var, "precedence": 5},
+universal_symbols = [{"symbol": 'A', "type": SymType.Var, "precedence": 5},
+                     {"symbol": 'B', "type": SymType.Var, "precedence": 5},
+                     {"symbol": 'D', "type": SymType.Var, "precedence": 5},
                      {"symbol": 'C', "type": SymType.Const, "precedence": 5},
                      {"symbol": '^2', "type": SymType.Fun, "precedence": -1},
                      {"symbol": '^3', "type": SymType.Fun, "precedence": -1},
@@ -72,7 +73,7 @@ R -> 'sqrt' [0.25]"""
 def read_eq_data(eq_number):
     train = []
     test = []
-    with open(f"/home/sebastian/Downloads/Feynman_with_units/{eq_number}", "r") as file:
+    with open(f"/home/sebastianmeznar/Downloads/Feynman_with_units/{eq_number}", "r") as file:
         for i, row in enumerate(file):
             line = [float(t) for t in row.strip().split(" ")]
             if i < 10000:
@@ -110,7 +111,7 @@ class SRProblem(ElementwiseProblem):
                 try:
                     with ignore_warnings(RuntimeWarning):
                         mb = ModelBox()
-                        mb.add_model(model_s, {'const': 'C', 'x': ["X", "Y"]})
+                        mb.add_model(model_s, {'const': 'C', 'x': ["A", "B", "D"]})
                         fit_models(mb, self.tdata)
                         model = list(mb.values())[0]
                         rmse = model.get_error(dummy=self.default_value)
@@ -123,7 +124,7 @@ class SRProblem(ElementwiseProblem):
     def _evaluate(self, x, out, *args, **kwargs):
         eq = self.generator.decode_latent(torch.tensor(x)[None, None, :])
         try:
-            model = Model(''.join(eq), sym_vars=["X", "Y"], sym_params=["C"])
+            model = Model(''.join(eq), sym_vars=["A", "B", "D"], sym_params=["C"])
             rmse = self.check_model(model)
             out["F"] = rmse
         except:
@@ -288,7 +289,7 @@ if __name__ == '__main__':
                'II.8.31', 'II.11.28', 'II.27.18', 'II.38.14', 'III.12.43']
 
     parser = argparse.ArgumentParser(prog='Nguyen benchmark', description='Run a ED benchmark')
-    parser.add_argument("-eq_num", choices=eq_2var, required=True, action="store")
+    parser.add_argument("-eq_num", required=True, action="store")
     parser.add_argument("-baseline", choices=['ProGED', 'HVAE_random', 'HVAE_evo', 'CVAE_random', 'CVAE_evo', 'GVAE_random', 'GVAE_evo'], action='store', required=True)
     parser.add_argument("-params", action='store', default=None)
     parser.add_argument("-dimension", action="store", type=int)
@@ -314,7 +315,7 @@ if __name__ == '__main__':
         print(ed.get_results())
         ed.write_results(f"results/hvae_random_{args.dimension}/feynman_{args.eq_num}_{np.random.randint(0, 1000000)}.json")
     elif args.baseline == "HVAE_evo":
-        generator = GeneratorHVAE(args.params, ["X", 'Y'], universal_symbols)
+        generator = GeneratorHVAE(args.params, ["A", 'B', 'D'], universal_symbols)
         ga = GA(pop_size=200, sampling=TorchNormalSampling(), crossover=LICrossover(), mutation=RandomMutation(),
                 eliminate_duplicates=False)
         problem = SRProblem(generator, train, args.dimension)

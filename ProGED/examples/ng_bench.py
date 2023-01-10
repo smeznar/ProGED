@@ -272,13 +272,18 @@ def eval_eq(eq, data, default_value=1e10):
             value = rmse
         else:
             value = default_value
-    except:
+        # signal.alarm(0)
+    except TimeoutException:
+        good = False
+        value = default_value
+    except Exception:
         good = False
         value = default_value
     finally:
         signal.alarm(0)
-        signal.signal(signal.SIGALRM, default_handler)
-        return value, good
+        # signal.signal(signal.SIGALRM, default_handler)
+    return value, good
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Nguyen benchmark', description='Run a ED benchmark')
@@ -290,6 +295,7 @@ if __name__ == '__main__':
 
     # Read data
     train, test = read_eq_data(args.eq_num)
+
 
     if args.baseline == "ProGED":
         grammar = GeneratorGrammar(grammar)

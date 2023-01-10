@@ -203,12 +203,12 @@ def fit_models(models, data, task_type="algebraic", pool_map=map, estimation_set
         "simulate_separately": False}
 
     optimizer_settings_preset = {
-        "lower_upper_bounds": (-4, 4),
+        "lower_upper_bounds": (-5, 5),
         "default_error": 10 ** 9,
         "strategy": 'rand1bin',
         "f": 0.45,
         "cr": 0.88,
-        "max_iter": 250,
+        "max_iter": 500,
         "pop_size": 50,
         "atol": 0.01,
         "tol": 0.01,
@@ -218,7 +218,7 @@ def fit_models(models, data, task_type="algebraic", pool_map=map, estimation_set
     estimation_settings_preset = {
         "target_variable_index": -1,
         "time_index": None,
-        "max_constants": 3,
+        "max_constants": 4,
         "optimizer": 'differential_evolution',
         "observed": models.observed,
         "optimizer_settings": optimizer_settings_preset,

@@ -7,15 +7,15 @@ import argparse
 
 from ProGED.generators.hvae_generator import GeneratorHVAE, SymType, HVAE, Encoder, Decoder, GRU122, GRU221, tokens_to_tree
 from ProGED.generators.grammar import GeneratorGrammar
-
 # equations_path = "nguyen_expressions.txt"
 equations_path = None
-save_expressions_path = "feynman_expressions2.txt"
-param_path = "./parameters/feynman2_32.pt"
+save_expressions_path = "feynman_expressions3.txt"
+param_path = "./parameters/feynman3_32.pt"
 # param_path = None
 
-universal_symbols = [{"symbol": 'X', "type": SymType.Var, "precedence": 5},
-                     {"symbol": 'Y', "type": SymType.Var, "precedence": 5},
+universal_symbols = [{"symbol": 'A', "type": SymType.Var, "precedence": 5},
+                     {"symbol": 'B', "type": SymType.Var, "precedence": 5},
+                     {"symbol": 'D', "type": SymType.Var, "precedence": 5},
                      {"symbol": 'C', "type": SymType.Const, "precedence": 5},
                      {"symbol": '^2', "type": SymType.Fun, "precedence": -1},
                      {"symbol": '^3', "type": SymType.Fun, "precedence": -1},
@@ -34,14 +34,15 @@ E -> F [0.6]
 F -> F '*' T [0.2]
 F -> F '/' T [0.2]
 F -> T [0.6]
-T -> V [0.4]
-T -> 'C' [0.3]
+T -> V [0.45]
+T -> 'C' [0.25]
 T -> A [0.3]
 A -> '(' E ')' P [0.1]
 A -> '(' E ')' [0.55]
 A -> R '(' E ')' [0.35]
-V -> 'X' [0.5]
-V -> 'Y' [0.5]
+V -> 'A' [0.334]
+V -> 'B' [0.333]
+V -> 'D' [0.333]
 P -> '^2' [0.8]
 P -> '^3' [0.2]
 R -> 'sin' [0.25]
@@ -90,12 +91,12 @@ def read_eq_data(eq_number):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Nguyen benchmark', description='Run a ED benchmark')
-    parser.add_argument("-eq_num", choices=range(1, 10), required=True, action="store", type=int)
+    parser.add_argument("-eq_num", action="store", default=1, type=int)
     args = parser.parse_args()
 
     # Read/Generate training expressions
     if equations_path is None:
-        train_expressions = generate_train_expressions(grammar, num_expressions=40000)
+        train_expressions = generate_train_expressions(grammar, num_expressions=50000)
         if save_expressions_path is not None:
             with open(save_expressions_path, "w") as file:
                 for e in train_expressions:
@@ -112,9 +113,9 @@ if __name__ == '__main__':
 
     # Train/Load the model
     # if param_path is None:
-    generator = GeneratorHVAE.train_and_init(train_expressions, ["X", "Y"], universal_symbols, epochs=20,
+    generator = GeneratorHVAE.train_and_init(train_expressions, ["A", "B", "D"], universal_symbols, epochs=20,
                                              hidden_size=32, representation_size=32,
-                                             model_path="./parameters/feynman2_32.pt")
+                                             model_path="./parameters/feynman3_32.pt")
     # else:
     #     generator = GeneratorHVAE(param_path, ["X"], universal_symbols)
 
@@ -150,3 +151,4 @@ if __name__ == '__main__':
     # Save results
     # with open(f"results/nguyen_hvae_random_32_{args.eq_num}.txt", "a") as file:
     #     file.write(f"{r2}\t{best_equation}\t{';'.join([str(z) for z in best_y])}\n")
+    os.system("cat run_feynman.sh | parallel -u -j 2")
