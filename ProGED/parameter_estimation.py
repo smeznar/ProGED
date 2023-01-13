@@ -208,7 +208,7 @@ def fit_models(models, data, task_type="algebraic", pool_map=map, estimation_set
         "strategy": 'rand1bin',
         "f": 0.45,
         "cr": 0.88,
-        "max_iter": 500,
+        "max_iter": 300,
         "pop_size": 50,
         "atol": 0.01,
         "tol": 0.01,
@@ -590,8 +590,8 @@ def hyperopt_fit (model, X, Y, T, p0, **estimation_settings):
         is used.
     """
 
-    from hyperopt import hp, fmin, rand, pyll, Trials
-    import hyperopt.pyll.stochastic
+    # from hyperopt import hp, fmin, rand, pyll, Trials
+    # import hyperopt.pyll.stochastic
     verbosity = estimation_settings["verbosity"]
     lu_bounds = estimation_settings["optimizer_settings"]["lower_upper_bounds"]
     lower_bound, upper_bound = lu_bounds[0]+1e-30, lu_bounds[1]+1e-30

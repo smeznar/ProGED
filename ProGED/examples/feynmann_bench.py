@@ -7,36 +7,29 @@ sys.path.append(my_lib_path)
 
 import argparse
 import json
-import signal
 
 import numpy as np
-import torch
+from torch import normal, no_grad, tensor, zeros
 from pymoo.algorithms.soo.nonconvex.ga import GA
 from pymoo.optimize import minimize
-from pymoo.core.problem import ElementwiseProblem, Problem
+from pymoo.core.problem import ElementwiseProblem
 from pymoo.core.sampling import Sampling
 from pymoo.core.crossover import Crossover
 from pymoo.core.mutation import Mutation
 from pymoo.core.termination import Termination
 from pymoo.termination.max_gen import MaximumGenerationTermination
 from sympy.testing.pytest import ignore_warnings
-from sympy import parse_expr
-from tqdm import tqdm
 
 from ProGED.generators.hvae_generator import GeneratorHVAE, SymType, HVAE, Encoder, Decoder, GRU122, GRU221, tokens_to_tree
-from ProGED.generators.grammar import GeneratorGrammar
-from ProGED import EqDisco
+# from ProGED.generators.grammar import GeneratorGrammar
+# from ProGED import EqDisco
 from ProGED import Model
 from ProGED import ModelBox
-from ProGED import EDTask
 from ProGED.parameter_estimation import fit_models
 
 # import equation_vae
 
-universal_symbols = [{"symbol": 'A', "type": SymType.Var, "precedence": 5},
-                     {"symbol": 'B', "type": SymType.Var, "precedence": 5},
-                     {"symbol": 'D', "type": SymType.Var, "precedence": 5},
-                     {"symbol": 'C', "type": SymType.Const, "precedence": 5},
+universal_symbols = [{"symbol": 'C', "type": SymType.Const, "precedence": 5},
                      {"symbol": '^2', "type": SymType.Fun, "precedence": -1},
                      {"symbol": '^3', "type": SymType.Fun, "precedence": -1},
                      {"symbol": '+', "type": SymType.Operator, "precedence": 0},
@@ -86,12 +79,13 @@ def read_eq_data(eq_number):
 
 
 class SRProblem(ElementwiseProblem):
-    def __init__(self, generator, tdata, dim, default_value=1e10):
+    def __init__(self, generator, tdata, dim, symbols, default_value=1e10):
         self.generator = generator
         self.tdata = tdata
         self.default_value = default_value
-        self.input_mean = torch.zeros(next(generator.model.decoder.parameters()).size(0))
+        self.input_mean = zeros(next(generator.model.decoder.parameters()).size(0))
         self.models = dict()
+        self.symbols = symbols
         self.best_f = 9e+50
         super().__init__(n_var=dim, n_obj=1)
 
@@ -111,20 +105,24 @@ class SRProblem(ElementwiseProblem):
                 try:
                     with ignore_warnings(RuntimeWarning):
                         mb = ModelBox()
-                        mb.add_model(model_s, {'const': 'C', 'x': ["A", "B", "D"]})
-                        fit_models(mb, self.tdata)
+                        mb.add_model(model_s, {'const': 'C', 'x': self.symbols})
+                        mb = fit_models(mb, self.tdata, estimation_settings={"max_constants": 3})
                         model = list(mb.values())[0]
+                        del mb
                         rmse = model.get_error(dummy=self.default_value)
                 except:
                     rmse = self.default_value
                 finally:
+                    print(len(self.models))
                     self.models[model_s] = {"eq": str(model), "error": rmse, "trees": 1}
+                    del model
                     return rmse
 
     def _evaluate(self, x, out, *args, **kwargs):
-        eq = self.generator.decode_latent(torch.tensor(x)[None, None, :])
+        with no_grad():
+            eq = self.generator.decode_latent(tensor(x)[None, None, :])
         try:
-            model = Model(''.join(eq), sym_vars=["A", "B", "D"], sym_params=["C"])
+            model = Model(''.join(eq), sym_vars=self.symbols, sym_params=["C"])
             rmse = self.check_model(model)
             out["F"] = rmse
         except:
@@ -135,68 +133,9 @@ class SRProblem(ElementwiseProblem):
                 self.best_f = rmse
 
 
-# class SRProblemOther(Problem):
-#     def __init__(self, generator, tdata, dim, default_value=1e10):
-#         self.generator = generator
-#         self.tdata = tdata
-#         self.default_value = default_value
-#         self.input_dim = dim
-#         self.models = dict()
-#         self.best_f = 9e+50
-#         super().__init__(n_var=dim, n_obj=1)
-#
-#     def check_model(self, model):
-#         if isinstance(model, str):
-#             model_s = model
-#         else:
-#             model_s = str(model)
-#         if model_s in self.models:
-#             self.models[model_s]["trees"] += 1
-#             return self.models[model_s]["error"]
-#         else:
-#             if model_s == "":
-#                 self.models[""] = {"eq": "", "error": self.default_value, "trees": 1}
-#                 return self.default_value
-#             else:
-#                 try:
-#                     with ignore_warnings(RuntimeWarning):
-#                         yp = model.evaluate(self.tdata[:, :-1])
-#                         if any(np.iscomplex(yp)):
-#                             yp = yp.real()
-#                     rmse = np.sqrt(np.square(np.subtract(self.tdata[:, -1], yp)).mean())
-#                     if not np.isfinite(rmse):
-#                         rmse = self.default_value
-#                 except:
-#                     rmse = self.default_value
-#                 finally:
-#                     self.models[model_s] = {"eq": model_s, "error": rmse, "trees": 1}
-#                     return rmse
-#
-#     def _evaluate(self, x, out, *args, **kwargs):
-#         eqs = self.generator.decode(x)
-#         out_rmse = np.zeros(x.shape[0])
-#         for i, eq in enumerate(eqs):
-#             try:
-#                 model = Model(eq, sym_vars=["X"])
-#                 rmse = self.check_model(model)
-#                 out_rmse[i] = rmse
-#             except:
-#                 rmse = self.check_model("")
-#                 out_rmse[i] = rmse
-#             finally:
-#                 if rmse < self.best_f:
-#                     self.best_f = rmse
-#         out["F"] = out_rmse
-
-
 class TorchNormalSampling(Sampling):
     def _do(self, problem, n_samples, **kwargs):
-        return [torch.normal(problem.input_mean).numpy() for i in range(n_samples)]
-
-
-# class TensorflowNormalSampling(Sampling):
-#     def _do(self, problem, n_samples, **kwargs):
-#         return np.random.normal(size=(n_samples, problem.input_dim))
+        return [normal(problem.input_mean).numpy() for i in range(n_samples)]
 
 
 class BestTermination(Termination):
@@ -221,20 +160,6 @@ class LICrossover(Crossover):
         return (X[0, :]*weights[:, None] + X[1, :]*(1-weights[:, None]))[None, :, :]
 
 
-# class RandomMutationOther(Mutation):
-#     def __init__(self):
-#         super().__init__()
-#
-#     def _do(self, problem, X, **kwargs):
-#         mean, var = problem.generator.encode_s([eq for eq in problem.generator.decode(X) if eq != ""])
-#         mutation_scale = np.random.random(mean.shape[0])
-#         std = mutation_scale[:, None]*(np.exp(var / 2.0) - 1) + 1
-#         new = [np.random.normal(mutation_scale[i]*mean[i], std[i]) for i in range(mean.shape[0])]
-#         for i in range(X.shape[0]-mean.shape[0]):
-#             new.append(np.random.normal(size=problem.input_dim))
-#         return np.array(new)
-
-
 class RandomMutation(Mutation):
     def __init__(self):
         super().__init__()
@@ -242,46 +167,13 @@ class RandomMutation(Mutation):
     def _do(self, problem, X, **kwargs):
         new = []
         for i in range(X.shape[0]):
-            eq = problem.generator.decode_latent(torch.tensor(X[i, :])[None, None, :])
-            var = problem.generator.encode_list(eq)[1][0, 0].detach().numpy()
+            with no_grad():
+                eq = problem.generator.decode_latent(tensor(X[i, :])[None, None, :])
+                var = problem.generator.encode_list(eq)[1][0, 0].detach().numpy()
             mutation_scale = np.random.random()
             std = mutation_scale * (np.exp(var / 2.0) - 1) + 1
-            new.append(torch.normal(torch.tensor(mutation_scale*X[i]), std=torch.tensor(std)).numpy())
+            new.append(normal(tensor(mutation_scale*X[i]), std=tensor(std)).numpy())
         return np.array(new, dtype=np.float32)
-
-
-class TimeoutException(Exception):   # Custom exception class
-    pass
-
-
-def timeout_handler(signum, frame):   # Custom signal handler
-    raise TimeoutException
-
-#
-# def eval_eq(eq, data, default_value=1e10):
-#     value = 0
-#     default_handler = signal.getsignal(signal.SIGALRM)
-#     signal.signal(signal.SIGALRM, timeout_handler)
-#     signal.alarm(1)
-#     good = True
-#     try:
-#         eq_model = Model(eq, sym_vars=["X"])
-#         with ignore_warnings(RuntimeWarning):
-#             yp = eq_model.evaluate(data[:, :-1])
-#             if any(np.iscomplex(yp)):
-#                 yp = yp.real()
-#         rmse = np.sqrt(np.square(np.subtract(data[:, -1], yp)).mean())
-#         if np.isfinite(rmse):
-#             value = rmse
-#         else:
-#             value = default_value
-#     except:
-#         good = False
-#         value = default_value
-#     finally:
-#         signal.alarm(0)
-#         signal.signal(signal.SIGALRM, default_handler)
-#         return value, good
 
 
 if __name__ == '__main__':
@@ -297,6 +189,20 @@ if __name__ == '__main__':
 
     # Read data
     train, test = read_eq_data(args.eq_num)
+
+    variables = []
+    if train.shape[1] == 2:
+        variables = ["X"]
+    elif train.shape[1] == 3:
+        variables = ["X", "Y"]
+    else:
+        variables = ["A", "B", "D"]
+
+    ns = []
+    for v in variables:
+        ns.append({"symbol": v, "type": SymType.Var, "precedence": 5})
+
+    universal_symbols = ns + universal_symbols
 
     if args.baseline == "ProGED":
         grammar = GeneratorGrammar(grammar)
@@ -315,60 +221,9 @@ if __name__ == '__main__':
         print(ed.get_results())
         ed.write_results(f"results/hvae_random_{args.dimension}/feynman_{args.eq_num}_{np.random.randint(0, 1000000)}.json")
     elif args.baseline == "HVAE_evo":
-        generator = GeneratorHVAE(args.params, ["A", 'B', 'D'], universal_symbols)
-        ga = GA(pop_size=200, sampling=TorchNormalSampling(), crossover=LICrossover(), mutation=RandomMutation(),
-                eliminate_duplicates=False)
-        problem = SRProblem(generator, train, args.dimension)
+        generator = GeneratorHVAE(args.params, variables, universal_symbols)
+        ga = GA(pop_size=200, sampling=TorchNormalSampling(), crossover=LICrossover(), mutation=RandomMutation())
+        problem = SRProblem(generator, train, args.dimension, variables)
         res = minimize(problem, ga, BestTermination(), verbose=True)
         with open(f"results/hvae_evo/feynman_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
             json.dump(list(problem.models.values()), file)
-
-    # -----------------------------------------------------------------------------------------------------------------
-
-    # elif args.baseline == "CVAE_random":
-    #     charlist = ['X', '+', '-', '*', '/', '^2', '^3', '^4', '^5', 'sin', 'cos', 'exp', 'log', 'sqrt', '(', ')', '']
-    #     model = equation_vae.EquationCharacterModel(args.params, latent_rep_size=args.dimension, charlist=charlist, ml=56)
-    #     seen_eqs = dict()
-    #     for _ in tqdm(range(2000)):
-    #         eqs = model.decode(np.random.normal(size=(50, args.dimension)))
-    #         for eq in eqs:
-    #             if eq in seen_eqs:
-    #                 seen_eqs[eq]["trees"] += 1
-    #             else:
-    #                 rmse, good = eval_eq(eq, train)
-    #                 seen_eqs[eq] = {"eq": eq, "error": rmse, "trees": 1, "valid": good}
-    #     with open(f"results/cvae_{args.dimension}/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
-    #         json.dump(list(seen_eqs.values()), file)
-    # elif args.baseline == "CVAE_evo":
-    #     charlist = ['X', '+', '-', '*', '/', '^2', '^3', '^4', '^5', 'sin', 'cos', 'exp', 'log', 'sqrt', '(', ')', '']
-    #     model = equation_vae.EquationCharacterModel(args.params, latent_rep_size=args.dimension, charlist=charlist, ml=56)
-    #     ga = GA(pop_size=200, sampling=TensorflowNormalSampling(), crossover=LICrossover(), mutation=RandomMutationOther(),
-    #             eliminate_duplicates=False)
-    #     problem = SRProblemOther(model, train, args.dimension)
-    #     res = minimize(problem, ga, BestTermination(), verbose=True)
-    #     with open(f"results/cvae_evo/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
-    #         json.dump(list(problem.models.values()), file)
-    # elif args.baseline == "GVAE_random":
-    #     model = equation_vae.EquationGrammarModel(args.params, latent_rep_size=args.dimension, mlength=84)
-    #     seen_eqs = dict()
-    #     for _ in tqdm(range(2000)):
-    #         eqs = model.decode(np.random.normal(size=(50, args.dimension)))
-    #         for eq in eqs:
-    #             if eq in seen_eqs:
-    #                 seen_eqs[eq]["trees"] += 1
-    #             else:
-    #                 rmse, good = eval_eq(eq, train)
-    #                 seen_eqs[eq] = {"eq": eq, "error": rmse, "trees": 1, "valid": good}
-    #     with open(f"results/gvae_{args.dimension}/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
-    #         json.dump(list(seen_eqs.values()), file)
-    # elif args.baseline == "GVAE_evo":
-    #     model = equation_vae.EquationGrammarModel(args.params, latent_rep_size=args.dimension, mlength=84)
-    #     ga = GA(pop_size=200, sampling=TensorflowNormalSampling(), crossover=LICrossover(), mutation=RandomMutationOther(),
-    #             eliminate_duplicates=False)
-    #     problem = SRProblemOther(model, train, args.dimension)
-    #     res = minimize(problem, ga, BestTermination(), verbose=True)
-    #     with open(f"results/gvae_evo/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
-    #         json.dump(list(problem.models.values()), file)
-
-
-
