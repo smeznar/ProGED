@@ -7,7 +7,8 @@ sys.path.append(other_baselines)
 
 import argparse
 import json
-import signal
+import time
+import random
 
 import numpy as np
 import torch
@@ -20,34 +21,35 @@ from pymoo.core.mutation import Mutation
 from pymoo.core.termination import Termination
 from pymoo.termination.max_gen import MaximumGenerationTermination
 from sympy.testing.pytest import ignore_warnings
-from sympy import parse_expr
 from tqdm import tqdm
 
 from ProGED.generators.hvae_generator import GeneratorHVAE, SymType, HVAE, Encoder, Decoder, GRU122, GRU221, tokens_to_tree
 from ProGED.generators.grammar import GeneratorGrammar
 from ProGED import EqDisco
 from ProGED import Model
+from ProGED.rust_evaluator import RustEval
 
 import equation_vae
 
-universal_symbols = [{"symbol": 'X', "type": SymType.Var, "precedence": 5},
-                     # {"symbol": 'Y', "type": SymType.Var, "precedence": 5},
-                     {"symbol": '^2', "type": SymType.Fun, "precedence": -1},
-                     {"symbol": '^3', "type": SymType.Fun, "precedence": -1},
-                     {"symbol": '^4', "type": SymType.Fun, "precedence": -1},
-                     {"symbol": '^5', "type": SymType.Fun, "precedence": -1},
+universal_symbols = [{"symbol": 'X', "type": SymType.Var, "precedence": 5, "fun": lambda l, r, d: d[:, 0]},
+                     # {"symbol": 'Y', "type": SymType.Var, "precedence": 5, "fun": lambda l, r, d: d[:, 1]},
+                     {"symbol": '^2', "type": SymType.Fun, "precedence": -1, "fun": lambda l, r, d: np.power(l, 2)},
+                     {"symbol": '^3', "type": SymType.Fun, "precedence": -1, "fun": lambda l, r, d: np.power(l, 3)},
+                     {"symbol": '^4', "type": SymType.Fun, "precedence": -1, "fun": lambda l, r, d: np.power(l, 4)},
+                     {"symbol": '^5', "type": SymType.Fun, "precedence": -1, "fun": lambda l, r, d: np.power(l, 5)},
                      # {"symbol": '^6', "type": SymType.Fun, "precedence": -1},
                      # {"symbol": '^7', "type": SymType.Fun, "precedence": -1},
                      # {"symbol": '^8', "type": SymType.Fun, "precedence": -1},
-                     {"symbol": '+', "type": SymType.Operator, "precedence": 0},
-                     {"symbol": '-', "type": SymType.Operator, "precedence": 0},
-                     {"symbol": '*', "type": SymType.Operator, "precedence": 1},
-                     {"symbol": '/', "type": SymType.Operator, "precedence": 1},
-                     {"symbol": 'sqrt', "type": SymType.Fun, "precedence": 5},
-                     {"symbol": 'sin', "type": SymType.Fun, "precedence": 5},
-                     {"symbol": 'cos', "type": SymType.Fun, "precedence": 5},
-                     {"symbol": 'exp', "type": SymType.Fun, "precedence": 5},
-                     {"symbol": 'log', "type": SymType.Fun, "precedence": 5}]
+                     {"symbol": '+', "type": SymType.Operator, "precedence": 0, "fun": lambda l, r, d: l + r},
+                     {"symbol": '-', "type": SymType.Operator, "precedence": 0, "fun": lambda l, r, d: l - r},
+                     {"symbol": '*', "type": SymType.Operator, "precedence": 1, "fun": lambda l, r, d: l * r},
+                     {"symbol": '/', "type": SymType.Operator, "precedence": 1, "fun": lambda l, r, d: l / r},
+                     {"symbol": 'sqrt', "type": SymType.Fun, "precedence": 5, "fun": lambda l, r, d: np.sqrt(l)},
+                     {"symbol": 'sin', "type": SymType.Fun, "precedence": 5, "fun": lambda l, r, d: np.sin(l)},
+                     {"symbol": 'cos', "type": SymType.Fun, "precedence": 5, "fun": lambda l, r, d: np.cos(l)},
+                     {"symbol": 'exp', "type": SymType.Fun, "precedence": 5, "fun": lambda l, r, d: np.exp(l)},
+                     {"symbol": 'log', "type": SymType.Fun, "precedence": 5, "fun": lambda l, r, d: np.log(r)}]
+s_for_tokenization = {t["symbol"]: t for i, t in enumerate(universal_symbols)}
 
 
 grammar = """E -> E '+' F [0.2]
@@ -99,6 +101,8 @@ class SRProblem(ElementwiseProblem):
         self.models = []
         self.evaluated_models = dict()
         self.best_f = 9e+50
+        self.best_expression = None
+        self.evaluator = RustEval(tdata)
         super().__init__(n_var=dim, n_obj=1)
 
     def add_model(self, model, score):
@@ -112,24 +116,33 @@ class SRProblem(ElementwiseProblem):
             self.models.append({"eq": model_str, "error": score})
 
     def _evaluate(self, x, out, *args, **kwargs):
-        eq = self.generator.decode_latent(torch.tensor(x)[None, None, :])
-        model = Model("".join(eq), sym_vars=["X"])
-        try:
-            with ignore_warnings(RuntimeWarning):
-                yp = model.evaluate(self.tdata[:, :-1])
-                if any(np.iscomplex(yp)):
-                    yp = yp.real()
-            rmse = np.sqrt(np.square(np.subtract(self.tdata[:, -1], yp)).mean())
-            if np.isfinite(rmse):
-                out["F"] = rmse
-            else:
-                out["F"] = self.default_value
-        except Exception:
-            out["F"] = self.default_value
-        finally:
-            if out['F'] < self.best_f:
-                self.best_f = out['F']
-            self.add_model(model, out['F'])
+        eq, eq_pof = self.generator.decode_latent(torch.tensor(x)[None, None, :])
+        s = ["X"] if self.tdata.shape[1] == 2 else ["X", "Y"]
+        # model = Model("".join(eq), sym_vars=s)
+        rmse_re = self.evaluator.get_error(eq_pof)
+        out["F"] = rmse_re if rmse_re is not None else self.default_value
+        # try:
+        #     with ignore_warnings(RuntimeWarning):
+        #         yp = model.evaluate(self.tdata[:, :-1])
+        #         if any(np.iscomplex(yp)):
+        #             yp = yp.real()
+        #     rmse = np.sqrt(np.square(np.subtract(self.tdata[:, -1], yp)).mean())
+        #     if np.isfinite(rmse):
+        #         out["F"] = rmse
+        #     else:
+        #         out["F"] = self.default_value
+        # except Exception:
+        #     out["F"] = self.default_value
+        # finally:
+        #     print(f"Original: {''.join(eq)}, simplified: {str(model)}")
+        #     print(f'With simplify: {out["F"]}, without simplify {rmse_re}')
+        #     print("--------------------------------------------------------")
+        # print(f"Expr: {''.join(eq)}: {out['F']}")
+        if out['F'] < self.best_f:
+            self.best_f = out['F']
+            self.best_expression = ["".join(eq), out['F']]
+            print(f"{self.best_expression[0]}: {self.best_expression[1]}")
+        self.add_model("".join(eq), out['F'])
 
 
 class SRProblemOther(Problem):
@@ -144,38 +157,29 @@ class SRProblemOther(Problem):
 
     def check_model(self, model):
         if isinstance(model, str):
-            model_s = model
+            tokens = tokenize_expr(model)
         else:
-            model_s = str(model)
-        if model_s in self.models:
-            self.models[model_s]["trees"] += 1
-            return self.models[model_s]["error"]
+            tokens = model
+            model = "".join(tokens)
+
+        if model in self.models:
+            self.models[model]["trees"] += 1
+            return self.models[model]["error"]
         else:
-            if model_s == "":
-                self.models[""] = {"eq": "", "error": self.default_value, "trees": 1}
+            if model == "":
+                self.models[""] = {"eq": "", "error": self.default_value, "trees": 1, "valid": False}
                 return self.default_value
             else:
-                try:
-                    with ignore_warnings(RuntimeWarning):
-                        yp = model.evaluate(self.tdata[:, :-1])
-                        if any(np.iscomplex(yp)):
-                            yp = yp.real()
-                    rmse = np.sqrt(np.square(np.subtract(self.tdata[:, -1], yp)).mean())
-                    if not np.isfinite(rmse):
-                        rmse = self.default_value
-                except:
-                    rmse = self.default_value
-                finally:
-                    self.models[model_s] = {"eq": model_s, "error": rmse, "trees": 1}
-                    return rmse
+                rmse, good = eval_eq(tokens, self.tdata, self.default_value)
+                self.models[model] = {"eq": model, "error": rmse, "trees": 1, "valid": good}
+                return rmse
 
     def _evaluate(self, x, out, *args, **kwargs):
         eqs = self.generator.decode(x)
         out_rmse = np.zeros(x.shape[0])
         for i, eq in enumerate(eqs):
             try:
-                model = Model(eq, sym_vars=["X"])
-                rmse = self.check_model(model)
+                rmse = self.check_model(eq)
                 out_rmse[i] = rmse
             except:
                 rmse = self.check_model("")
@@ -223,7 +227,7 @@ class RandomMutationOther(Mutation):
         super().__init__()
 
     def _do(self, problem, X, **kwargs):
-        mean, var = problem.generator.encode_s([eq for eq in problem.generator.decode(X) if eq != ""])
+        mean, var = problem.generator.encode_s([eq for eq in problem.generator.decode_latent(X) if eq != ""])
         mutation_scale = np.random.random(mean.shape[0])
         std = mutation_scale[:, None]*(np.exp(var / 2.0) - 1) + 1
         new = [np.random.normal(mutation_scale[i]*mean[i], std[i]) for i in range(mean.shape[0])]
@@ -239,7 +243,7 @@ class RandomMutation(Mutation):
     def _do(self, problem, X, **kwargs):
         new = []
         for i in range(X.shape[0]):
-            eq = problem.generator.decode_latent(torch.tensor(X[i, :])[None, None, :])
+            eq = problem.generator.decode_latent(torch.tensor(X[i, :])[None, None, :])[0]
             var = problem.generator.encode_list(eq)[1][0, 0].detach().numpy()
             mutation_scale = np.random.random()
             std = mutation_scale * (np.exp(var / 2.0) - 1) + 1
@@ -251,20 +255,40 @@ class TimeoutException(Exception):   # Custom exception class
     pass
 
 
-def timeout_handler(signum, frame):   # Custom signal handler
+def timeout_handler(signum, frame):
+    print("Exception")# Custom signal handler
     raise TimeoutException
 
 
+def eval_tree(tree, data, symbols):
+    l = None
+    r = None
+    if tree.left is not None:
+        l = eval_tree(tree.left, data, symbols)
+    if tree.right is not None:
+        r = eval_tree(tree.right, data, symbols)
+    return symbols[tree.symbol]["fun"](l, r, data)
+
+
+def tokenize_expr(expr):
+    common_functions = ["cos", "sin", "exp", "sqrt", "log", "^2", "^3", "^4", "^5"]
+    for fn in common_functions:
+        expr = expr.replace(fn, f" {fn} ")
+    first_tokens = expr.split(" ")
+    tokens = []
+    for t in first_tokens:
+        if t in common_functions:
+            tokens += [t]
+        else:
+            tokens += [c for c in t]
+    return tokens
+
 def eval_eq(eq, data, default_value=1e10):
-    value = 0
-    default_handler = signal.getsignal(signal.SIGALRM)
-    signal.signal(signal.SIGALRM, timeout_handler)
-    signal.alarm(1)
     good = True
     try:
-        eq_model = Model(eq, sym_vars=["X"])
+        tree = tokens_to_tree(eq, symbols=s_for_tokenization)
         with ignore_warnings(RuntimeWarning):
-            yp = eq_model.evaluate(data[:, :-1])
+            yp = eval_tree(tree, data, s_for_tokenization)
             if any(np.iscomplex(yp)):
                 yp = yp.real()
         rmse = np.sqrt(np.square(np.subtract(data[:, -1], yp)).mean())
@@ -272,16 +296,9 @@ def eval_eq(eq, data, default_value=1e10):
             value = rmse
         else:
             value = default_value
-        # signal.alarm(0)
-    except TimeoutException:
+    except:
         good = False
         value = default_value
-    except Exception:
-        good = False
-        value = default_value
-    finally:
-        signal.alarm(0)
-        # signal.signal(signal.SIGALRM, default_handler)
     return value, good
 
 
@@ -291,11 +308,18 @@ if __name__ == '__main__':
     parser.add_argument("-baseline", choices=['ProGED', 'HVAE_random', 'HVAE_evo', 'CVAE_random', 'CVAE_evo', 'GVAE_random', 'GVAE_evo'], action='store', required=True)
     parser.add_argument("-params", action='store', default=None)
     parser.add_argument("-dimension", action="store", type=int)
+    parser.add_argument("-seed", type=int)
     args = parser.parse_args()
 
     # Read data
-    train, test = read_eq_data(args.eq_num)
 
+    if args.seed is not None:
+        np.random.seed(args.seed)
+        torch.manual_seed(args.seed)
+        random.seed(args.seed)
+
+
+    train, test = read_eq_data(args.eq_num)
 
     if args.baseline == "ProGED":
         grammar = GeneratorGrammar(grammar)
@@ -314,15 +338,19 @@ if __name__ == '__main__':
         print(ed.get_results())
         ed.write_results(f"results/hvae_random_{args.dimension}/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json")
     elif args.baseline == "HVAE_evo":
-        generator = GeneratorHVAE(args.params, ["X"], universal_symbols)
+        if train.shape[1] == 3:
+            universal_symbols.insert(1, {"symbol": 'Y', "type": SymType.Var, "precedence": 5, "fun": lambda l, r, d: d[:, 1]})
+        s = ["X"] if train.shape[1] == 2 else ["X", "Y"]
+        generator = GeneratorHVAE(args.params, s, universal_symbols)
         ga = GA(pop_size=200, sampling=TorchNormalSampling(), crossover=LICrossover(), mutation=RandomMutation(),
                 eliminate_duplicates=False)
         problem = SRProblem(generator, train, args.dimension)
         res = minimize(problem, ga, BestTermination(), verbose=True)
-        with open(f"results/hvae_evo/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
+        with open(f"results/reproducable2rust/nguyen_{args.eq_num}_{time.time()}.json", "w") as file:
+            # json.dump({"best": problem.best_expr, "all": list(problem.models.values())}, file)
             for i in range(len(problem.models)):
                 problem.models[i]["trees"] = problem.evaluated_models[problem.models[i]["eq"]]
-            json.dump(problem.models, file)
+            json.dump({"best": problem.best_expression, "all": problem.models}, file)
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -333,11 +361,12 @@ if __name__ == '__main__':
         for _ in tqdm(range(2000)):
             eqs = model.decode(np.random.normal(size=(50, args.dimension)))
             for eq in eqs:
-                if eq in seen_eqs:
-                    seen_eqs[eq]["trees"] += 1
+                eq_str = "".join(eq)
+                if eq_str in seen_eqs:
+                    seen_eqs[eq_str]["trees"] += 1
                 else:
                     rmse, good = eval_eq(eq, train)
-                    seen_eqs[eq] = {"eq": eq, "error": rmse, "trees": 1, "valid": good}
+                    seen_eqs[eq_str] = {"eq": eq_str, "error": rmse, "trees": 1, "valid": good}
         with open(f"results/cvae_{args.dimension}/nguyen_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
             json.dump(list(seen_eqs.values()), file)
     elif args.baseline == "CVAE_evo":

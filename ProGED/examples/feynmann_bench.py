@@ -106,14 +106,14 @@ class SRProblem(ElementwiseProblem):
                     with ignore_warnings(RuntimeWarning):
                         mb = ModelBox()
                         mb.add_model(model_s, {'const': 'C', 'x': self.symbols})
-                        mb = fit_models(mb, self.tdata, estimation_settings={"max_constants": 3})
+                        mb = fit_models(mb, self.tdata, estimation_settings={"max_constants": 4})
                         model = list(mb.values())[0]
                         del mb
-                        rmse = model.get_error(dummy=self.default_value)
-                except:
+                        rmse = float(model.get_error(dummy=self.default_value)[0])
+                except Exception as e:
                     rmse = self.default_value
                 finally:
-                    print(len(self.models))
+                    # print(len(self.models))
                     self.models[model_s] = {"eq": str(model), "error": rmse, "trees": 1}
                     del model
                     return rmse
@@ -224,6 +224,6 @@ if __name__ == '__main__':
         generator = GeneratorHVAE(args.params, variables, universal_symbols)
         ga = GA(pop_size=200, sampling=TorchNormalSampling(), crossover=LICrossover(), mutation=RandomMutation())
         problem = SRProblem(generator, train, args.dimension, variables)
-        res = minimize(problem, ga, BestTermination(), verbose=True)
+        res = minimize(problem, ga, BestTermination(n_max_gen=500), verbose=True)
         with open(f"results/hvae_evo/feynman_{args.eq_num}_{np.random.randint(0, 1000000)}.json", "w") as file:
             json.dump(list(problem.models.values()), file)

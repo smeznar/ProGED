@@ -113,7 +113,7 @@ def fit_models(models, data, task_type="algebraic", pool_map=map, estimation_set
     }
 
     estimation_settings_preset = {
-        "target_variable_index": None,
+        "target_variable_index": -1,
         "time_index": None,
         "max_constants": 5,
         "optimizer": 'DE_pymoo',

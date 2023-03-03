@@ -13,15 +13,6 @@ and associated information and references.
 Class methods serve as an interfance to interact with the model.
 The class is intended to be used as part of an equation discovery algorithm."""
 
-
-class TimeoutException(Exception):   # Custom exception class
-    pass
-
-
-def timeout_handler(signum, frame):   # Custom signal handler
-    raise TimeoutException
-
-
 class Model:
     """Class that represents a single model, defined by its canonical expression string.
     
@@ -77,22 +68,10 @@ class Model:
         self.params = params
         self.observed = [s.strip("'") for s in sym_vars]
 
-        # default_handler = signal.getsignal(signal.SIGALRM)
-        # signal.signal(signal.SIGALRM, timeout_handler)
-
         if isinstance(expr, type("")):
-            # signal.alarm(1)
-            try:
-                self.expr = sp.sympify(expr)
-            except TimeoutException:
-                print(f"Parsing {expr} took too long")
-                self.expr = sp.parse_expr(expr, evaluate=False)
-            # finally:
-                # signal.alarm(0)
+            self.expr = sp.sympify(expr)
         else:
             self.expr = expr
-
-        # signal.signal(signal.SIGALRM, default_handler)
 
         try:
             self.sym_params = sp.symbols(sym_params)
@@ -105,7 +84,7 @@ class Model:
                     print("Unknown type passed as sym_params input of Model."\
                           "Valid types: tuple or list of strings."\
                           "Example: ('C1', 'C2', 'C3').")
-        except ValueError:
+        except:
             print(expr, params, sym_params, sym_vars)
         self.sym_vars = sp.symbols(sym_vars)
         self.p = 0
