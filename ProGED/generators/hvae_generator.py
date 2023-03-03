@@ -175,6 +175,7 @@ class GeneratorHVAE(BaseExpressionGenerator):
         tree = self.model.decode(latent, self.decoding_dict)
         tree.change_redundant_variables(self.variables, self.constant)
         return tree.to_list(with_precedence=True, precedence=self.precedence)
+        return tree.to_list(with_precedence=True, precedence=self.precedence), tree.to_list(notation="postfix")
 
 
 class Node:
@@ -192,6 +193,11 @@ class Node:
             return f"[{self.symbol}{str(self.left)}]"
         else:
             return f"[{str(self.left)}{self.symbol}{str(self.right)}]"
+
+    def __len__(self):
+        nl = len(self.left) if self.left is not None else 0
+        nr = len(self.right) if self.right is not None else 0
+        return nl + nr + 1
 
     def height(self):
         hl = self.left.height() if self.left is not None else 0
@@ -319,34 +325,41 @@ def tokens_to_tree(tokens, symbols):
     tokens : list of string tokens
     symbols: dictionary of possible tokens -> attributes, each token must have attributes: nargs (0-2), order
     """
+    start_expr = "".join(tokens)
+    num_tokens = len([t for t in tokens if t != "(" and t != ")"])
     tokens = ["("] + tokens + [")"]
     operator_stack = []
     out_stack = []
     for token in tokens:
         if token == "(":
             operator_stack.append(token)
-        elif token in symbols and symbols[token]["type"] in [SymType.Var, SymType.Const, SymType.Literal]:
+        elif token in symbols and (symbols[token]["type"].value == SymType.Var.value or symbols[token]["type"].value == SymType.Const.value):
             out_stack.append(Node(token))
-        elif token in symbols and symbols[token]["type"] is SymType.Fun:
-            operator_stack.append(token)
-        elif token in symbols and symbols[token]["type"] is SymType.Operator:
+        elif token in symbols and symbols[token]["type"].value == SymType.Fun.value:
+            if token[0] == "^":
+                out_stack.append(Node(token, left=out_stack.pop()))
+            else:
+                operator_stack.append(token)
+        elif token in symbols and symbols[token]["type"].value == SymType.Operator.value:
             while len(operator_stack) > 0 and operator_stack[-1] != '(' \
                     and symbols[operator_stack[-1]]["precedence"] > symbols[token]["precedence"]:
                     # or (symbols[operator_stack[-1]]["precedence"] == symbols[token]["precedence"] and symbols[token]["left_asoc"])):
-                if symbols[operator_stack[-1]]["type"] is SymType.Fun:
+                if symbols[operator_stack[-1]]["type"].value == SymType.Fun.value:
                     out_stack.append(Node(operator_stack.pop(), left=out_stack.pop()))
                 else:
                     out_stack.append(Node(operator_stack.pop(), out_stack.pop(), out_stack.pop()))
             operator_stack.append(token)
         else:
             while len(operator_stack) > 0 and operator_stack[-1] != '(':
-                if symbols[operator_stack[-1]]["type"] is SymType.Fun:
+                if symbols[operator_stack[-1]]["type"].value == SymType.Fun.value:
                     out_stack.append(Node(operator_stack.pop(), left=out_stack.pop()))
                 else:
                     out_stack.append(Node(operator_stack.pop(), out_stack.pop(), out_stack.pop()))
             operator_stack.pop()
-            if len(operator_stack) > 0 and operator_stack[-1] in symbols and symbols[operator_stack[-1]]["type"] is SymType.Fun:
+            if len(operator_stack) > 0 and operator_stack[-1] in symbols and symbols[operator_stack[-1]]["type"].value == SymType.Fun.value:
                 out_stack.append(Node(operator_stack.pop(), left=out_stack.pop()))
+    if len(out_stack[-1]) < num_tokens:
+        raise Exception(f"Could not parse the whole expression {start_expr}")
     return out_stack[-1]
 
 
@@ -565,7 +578,7 @@ if __name__ == '__main__':
     #     results = json.load(file)
     #     code = json.loads(results[0]["code"])
 
-    generator = GeneratorHVAE("/home/sebastian/IJS/ProGED/ProGED/examples/parameters/params_test.pt", ["x"], universal_symbols)
+    generator = GeneratorHVAE("../examples/parameters/params_test.pt", ["x"], universal_symbols)
     # GeneratorHVAE.benchmark_reconstruction(eqs, generator=generator)
 
     ed = EqDisco(data=mat, variable_names=["x1", "x2", "x3", "y"], generator=generator, sample_size=100, constant_symbol="C")
